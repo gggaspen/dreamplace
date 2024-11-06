@@ -1,0 +1,8 @@
+.text-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: red;
+  height: 40px;
+  overflow: hidden;
+}

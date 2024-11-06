@@ -11,9 +11,9 @@ export default function Banner() {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "#270027",
-        // backgroundImage:
-        //   "url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3h6eWo5Z3VtZHl0OWxseWkxaTl3NjB3emt6MmoxYXg2b3d2aDJ1OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/88Fu8MtnSXI6j3ywN8/giphy.gif)",
+        height: "100dvh",
+        backgroundImage:
+          "url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3h6eWo5Z3VtZHl0OWxseWkxaTl3NjB3emt6MmoxYXg2b3d2aDJ1OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/88Fu8MtnSXI6j3ywN8/giphy.gif)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         transform: "scaleX(-1)",
@@ -37,9 +37,9 @@ export default function Banner() {
         </Box>
         <Box>
           <Text fontSize={"1em"}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum
-            dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit
-            amet consectetur adipisicing elit.
+            Sapiente voluptas magni soluta illum dolorem aspernatur quo, dicta
+            eligendi explicabo quod perspiciatis? Voluptatibus molestiae
+            asperiores voluptatum dolorem pariatur possimus quidem repudiandae.
           </Text>
         </Box>
         <Box>
@@ -51,6 +51,8 @@ export default function Banner() {
             border={"none"}
             cursor={"pointer"}
             padding={"10px 20px"}
+            marginTop={"1em"}
+            borderRadius={"none"}
             transition={"background-color 0.2s ease-out, color 0.2s ease-out"}
             _hover={{
               backgroundColor: "rgba(0, 0, 0, 0.6)",
