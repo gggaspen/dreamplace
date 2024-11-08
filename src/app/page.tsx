@@ -7,8 +7,8 @@ import Nav from "@/components/nav/Nav";
 export default function Home() {
   return (
     <>
-      <main>
-        <Box w={"100dvw"} h={"100dvh"}>
+      <main className="poppins-medium">
+        <Box h={"100dvh"}>
           <Box position={"absolute"} zIndex={2} w={"100%"}>
             <TopBanner></TopBanner>
             <Nav />

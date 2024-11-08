@@ -1,25 +1,42 @@
+// "use client";
+
 import { Text, Box, Flex, Button } from "@chakra-ui/react";
 
 export default function Banner() {
   return (
     <Flex
       alignItems="flex-end"
-      _before={{
-        content: '""',
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: "100dvh",
-        backgroundImage:
-          "url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3h6eWo5Z3VtZHl0OWxseWkxaTl3NjB3emt6MmoxYXg2b3d2aDJ1OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/88Fu8MtnSXI6j3ywN8/giphy.gif)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        transform: "scaleX(-1)",
-        zIndex: 0,
-      }}
+      position="relative"
+      overflow="hidden"
+      height="100vh"
     >
+      {/* Pseudo-elemento con fondo fijo */}
+      <Box
+        position="absolute"
+        top={0}
+        left={0}
+        right={0}
+        bottom={0}
+        _before={{
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          // backgroundImage:
+          //   "url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3h6eWo5Z3VtZHl0OWxseWkxaTl3NjB3emt6MmoxYXg2b3d2aDJ1OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/88Fu8MtnSXI6j3ywN8/giphy.gif)",
+          // backgroundImage: "url(https://i.postimg.cc/cJRCSK23/MG-4797-1.jpg)",
+          backgroundImage: `url(https://i.postimg.cc/cJRCSK23/MG-4797-1.jpg)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+          // transform: "scaleX(-1)", // Aplica la inversión aquí
+          zIndex: 0,
+        }}
+      />
+
+      {/* Contenido */}
       <Flex
         flexDirection="column"
         justifyContent="flex-end"
@@ -32,14 +49,17 @@ export default function Banner() {
       >
         <Box>
           <Text fontSize={{ base: "2em", lg: "3em" }}>
-            LOREM IPSUM dolor sit amet consectetur
+            DREAMPLACE ft. Rym & Retina press.
           </Text>
         </Box>
         <Box>
+          <Text fontSize={"1em"}>"El muelle" | 30 NOV 2024</Text>
+          {/* <Text fontSize={"1em"}>
+            "El muelle" | 30 NOV 2024 | Agustin Pietrocola / Ailen Dc & Naza Rv
+            / Facukid & Ariel Stamile / Meline
+          </Text> */}
           <Text fontSize={"1em"}>
-            Sapiente voluptas magni soluta illum dolorem aspernatur quo, dicta
-            eligendi explicabo quod perspiciatis? Voluptatibus molestiae
-            asperiores voluptatum dolorem pariatur possimus quidem repudiandae.
+            Un espectáculo donde converge el arte, la música y los sueños.
           </Text>
         </Box>
         <Box>
