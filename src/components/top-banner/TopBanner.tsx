@@ -55,7 +55,7 @@ export default function TopBanner() {
         variants={childVariants}
         transition={{
           ease: [0.1, 0.25, 0.3, 1],
-          duration: 0.4,
+          duration: 0.6,
         }}
       >
         BUY TICKETS NOW

@@ -41,7 +41,7 @@ export default function Nav() {
       animate={hidden ? "hidden" : "visible"}
       transition={{
         ease: [0.1, 0.25, 0.3, 1],
-        duration: 0.6,
+        duration: 1,
         staggerChildren: 0.05,
       }}
     >

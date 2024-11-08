@@ -19,15 +19,15 @@ const Slide = ({ left, direction, progress, arrow }: any) => {
     >
       <Flex h="" alignItems={"center"}>
         <Flex h="" alignItems={"center"}>
-          <Text fontSize={"5em"} color={"#000"}>
+          <Text fontWeight={"bold"} fontSize={{ base: "2em", lg: "5em" }} color={"#000"}>
             PROGRAMA
           </Text>
           <Arrow direction={arrow} h={"50px"} w={"50px"} color="#000" />
-          <Text fontSize={"5em"} color={"#000"}>
+          <Text fontWeight={"bold"} fontSize={{ base: "2em", lg: "5em" }} color={"#000"}>
             PROGRAMA
           </Text>
           <Arrow direction={arrow} h={"50px"} w={"50px"} color="#000" />
-          <Text fontSize={"5em"} color={"#000"}>
+          <Text fontWeight={"bold"} fontSize={{ base: "2em", lg: "5em" }} color={"#000"}>
             PROGRAMA
           </Text>
           <Arrow direction={arrow} h={"50px"} w={"50px"} color="#000" />

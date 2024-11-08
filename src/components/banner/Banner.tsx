@@ -1,6 +1,7 @@
 // "use client";
 
 import { Text, Box, Flex, Button } from "@chakra-ui/react";
+import "./Banner.css";
 
 export default function Banner() {
   return (
@@ -12,6 +13,7 @@ export default function Banner() {
     >
       {/* Pseudo-elemento con fondo fijo */}
       <Box
+        className="op-motion"
         position="absolute"
         top={0}
         left={0}
@@ -27,7 +29,8 @@ export default function Banner() {
           // backgroundImage:
           //   "url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3h6eWo5Z3VtZHl0OWxseWkxaTl3NjB3emt6MmoxYXg2b3d2aDJ1OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/88Fu8MtnSXI6j3ywN8/giphy.gif)",
           // backgroundImage: "url(https://i.postimg.cc/cJRCSK23/MG-4797-1.jpg)",
-          backgroundImage: `url(https://i.postimg.cc/cJRCSK23/MG-4797-1.jpg)`,
+          // backgroundImage: `url(https://i.postimg.cc/cJRCSK23/MG-4797-1.jpg)`,
+          backgroundImage: `url(https://i.postimg.cc/bv75Qrwm/Runa-4.jpg)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",
@@ -48,17 +51,30 @@ export default function Banner() {
         paddingRight={{ base: "10%", lg: "40%" }}
       >
         <Box>
-          <Text fontSize={{ base: "2em", lg: "3em" }}>
+          <Text
+            _selection={{
+              backgroundColor: "#000",
+            }}
+            fontSize={{ base: "2em", lg: "3em" }}
+          >
             DREAMPLACE ft. Rym & Retina press.
           </Text>
         </Box>
         <Box>
-          <Text fontSize={"1em"}>"El muelle" | 30 NOV 2024</Text>
-          {/* <Text fontSize={"1em"}>
-            "El muelle" | 30 NOV 2024 | Agustin Pietrocola / Ailen Dc & Naza Rv
-            / Facukid & Ariel Stamile / Meline
-          </Text> */}
-          <Text fontSize={"1em"}>
+          <Text
+            _selection={{
+              backgroundColor: "#000",
+            }}
+            fontSize={"1em"}
+          >
+            "El muelle" | 30 NOV 2024
+          </Text>
+          <Text
+            _selection={{
+              backgroundColor: "#000",
+            }}
+            fontSize={"1em"}
+          >
             Un espectáculo donde converge el arte, la música y los sueños.
           </Text>
         </Box>
@@ -80,7 +96,7 @@ export default function Banner() {
               boxShadow: "inset 0 0 0px 1px #eee",
             }}
           >
-            LOREM IPSUM NOW
+            CONSEGUÍ AHORA TUS ENTRADAS
           </Button>
         </Box>
       </Flex>

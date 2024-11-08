@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from "react";
 import "./BottomBanner.css";
 import Slide from "../slide/Slide";
 import { useScroll } from "framer-motion";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 
 const BottomBanner: React.FC = () => {
   useEffect(() => {
@@ -24,7 +24,14 @@ const BottomBanner: React.FC = () => {
   });
 
   return (
-    <Box overflow={"hidden"} bgColor={"#fff"}>
+    <Flex
+      flexDirection={"column"}
+      gap={"1em"}
+      py={"1em"}
+      overflow={"hidden"}
+      // bgColor={"#fff"}
+      className="bg-gradient"
+    >
       {/* <Box overflow={"hidden"} bgColor={"#fff"} h={"50dvh"}> */}
       <Slide left={"-10%"} direction={"left"} progress={scrollYProgress} />
       <Slide
@@ -33,7 +40,7 @@ const BottomBanner: React.FC = () => {
         progress={scrollYProgress}
         arrow={"left"}
       />
-    </Box>
+    </Flex>
   );
 };
 
