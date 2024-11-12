@@ -1,17 +1,16 @@
 "use client";
 
-import { Flex, Text } from "@chakra-ui/react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
 import "./TopBanner.css";
 
 export default function TopBanner() {
-  const phrases = [
-    "BUY TICKETS NOW",
-    "COMPRA TUS TICKETS AHORA",
-    "VAGAR MORGULIS",
-    "AHORA O NEVER",
-  ];
+  // const phrases = [
+  //   "BUY TICKETS NOW",
+  //   "COMPRA TUS TICKETS AHORA",
+  //   "VAGAR MORGULIS",
+  //   "AHORA O NEVER",
+  // ];
 
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);

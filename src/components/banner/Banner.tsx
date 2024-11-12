@@ -67,7 +67,7 @@ export default function Banner() {
             }}
             fontSize={"1em"}
           >
-            "El muelle" | 30 NOV 2024
+            &quot;El muelle&quot; | 30 NOV 2024
           </Text>
           <Text
             _selection={{

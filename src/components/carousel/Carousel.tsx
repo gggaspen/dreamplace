@@ -4,10 +4,9 @@ import Carousel from "react-spring-3d-carousel";
 import { useState, useEffect } from "react";
 import { config } from "react-spring";
 import { Flex } from "@chakra-ui/react";
-import { HeroPattern } from "@/app/ui/patterns";
 
 export default function Carroussel(props: any) {
-  const table = props.cards.map((element: any, index: any) => {
+  const table = props.cards.map((element: any, index: number) => {
     return { ...element, onClick: () => setGoToSlide(index) };
   });
 

@@ -1,11 +1,11 @@
 "use client";
 
 import Lenis from "lenis";
-import React, { useEffect, useRef } from "react";
+import React, { MutableRefObject, useEffect, useRef } from "react";
 import "./BottomBanner.css";
 import Slide from "../slide/Slide";
 import { useScroll } from "framer-motion";
-import { Box, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 const BottomBanner: React.FC = () => {
   useEffect(() => {
@@ -17,7 +17,7 @@ const BottomBanner: React.FC = () => {
     requestAnimationFrame(raf);
   }, []);
 
-  const container: any = useRef();
+  const container: MutableRefObject<any> = useRef();
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start end", "end start"],

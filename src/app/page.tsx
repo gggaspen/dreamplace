@@ -6,9 +6,6 @@ import Nav from "@/components/nav/Nav";
 import Logo from "@/components/logo/Logo";
 // import { Gallery } from "@/components/gallery/Gallery";
 import { Iframe } from "@/components/iframe/Iframe";
-import Carousel from "@/components/carousel/Carousel";
-import { v4 as uuidv4 } from "uuid";
-import Card from "@/components/carousel/Card";
 import CarrousselV2 from "@/components/carousel-v2/Carousel";
 
 export default function Home() {
