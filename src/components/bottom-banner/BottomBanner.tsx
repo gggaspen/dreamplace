@@ -36,7 +36,7 @@ const BottomBanner: React.FC = () => {
       {/* <Box overflow={"hidden"} bgColor={"#fff"} h={"50dvh"}> */}
       <Slide left={"-10%"} direction={"left"} progress={scrollYProgress} />
       <Slide
-        left={"-20%"}
+        left={"-50%"}
         direction={"right"}
         progress={scrollYProgress}
         arrow={"left"}

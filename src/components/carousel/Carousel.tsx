@@ -3,6 +3,8 @@
 import Carousel from "react-spring-3d-carousel";
 import { useState, useEffect } from "react";
 import { config } from "react-spring";
+import { Flex } from "@chakra-ui/react";
+import { HeroPattern } from "@/app/ui/patterns";
 
 export default function Carroussel(props: any) {
   const table = props.cards.map((element: any, index: any) => {
@@ -20,8 +22,14 @@ export default function Carroussel(props: any) {
   }, [props.offset, props.showArrows]);
 
   return (
-    <div
-      style={{ width: props.width, height: props.height, margin: props.margin }}
+    <Flex
+      // bgColor={"#2d2d2d"}
+      // style={{
+        // backgroundImage: `url("${new HeroPattern("ff6600", 1).getPattern()}")`,
+      // }}
+      w={props.width}
+      h={props.height}
+      m={props.margin}
     >
       <Carousel
         slides={cards}
@@ -30,6 +38,6 @@ export default function Carroussel(props: any) {
         showNavigation={showArrows}
         animationConfig={config.gentle}
       />
-    </div>
+    </Flex>
   );
 }

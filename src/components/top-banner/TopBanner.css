@@ -4,11 +4,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-	background: linear-gradient(-45deg, #ff00e1, #ff0062, #ff6600, #d52323);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
+  background: linear-gradient(-45deg, #ff00e1, #ff0062, #ff6600, #d52323);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
   height: 40px;
   overflow: hidden;
+  cursor: pointer;
 }
 
 @keyframes gradient {

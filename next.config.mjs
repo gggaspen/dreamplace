@@ -7,7 +7,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "flowbite.s3.amazonaws.com",
+        hostname: "i.postimg.cc",
         pathname: "/**",
       },
     ],
