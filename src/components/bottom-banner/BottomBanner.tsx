@@ -29,9 +29,10 @@ const BottomBanner: React.FC = () => {
       gap={"1em"}
       py={"1em"}
       overflow={"hidden"}
-      // bgColor={"#fff"}
       className="bg-gradient"
       cursor={"pointer"}
+      justifyContent={"center"}
+      minH={{ base: "25dvh", lg: "30dvh" }}
     >
       {/* <Box overflow={"hidden"} bgColor={"#fff"} h={"50dvh"}> */}
       <Slide left={"-10%"} direction={"left"} progress={scrollYProgress} />
