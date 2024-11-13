@@ -4,12 +4,16 @@ export const Iframe = () => {
   return (
     <Flex
       w={"100%"}
-      h={"50dvw"}
+      h={"50dvh"}
       p={"4em"}
       justifyContent={"center"}
       alignItems={"flex-end"}
       // position="absolute"
       bgImage={"url(https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png)"}
+      bgRepeat={"no-repeat"}
+      bgPos={"center"}
+      bgSize={"cover"}
+      bgAttachment={"fixed"}
     >
       <iframe
         style={{ borderRadius: "14px" }}

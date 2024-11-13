@@ -4,6 +4,7 @@ import { Text, Flex } from "@chakra-ui/react";
 import { motion, useTransform } from "framer-motion";
 import Arrow from "../arrow/Arrow";
 import React from "react";
+import { kanit } from "@/app/ui/fonts";
 
 const dates = [
   { text: "30 NOV 2024" },
@@ -40,6 +41,7 @@ const Slide = ({ left, direction, progress, arrow }: any) => {
                 _hover={{
                   color: "#fff",
                 }}
+                className={`${kanit.className}`}
               >
                 {date.text}
               </Text>

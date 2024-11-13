@@ -11,7 +11,7 @@ import CarrousselV2 from "@/components/carousel-v2/Carousel";
 export default function Home() {
   return (
     <>
-      <main className="poppins-medium">
+      <main className="">
         <Box h={"100dvh"}>
           <Box position={"absolute"} zIndex={2} w={"100%"}>
             <TopBanner></TopBanner>

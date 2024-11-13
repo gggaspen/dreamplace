@@ -13,7 +13,7 @@ export default function Banner() {
     >
       {/* Pseudo-elemento con fondo fijo */}
       <Box
-        className="op-motion"
+        className="op-motion bg-banner"
         position="absolute"
         top={0}
         left={0}
@@ -28,8 +28,6 @@ export default function Banner() {
           bottom: 0,
           // backgroundImage:
           //   "url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3h6eWo5Z3VtZHl0OWxseWkxaTl3NjB3emt6MmoxYXg2b3d2aDJ1OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/88Fu8MtnSXI6j3ywN8/giphy.gif)",
-          // backgroundImage: "url(https://i.postimg.cc/cJRCSK23/MG-4797-1.jpg)",
-          // backgroundImage: `url(https://i.postimg.cc/cJRCSK23/MG-4797-1.jpg)`,
           // backgroundImage: `url(https://i.postimg.cc/2SFKfTPn/Runa-4.jpg)`,
           // backgroundSize: "cover",
           // backgroundPosition: "center",
