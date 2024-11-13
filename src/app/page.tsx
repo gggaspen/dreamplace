@@ -11,7 +11,7 @@ import CarrousselV2 from "@/components/carousel-v2/Carousel";
 export default function Home() {
   return (
     <>
-      <main className="poppins-medium">
+      <main className="">
         <Box h={"100dvh"}>
           <Box position={"absolute"} zIndex={2} w={"100%"}>
             <TopBanner></TopBanner>
@@ -29,48 +29,11 @@ export default function Home() {
 
         <Iframe />
 
-        <Flex
-          // justifyContent={"center"}
-          // alignItems={"center"}
-          // py={"3em"}
-          // mt={"2em"}
-        >
+        <Flex>
           <CarrousselV2></CarrousselV2>
         </Flex>
-        {/* <Flex justifyContent={"center"} alignItems={"center"} py={"3em"} mt={"2em"}>
-          <Carousel
-            cards={[
-              {
-                key: uuidv4(),
-                content: (
-                  <Card imgSrc="https://i.postimg.cc/2SFKfTPn/Runa-4.jpg" />
-                ),
-              },
-              {
-                key: uuidv4(),
-                content: (
-                  <Card imgSrc="https://i.postimg.cc/7PT33YMf/AGUS4.jpg" />
-                ),
-              },
-              {
-                key: uuidv4(),
-                content: (
-                  <Card imgSrc="https://i.postimg.cc/NFTRBpf1/DSC-2471.jpg" />
-                ),
-              },
-              {
-                key: uuidv4(),
-                content: <Card imgSrc="https://i.postimg.cc/4NkzBkBw/UY.jpg" />,
-              },
-            ]}
-            height="60dvh"
-            width="60%"
-            // margin="0 auto"
-            offset={2}
-            // px={"2em"}
-            showArrows={false}
-          />
-        </Flex> */}
+
+        <BottomBanner />
 
         <div style={{ height: "100dvh" }}></div>
 

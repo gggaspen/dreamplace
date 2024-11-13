@@ -35,7 +35,7 @@ const BottomBanner: React.FC = () => {
       minH={{ base: "25dvh", lg: "30dvh" }}
     >
       {/* <Box overflow={"hidden"} bgColor={"#fff"} h={"50dvh"}> */}
-      <Slide left={"-10%"} direction={"left"} progress={scrollYProgress} />
+      <Slide left={"-50%"} direction={"left"} progress={scrollYProgress} />
       <Slide
         left={"-50%"}
         direction={"right"}
