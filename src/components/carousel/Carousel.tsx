@@ -1,42 +1,59 @@
 "use client";
 
-import Carousel from "react-spring-3d-carousel";
-import { useState, useEffect } from "react";
-import { config } from "react-spring";
-import { Flex } from "@chakra-ui/react";
+import Image from "next/image";
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectCube, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/pagination";
+import "./Carousel.css";
 
-export default function Carroussel(props: any) {
-  const table = props.cards.map((element: any, index: number) => {
-    return { ...element, onClick: () => setGoToSlide(index) };
-  });
+const images = [
+  "https://i.postimg.cc/j5vtVgdF/Banner-Carrusel-1.png",
+  "https://i.postimg.cc/KYPmfvXF/Banner-Carrusel-2.png",
+  "https://i.postimg.cc/QCtsjQFx/Banner-Carrusel-3.png",
+  "https://i.postimg.cc/TwTf4MGb/Banner-Carrusel-4.png",
+  // "https://i.postimg.cc/2SFKfTPn/Runa-4.jpg",
+  // "https://i.postimg.cc/7PT33YMf/AGUS4.jpg",
+  // "https://i.postimg.cc/NFTRBpf1/DSC-2471.jpg",
+  // "https://i.postimg.cc/4NkzBkBw/UY.jpg",
+];
 
-  const [offsetRadius, setOffsetRadius] = useState(2);
-  const [showArrows, setShowArrows] = useState(false);
-  const [goToSlide, setGoToSlide] = useState<number | undefined>(undefined);
-  const [cards] = useState(table);
-
-  useEffect(() => {
-    setOffsetRadius(props.offset);
-    setShowArrows(props.showArrows);
-  }, [props.offset, props.showArrows]);
-
+export default function Carroussel() {
   return (
-    <Flex
-      // bgColor={"#2d2d2d"}
-      // style={{
-        // backgroundImage: `url("${new HeroPattern("ff6600", 1).getPattern()}")`,
-      // }}
-      w={props.width}
-      h={props.height}
-      m={props.margin}
-    >
-      <Carousel
-        slides={cards}
-        goToSlide={goToSlide ?? 0}
-        offsetRadius={offsetRadius}
-        showNavigation={showArrows}
-        animationConfig={config.gentle}
-      />
-    </Flex>
+    <>
+      <div className="w-full relative">
+        <Swiper
+          className="progress-slide-carousel"
+          modules={[Autoplay, Pagination]}
+          pagination={{
+            clickable: true,
+            type: "progressbar",
+          }}
+          loop={true}
+          autoplay={{
+            delay: 1200,
+            disableOnInteraction: false,
+          }}
+          speed={500}
+        >
+          {images.map((image, index) => (
+            <SwiperSlide key={index}>
+              <div className="flex justify-center">
+                {/* <div className="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center"> */}
+                <Image
+                  width={4000}
+                  height={300}
+                  alt={`Image ${index + 1}`}
+                  src={image}
+                  className=""
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </>
   );
 }

@@ -32,7 +32,7 @@ const BottomBanner: React.FC = () => {
       className="bg-gradient"
       cursor={"pointer"}
       justifyContent={"center"}
-      minH={{ base: "25dvh", lg: "30dvh" }}
+      h={"100%"}
     >
       {/* <Box overflow={"hidden"} bgColor={"#fff"} h={"50dvh"}> */}
       <Slide left={"-50%"} direction={"left"} progress={scrollYProgress} />

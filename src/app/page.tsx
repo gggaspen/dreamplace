@@ -6,7 +6,8 @@ import Nav from "@/components/nav/Nav";
 import Logo from "@/components/logo/Logo";
 // import { Gallery } from "@/components/gallery/Gallery";
 import { Iframe } from "@/components/iframe/Iframe";
-import CarrousselV2 from "@/components/carousel-v2/Carousel";
+import Carroussel from "@/components/carousel/Carousel";
+import Footer from "@/components/footer/Footer";
 
 export default function Home() {
   return (
@@ -21,7 +22,9 @@ export default function Home() {
           <Banner></Banner>
         </Box>
 
-        <BottomBanner />
+        <Box minH={{ base: "25dvh", lg: "30dvh" }}>
+          <BottomBanner />
+        </Box>
 
         <Flex justifyContent={"center"} py={"2em"}>
           <Logo w="80%" color="#222" />
@@ -30,16 +33,14 @@ export default function Home() {
         <Iframe />
 
         <Flex>
-          <CarrousselV2></CarrousselV2>
+          <Carroussel />
         </Flex>
 
         <BottomBanner />
 
-        <div style={{ height: "100dvh" }}></div>
+        <Footer />
 
-        {/* <div id="bottom-banner"></div>
-      <div id="pics-grid"></div>
-      <div id="date-motion"></div>
+        {/* 
       <div id="artists"></div>
       <div id="more-info"></div>
       <div id="footer"></div> */}
