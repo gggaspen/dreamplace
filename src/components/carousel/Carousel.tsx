@@ -3,7 +3,11 @@
 import Image from "next/image";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectCube, Pagination } from "swiper/modules";
+import {
+  Autoplay,
+  // EffectCube
+  Pagination,
+} from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/pagination";
