@@ -8,6 +8,8 @@ import { useScroll } from "framer-motion";
 import { Flex } from "@chakra-ui/react";
 
 const BottomBanner: React.FC = () => {
+  const container: MutableRefObject<any> = useRef(null);
+
   useEffect(() => {
     const lenis = new Lenis();
     function raf(time: number) {
@@ -17,14 +19,15 @@ const BottomBanner: React.FC = () => {
     requestAnimationFrame(raf);
   }, []);
 
-  const container: MutableRefObject<any> = useRef();
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start end", "end start"],
+    layoutEffect: false,
   });
 
   return (
     <Flex
+      ref={container}
       flexDirection={"column"}
       gap={"1em"}
       py={"1em"}
@@ -35,9 +38,9 @@ const BottomBanner: React.FC = () => {
       h={"100%"}
     >
       {/* <Box overflow={"hidden"} bgColor={"#fff"} h={"50dvh"}> */}
-      <Slide left={"-50%"} direction={"left"} progress={scrollYProgress} />
+      <Slide left={"-100%"} direction={"left"} progress={scrollYProgress} />
       <Slide
-        left={"-50%"}
+        left={"-100%"}
         direction={"right"}
         progress={scrollYProgress}
         arrow={"left"}
