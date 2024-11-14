@@ -2,6 +2,7 @@
 
 import { Text, Box, Flex, Button } from "@chakra-ui/react";
 import "./Banner.css";
+// import TextScramble from "@/app/motions/TextScramble";
 
 export default function Banner() {
   return (
@@ -9,7 +10,7 @@ export default function Banner() {
       alignItems="flex-end"
       position="relative"
       overflow="hidden"
-      height="100vh"
+      height="100dvh"
     >
       {/* Pseudo-elemento con fondo fijo */}
       <Box
@@ -42,7 +43,7 @@ export default function Banner() {
         flexDirection="column"
         justifyContent="flex-end"
         gap="2"
-        h="100vh"
+        h="100dvh"
         zIndex={1}
         paddingBottom={"10%"}
         paddingLeft={"10%"}
@@ -55,6 +56,7 @@ export default function Banner() {
             }}
             fontSize={{ base: "2em", lg: "3em" }}
           >
+            {/* <TextScramble phrases={["DREAMPLACE ft. Rym & Retina press."]} /> */}
             DREAMPLACE ft. Rym & Retina press.
           </Text>
         </Box>

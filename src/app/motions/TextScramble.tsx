@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 class TextScrambleClass {
   el: HTMLElement;
@@ -53,10 +53,10 @@ class TextScrambleClass {
     for (let i = 0, n = this.queue.length; i < n; i++) {
       const { from, to, start, end } = this.queue[i];
       let { char } = this.queue[i];
-      console.log(from);
-      console.log(to);
-      console.log(start);
-      console.log(end);
+      // console.log(from);
+      // console.log(to);
+      // console.log(start);
+      // console.log(end);
 
       if (this.frame >= end) {
         complete++;
@@ -99,21 +99,37 @@ const TextScramble: React.FC<TextScrambleProps> = ({
   duration = 1800,
   className,
 }) => {
+  const [hasMounted, setHasMounted] = useState(false);
   const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (textRef.current) {
+    setHasMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (hasMounted && textRef.current) {
       const fx = new TextScrambleClass(textRef.current);
-      let counter = 0;
-      const next = () => {
-        fx.setText(phrases[counter]).then(() => {
-          setTimeout(next, duration);
-        });
-        counter = (counter + 1) % phrases.length;
-      };
-      next();
+      const firstPhrase = phrases[0] || "";
+      fx.setText(firstPhrase);
     }
-  }, [phrases, duration]);
+  }, [phrases]);
+
+  // useEffect(() => {
+  //   if (hasMounted && textRef.current) {
+  //     const fx = new TextScrambleClass(textRef.current);
+  //     let currentIndex = 0;
+
+  //     const runScramble = async () => {
+  //       while (true) {
+  //         await fx.setText(phrases[currentIndex]);
+  //         currentIndex = (currentIndex + 1) % phrases.length;
+  //         await new Promise((resolve) => setTimeout(resolve, duration));
+  //       }
+  //     };
+
+  //     runScramble();
+  //   }
+  // }, [hasMounted, phrases, duration]);
 
   return <div ref={textRef} className={className} />;
 };

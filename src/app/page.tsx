@@ -22,7 +22,8 @@ export default function Home() {
           <Banner></Banner>
         </Box>
 
-        <Box minH={{ base: "25dvh", lg: "30dvh" }}>
+        <Box minH={{ lg: "30dvh" }}>
+          {/* <Box minH={{ base: "25dvh", lg: "30dvh" }}> */}
           <BottomBanner />
         </Box>
 
