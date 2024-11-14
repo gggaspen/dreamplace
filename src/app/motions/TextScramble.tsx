@@ -96,7 +96,7 @@ interface TextScrambleProps {
 
 const TextScramble: React.FC<TextScrambleProps> = ({
   phrases,
-  duration = 1800,
+  // duration = 1800,
   className,
 }) => {
   const [hasMounted, setHasMounted] = useState(false);
