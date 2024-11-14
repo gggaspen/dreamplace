@@ -9,7 +9,7 @@ export default function Banner() {
       alignItems="flex-end"
       position="relative"
       overflow="hidden"
-      height="100vh"
+      height="100dvh"
     >
       {/* Pseudo-elemento con fondo fijo */}
       <Box
@@ -42,7 +42,7 @@ export default function Banner() {
         flexDirection="column"
         justifyContent="flex-end"
         gap="2"
-        h="100vh"
+        h="100dvh"
         zIndex={1}
         paddingBottom={"10%"}
         paddingLeft={"10%"}
