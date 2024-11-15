@@ -1,6 +1,6 @@
 // "use client";
 
-import { Text, Box, Flex, Button, Link } from "@chakra-ui/react";
+import { Text, Box, Flex } from "@chakra-ui/react";
 import "./Banner.css";
 import ButtonPrimary from "../button-primary/ButtonPrimary";
 // import TextScramble from "@/app/motions/TextScramble";

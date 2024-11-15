@@ -1,4 +1,4 @@
-import { Box, Text, Flex, Button } from "@chakra-ui/react";
+import { Box, Text, Flex } from "@chakra-ui/react";
 import Arrow from "../arrow/Arrow";
 import React from "react";
 import "./Footer.css";
