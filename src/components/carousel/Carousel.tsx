@@ -18,10 +18,6 @@ const images = [
   "https://i.postimg.cc/KYPmfvXF/Banner-Carrusel-2.png",
   "https://i.postimg.cc/QCtsjQFx/Banner-Carrusel-3.png",
   "https://i.postimg.cc/TwTf4MGb/Banner-Carrusel-4.png",
-  // "https://i.postimg.cc/2SFKfTPn/Runa-4.jpg",
-  // "https://i.postimg.cc/7PT33YMf/AGUS4.jpg",
-  // "https://i.postimg.cc/NFTRBpf1/DSC-2471.jpg",
-  // "https://i.postimg.cc/4NkzBkBw/UY.jpg",
 ];
 
 export default function Carroussel() {
