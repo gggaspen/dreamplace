@@ -13,11 +13,6 @@ export const Iframe = () => {
           alignItems={"center"}
           zIndex={1}
           px={{ base: "2em", md: "4em" }}
-          // bgImage={"url(https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png)"}
-          // bgRepeat={"no-repeat"}
-          // bgPos={"center"}
-          // bgSize={"cover"}
-          // bgAttachment={"fixed"}
         >
           <iframe
             style={{ borderRadius: "14px" }}
@@ -54,7 +49,7 @@ export const Iframe = () => {
               "#$%& &% &%#/
             </Text>
           </Flex>
-          <Box h={{ base: "30dvh", md: "50dvh" }} bgColor={"black"}>
+          <Box bgColor={"black"}>
             <BottomBanner
               rows={[
                 { direction: "right" },

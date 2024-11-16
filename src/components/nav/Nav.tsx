@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Link } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import "./Nav.css";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
@@ -59,7 +59,7 @@ export default function Nav() {
               duration: 0.6,
             }}
           >
-            <Link>{item}</Link>
+            {/* <Link>{item}</Link> */}
           </motion.div>
         ))}
       </Flex>
