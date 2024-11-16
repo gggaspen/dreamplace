@@ -13,26 +13,19 @@ export const Iframe = () => {
         <Flex
           position={"absolute"}
           w={"100%"}
-          // h={"100%"}
           justifyContent={"center"}
           alignItems={"center"}
           zIndex={1}
           px={{ base: "2em", md: "4em" }}
-          // mb={{
-          //   base: "1em",
-          //   md: "1em",
-          // }}
           mt={{
-            base: "8em",
+            base: "10em",
             md: `18em`,
             lg: `18em`,
-            // md: `calc(-30px - ${0})`,
           }}
         >
           <iframe
             style={{
               borderRadius: "14px",
-              // marginTop: "-2em"
             }}
             src="https://open.spotify.com/embed/artist/6dd2fVevgttSYrLvsRqdTI?utm_source=generator"
             width="100%"

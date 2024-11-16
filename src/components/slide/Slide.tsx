@@ -34,7 +34,7 @@ const Slide = ({ left, direction, progress, arrow }: any) => {
           {dates.map((date, index) => (
             <React.Fragment key={index}>
               <Text
-                fontWeight={"bold"}
+                // fontWeight={"bold"}
                 fontSize={{ base: "2em", lg: "5em" }}
                 color={"#000"}
                 transition={"color 0.2s ease-out, color 0.2s ease-out"}
