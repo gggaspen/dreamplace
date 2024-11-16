@@ -4,7 +4,7 @@ import { Text, Flex } from "@chakra-ui/react";
 import { motion, useTransform } from "framer-motion";
 import Arrow from "../arrow/Arrow";
 import React from "react";
-import { kanit } from "@/app/ui/fonts";
+import { poppins } from "@/app/ui/fonts";
 
 const dates = [
   { text: "30 NOV 2024" },
@@ -29,8 +29,8 @@ const Slide = ({ left, direction, progress, arrow }: any) => {
       style={{ x: translateX, left }}
       className="relative flex whitespace-nowrap"
     >
-      <Flex h="" alignItems={"center"}>
-        <Flex h="" alignItems={"center"}>
+      <Flex alignItems={"center"}>
+        <Flex alignItems={"center"}>
           {dates.map((date, index) => (
             <React.Fragment key={index}>
               <Text
@@ -41,7 +41,7 @@ const Slide = ({ left, direction, progress, arrow }: any) => {
                 _hover={{
                   color: "#eee",
                 }}
-                className={`${kanit.className}`}
+                className={`${poppins.className}`}
               >
                 {date.text}
               </Text>

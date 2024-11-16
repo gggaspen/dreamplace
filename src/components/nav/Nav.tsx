@@ -59,7 +59,7 @@ export default function Nav() {
               duration: 0.6,
             }}
           >
-            <Link>{item}</Link>
+            {/* <Link>{item}</Link> */}
           </motion.div>
         ))}
       </Flex>
