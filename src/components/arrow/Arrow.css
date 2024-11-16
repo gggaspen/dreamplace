@@ -1,6 +1,7 @@
 .cls-1-arrow-big {
   fill: none;
   stroke-miterlimit: 10;
+  stroke-width: 2px;
 }
 
 .margin-arrow {
@@ -29,4 +30,12 @@
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   -o-transform: rotate(90deg);
+}
+
+.top-right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
 }

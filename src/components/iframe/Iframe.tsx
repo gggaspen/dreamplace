@@ -1,25 +1,42 @@
 import { Text, Box, Flex } from "@chakra-ui/react";
 import BottomBanner from "../bottom-banner/BottomBanner";
+import Arrow from "../arrow/Arrow";
+import Link from "next/link";
 
 export const Iframe = () => {
+  const height = 152;
+  // const height = 352;
+
   return (
     <>
       <Box pos={"relative"}>
         <Flex
           position={"absolute"}
           w={"100%"}
-          h={"100%"}
+          // h={"100%"}
           justifyContent={"center"}
           alignItems={"center"}
           zIndex={1}
           px={{ base: "2em", md: "4em" }}
+          // mb={{
+          //   base: "1em",
+          //   md: "1em",
+          // }}
+          mt={{
+            base: "8em",
+            md: `18em`,
+            lg: `18em`,
+            // md: `calc(-30px - ${0})`,
+          }}
         >
           <iframe
-            style={{ borderRadius: "14px" }}
+            style={{
+              borderRadius: "14px",
+              // marginTop: "-2em"
+            }}
             src="https://open.spotify.com/embed/artist/6dd2fVevgttSYrLvsRqdTI?utm_source=generator"
             width="100%"
-            // height="352"
-            height="152"
+            height={height + "px"}
             loading="lazy"
           ></iframe>
         </Flex>
@@ -38,16 +55,27 @@ export const Iframe = () => {
             <Text
               fontSize={{ base: "1.5em", md: "2em" }}
               fontWeight={600}
-              mb={"calc(152px - 2em)"}
+              mb={{
+                base: `calc(${height}px - 1em)`,
+                md: `calc(${height}px - 1em)`,
+              }}
             >
               Our Artists
             </Text>
-            <Text
-              fontSize={{ base: "1.5em", md: "2em" }}
-              mb={"calc(152px - 2em)"}
+            <Box
+              zIndex={2}
+              mb={{
+                base: `calc(${height}px - 1em)`,
+                md: `calc(${height}px - 1em)`,
+              }}
             >
-              "#$%& &% &%#/
-            </Text>
+              <Link
+                href="https://open.spotify.com/artist/6dd2fVevgttSYrLvsRqdTI"
+                target="_blank"
+              >
+                <Arrow direction={"top-right"} w={"20px"} color={"#fff"} />
+              </Link>
+            </Box>
           </Flex>
           <Box bgColor={"black"}>
             <BottomBanner

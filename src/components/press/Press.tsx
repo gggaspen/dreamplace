@@ -3,6 +3,7 @@ import "./Press.css";
 import ButtonPrimary from "../button-primary/ButtonPrimary";
 import Link from "next/link";
 import Image from "next/image";
+import Arrow from "../arrow/Arrow";
 
 export default function Press() {
   return (
@@ -105,7 +106,9 @@ export default function Press() {
         </Flex>
 
         <Box>
-          <ButtonPrimary />
+          <ButtonPrimary>
+            <Arrow color="#000" w="20px" direction="top-right"></Arrow>
+          </ButtonPrimary>
         </Box>
       </Flex>
     </Flex>

@@ -29,6 +29,7 @@ export default function PressInfo() {
             p={"1em"}
             py={"1.5em"}
             color={"black"}
+            fontWeight={"bold"}
           >
             {btnLabel}
           </Button>
