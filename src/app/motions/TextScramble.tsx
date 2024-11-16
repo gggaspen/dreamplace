@@ -66,7 +66,7 @@ class TextScrambleClass {
           char = this.randomChar();
           this.queue[i].char = char;
         }
-        output += `<span style="color:#fff;">${char}</span>`;
+        output += `<span style="color:#eee;">${char}</span>`;
       } else {
         output += from;
       }

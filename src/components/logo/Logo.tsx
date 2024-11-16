@@ -1,4 +1,4 @@
-const Logo = ({ color = "#fff", w = "100%", h = "100%" }) => {
+const Logo = ({ color = "#eee", w = "100%", h = "100%" }) => {
   return (
     <svg width={w} height={h} viewBox="0 0 3086.38 604.17">
       <path

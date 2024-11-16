@@ -5,10 +5,14 @@ import React, { MutableRefObject, useEffect, useRef } from "react";
 import "./BottomBanner.css";
 import Slide from "../slide/Slide";
 import { useScroll } from "framer-motion";
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import Link from "next/link";
 
-const BottomBanner: React.FC = () => {
+interface BottomBannerProps {
+  rows?: { direction: "left" | "right" }[];
+}
+
+const BottomBanner: React.FC<BottomBannerProps> = ({ rows }) => {
   const container: MutableRefObject<any> = useRef(null);
   const url =
     "https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito";
@@ -29,28 +33,38 @@ const BottomBanner: React.FC = () => {
   });
 
   return (
-    <Link href={url} target="_blank">
-      <Flex
-        ref={container}
-        flexDirection={"column"}
-        gap={"1em"}
-        py={"1em"}
-        overflow={"hidden"}
-        className="bg-gradient"
-        cursor={"pointer"}
-        justifyContent={"center"}
-        h={"100%"}
-      >
-        {/* <Box overflow={"hidden"} bgColor={"#fff"} h={"50dvh"}> */}
-        <Slide left={"-100%"} direction={"left"} progress={scrollYProgress} />
-        <Slide
-          left={"-100%"}
-          direction={"right"}
-          progress={scrollYProgress}
-          arrow={"left"}
-        />
-      </Flex>
-    </Link>
+    <Box>
+      <Link href={url} target="_blank">
+        <Flex
+          ref={container}
+          flexDirection={"column"}
+          gap={"1em"}
+          py={"1em"}
+          overflow={"hidden"}
+          className="bg-gradient"
+          cursor={"pointer"}
+          justifyContent={"center"}
+          h={"100%"}
+        >
+          {rows.map((row, index) => (
+            <Slide
+              key={index}
+              left={"-100%"}
+              direction={row.direction}
+              progress={scrollYProgress}
+              arrow={row.direction === "left" ? "right" : "left"}
+            />
+          ))}
+          {/* <Slide left={"-100%"} direction={"left"} progress={scrollYProgress} />
+          <Slide
+            left={"-100%"}
+            direction={"right"}
+            progress={scrollYProgress}
+            arrow={"left"}
+          /> */}
+        </Flex>
+      </Link>
+    </Box>
   );
 };
 

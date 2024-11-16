@@ -1,12 +1,14 @@
 import Banner from "@/components/banner/Banner";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import BottomBanner from "@/components/bottom-banner/BottomBanner";
 import TopBanner from "@/components/top-banner/TopBanner";
 import Nav from "@/components/nav/Nav";
-import Logo from "@/components/logo/Logo";
 // import { Gallery } from "@/components/gallery/Gallery";
 import { Iframe } from "@/components/iframe/Iframe";
 import Carroussel from "@/components/carousel/Carousel";
+import MiniBanner from "@/components/mini-banner/MiniBanner";
+import PressInfo from "@/components/press-info/PressInfo";
+import Press from "@/components/press/Press";
 import Footer from "@/components/footer/Footer";
 
 export default function Home() {
@@ -22,29 +24,21 @@ export default function Home() {
           <Banner></Banner>
         </Box>
 
-        <Box minH={{ lg: "30dvh" }}>
-          {/* <Box minH={{ base: "25dvh", lg: "30dvh" }}> */}
-          <BottomBanner />
-        </Box>
+        <MiniBanner bgColor="lightgray" />
 
-        <Flex justifyContent={"center"} py={"2em"}>
-          <Logo w="80%" color="#222" />
-        </Flex>
+        <Carroussel />
+
+        <BottomBanner rows={[{ direction: "left" }]} />
 
         <Iframe />
 
-        <Flex>
-          <Carroussel />
-        </Flex>
+        <PressInfo />
 
-        <BottomBanner />
+        <MiniBanner bgColor="#eee" />
+
+        <Press />
 
         <Footer />
-
-        {/* 
-      <div id="artists"></div>
-      <div id="more-info"></div>
-      <div id="footer"></div> */}
       </main>
     </>
   );
