@@ -9,6 +9,8 @@ import { Iframe } from "@/components/iframe/Iframe";
 import Carroussel from "@/components/carousel/Carousel";
 import MiniBanner from "@/components/mini-banner/MiniBanner";
 import PressInfo from "@/components/press-info/PressInfo";
+import Press from "@/components/press/Press";
+import Footer from "@/components/footer/Footer";
 
 export default function Home() {
   return (
@@ -35,9 +37,10 @@ export default function Home() {
 
         <MiniBanner bgColor="#eee" />
 
-        {/* <Flex justifyContent={"center"} py={"2em"}>
-          <Logo w="80%" color="#222" />
-        </Flex> */}
+        <Press />
+
+        <Footer />
+
       </main>
     </>
   );
