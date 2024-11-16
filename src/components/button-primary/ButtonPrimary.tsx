@@ -1,6 +1,10 @@
 import { Text, Link } from "@chakra-ui/react";
 
-export default function ButtonPrimary() {
+export default function ButtonPrimary({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   const url =
     "https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito";
 
@@ -29,7 +33,9 @@ export default function ButtonPrimary() {
       alignItems={"center"}
       outline={"none"}
     >
+      {children}
       <Text>CONSEGUÍ AHORA TUS ENTRADAS</Text>
+      {children}
     </Link>
   );
 }

@@ -24,7 +24,7 @@ export default function Home() {
           <Banner></Banner>
         </Box>
 
-        <MiniBanner bgColor="lightgray" />
+        <MiniBanner text="NUESTROS ARTISTAS" bgColor="lightgray" />
 
         <Carroussel />
 
@@ -34,7 +34,7 @@ export default function Home() {
 
         <PressInfo />
 
-        <MiniBanner bgColor="#eee" />
+        <MiniBanner text="NUESTROS ARTISTAS" bgColor="#eee" />
 
         <Press />
 

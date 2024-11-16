@@ -1,7 +1,12 @@
 import { Text, Box, Flex } from "@chakra-ui/react";
 import BottomBanner from "../bottom-banner/BottomBanner";
+import Arrow from "../arrow/Arrow";
+import Link from "next/link";
 
 export const Iframe = () => {
+  const height = 152;
+  // const height = 352;
+
   return (
     <>
       <Box pos={"relative"}>
@@ -15,11 +20,10 @@ export const Iframe = () => {
           px={{ base: "2em", md: "4em" }}
         >
           <iframe
-            style={{ borderRadius: "14px" }}
+            style={{ borderRadius: "14px", marginTop: "-2em" }}
             src="https://open.spotify.com/embed/artist/6dd2fVevgttSYrLvsRqdTI?utm_source=generator"
             width="100%"
-            // height="352"
-            height="152"
+            height={height + "px"}
             loading="lazy"
           ></iframe>
         </Flex>
@@ -38,16 +42,19 @@ export const Iframe = () => {
             <Text
               fontSize={{ base: "1.5em", md: "2em" }}
               fontWeight={600}
-              mb={"calc(152px - 2em)"}
+              mb={`calc(${height}px - 2em)`}
             >
               Our Artists
             </Text>
-            <Text
-              fontSize={{ base: "1.5em", md: "2em" }}
-              mb={"calc(152px - 2em)"}
-            >
-              "#$%& &% &%#/
-            </Text>
+            <Box mb={`calc(${height}px - 3em)`} zIndex={2}>
+              <Link
+                // style={{ marginBottom: `calc(${height}px - 2em)` }}
+                href="https://open.spotify.com/artist/6dd2fVevgttSYrLvsRqdTI"
+                target="_blank"
+              >
+                <Arrow direction={"top-right"} w={"20px"} color={"#fff"} />
+              </Link>
+            </Box>
           </Flex>
           <Box bgColor={"black"}>
             <BottomBanner

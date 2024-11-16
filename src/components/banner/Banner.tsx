@@ -1,6 +1,7 @@
 import { Text, Box, Flex } from "@chakra-ui/react";
 import "./Banner.css";
 import ButtonPrimary from "../button-primary/ButtonPrimary";
+import Arrow from "../arrow/Arrow";
 
 export default function Banner() {
   return (
@@ -68,7 +69,9 @@ export default function Banner() {
           </Text>
         </Box>
         <Box>
-          <ButtonPrimary />
+          <ButtonPrimary>
+            <Arrow color="#000" w="20px" direction="top-right"></Arrow>
+          </ButtonPrimary>
         </Box>
       </Flex>
     </Flex>

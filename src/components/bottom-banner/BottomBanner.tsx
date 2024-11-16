@@ -39,7 +39,7 @@ const BottomBanner: React.FC<BottomBannerProps> = ({ rows }) => {
           ref={container}
           flexDirection={"column"}
           gap={"1em"}
-          py={"1em"}
+          // py={"1em"}
           overflow={"hidden"}
           className="bg-gradient"
           cursor={"pointer"}

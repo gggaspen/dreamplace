@@ -4,6 +4,7 @@ import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
 import "./TopBanner.css";
 import Link from "next/link";
+import MiniBanner from "../mini-banner/MiniBanner";
 
 export default function TopBanner() {
   const url =
@@ -50,7 +51,7 @@ export default function TopBanner() {
         animate={hidden ? "hidden" : "visible"}
         transition={{
           ease: [0.1, 0.25, 0.3, 1],
-          duration: 0.6,
+          duration: 0.1,
           staggerChildren: 0.05,
         }}
         className="text-container"
@@ -59,10 +60,11 @@ export default function TopBanner() {
           variants={childVariants}
           transition={{
             ease: [0.1, 0.25, 0.3, 1],
-            duration: 0.6,
+            duration: 0.1,
           }}
         >
-          BUY TICKETS NOW
+          {/* BUY TICKETS NOW */}
+          <MiniBanner text="COMPRAR TICKETS AHORA" arrowDirection="top-right"></MiniBanner>
         </motion.p>
         {/* <TextScramble phrases={phrases} className="text-white" /> */}
       </motion.div>

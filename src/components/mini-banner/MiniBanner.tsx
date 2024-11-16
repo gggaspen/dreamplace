@@ -3,15 +3,15 @@ import Arrow from "../arrow/Arrow";
 import React from "react";
 import "./MiniBanner.css";
 
-export default function MiniBanner({ bgColor }: any) {
+export default function MiniBanner({ bgColor, text, arrowDirection }: any) {
   const textsList = [
-    { text: "NUESTROS ARTISTAS" },
-    { text: "NUESTROS ARTISTAS" },
-    { text: "NUESTROS ARTISTAS" },
-    { text: "NUESTROS ARTISTAS" },
-    { text: "NUESTROS ARTISTAS" },
-    { text: "NUESTROS ARTISTAS" },
-    { text: "NUESTROS ARTISTAS" },
+    { text: text },
+    { text: text },
+    { text: text },
+    { text: text },
+    { text: text },
+    { text: text },
+    { text: text },
   ];
 
   return (
@@ -27,7 +27,7 @@ export default function MiniBanner({ bgColor }: any) {
               >
                 <Text whiteSpace={"nowrap"}>{text}</Text>
                 <Arrow
-                  direction={"bottom"}
+                  direction={arrowDirection ? arrowDirection : "bottom"}
                   color={bgColor === "#eee" ? "#000" : "#eee"}
                   w={"20px"}
                 ></Arrow>
