@@ -1,6 +1,44 @@
-.op-motion {
+/* .op-motion {
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
+} */
+/* Clase para animaciones u otros efectos */
+.op-motion-press {
+  transition: all 0.3s ease-in-out; /* Compatibilidad básica para transiciones */
+  -webkit-transition: all 0.3s ease-in-out; /* Soporte para Safari */
+}
+
+/* Clase para el fondo de banner */
+.bg-press {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+/* Pseudo-elemento ::before */
+.bg-press::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1; /* Asegura que el fondo esté detrás del contenido */
+
+  background-image: url(https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png);
+  background-position: center; /* Centrado para todos los navegadores */
+  background-attachment: fixed; /* Soporte completo en navegadores modernos */
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  /* Prefijos para mejorar compatibilidad */
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 @keyframes opacity {
