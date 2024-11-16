@@ -1,4 +1,4 @@
-import { Box, Text, Flex, Button } from "@chakra-ui/react";
+import { Box, Text, Flex, Button, Link } from "@chakra-ui/react";
 import React from "react";
 
 export default function PressInfo() {
@@ -9,11 +9,16 @@ export default function PressInfo() {
   return (
     <>
       <Box bg={"lightgray"} py={"1em"} px={"4em"}>
-        <Text fontSize={"3em"} py={".5em"} color={"black"}>
+        <Text fontSize={{ base: "2em", md: "3em" }} py={".5em"} color={"black"}>
           Attend ADE
         </Text>
         <Flex gap={"2em"} h={"50%"} pb={"1.5em"}>
-          <Text fontWeight={"bold"} fontSize={"2em"} flex={1} color={"black"}>
+          <Text
+            fontWeight={"bold"}
+            fontSize={{ base: "1em", md: "2em" }}
+            flex={1}
+            color={"black"}
+          >
             ADE Pro <br /> Pass
           </Text>
           <Flex
@@ -30,11 +35,22 @@ export default function PressInfo() {
             py={"1.5em"}
             color={"black"}
             fontWeight={"bold"}
+            fontSize={"1em"}
           >
-            {btnLabel}
+            <Link
+              href="https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito"
+              target="_blank"
+            >
+              {btnLabel}
+            </Link>
           </Button>
         </Flex>
-        <Text color={"black"} mb={"1em"} display={{ base: "flex", lg: "none" }}>
+        <Text
+          color={"black"}
+          mb={"1em"}
+          display={{ base: "flex", lg: "none" }}
+          fontSize={{ base: ".5em", md: "1em" }}
+        >
           {description}
         </Text>
         <Box bgColor={"black"} h={"1px"} />

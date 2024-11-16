@@ -18,9 +18,10 @@ export const Iframe = () => {
           zIndex={1}
           px={{ base: "2em", md: "4em" }}
           mt={{
-            base: "10em",
+            base: "5em",
+            sm: "5em",
             md: `18em`,
-            lg: `18em`,
+            lg: `14em`,
           }}
         >
           <iframe
@@ -43,13 +44,13 @@ export const Iframe = () => {
             bgColor={"black"}
             px={{ base: "2em", md: "4em" }}
             justifyContent={"space-between"}
-            alignItems={"flex-end"}
+            alignItems={"center"}
           >
             <Text
-              fontSize={{ base: "1.5em", md: "2em" }}
+              fontSize={{ base: "1.5em", md: "3em" }}
               fontWeight={600}
               mb={{
-                base: `calc(${height}px - 1em)`,
+                base: `calc(${height}px - 2em)`,
                 md: `calc(${height}px - 1em)`,
               }}
             >
@@ -58,7 +59,7 @@ export const Iframe = () => {
             <Box
               zIndex={2}
               mb={{
-                base: `calc(${height}px - 1em)`,
+                base: `calc(${height}px - 2.5em)`,
                 md: `calc(${height}px - 1em)`,
               }}
             >

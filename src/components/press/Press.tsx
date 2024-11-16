@@ -14,7 +14,7 @@ export default function Press() {
       height="70dvh"
     >
       <Box
-        className="op-motion bg-banner"
+        className="op-motion-press bg-press"
         position="absolute"
         top={0}
         left={0}
@@ -54,6 +54,7 @@ export default function Press() {
               backgroundColor: "#000",
             }}
             fontSize={{ base: "2em", lg: "3em" }}
+            color={"#eee"}
           >
             Agustin Pietrocola
           </Text>
@@ -64,6 +65,7 @@ export default function Press() {
               backgroundColor: "#000",
             }}
             fontSize={"1em"}
+            color={"#eee"}
           >
             todos los labels | todos los labels | importantes
           </Text>

@@ -34,7 +34,9 @@ export default function ButtonPrimary({
       outline={"none"}
     >
       <Text display={{ base: "none", md: "block" }}>{children}</Text>
-      <Text>CONSEGUÍ AHORA TUS ENTRADAS</Text>
+      <Text fontSize={{ base: ".6em", md: "1em" }}>
+        CONSEGUÍ AHORA TUS ENTRADAS
+      </Text>
       <Text display={{ base: "none", md: "block" }}>{children}</Text>
     </Link>
   );
