@@ -1,5 +1,4 @@
-import { Box, Text, Flex, Button } from "@chakra-ui/react";
-import Arrow from "../arrow/Arrow";
+import { Box, Text, Flex } from "@chakra-ui/react";
 import React from "react";
 import Logo from "../logo/Logo";
 import Image from "next/image";
@@ -9,6 +8,7 @@ export default function Footer() {
   const description =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit.";
   const btnLabel = "Comprar Tickets";
+  console.log(description, btnLabel);
 
   return (
     <>

@@ -1,9 +1,8 @@
 import Banner from "@/components/banner/Banner";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import BottomBanner from "@/components/bottom-banner/BottomBanner";
 import TopBanner from "@/components/top-banner/TopBanner";
 import Nav from "@/components/nav/Nav";
-import Logo from "@/components/logo/Logo";
 // import { Gallery } from "@/components/gallery/Gallery";
 import { Iframe } from "@/components/iframe/Iframe";
 import Carroussel from "@/components/carousel/Carousel";
@@ -40,7 +39,6 @@ export default function Home() {
         <Press />
 
         <Footer />
-
       </main>
     </>
   );

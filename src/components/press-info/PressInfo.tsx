@@ -1,5 +1,4 @@
 import { Box, Text, Flex, Button } from "@chakra-ui/react";
-import Arrow from "../arrow/Arrow";
 import React from "react";
 
 export default function PressInfo() {
