@@ -11,30 +11,6 @@ export const Iframe = () => {
     <>
       <Box pos={"relative"}>
         <Flex
-          position={"absolute"}
-          w={"100%"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          zIndex={1}
-          px={{ base: "2em", md: "4em" }}
-          mt={{
-            base: "5em",
-            sm: "5em",
-            md: `18em`,
-            lg: `14em`,
-          }}
-        >
-          <iframe
-            style={{
-              borderRadius: "14px",
-            }}
-            src="https://open.spotify.com/embed/artist/6dd2fVevgttSYrLvsRqdTI?utm_source=generator"
-            width="100%"
-            height={height + "px"}
-            loading="lazy"
-          ></iframe>
-        </Flex>
-        <Flex
           flexDirection={"column"}
           justifyContent={"flex-end"}
           bgColor={"black"}
@@ -71,7 +47,28 @@ export const Iframe = () => {
               </Link>
             </Box>
           </Flex>
-          <Box bgColor={"black"}>
+          <Box bgColor={"blue"}>
+            <Flex
+              style={{
+                position: "absolute",
+                zIndex: 1,
+                marginTop: "-5em",
+              }}
+              w={"100%"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              px={{ base: "2em", md: "4em" }}
+            >
+              <iframe
+                style={{
+                  borderRadius: "14px",
+                }}
+                src="https://open.spotify.com/embed/artist/6dd2fVevgttSYrLvsRqdTI?utm_source=generator"
+                width="100%"
+                height={height + "px"}
+                loading="lazy"
+              ></iframe>
+            </Flex>
             <BottomBanner
               rows={[
                 { direction: "right" },

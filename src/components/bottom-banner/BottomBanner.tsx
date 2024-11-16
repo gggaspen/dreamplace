@@ -55,13 +55,6 @@ const BottomBanner: React.FC<BottomBannerProps> = ({ rows }) => {
               arrow={row.direction === "left" ? "right" : "left"}
             />
           ))}
-          {/* <Slide left={"-100%"} direction={"left"} progress={scrollYProgress} />
-          <Slide
-            left={"-100%"}
-            direction={"right"}
-            progress={scrollYProgress}
-            arrow={"left"}
-          /> */}
         </Flex>
       </Link>
     </Box>
