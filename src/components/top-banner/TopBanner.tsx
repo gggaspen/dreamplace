@@ -51,21 +51,24 @@ export default function TopBanner() {
         animate={hidden ? "hidden" : "visible"}
         transition={{
           ease: [0.1, 0.25, 0.3, 1],
-          duration: 0.1,
+          duration: 0.6,
           staggerChildren: 0.05,
         }}
         className="text-container"
       >
-        <motion.p
+        <motion.div
           variants={childVariants}
           transition={{
             ease: [0.1, 0.25, 0.3, 1],
-            duration: 0.1,
+            duration: 1.2,
           }}
         >
-          {/* BUY TICKETS NOW */}
-          <MiniBanner text="COMPRAR TICKETS AHORA" arrowDirection="top-right"></MiniBanner>
-        </motion.p>
+          <MiniBanner
+            text="COMPRAR TICKETS AHORA"
+            arrowDirection="top-right"
+            delay={50}
+          ></MiniBanner>
+        </motion.div>
         {/* <TextScramble phrases={phrases} className="text-white" /> */}
       </motion.div>
     </Link>

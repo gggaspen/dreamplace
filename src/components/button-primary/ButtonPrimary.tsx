@@ -33,9 +33,9 @@ export default function ButtonPrimary({
       alignItems={"center"}
       outline={"none"}
     >
-      {children}
+      <Text display={{ base: "none", md: "block" }}>{children}</Text>
       <Text>CONSEGUÍ AHORA TUS ENTRADAS</Text>
-      {children}
+      <Text display={{ base: "none", md: "block" }}>{children}</Text>
     </Link>
   );
 }

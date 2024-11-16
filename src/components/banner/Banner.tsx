@@ -2,6 +2,7 @@ import { Text, Box, Flex } from "@chakra-ui/react";
 import "./Banner.css";
 import ButtonPrimary from "../button-primary/ButtonPrimary";
 import Arrow from "../arrow/Arrow";
+// import TextScramble from "@/app/motions/TextScramble";
 
 export default function Banner() {
   return (
@@ -48,6 +49,10 @@ export default function Banner() {
             fontSize={{ base: "2em", lg: "3em" }}
           >
             DREAMPLACE ft. Rym & Retina press.
+            {/* <TextScramble
+              phrases={["DREAMPLACE ft. Rym & Retina press."]}
+              className="text-white"
+            /> */}
           </Text>
         </Box>
         <Box>

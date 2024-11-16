@@ -13,14 +13,27 @@ export const Iframe = () => {
         <Flex
           position={"absolute"}
           w={"100%"}
-          h={"100%"}
+          // h={"100%"}
           justifyContent={"center"}
           alignItems={"center"}
           zIndex={1}
           px={{ base: "2em", md: "4em" }}
+          // mb={{
+          //   base: "1em",
+          //   md: "1em",
+          // }}
+          mt={{
+            base: "8em",
+            md: `18em`,
+            lg: `18em`,
+            // md: `calc(-30px - ${0})`,
+          }}
         >
           <iframe
-            style={{ borderRadius: "14px", marginTop: "-2em" }}
+            style={{
+              borderRadius: "14px",
+              // marginTop: "-2em"
+            }}
             src="https://open.spotify.com/embed/artist/6dd2fVevgttSYrLvsRqdTI?utm_source=generator"
             width="100%"
             height={height + "px"}
@@ -42,13 +55,21 @@ export const Iframe = () => {
             <Text
               fontSize={{ base: "1.5em", md: "2em" }}
               fontWeight={600}
-              mb={`calc(${height}px - 2em)`}
+              mb={{
+                base: `calc(${height}px - 1em)`,
+                md: `calc(${height}px - 1em)`,
+              }}
             >
               Our Artists
             </Text>
-            <Box mb={`calc(${height}px - 3em)`} zIndex={2}>
+            <Box
+              zIndex={2}
+              mb={{
+                base: `calc(${height}px - 1em)`,
+                md: `calc(${height}px - 1em)`,
+              }}
+            >
               <Link
-                // style={{ marginBottom: `calc(${height}px - 2em)` }}
                 href="https://open.spotify.com/artist/6dd2fVevgttSYrLvsRqdTI"
                 target="_blank"
               >
