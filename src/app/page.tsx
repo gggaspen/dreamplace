@@ -7,7 +7,8 @@ import Logo from "@/components/logo/Logo";
 // import { Gallery } from "@/components/gallery/Gallery";
 import { Iframe } from "@/components/iframe/Iframe";
 import Carroussel from "@/components/carousel/Carousel";
-import Footer from "@/components/footer/Footer";
+import MiniBanner from "@/components/mini-banner/MiniBanner";
+import PressInfo from "@/components/press-info/PressInfo";
 
 export default function Home() {
   return (
@@ -22,29 +23,21 @@ export default function Home() {
           <Banner></Banner>
         </Box>
 
-        <Box minH={{ lg: "30dvh" }}>
-          {/* <Box minH={{ base: "25dvh", lg: "30dvh" }}> */}
-          <BottomBanner />
-        </Box>
+        <MiniBanner bgColor="lightgray" />
 
-        <Flex justifyContent={"center"} py={"2em"}>
-          <Logo w="80%" color="#222" />
-        </Flex>
+        <Carroussel />
+
+        <BottomBanner rows={[{ direction: "left" }]} />
 
         <Iframe />
 
-        <Flex>
-          <Carroussel />
-        </Flex>
+        <PressInfo />
 
-        <BottomBanner />
+        <MiniBanner bgColor="#eee" />
 
-        <Footer />
-
-        {/* 
-      <div id="artists"></div>
-      <div id="more-info"></div>
-      <div id="footer"></div> */}
+        {/* <Flex justifyContent={"center"} py={"2em"}>
+          <Logo w="80%" color="#222" />
+        </Flex> */}
       </main>
     </>
   );

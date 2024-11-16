@@ -12,6 +12,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/pagination";
 import "./Carousel.css";
+import { Flex } from "@chakra-ui/react";
 
 const images = [
   "https://i.postimg.cc/j5vtVgdF/Banner-Carrusel-1.png",
@@ -22,7 +23,7 @@ const images = [
 
 export default function Carroussel() {
   return (
-    <>
+    <Flex>
       <div className="w-full relative">
         <Swiper
           className="progress-slide-carousel"
@@ -54,6 +55,6 @@ export default function Carroussel() {
           ))}
         </Swiper>
       </div>
-    </>
+    </Flex>
   );
 }
