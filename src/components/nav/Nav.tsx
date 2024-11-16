@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Link } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import "./Nav.css";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
