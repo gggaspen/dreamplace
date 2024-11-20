@@ -3,16 +3,18 @@ import { Text, Link, Box } from "@chakra-ui/react";
 export default function ButtonPrimary({
   children,
   text,
+  download,
 }: Readonly<{
   children: React.ReactNode;
   text?: string;
+  download?: boolean;
 }>) {
   const url =
     "https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito";
 
   return (
     <Link
-      href={url}
+      href={download ? "./pdf/Presskit 2024 - Agustin Pietrocola.pdf" : url}
       target="_blank"
       w={"100%"}
       textAlign={"center"}

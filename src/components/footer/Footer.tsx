@@ -49,7 +49,7 @@ export default function Footer() {
         </Flex>
 
         <Flex justifyContent={"center"} mb={"4em"}>
-          <Logo w="100%" color="rgb(4, 4, 4)" />
+          <Logo w="100%" color="rgb(8, 8, 8)" />
         </Flex>
       </Flex>
     </>

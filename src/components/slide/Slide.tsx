@@ -39,7 +39,7 @@ const Slide = ({ left, direction, progress, arrow }: any) => {
                 color={"#000"}
                 transition={"color 0.2s ease-out, color 0.2s ease-out"}
                 _hover={{
-                  color: "#eee",
+                  color: "#fff",
                 }}
                 className={`${poppins.className}`}
               >

@@ -108,7 +108,7 @@ export default function Press() {
         </Flex>
 
         <Box>
-          <ButtonPrimary text="Presskit">
+          <ButtonPrimary text="Presskit" download={true}>
             <Arrow color="#000" w="20px" direction="top-right"></Arrow>
           </ButtonPrimary>
         </Box>
