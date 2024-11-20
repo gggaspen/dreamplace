@@ -19,6 +19,10 @@ body {
   background: var(--background);
 }
 
+body:after {
+  position: fixed;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
