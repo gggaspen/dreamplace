@@ -11,6 +11,10 @@
   background-attachment: fixed;
 }
 
+.minicover {
+  background-image: url(../../assets/img/banner-1.png);
+}
+
 @media (max-width: 768px) {
   .bg-banner::before {
     background-position-x: center;

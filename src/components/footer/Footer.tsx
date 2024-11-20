@@ -15,8 +15,8 @@ export default function Footer() {
       <Flex
         flexDirection={"column"}
         justifyContent={"space-between"}
-        h={"70dvh"}
-        bg={"black"}
+        h={"100dvh"}
+        bg={"#000"}
         py={"1em"}
         px={"4em"}
       >
@@ -27,52 +27,29 @@ export default function Footer() {
           w={"100%"}
           alignItems={"center"}
           justifyContent={"center"}
+          flexDirection={"column"}
           gap={"2em"}
         >
           <Text fontWeight={"bold"} fontSize={"1em"} my={"2em"}>
             2024 EDITION
           </Text>
-          {/* <Text fontWeight={"bold"} fontSize={".5em"} mb={"3em"}>
-            @dreamplace.ar
-          </Text> */}
-          {/* <Box>
-            <Text fontWeight={"bold"} fontSize={".5em"} mb={"3em"}>
-              2024 EDITION
-            </Text>
-            <Text fontSize={".8em"} mb={"1em"}>Lorem ipsum dolor sit amet.</Text>
-            <Text fontSize={".8em"} mb={"1em"}>Lorem ipsum dolor sit amet.</Text>
-            <Text fontSize={".8em"} mb={"1em"}>Lorem ipsum dolor sit amet.</Text>
-            <Text fontSize={".8em"} mb={"1em"}>Lorem ipsum dolor sit amet.</Text>
-          </Box>
-          <Box>
-            <Text fontWeight={"bold"} fontSize={".5em"} mb={"3em"}>
-              JOIN DREAMPLACE
-            </Text>
-            <Text fontSize={".8em"} mb={"1em"}>Lorem ipsum dolor sit amet.</Text>
-            <Text fontSize={".8em"} mb={"1em"}>Lorem ipsum dolor sit amet.</Text>
-            <Text fontSize={".8em"} mb={"1em"}>Lorem ipsum dolor sit amet.</Text>
-            <Text fontSize={".8em"} mb={"1em"}>Lorem ipsum dolor sit amet.</Text>
-          </Box> */}
-        </Flex>
 
-        <Flex justifyContent={"center"} py={"2em"}>
-          <Logo w="80%" color="#222" />
-        </Flex>
+          <Link href="https://www.instagram.com/dreamplace.ar/" target="_blank">
+            <Text>@dreamplace.ar</Text>
+          </Link>
 
-        <Flex justifyContent={"center"} py={"2em"}>
-          <Link
-            className="flex gap-4 items-center"
-            href="https://www.instagram.com/dreamplace.ar/"
-            target="_blank"
-          >
+          <Link href="https://www.instagram.com/dreamplace.ar/" target="_blank">
             <Image
               src="https://i.postimg.cc/0NM8hg7n/ig.png"
               width={30}
               height={30}
               alt="Instagram icon"
             />
-            <Text>@dreamplace.ar</Text>
           </Link>
+        </Flex>
+
+        <Flex justifyContent={"center"} mb={"4em"}>
+          <Logo w="100%" color="rgb(8, 8, 8)" />
         </Flex>
       </Flex>
     </>

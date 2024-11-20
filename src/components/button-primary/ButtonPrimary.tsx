@@ -1,16 +1,20 @@
-import { Text, Link } from "@chakra-ui/react";
+import { Text, Link, Box } from "@chakra-ui/react";
 
 export default function ButtonPrimary({
   children,
+  text,
+  download,
 }: Readonly<{
   children: React.ReactNode;
+  text?: string;
+  download?: boolean;
 }>) {
   const url =
     "https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito";
 
   return (
     <Link
-      href={url}
+      href={download ? "./pdf/Presskit 2024 - Agustin Pietrocola.pdf" : url}
       target="_blank"
       w={"100%"}
       textAlign={"center"}
@@ -33,11 +37,17 @@ export default function ButtonPrimary({
       alignItems={"center"}
       outline={"none"}
     >
-      <Text display={{ base: "none", md: "block" }}>{children}</Text>
-      <Text fontSize={{ base: ".6em", md: "1em" }}>
-        CONSEGUÍ AHORA TUS ENTRADAS
-      </Text>
-      <Text display={{ base: "none", md: "block" }}>{children}</Text>
+      <Box>
+        <Text>{children}</Text>
+      </Box>
+      <Box>
+        <Text fontSize={{ sm: ".6em", base: ".8em", md: "1em" }}>
+          {text ? text : "CONSEGUÍ AHORA TUS TICKETS"}
+        </Text>
+      </Box>
+      <Box opacity={0}>
+        <Text>{children}</Text>
+      </Box>
     </Link>
   );
 }
