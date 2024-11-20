@@ -3,9 +3,7 @@
 import Lenis from "lenis";
 import React, { MutableRefObject, useEffect, useRef } from "react";
 import { motion, useTransform } from "framer-motion";
-// import "./BackdropParallax.css";
 import { useScroll } from "framer-motion";
-import { Text } from "@chakra-ui/react";
 import Image from "next/image";
 
 interface BackdropParallaxProps {
