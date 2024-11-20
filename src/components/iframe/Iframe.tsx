@@ -1,10 +1,9 @@
 "use client";
 
-import { Text, Box, Flex, useMediaQuery } from "@chakra-ui/react";
+import { Text, Box, Flex } from "@chakra-ui/react";
 import BottomBanner from "../bottom-banner/BottomBanner";
 import Arrow from "../arrow/Arrow";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 export const Iframe = () => {
   /**
