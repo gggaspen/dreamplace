@@ -19,6 +19,10 @@ export default function Banner() {
         left={0}
         right={0}
         bottom={0}
+        filter={{
+          base: "blur(10px)",
+          lg: "blur(0px)",
+        }}
         _before={{
           content: '""',
           position: "absolute",
@@ -28,6 +32,33 @@ export default function Banner() {
           bottom: 0,
           zIndex: 0,
         }}
+      />
+
+      <Flex
+        display={{ base: "flex", lg: "none" }}
+        justifyContent={"center"}
+        alignItems={"center"}
+        w={"100%"}
+        h={"100%"}
+        position="absolute"
+      >
+        <Box
+          w={"70dvw"}
+          h={"70dvw"}
+          bgSize={"cover"}
+          bgPos={"center"}
+          className="minicover"
+          mb={"6em"}
+        />
+      </Flex>
+
+      <Box
+        w={"100%"}
+        h={"100%"}
+        bg={
+          "linear-gradient(0deg, rgb(0 0 0) 0%, transparent, rgb(255 255 255 / 0%) 100%)"
+        }
+        position="absolute"
       />
 
       {/* Contenido */}
@@ -47,6 +78,7 @@ export default function Banner() {
               backgroundColor: "#000",
             }}
             fontSize={{ base: "2em", lg: "3em" }}
+            color={"#eee"}
           >
             DREAMPLACE ft. Rym & Retina press.
             {/* <TextScramble
@@ -61,6 +93,7 @@ export default function Banner() {
               backgroundColor: "#000",
             }}
             fontSize={"1em"}
+            color={"#eee"}
           >
             &quot;El muelle&quot; | 30 NOV 2024
           </Text>
@@ -69,6 +102,7 @@ export default function Banner() {
               backgroundColor: "#000",
             }}
             fontSize={"1em"}
+            color={"#eee"}
           >
             Un espectáculo donde converge el arte, la música y los sueños.
           </Text>

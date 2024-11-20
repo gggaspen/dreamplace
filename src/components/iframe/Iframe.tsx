@@ -1,11 +1,26 @@
-import { Text, Box, Flex } from "@chakra-ui/react";
+"use client";
+
+import { Text, Box, Flex, useMediaQuery } from "@chakra-ui/react";
 import BottomBanner from "../bottom-banner/BottomBanner";
 import Arrow from "../arrow/Arrow";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export const Iframe = () => {
-  const height = 152;
-  // const height = 352;
+  // const [isDesktop] = useMediaQuery(["(min-width: 768px)"], {
+  //   ssr: true,
+  // });
+  // const height = isDesktop ? 352 : 152;
+  const [height, setHeight] = useState(152);
+  useEffect(() => {
+    const updateHeight = () => {
+      const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+      setHeight(isDesktop ? 352 : 152);
+    };
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
+  }, []);
 
   return (
     <>
@@ -29,6 +44,7 @@ export const Iframe = () => {
                 base: `calc(${height}px - 2em)`,
                 md: `calc(${height}px - 1em)`,
               }}
+              color={"#eee"}
             >
               Our Artists
             </Text>
@@ -52,12 +68,12 @@ export const Iframe = () => {
               style={{
                 position: "absolute",
                 zIndex: 1,
-                marginTop: "-5em",
               }}
               w={"100%"}
               justifyContent={"center"}
               alignItems={"center"}
               px={{ base: "2em", md: "4em" }}
+              mt={{ base: `-5em`, md: `-12.5em` }}
             >
               <iframe
                 style={{

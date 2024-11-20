@@ -67,7 +67,7 @@ export default function Press() {
             fontSize={"1em"}
             color={"#eee"}
           >
-            todos los labels | todos los labels | importantes
+            Mango Alley | UV | Long Way Records
           </Text>
         </Box>
 
@@ -108,7 +108,7 @@ export default function Press() {
         </Flex>
 
         <Box>
-          <ButtonPrimary>
+          <ButtonPrimary text="Presskit">
             <Arrow color="#000" w="20px" direction="top-right"></Arrow>
           </ButtonPrimary>
         </Box>

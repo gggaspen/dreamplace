@@ -1,5 +1,6 @@
 import { Box, Text, Flex, Button, Link } from "@chakra-ui/react";
 import React from "react";
+import "./PressInfo.css";
 
 export default function PressInfo() {
   const description =
@@ -8,8 +9,8 @@ export default function PressInfo() {
 
   return (
     <>
-      <Box bg={"lightgray"} py={"1em"} px={"4em"}>
-        <Text fontSize={{ base: "2em", md: "3em" }} py={".5em"} color={"black"}>
+      <Box bg={"black"} py={"1em"} px={"4em"}>
+        <Text fontSize={{ base: "2em", md: "3em" }} py={".5em"} color={"#eee"}>
           Attend ADE
         </Text>
         <Flex gap={"2em"} h={"50%"} pb={"1.5em"}>
@@ -17,7 +18,7 @@ export default function PressInfo() {
             fontWeight={"bold"}
             fontSize={{ base: "1em", md: "2em" }}
             flex={1}
-            color={"black"}
+            color={"#eee"}
           >
             ADE Pro <br /> Pass
           </Text>
@@ -26,16 +27,17 @@ export default function PressInfo() {
             alignItems={"flex-end"}
             flex={2}
           >
-            <Text color={"black"}>{description}</Text>
+            <Text color={"#eee"}>{description}</Text>
           </Flex>
           <Button
             bgColor={"yellow"}
-            borderRadius={"100px"}
+            borderRadius={"0"}
             p={"1em"}
             py={"1.5em"}
-            color={"black"}
+            color={"#eee"}
             fontWeight={"bold"}
             fontSize={"1em"}
+            className="btn-buy"
           >
             <Link
               href="https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito"
@@ -46,14 +48,14 @@ export default function PressInfo() {
           </Button>
         </Flex>
         <Text
-          color={"black"}
+          color={"#eee"}
           mb={"1em"}
           display={{ base: "flex", lg: "none" }}
           fontSize={{ base: ".5em", md: "1em" }}
         >
           {description}
         </Text>
-        <Box bgColor={"black"} h={"1px"} />
+        <Box bgColor={"#eee"} h={"1px"} />
       </Box>
     </>
   );
