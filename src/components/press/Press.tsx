@@ -4,6 +4,7 @@ import ButtonPrimary from "../button-primary/ButtonPrimary";
 import Link from "next/link";
 import Image from "next/image";
 import Arrow from "../arrow/Arrow";
+import BackdropParallax from "../backdrop-parallax/BackdropParallax";
 
 export default function Press() {
   return (
@@ -13,29 +14,16 @@ export default function Press() {
       overflow="hidden"
       height={{ base: "100dvh", lg: "70dvh" }}
       justifyContent={{ base: "center", lg: "flex-start" }}
+      bgColor={"blue"}
     >
+      <BackdropParallax></BackdropParallax>
       <Box
-        className="op-motion-press bg-press"
+        w={"100%"}
+        h={"100%"}
+        bg={
+          "linear-gradient(0deg, rgb(0 0 0) 0%, transparent, rgb(255 255 255 / 0%) 100%)"
+        }
         position="absolute"
-        top={0}
-        left={0}
-        right={0}
-        bottom={0}
-        _before={{
-          content: '""',
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 0,
-          backgroundImage:
-            "url(https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png)",
-          backgroundPositionY: "center",
-          backgroundAttachment: "fixed",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }}
       />
 
       {/* Contenido */}
