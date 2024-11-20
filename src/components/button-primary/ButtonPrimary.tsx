@@ -37,7 +37,7 @@ export default function ButtonPrimary({
       alignItems={"center"}
       outline={"none"}
     >
-      <Box>
+      <Box display={{ sm: "none", base: "none", md: "block" }}>
         <Text>{children}</Text>
       </Box>
       <Box>
@@ -45,7 +45,7 @@ export default function ButtonPrimary({
           {text ? text : "CONSEGUÍ AHORA TUS TICKETS"}
         </Text>
       </Box>
-      <Box opacity={0}>
+      <Box opacity={0} display={{ sm: "none", base: "none", md: "block" }}>
         <Text>{children}</Text>
       </Box>
     </Link>

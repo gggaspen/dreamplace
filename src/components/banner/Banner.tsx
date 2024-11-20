@@ -43,8 +43,8 @@ export default function Banner() {
         position="absolute"
       >
         <Box
-          w={"70dvw"}
-          h={"70dvw"}
+          w={"60dvw"}
+          h={"60dvw"}
           bgSize={"cover"}
           bgPos={"center"}
           className="minicover"
@@ -77,7 +77,7 @@ export default function Banner() {
             _selection={{
               backgroundColor: "#000",
             }}
-            fontSize={{ base: "2em", lg: "3em" }}
+            fontSize={{ base: "1.5em", lg: "3em" }}
             color={"#eee"}
           >
             DREAMPLACE ft. Rym & Retina press.
@@ -92,16 +92,17 @@ export default function Banner() {
             _selection={{
               backgroundColor: "#000",
             }}
-            fontSize={"1em"}
+            fontSize={".8em"}
             color={"#eee"}
+            mb={"1em"}
           >
-            &quot;El muelle&quot; | 30 NOV 2024
+            <span style={{ fontWeight: 600 }}>El Muelle</span> | 30 NOV 2024
           </Text>
           <Text
             _selection={{
               backgroundColor: "#000",
             }}
-            fontSize={"1em"}
+            fontSize={".8em"}
             color={"#eee"}
           >
             Un espectáculo donde converge el arte, la música y los sueños.
