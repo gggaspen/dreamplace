@@ -41,7 +41,7 @@ export default function ButtonPrimary({
         <Text>{children}</Text>
       </Box>
       <Box>
-        <Text fontSize={{ sm: ".6em", base: ".8em", md: "1em" }}>
+        <Text fontSize={{ sm: "1em", base: "1em", md: "1em" }}>
           {text ? text : "CONSEGUÍ AHORA TUS TICKETS"}
         </Text>
       </Box>

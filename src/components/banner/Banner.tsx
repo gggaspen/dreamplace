@@ -19,10 +19,10 @@ export default function Banner() {
         left={0}
         right={0}
         bottom={0}
-        filter={{
-          base: "blur(10px)",
-          lg: "blur(0px)",
-        }}
+        // filter={{
+        //   base: "blur(10px)",
+        //   lg: "blur(0px)",
+        // }}
         _before={{
           content: '""',
           position: "absolute",
@@ -34,7 +34,7 @@ export default function Banner() {
         }}
       />
 
-      <Flex
+      {/* <Flex
         display={{ base: "flex", lg: "none" }}
         justifyContent={"center"}
         alignItems={"center"}
@@ -50,7 +50,7 @@ export default function Banner() {
           className="minicover"
           mb={"6em"}
         />
-      </Flex>
+      </Flex> */}
 
       <Box
         w={"100%"}

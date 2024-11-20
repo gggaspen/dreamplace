@@ -18,7 +18,7 @@ export default function Footer() {
         h={"100dvh"}
         bg={"#000"}
         py={"1em"}
-        px={"4em"}
+        px={"3em"}
       >
         <Box h={""} borderBottom={"1px solid #eee"} mb={"2em"} />
 

@@ -9,7 +9,7 @@ export default function PressInfo() {
 
   return (
     <>
-      <Box bg={"black"} py={"1em"} px={"4em"}>
+      <Box bg={"black"} py={"1em"} px={"3em"}>
         <Text fontSize={{ base: "2em", md: "3em" }} py={".5em"} color={"#eee"}>
           Attend ADE
         </Text>
@@ -49,7 +49,8 @@ export default function PressInfo() {
         </Flex>
         <Text
           color={"#eee"}
-          mb={"1em"}
+          mb={"3em"}
+          mt={"1em"}
           display={{ base: "flex", lg: "none" }}
           fontSize={{ base: ".5em", md: "1em" }}
         >
