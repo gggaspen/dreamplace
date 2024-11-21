@@ -12,9 +12,8 @@ export default function Press() {
       alignItems="flex-end"
       position="relative"
       overflow="hidden"
-      height={{ base: "100dvh", lg: "70dvh" }}
-      justifyContent={{ base: "center", lg: "flex-start" }}
-      bgColor={"blue"}
+      height={{ base: "70dvh", lg: "70dvh" }}
+      justifyContent={{ base: "center", lg: "center" }}
     >
       <BackdropParallax></BackdropParallax>
       <Box
