@@ -33,20 +33,22 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = () => {
 
   return (
     <Flex
-      w={{ base: "1800px", lg: "100%" }}
-      h={"100%"}
+      w={{ base: "800px", lg: "100%" }}
+      h={"70dvh"}
       justifyContent={"center"}
       position={"absolute"}
-      bottom={{ base: -300, lg: -300 }}
+      // bottom={{ base: -300, lg: -300 }}
     >
-      <motion.div
+      <div
+        // <motion.div
         style={{
-          y: translateY,
-          bottom: -100,
+          // y: translateY,
+          // bottom: -100,
           position: "absolute",
           display: "flex",
           justifyContent: "center",
           width: "100%",
+          height: "100%",
         }}
       >
         <Image
@@ -54,8 +56,10 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = () => {
           width={3000}
           height={0}
           alt="Banner Prensa"
+          style={{ objectFit: "cover" }}
         ></Image>
-      </motion.div>
+      </div>
+      {/* </motion.div> */}
     </Flex>
   );
 };
