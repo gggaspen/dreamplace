@@ -3,11 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Autoplay,
-  // EffectCube
-  Pagination,
-} from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/pagination";
@@ -19,13 +15,12 @@ const images = [
   "https://i.postimg.cc/KYPmfvXF/Banner-Carrusel-2.png",
   "https://i.postimg.cc/QCtsjQFx/Banner-Carrusel-3.png",
   "https://i.postimg.cc/TwTf4MGb/Banner-Carrusel-4.png",
-
-  // "https://i.postimg.cc/7YDS4c7n/DSC-2471.jpg",
-  // "https://i.postimg.cc/15Hw3Hrh/DSC-2571.jpg",
-  // "https://i.postimg.cc/2SSvbZ0q/DSC-2574.jpg",
-  // "https://i.postimg.cc/GpZs5SdY/DSC-2932.jpg",
-  // "https://i.postimg.cc/2jdB0wJb/DSC-8416.jpg",
-  // "https://i.postimg.cc/ZKVvSqJJ/DSC-8417.jpg",
+  "https://i.postimg.cc/7YDS4c7n/DSC-2471.jpg",
+  "https://i.postimg.cc/15Hw3Hrh/DSC-2571.jpg",
+  "https://i.postimg.cc/2SSvbZ0q/DSC-2574.jpg",
+  "https://i.postimg.cc/GpZs5SdY/DSC-2932.jpg",
+  "https://i.postimg.cc/2jdB0wJb/DSC-8416.jpg",
+  "https://i.postimg.cc/ZKVvSqJJ/DSC-8417.jpg",
   "https://i.postimg.cc/XqgGXjFc/IMG-3406.jpg",
   "https://i.postimg.cc/SR4Yy2Xx/MG-4644-1.jpg",
   "https://i.postimg.cc/QxXKw7G6/MG-4729.jpg",
@@ -34,36 +29,41 @@ const images = [
 ];
 
 export default function Carroussel() {
+  const isDesktop: boolean = window.matchMedia("(min-width: 768px)").matches;
+
   return (
     <Flex>
-      <div className="w-full relative">
+      <div className="w-full relative bg-black">
         <Swiper
           className="progress-slide-carousel"
           modules={[Autoplay, Pagination]}
           pagination={{
             clickable: true,
             type: "progressbar",
+            progressbarOpposite: false,
           }}
           loop={true}
           autoplay={{
-            delay: 1200,
-            disableOnInteraction: false,
+            delay: 2000,
+            disableOnInteraction: !isDesktop,
+            pauseOnMouseEnter: isDesktop,
           }}
-          speed={500}
+          speed={100}
         >
           {images.map((image, index) => (
-            <SwiperSlide key={index}>
-              <div className="flex justify-center">
-                {/* <div className="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center"> */}
-                <Image
-                  width={4000}
-                  height={300}
-                  alt={`Image ${index + 1}`}
-                  src={image}
-                  className=""
-                />
-              </div>
-            </SwiperSlide>
+            <React.Fragment key={index}>
+              <SwiperSlide>
+                <div className="flex justify-center swiper-zoom-container">
+                  <Image
+                    width={4000}
+                    height={300}
+                    alt={`Image ${index + 1}`}
+                    src={image}
+                    style={{ objectFit: "contain" }}
+                  />
+                </div>
+              </SwiperSlide>
+            </React.Fragment>
           ))}
         </Swiper>
       </div>

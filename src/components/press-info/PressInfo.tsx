@@ -9,7 +9,7 @@ export default function PressInfo() {
 
   return (
     <>
-      <Box bg={"black"} py={"1em"} px={"3em"}>
+      <Box bg={"#000"} py={"1em"} px={"3em"}>
         <Text fontSize={{ base: "2em", md: "3em" }} py={".5em"} color={"#eee"}>
           Attend ADE
         </Text>
