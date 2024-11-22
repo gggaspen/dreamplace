@@ -19,13 +19,12 @@ const images = [
   "https://i.postimg.cc/KYPmfvXF/Banner-Carrusel-2.png",
   "https://i.postimg.cc/QCtsjQFx/Banner-Carrusel-3.png",
   "https://i.postimg.cc/TwTf4MGb/Banner-Carrusel-4.png",
-
-  // "https://i.postimg.cc/7YDS4c7n/DSC-2471.jpg",
-  // "https://i.postimg.cc/15Hw3Hrh/DSC-2571.jpg",
-  // "https://i.postimg.cc/2SSvbZ0q/DSC-2574.jpg",
-  // "https://i.postimg.cc/GpZs5SdY/DSC-2932.jpg",
-  // "https://i.postimg.cc/2jdB0wJb/DSC-8416.jpg",
-  // "https://i.postimg.cc/ZKVvSqJJ/DSC-8417.jpg",
+  "https://i.postimg.cc/7YDS4c7n/DSC-2471.jpg",
+  "https://i.postimg.cc/15Hw3Hrh/DSC-2571.jpg",
+  "https://i.postimg.cc/2SSvbZ0q/DSC-2574.jpg",
+  "https://i.postimg.cc/GpZs5SdY/DSC-2932.jpg",
+  "https://i.postimg.cc/2jdB0wJb/DSC-8416.jpg",
+  "https://i.postimg.cc/ZKVvSqJJ/DSC-8417.jpg",
   "https://i.postimg.cc/XqgGXjFc/IMG-3406.jpg",
   "https://i.postimg.cc/SR4Yy2Xx/MG-4644-1.jpg",
   "https://i.postimg.cc/QxXKw7G6/MG-4729.jpg",
@@ -36,13 +35,14 @@ const images = [
 export default function Carroussel() {
   return (
     <Flex>
-      <div className="w-full relative">
+      <div className="w-full relative bg-black">
         <Swiper
           className="progress-slide-carousel"
           modules={[Autoplay, Pagination]}
           pagination={{
             clickable: true,
             type: "progressbar",
+            progressbarOpposite: false,
           }}
           loop={true}
           autoplay={{
@@ -52,18 +52,23 @@ export default function Carroussel() {
           speed={500}
         >
           {images.map((image, index) => (
-            <SwiperSlide key={index}>
-              <div className="flex justify-center">
-                {/* <div className="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center"> */}
-                <Image
-                  width={4000}
-                  height={300}
-                  alt={`Image ${index + 1}`}
-                  src={image}
-                  className=""
-                />
-              </div>
-            </SwiperSlide>
+            <React.Fragment key={index}>
+              <SwiperSlide>
+                <div className="flex justify-center">
+                  {/* <div className="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center"> */}
+                  <Image
+                    width={4000}
+                    height={300}
+                    alt={`Image ${index + 1}`}
+                    src={image}
+                    // className="imgae-carousel"
+                    // style={{ width: "fit-content !important;" }}
+                    // objectFit="cover"
+                    style={{ objectFit: "contain" }}
+                  />
+                </div>
+              </SwiperSlide>
+            </React.Fragment>
           ))}
         </Swiper>
       </div>
