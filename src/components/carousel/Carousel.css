@@ -4,27 +4,15 @@
 @import "swiper/css/pagination";
 
 .swiper-slide div {
-  /* display: none; */
   height: 50dvh;
 }
-
-.swiper-slide-active div {
-}
-
-.swiper-slide div img.img-carousel {
-  /* width: fit-content !important; */
-}
-
 .swiper-wrapper {
   width: 100%;
   height: max-content !important;
-  /* padding-bottom: 64px !important; */
   -webkit-transition-timing-function: linear !important;
   transition-timing-function: linear !important;
   position: relative;
   background: none;
-
-  /* max-height: 50dvh; */
 }
 
 .swiper-pagination-progressbar-fill {

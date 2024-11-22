@@ -3,11 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Autoplay,
-  // EffectCube
-  Pagination,
-} from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/pagination";
@@ -33,6 +29,8 @@ const images = [
 ];
 
 export default function Carroussel() {
+  const isDesktop: boolean = window.matchMedia("(min-width: 768px)").matches;
+
   return (
     <Flex>
       <div className="w-full relative bg-black">
@@ -46,24 +44,21 @@ export default function Carroussel() {
           }}
           loop={true}
           autoplay={{
-            delay: 1200,
-            disableOnInteraction: false,
+            delay: 2000,
+            disableOnInteraction: !isDesktop,
+            pauseOnMouseEnter: isDesktop,
           }}
-          speed={500}
+          speed={100}
         >
           {images.map((image, index) => (
             <React.Fragment key={index}>
               <SwiperSlide>
-                <div className="flex justify-center">
-                  {/* <div className="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center"> */}
+                <div className="flex justify-center swiper-zoom-container">
                   <Image
                     width={4000}
                     height={300}
                     alt={`Image ${index + 1}`}
                     src={image}
-                    // className="imgae-carousel"
-                    // style={{ width: "fit-content !important;" }}
-                    // objectFit="cover"
                     style={{ objectFit: "contain" }}
                   />
                 </div>

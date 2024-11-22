@@ -32,11 +32,11 @@ export const Iframe = () => {
         <Flex
           flexDirection={"column"}
           justifyContent={"flex-end"}
-          bgColor={"black"}
+          bgColor={"#000"}
         >
           <Flex
             h={{ base: "50dvh", md: "50dvh" }}
-            bgColor={"black"}
+            bgColor={"#000"}
             px={{ base: "2em", md: "4em" }}
             pt={{ base: "3em", md: "5em" }}
             justifyContent={"space-between"}
