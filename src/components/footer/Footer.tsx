@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Logo from "../logo/Logo";
 import Image from "next/image";
 import Link from "next/link";
-import YouTubeEmbed from "../youtube-embed/YoutubeEmbed";
+import YouTubeEmbed from "@/components/youtube-embed/YoutubeEmbed";
 
 export default function Footer() {
   const [isVisible, setIsVisible] = useState(false);
