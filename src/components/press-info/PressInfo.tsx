@@ -1,53 +1,54 @@
-import { Box, Text, Flex, Button, Link } from "@chakra-ui/react";
+import { Box, Text, Flex, Button } from "@chakra-ui/react";
 import React from "react";
 import "./PressInfo.css";
+import WhatsAppBtn from "../whatsapp/WhatsAppBtn";
+// import Arrow from "../arrow/Arrow";
 
 export default function PressInfo() {
-  const description =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit.";
-  const btnLabel = "Comprar Tickets";
+  // const description =
+  //   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit.";
 
   return (
     <>
-      <Box bg={"#000"} py={"1em"} px={"3em"}>
-        <Text fontSize={{ base: "2em", md: "3em" }} py={".5em"} color={"#eee"}>
-          Attend ADE
+      <Box bg={"#000"} py={"1em"} px={{ base: "2em", md: "4em" }}>
+        <Text
+          fontSize={{ base: "1.5em", md: "3em" }}
+          fontWeight={600}
+          py={".5em"}
+          color={"#eee"}
+        >
+          Contact us
         </Text>
-        <Flex gap={"2em"} h={"50%"} pb={"1.5em"}>
+        <Flex alignItems={"center"} gap={"2em"} h={"50%"} pb={"1.5em"}>
           <Text
             fontWeight={"bold"}
             fontSize={{ base: "1em", md: "2em" }}
             flex={1}
             color={"#eee"}
           >
-            ADE Pro <br /> Pass
+            Send us a WhatsApp
           </Text>
-          <Flex
+          {/* <Flex
             display={{ base: "none", lg: "flex" }}
             alignItems={"flex-end"}
             flex={2}
           >
             <Text color={"#eee"}>{description}</Text>
-          </Flex>
+          </Flex> */}
           <Button
             bgColor={"yellow"}
-            borderRadius={"0"}
-            p={"1em"}
-            py={"1.5em"}
+            borderRadius={"900px"}
+            p={".5em"}
             color={"#eee"}
-            fontWeight={"bold"}
-            fontSize={"1em"}
             className="btn-buy"
+            w={"60px"}
+            h={"60px"}
           >
-            <Link
-              href="https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito"
-              target="_blank"
-            >
-              {btnLabel}
-            </Link>
+            {/* <Arrow direction={"top-right"} color={"#eee"}></Arrow> */}
+            <WhatsAppBtn />
           </Button>
         </Flex>
-        <Text
+        {/* <Text
           color={"#eee"}
           mb={"3em"}
           mt={"1em"}
@@ -55,7 +56,7 @@ export default function PressInfo() {
           fontSize={{ base: ".5em", md: "1em" }}
         >
           {description}
-        </Text>
+        </Text> */}
         <Box bgColor={"#eee"} h={"1px"} />
       </Box>
     </>
