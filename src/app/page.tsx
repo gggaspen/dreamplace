@@ -13,19 +13,21 @@ import Footer from "@/components/footer/Footer";
 export default function Home() {
   return (
     <>
-      <main className="">
+      <Box pos={"relative"}>
         <Box h={"100dvh"}>
           <Box position={"absolute"} zIndex={2} w={"100%"}>
             <TopBanner></TopBanner>
             <Nav />
           </Box>
 
-          <Banner></Banner>
+          <Banner bgSourceUrl="/img/banner-1.png"></Banner>
         </Box>
 
         <Carroussel />
 
-        <BottomBanner rows={[{ direction: "left" }]} />
+        <Box pos={"relative"} zIndex={1}>
+          <BottomBanner rows={[{ direction: "left" }]} />
+        </Box>
 
         <Iframe />
 
@@ -34,9 +36,15 @@ export default function Home() {
         <MiniBanner text="NUESTROS ARTISTAS" bgColor="#eee" />
 
         <Press />
+        {/* <Box zIndex={2}>
+          <Banner
+            forPress={true}
+            bgSourceUrl="https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png"
+          ></Banner>
+        </Box> */}
 
         <Footer />
-      </main>
+      </Box>
     </>
   );
 }

@@ -15,11 +15,13 @@ interface BackdropParallaxProps {
   rows?: { direction: "left" | "right" }[];
   srcUrl: string;
   objectPosition?: string;
+  forPress?: boolean;
 }
 
 const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   srcUrl,
-  objectPosition,
+  // objectPosition,
+  forPress,
 }) => {
   // const container: MutableRefObject<any> = useRef(null);
 
@@ -43,22 +45,18 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   return (
     <Flex
       w={{ base: "800px", lg: "100%" }}
-      h={"100%"}
-      // h={"70dvh"}
       justifyContent={"center"}
-      position={"absolute"}
-      // bottom={{ base: -300, lg: -300 }}
+      pos={forPress ? "absolute" : "relative"}
+      h={forPress ? "inherit" : "auto"}
     >
       <div
-        // <motion.div
         style={{
-          // y: translateY,
-          // bottom: -100,
           position: "absolute",
           display: "flex",
           justifyContent: "center",
-          width: "100%",
-          height: "100%",
+          width: "100dvw",
+          height: forPress ? "inherit" : "auto",
+          zIndex: 0,
         }}
       >
         <Image
@@ -68,11 +66,13 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
           alt="Banner Prensa"
           style={{
             objectFit: "cover",
-            objectPosition: objectPosition ?? "center",
+            position: "fixed",
+            // position: forPress ? "relative" : "fixed",
+            width: "100%",
+            height: "100%",
           }}
         ></Image>
       </div>
-      {/* </motion.div> */}
     </Flex>
   );
 };

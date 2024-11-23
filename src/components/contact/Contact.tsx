@@ -10,7 +10,12 @@ export default function PressInfo() {
 
   return (
     <>
-      <Box bg={"#000"} py={"3em"} px={{ base: "2em", md: "14em" }}>
+      <Box
+        bg={"#000"}
+        py={"3em"}
+        px={{ base: "2em", md: "14em" }}
+        pos={"relative"}
+      >
         <Text
           fontSize={{ base: "1.5em", md: "3em" }}
           fontWeight={600}

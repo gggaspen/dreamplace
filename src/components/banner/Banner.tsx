@@ -5,13 +5,14 @@ import Arrow from "../arrow/Arrow";
 import BackdropParallax from "../backdrop-parallax/BackdropParallax";
 // import TextScramble from "@/app/motions/TextScramble";
 
-export default function Banner() {
+export default function Banner({ bgSourceUrl, forPress }: any) {
   return (
     <Flex
-      alignItems="flex-end"
+      alignItems="center"
       position="relative"
       overflow="hidden"
-      height="100dvh"
+      height={forPress ? "70dvh" : "100dvh"}
+      flexDirection={"column"}
     >
       {/* <Box
         className="op-motion bg-banner"
@@ -53,9 +54,26 @@ export default function Banner() {
         />
       </Flex> */}
 
+      {/* {!forPress ? (
+        <>
+          <BackdropParallax
+            srcUrl={bgSourceUrl}
+            objectPosition="right"
+          ></BackdropParallax>
+          <Box
+            w={"100%"}
+            h={"100%"}
+            bg={
+              "linear-gradient(0deg, rgb(0 0 0) 0%, transparent, rgb(255 255 255 / 0%) 100%)"
+            }
+            position="absolute"
+          />
+        </>
+      ) : null} */}
       <BackdropParallax
-        srcUrl="/img/banner-1.png"
+        srcUrl={bgSourceUrl}
         objectPosition="right"
+        forPress={forPress}
       ></BackdropParallax>
       <Box
         w={"100%"}
@@ -64,6 +82,7 @@ export default function Banner() {
           "linear-gradient(0deg, rgb(0 0 0) 0%, transparent, rgb(255 255 255 / 0%) 100%)"
         }
         position="absolute"
+        zIndex={1}
       />
 
       {/* Contenido */}
@@ -71,7 +90,8 @@ export default function Banner() {
         flexDirection="column"
         justifyContent="flex-end"
         gap="2"
-        h="100dvh"
+        // h="100dvh"
+        h={forPress ? "70dvh" : "100dvh"}
         zIndex={1}
         paddingBottom={"10%"}
         paddingX={{ base: "2em", lg: "14em" }}
@@ -119,6 +139,23 @@ export default function Banner() {
           </ButtonPrimary>
         </Box>
       </Flex>
+      {/* 
+      {forPress ? (
+        <>
+          <BackdropParallax
+            srcUrl={bgSourceUrl}
+            objectPosition="right"
+          ></BackdropParallax>
+          <Box
+            w={"100%"}
+            h={"100%"}
+            bg={
+              "linear-gradient(0deg, rgb(0 0 0) 0%, transparent, rgb(255 255 255 / 0%) 100%)"
+            }
+            position="absolute"
+          />
+        </>
+      ) : null} */}
     </Flex>
   );
 }

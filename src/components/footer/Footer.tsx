@@ -40,6 +40,7 @@ export default function Footer() {
         bg={"#000"}
         py={"1em"}
         paddingX={{ base: "2em", lg: "14em" }}
+        pos={"relative"}
       >
         <Box h={""} borderBottom={"1px solid #eee"} mb={"2em"} />
 
@@ -76,7 +77,7 @@ export default function Footer() {
         </Flex>
 
         <Flex justifyContent={"center"} my={"4em"}>
-          <Logo w="100%" color="rgb(8, 8, 8)" />
+          <Logo w="100%" color="#111" />
         </Flex>
       </Flex>
     </>

@@ -10,10 +10,12 @@ export default function Press() {
   return (
     <Flex
       alignItems="flex-end"
-      position="relative"
       overflow="hidden"
       height={{ base: "70dvh", lg: "70dvh" }}
       justifyContent={{ base: "center", lg: "center" }}
+      pos={"relative"}
+      zIndex={1}
+      flexDirection={"column"}
     >
       <BackdropParallax srcUrl="https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png"></BackdropParallax>
       <Box
