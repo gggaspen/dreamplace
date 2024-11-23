@@ -53,7 +53,10 @@ export default function Banner() {
         />
       </Flex> */}
 
-      <BackdropParallax srcUrl="/img/banner-1.png"></BackdropParallax>
+      <BackdropParallax
+        srcUrl="/img/banner-1.png"
+        objectPosition="right"
+      ></BackdropParallax>
       <Box
         w={"100%"}
         h={"100%"}

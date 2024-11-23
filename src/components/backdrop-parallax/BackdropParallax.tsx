@@ -14,9 +14,13 @@ import { Flex } from "@chakra-ui/react";
 interface BackdropParallaxProps {
   rows?: { direction: "left" | "right" }[];
   srcUrl: string;
+  objectPosition?: string;
 }
 
-const BackdropParallax: React.FC<BackdropParallaxProps> = ({ srcUrl }) => {
+const BackdropParallax: React.FC<BackdropParallaxProps> = ({
+  srcUrl,
+  objectPosition,
+}) => {
   // const container: MutableRefObject<any> = useRef(null);
 
   useEffect(() => {
@@ -39,7 +43,8 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({ srcUrl }) => {
   return (
     <Flex
       w={{ base: "800px", lg: "100%" }}
-      h={"70dvh"}
+      h={"100%"}
+      // h={"70dvh"}
       justifyContent={"center"}
       position={"absolute"}
       // bottom={{ base: -300, lg: -300 }}
@@ -61,7 +66,10 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({ srcUrl }) => {
           width={3000}
           height={0}
           alt="Banner Prensa"
-          style={{ objectFit: "cover" }}
+          style={{
+            objectFit: "cover",
+            objectPosition: objectPosition ?? "center",
+          }}
         ></Image>
       </div>
       {/* </motion.div> */}
