@@ -69,8 +69,8 @@ export default function Banner() {
         h="100dvh"
         zIndex={1}
         paddingBottom={"10%"}
-        paddingLeft={"10%"}
-        paddingRight={{ base: "10%", lg: "40%" }}
+        paddingX={{ base: "2em", lg: "14em" }}
+        paddingRight={{ base: "2em", lg: "40%" }}
       >
         <Box>
           <Text
