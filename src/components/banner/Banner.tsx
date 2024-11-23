@@ -2,6 +2,7 @@ import { Text, Box, Flex } from "@chakra-ui/react";
 import "./Banner.css";
 import ButtonPrimary from "../button-primary/ButtonPrimary";
 import Arrow from "../arrow/Arrow";
+import BackdropParallax from "../backdrop-parallax/BackdropParallax";
 // import TextScramble from "@/app/motions/TextScramble";
 
 export default function Banner() {
@@ -12,7 +13,7 @@ export default function Banner() {
       overflow="hidden"
       height="100dvh"
     >
-      <Box
+      {/* <Box
         className="op-motion bg-banner"
         position="absolute"
         top={0}
@@ -32,7 +33,7 @@ export default function Banner() {
           bottom: 0,
           zIndex: 0,
         }}
-      />
+      /> */}
 
       {/* <Flex
         display={{ base: "flex", lg: "none" }}
@@ -52,6 +53,7 @@ export default function Banner() {
         />
       </Flex> */}
 
+      <BackdropParallax srcUrl="/img/banner-1.png"></BackdropParallax>
       <Box
         w={"100%"}
         h={"100%"}
@@ -69,8 +71,8 @@ export default function Banner() {
         h="100dvh"
         zIndex={1}
         paddingBottom={"10%"}
-        paddingLeft={"10%"}
-        paddingRight={{ base: "10%", lg: "40%" }}
+        paddingX={{ base: "2em", lg: "14em" }}
+        paddingRight={{ base: "2em", lg: "40%" }}
       >
         <Box>
           <Text

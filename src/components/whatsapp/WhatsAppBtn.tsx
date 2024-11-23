@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Text } from "@chakra-ui/react";
 
-export default function WhatsAppBtn() {
+export default function WhatsAppBtn({ text }: Readonly<{ text: string }>) {
   const encodedMessage = "Hola! Estoy en la página web.\n";
   const phoneNumber = "+5492494332023";
   return (
@@ -15,14 +16,18 @@ export default function WhatsAppBtn() {
         justifyContent: "center",
       }}
     >
-      <Image
-        src="/img/icon/whatsapp.png"
-        style={{ margin: "20px" }}
-        alt="whatsapp"
-        width={30}
-        height={30}
-        priority
-      />
+      {text ? (
+        <Text fontWeight={600}>{text}</Text>
+      ) : (
+        <Image
+          src="/img/icon/whatsapp.png"
+          style={{ margin: "20px" }}
+          alt="whatsapp"
+          width={30}
+          height={30}
+          priority
+        />
+      )}
     </Link>
   );
 }
