@@ -35,42 +35,29 @@ export const Iframe = () => {
           bgColor={"#000"}
         >
           <Flex
-            h={{ base: "50dvh", md: "50dvh" }}
+            h={{ base: "50dvh", md: "60dvh" }}
             bgColor={"#000"}
-            px={{ base: "2em", md: "4em" }}
-            pt={{ base: "3em", md: "5em" }}
+            px={{ base: "2em", md: "14em" }}
+            pt={{ base: "3em", md: "3em" }}
             justifyContent={"space-between"}
-            // alignItems={"center"}
           >
             <Text
               fontSize={{ base: "1.5em", md: "3em" }}
               fontWeight={600}
-              mb={
-                {
-                  // base: `calc(${height}px - 2em)`,
-                  // md: `calc(${height}px - 1em)`,
-                }
-              }
               color={"#eee"}
             >
-              Our Artists
+              Residente
             </Text>
             <Flex
               alignItems={"flex-start"}
               zIndex={2}
-              mt={".5em"}
-              mb={
-                {
-                  // base: `calc(${height}px - 2.5em)`,
-                  // md: `calc(${height}px - 1em)`,
-                }
-              }
+              mt={{ base: "0", md: "1em" }}
             >
               <Link
                 href="https://open.spotify.com/artist/6dd2fVevgttSYrLvsRqdTI"
                 target="_blank"
               >
-                <Arrow direction={"top-right"} w={"20px"} color={"#eee"} />
+                <Arrow direction={"top-right"} w={"30px"} color={"#eee"} />
               </Link>
             </Flex>
           </Flex>
@@ -83,7 +70,7 @@ export const Iframe = () => {
               w={"100%"}
               justifyContent={"center"}
               alignItems={"center"}
-              px={{ base: "2em", md: "4em" }}
+              px={{ base: "2em", md: "14em" }}
               mt={{ base: "-218px", md: "-12.5em" }}
             >
               <iframe

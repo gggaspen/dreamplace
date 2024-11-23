@@ -15,7 +15,7 @@ export default function Press() {
       height={{ base: "70dvh", lg: "70dvh" }}
       justifyContent={{ base: "center", lg: "center" }}
     >
-      <BackdropParallax></BackdropParallax>
+      <BackdropParallax srcUrl="https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png"></BackdropParallax>
       <Box
         w={"100%"}
         h={"100%"}
@@ -34,8 +34,8 @@ export default function Press() {
         h="100dvh"
         zIndex={1}
         paddingBottom={"10%"}
-        paddingLeft={"10%"}
-        paddingRight={{ base: "10%", lg: "40%" }}
+        paddingX={{ base: "2em", lg: "14em" }}
+        paddingRight={{ base: "2em", lg: "40%" }}
       >
         <Box>
           <Text
@@ -44,6 +44,7 @@ export default function Press() {
             }}
             fontSize={{ base: "2em", lg: "3em" }}
             color={"#eee"}
+            fontWeight={600}
           >
             Agustin Pietrocola
           </Text>

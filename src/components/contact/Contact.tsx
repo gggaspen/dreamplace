@@ -1,6 +1,6 @@
 import { Box, Text, Flex, Button } from "@chakra-ui/react";
 import React from "react";
-import "./PressInfo.css";
+import "./Contact.css";
 import WhatsAppBtn from "../whatsapp/WhatsAppBtn";
 // import Arrow from "../arrow/Arrow";
 
@@ -10,23 +10,24 @@ export default function PressInfo() {
 
   return (
     <>
-      <Box bg={"#000"} py={"1em"} px={{ base: "2em", md: "4em" }}>
+      <Box bg={"#000"} py={"3em"} px={{ base: "2em", md: "14em" }}>
         <Text
           fontSize={{ base: "1.5em", md: "3em" }}
           fontWeight={600}
-          py={".5em"}
+          // py={".5em"}
+          mb={".5em"}
           color={"#eee"}
         >
-          Contact us
+          Contacto
         </Text>
         <Flex alignItems={"center"} gap={"2em"} h={"50%"} pb={"1.5em"}>
           <Text
-            fontWeight={"bold"}
-            fontSize={{ base: "1em", md: "2em" }}
+            // fontWeight={"bold"}
+            fontSize={{ base: "1em", md: "1.5em" }}
             flex={1}
             color={"#eee"}
           >
-            Send us a WhatsApp
+            Envianos un WhatsApp
           </Text>
           {/* <Flex
             display={{ base: "none", lg: "flex" }}
@@ -37,15 +38,15 @@ export default function PressInfo() {
           </Flex> */}
           <Button
             bgColor={"yellow"}
-            borderRadius={"900px"}
-            p={".5em"}
+            borderRadius={"none"}
+            p={"1em"}
             color={"#eee"}
             className="btn-buy"
-            w={"60px"}
-            h={"60px"}
+            // w={"60px"}
+            // h={"60px"}
           >
             {/* <Arrow direction={"top-right"} color={"#eee"}></Arrow> */}
-            <WhatsAppBtn />
+            <WhatsAppBtn text={"Contactanos"} />
           </Button>
         </Flex>
         {/* <Text
