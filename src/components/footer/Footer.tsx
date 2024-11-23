@@ -1,26 +1,53 @@
+"use client";
+
 import { Box, Text, Flex } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Logo from "../logo/Logo";
 import Image from "next/image";
 import Link from "next/link";
+import YouTubeEmbed from "../youtube-embed/YoutubeEmbed";
 
 export default function Footer() {
-  const description =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit.";
-  const btnLabel = "Comprar Tickets";
-  console.log(description, btnLabel);
+  const [isVisible, setIsVisible] = useState(false);
+  const observerRef = useRef(null); // El ref para el observador
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true); // Cambia el estado cuando sea visible
+        }
+      },
+      { threshold: 0.5 } // Se activa cuando el 50% del elemento es visible
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <>
       <Flex
         flexDirection={"column"}
         justifyContent={"space-between"}
-        h={"100dvh"}
         bg={"#000"}
         py={"1em"}
         paddingX={{ base: "2em", lg: "14em" }}
       >
         <Box h={""} borderBottom={"1px solid #eee"} mb={"2em"} />
+
+        {/* El contenedor observado siempre está presente */}
+        <div ref={observerRef} style={{ visibility: "hidden" }} />
+
+        {/* Renderiza el iframe cuando es visible */}
+        {isVisible && <YouTubeEmbed />}
 
         <Flex
           color={"white"}
@@ -48,7 +75,7 @@ export default function Footer() {
           </Link>
         </Flex>
 
-        <Flex justifyContent={"center"} mb={"4em"}>
+        <Flex justifyContent={"center"} my={"4em"}>
           <Logo w="100%" color="rgb(8, 8, 8)" />
         </Flex>
       </Flex>

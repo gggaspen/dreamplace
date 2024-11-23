@@ -15,7 +15,7 @@ export default function Press() {
       height={{ base: "70dvh", lg: "70dvh" }}
       justifyContent={{ base: "center", lg: "center" }}
     >
-      <BackdropParallax></BackdropParallax>
+      <BackdropParallax srcUrl="https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png"></BackdropParallax>
       <Box
         w={"100%"}
         h={"100%"}

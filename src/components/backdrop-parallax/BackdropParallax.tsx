@@ -13,9 +13,10 @@ import { Flex } from "@chakra-ui/react";
 
 interface BackdropParallaxProps {
   rows?: { direction: "left" | "right" }[];
+  srcUrl: string;
 }
 
-const BackdropParallax: React.FC<BackdropParallaxProps> = () => {
+const BackdropParallax: React.FC<BackdropParallaxProps> = ({ srcUrl }) => {
   // const container: MutableRefObject<any> = useRef(null);
 
   useEffect(() => {
@@ -56,7 +57,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = () => {
         }}
       >
         <Image
-          src="https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png"
+          src={srcUrl}
           width={3000}
           height={0}
           alt="Banner Prensa"

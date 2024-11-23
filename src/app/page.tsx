@@ -1,5 +1,5 @@
 import Banner from "@/components/banner/Banner";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import BottomBanner from "@/components/bottom-banner/BottomBanner";
 import TopBanner from "@/components/top-banner/TopBanner";
 import Nav from "@/components/nav/Nav";
