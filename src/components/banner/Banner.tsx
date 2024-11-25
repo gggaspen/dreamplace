@@ -3,6 +3,7 @@ import "./Banner.css";
 import ButtonPrimary from "../button-primary/ButtonPrimary";
 import Arrow from "../arrow/Arrow";
 import BackdropParallax from "../backdrop-parallax/BackdropParallax";
+import TextScramble from "@/app/motions/TextScramble";
 // import TextScramble from "@/app/motions/TextScramble";
 
 export default function Banner() {
@@ -88,11 +89,11 @@ export default function Banner() {
             fontSize={{ base: "1.5em", lg: "3em" }}
             color={"#eee"}
           >
-            DREAMPLACE ft. Rym & Retina press.
-            {/* <TextScramble
+            {/* DREAMPLACE ft. Rym & Retina press. */}
+            <TextScramble
               phrases={["DREAMPLACE ft. Rym & Retina press."]}
               className="text-white"
-            /> */}
+            />
           </Text>
         </Box>
         <Box>
