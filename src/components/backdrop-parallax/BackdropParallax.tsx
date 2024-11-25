@@ -15,11 +15,13 @@ interface BackdropParallaxProps {
   rows?: { direction: "left" | "right" }[];
   srcUrl: string;
   objectPosition?: string;
+  height?: string;
 }
 
 const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   srcUrl,
   objectPosition,
+  height,
 }) => {
   // const container: MutableRefObject<any> = useRef(null);
 
@@ -43,8 +45,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   return (
     <Flex
       w={{ base: "800px", lg: "100%" }}
-      h={"100%"}
-      // h={"70dvh"}
+      h={height}
       justifyContent={"center"}
       position={"absolute"}
       // bottom={{ base: -300, lg: -300 }}

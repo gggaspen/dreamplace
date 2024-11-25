@@ -23,6 +23,8 @@ export default function Home() {
           <Banner></Banner>
         </Box>
 
+        <MiniBanner text="PRODUCCIONES" bgColor="#eee" />
+
         <Carroussel />
 
         <BottomBanner rows={[{ direction: "left" }]} />

@@ -6,12 +6,14 @@ import BackdropParallax from "../backdrop-parallax/BackdropParallax";
 // import TextScramble from "@/app/motions/TextScramble";
 
 export default function Banner() {
+  const height = "100dvh";
+
   return (
     <Flex
       alignItems="flex-end"
       position="relative"
       overflow="hidden"
-      height="100dvh"
+      height={height}
     >
       {/* <Box
         className="op-motion bg-banner"
@@ -56,6 +58,7 @@ export default function Banner() {
       <BackdropParallax
         srcUrl="/img/banner-1.png"
         objectPosition="right"
+        height={height}
       ></BackdropParallax>
       <Box
         w={"100%"}
