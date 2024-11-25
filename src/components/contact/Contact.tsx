@@ -10,25 +10,32 @@ export default function PressInfo() {
 
   return (
     <>
-      <Box bg={"#000"} py={"3em"} px={{ base: "2em", md: "14em" }}>
+      <Box bg={"#000"} py={"2em"} px={{ base: "2em", md: "14em" }}>
         <Text
           fontSize={{ base: "1.5em", md: "3em" }}
           fontWeight={600}
           // py={".5em"}
           mb={".5em"}
           color={"#eee"}
+          textAlign={"center"}
         >
-          Contacto
+          Contactanos
         </Text>
-        <Flex alignItems={"center"} gap={"2em"} h={"50%"} pb={"1.5em"}>
-          <Text
-            // fontWeight={"bold"}
-            fontSize={{ base: "1em", md: "1.5em" }}
+        <Flex
+          alignItems={"center"}
+          justifyContent={"center"}
+          gap={"2em"}
+          h={"50%"}
+          pb={"1.5em"}
+        >
+          {/* <Text
+            fontWeight={"bold"}
+            fontSize={{ base: "1em", md: "2em" }}
             flex={1}
             color={"#eee"}
           >
-            Envianos un WhatsApp
-          </Text>
+            Send us a WhatsApp
+          </Text> */}
           {/* <Flex
             display={{ base: "none", lg: "flex" }}
             alignItems={"flex-end"}
@@ -38,7 +45,7 @@ export default function PressInfo() {
           </Flex> */}
           <Button
             bgColor={"yellow"}
-            borderRadius={"none"}
+            borderRadius={"0px"}
             p={"1em"}
             color={"#eee"}
             className="btn-buy"
@@ -46,7 +53,7 @@ export default function PressInfo() {
             // h={"60px"}
           >
             {/* <Arrow direction={"top-right"} color={"#eee"}></Arrow> */}
-            <WhatsAppBtn text={"Contactanos"} />
+            <WhatsAppBtn text="Click aquí" />
           </Button>
         </Flex>
         {/* <Text

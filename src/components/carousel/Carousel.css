@@ -4,7 +4,7 @@
 @import "swiper/css/pagination";
 
 .swiper-slide div {
-  height: 50dvh;
+  /* height: 50dvh; */
 }
 .swiper-wrapper {
   width: 100%;
