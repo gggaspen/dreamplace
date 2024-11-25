@@ -96,7 +96,7 @@ interface TextScrambleProps {
 
 const TextScramble: React.FC<TextScrambleProps> = ({
   phrases,
-  // duration = 1800,
+  duration = 9999999999999999,
   className,
 }) => {
   const [hasMounted, setHasMounted] = useState(false);
@@ -106,29 +106,30 @@ const TextScramble: React.FC<TextScrambleProps> = ({
     setHasMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (hasMounted && textRef.current) {
-      const fx = new TextScrambleClass(textRef.current);
-      const firstPhrase = phrases[0] || "";
-      fx.setText(firstPhrase);
-    }
-  }, [phrases]);
-
   // useEffect(() => {
   //   if (hasMounted && textRef.current) {
   //     const fx = new TextScrambleClass(textRef.current);
-  //     let currentIndex = 0;
-
-  //     const runScramble = async () => {
-  //       while (true) {
-  //         await fx.setText(phrases[currentIndex]);
-  //         currentIndex = (currentIndex + 1) % phrases.length;
-  //         await new Promise((resolve) => setTimeout(resolve, duration));
-  //       }
-  //     };
-
-  //     runScramble();
+  //     const firstPhrase = phrases[0] || "";
+  //     fx.setText(firstPhrase);
   //   }
+  // }, [phrases]);
+
+  useEffect(() => {
+    if (hasMounted && textRef.current) {
+      const fx = new TextScrambleClass(textRef.current);
+      let currentIndex = 0;
+
+      const runScramble = async () => {
+        while (true) {
+          await fx.setText(phrases[currentIndex]);
+          currentIndex = (currentIndex + 1) % phrases.length;
+          await new Promise((resolve) => setTimeout(resolve, duration));
+        }
+      };
+
+      runScramble();
+    }
+  }, [hasMounted, phrases, duration]);
   // }, [hasMounted, phrases, duration]);
 
   return <div ref={textRef} className={className} />;
