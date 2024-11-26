@@ -27,6 +27,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          rel="icon"
+          type="image/png"
+          href="/img/icon/logo.png"
+          sizes="96x96"
+        />
+        {/* <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> */}
+        <link rel="shortcut icon" href="/img/icon/logo.png" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/img/icon/logo.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+      </head>
       <body
         // className={`${roboto.className} ${geistSans.variable} ${geistMono.variable} antialiased`}
         className={`${poppins.className} ${geistSans.variable} ${geistMono.variable} antialiased`}

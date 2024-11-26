@@ -1,9 +1,9 @@
 "use client";
 
-import { Flex } from "@chakra-ui/react";
+import { Flex, useMediaQuery } from "@chakra-ui/react";
 import "./Nav.css";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../logo/Logo";
 
 export default function Nav() {
@@ -11,6 +11,17 @@ export default function Nav() {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [prev, setPrev] = useState(0);
+  const [desktopSize, setDesktopSize] = useState(152);
+
+  useEffect(() => {
+    const updateDesktopSize = () => {
+      const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+      setDesktopSize(isDesktop ? 352 : 152);
+    };
+    updateDesktopSize();
+    window.addEventListener("resize", updateDesktopSize);
+    return () => window.removeEventListener("resize", updateDesktopSize);
+  }, []);
 
   function update(latest: number, prev: number): void {
     if (latest < prev) {
@@ -46,7 +57,10 @@ export default function Nav() {
       }}
     >
       <Flex>
-        <Logo w="100px" />
+        <Logo
+          w={desktopSize ? "100px" : "50px"}
+          mode={desktopSize ? "full" : "mini"}
+        />
       </Flex>
 
       <Flex gap="8" alignItems={"center"} justifyContent={"space-between"}>
