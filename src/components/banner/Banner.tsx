@@ -4,7 +4,6 @@ import ButtonPrimary from "../button-primary/ButtonPrimary";
 import Arrow from "../arrow/Arrow";
 import BackdropParallax from "../backdrop-parallax/BackdropParallax";
 // import TextScramble from "@/app/motions/TextScramble";
-// import TextScramble from "@/app/motions/TextScramble";
 
 export default function Banner() {
   const height = "100dvh";
