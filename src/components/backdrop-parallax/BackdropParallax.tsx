@@ -85,6 +85,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
           alt="Banner Prensa"
           style={{
             objectFit: "cover",
+            height: "100%",
             // objectPosition: objectPosition ?? "center",
             // objectPosition: "center",
           }}
