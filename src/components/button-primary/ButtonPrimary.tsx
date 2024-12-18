@@ -43,7 +43,7 @@ export default function ButtonPrimary({
       </Box>
       <Box>
         <Text fontSize={{ sm: "1em", base: "1em", md: "1em" }}>
-          {text ? text : "CONSEGUÍ AHORA TUS TICKETS"}
+          {text ? text : "COMPRAR TICKETS AHORA"}
         </Text>
       </Box>
       <Box opacity={0} display={{ sm: "none", base: "none", md: "block" }}>

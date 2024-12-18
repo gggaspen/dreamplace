@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <main className="">
         <Box h={"100dvh"}>
-          <Box position={"absolute"} zIndex={2} w={"100%"}>
+          <Box position={"absolute"} zIndex={99} w={"100%"}>
             <TopBanner></TopBanner>
             <Nav />
           </Box>

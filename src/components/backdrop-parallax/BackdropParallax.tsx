@@ -74,7 +74,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
     >
       <Box
         position={"absolute"}
-        display={{ base: "block", lg: "flex" }}
+        display={{ base: srcUrl ? "flex" : "block", lg: "flex" }}
         justifyContent={"center"}
         width={"100%"}
         height={"100%"}
