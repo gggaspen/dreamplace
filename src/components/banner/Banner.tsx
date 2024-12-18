@@ -99,7 +99,7 @@ export default function Banner() {
           </Text>
         </Box>
         <Box>
-          <ButtonPrimary>
+          <ButtonPrimary mode="light">
             <Arrow color="#000" w="20px" direction="top-right"></Arrow>
           </ButtonPrimary>
         </Box>
