@@ -4,7 +4,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(-45deg, #ff0000, #7c0000, #ff0000, #750000);
+  /* background: linear-gradient(-45deg, #ff0000, #7c0000, #ff0000, #750000); */
+  background: linear-gradient(-45deg, #fd1d75, #de0853, #fd1d75, #9e043a);
   background-size: 400% 400%;
   animation: gradient 7s ease infinite;
   height: 40px;

@@ -11,12 +11,29 @@ import "./Carousel.css";
 import { Box, Flex } from "@chakra-ui/react";
 
 const images = [
-  "https://i.postimg.cc/j5vtVgdF/Banner-Carrusel-1.png",
-  "https://i.postimg.cc/KYPmfvXF/Banner-Carrusel-2.png",
-  "https://i.postimg.cc/TwTf4MGb/Banner-Carrusel-4.png",
-  "https://i.postimg.cc/SR4Yy2Xx/MG-4644-1.jpg",
-  "https://i.postimg.cc/R03HGz54/MG-4797-1.jpg",
-  "https://i.postimg.cc/9Qg9GQkL/MG-4813.jpg",
+  /**
+   * Muelle:
+   */
+  // "https://i.postimg.cc/j5vtVgdF/Banner-Carrusel-1.png",
+  // "https://i.postimg.cc/KYPmfvXF/Banner-Carrusel-2.png",
+  // "https://i.postimg.cc/TwTf4MGb/Banner-Carrusel-4.png",
+  // "https://i.postimg.cc/SR4Yy2Xx/MG-4644-1.jpg",
+  // "https://i.postimg.cc/R03HGz54/MG-4797-1.jpg",
+  // "https://i.postimg.cc/9Qg9GQkL/MG-4813.jpg",
+  /**
+   * Noel:
+   */
+  "/img/carousel/PIC (216).jpg",
+  "/img/carousel/PIC (199).jpg",
+  "/img/carousel/PIC (163).jpg",
+  "/img/carousel/PIC (161).jpg",
+  "/img/carousel/PIC (123).jpg",
+  "/img/carousel/PIC (106).jpg",
+  "/img/carousel/PIC (95).jpg",
+  "/img/carousel/PIC (55).jpg",
+  "/img/carousel/PIC (45).jpg",
+  "/img/carousel/PIC (40).jpg",
+  "/img/carousel/PIC (36).jpg",
 ];
 
 export default function Carroussel() {
