@@ -4,7 +4,7 @@ const nextConfig = {
     optimizePackageImports: ["@chakra-ui/react"],
   },
   images: {
-    // disableStaticImages: true, // Deshabilita la optimización de imágenes
+    disableStaticImages: true, // Deshabilita la optimización de imágenes
     remotePatterns: [
       {
         protocol: "https",
