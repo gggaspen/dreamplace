@@ -15,7 +15,8 @@ interface BottomBannerProps {
 const BottomBanner: React.FC<BottomBannerProps> = ({ rows }) => {
   const container: MutableRefObject<any> = useRef(null);
   const url =
-    "https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito";
+    // "https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito";
+    "https://www.todopass.com.ar/inicio/355-fiesta-de-noel-xv.html";
 
   useEffect(() => {
     const lenis = new Lenis();

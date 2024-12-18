@@ -10,7 +10,8 @@ export default function ButtonPrimary({
   download?: boolean;
 }>) {
   const url =
-    "https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito";
+    // "https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito";
+    "https://www.todopass.com.ar/inicio/355-fiesta-de-noel-xv.html";
 
   return (
     <Link

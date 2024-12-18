@@ -1,3 +1,5 @@
+"use client";
+
 import { Text, Box, Flex } from "@chakra-ui/react";
 import "./Banner.css";
 import ButtonPrimary from "../button-primary/ButtonPrimary";
@@ -15,49 +17,8 @@ export default function Banner() {
       overflow="hidden"
       height={height}
     >
-      {/* <Box
-        className="op-motion bg-banner"
-        position="absolute"
-        top={0}
-        left={0}
-        right={0}
-        bottom={0}
-        // filter={{
-        //   base: "blur(10px)",
-        //   lg: "blur(0px)",
-        // }}
-        _before={{
-          content: '""',
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 0,
-        }}
-      /> */}
-
-      {/* <Flex
-        display={{ base: "flex", lg: "none" }}
-        justifyContent={"center"}
-        alignItems={"center"}
-        w={"100%"}
-        h={"100%"}
-        position="absolute"
-      >
-        <Box
-          w={"60dvw"}
-          h={"60dvw"}
-          bgSize={"cover"}
-          bgPos={"center"}
-          className="minicover"
-          mb={"6em"}
-        />
-      </Flex> */}
-
       <BackdropParallax
-        srcUrl="/img/banner-1.png"
-        objectPosition="right"
+        // objectPosition="right"
         height={height}
       ></BackdropParallax>
       <Box
@@ -88,7 +49,7 @@ export default function Banner() {
             fontSize={{ base: "1.5em", lg: "3em" }}
             color={"#eee"}
           >
-            DREAMPLACE ft. Rym & Retina press.
+            Dreamplace ft. Noel Fest Press.
             {/* <TextScramble
               phrases={["DREAMPLACE ft. Rym & Retina press."]}
               className="text-white"
@@ -104,7 +65,8 @@ export default function Banner() {
             color={"#eee"}
             mb={"1em"}
           >
-            <span style={{ fontWeight: 600 }}>El Muelle</span> | 30 NOV 2024
+            <span style={{ fontWeight: 600 }}>Estadio Ferro, Tandil</span> | 24
+            Dic | Edición Navidad
           </Text>
           <Text
             _selection={{
@@ -113,7 +75,12 @@ export default function Banner() {
             fontSize={".8em"}
             color={"#eee"}
           >
-            Un espectáculo donde converge el arte, la música y los sueños.
+            {/* Un espectáculo donde converge el arte, la música y los sueños. */}
+            15 años de la fiesta más grande de Tandil. Nos recibe una
+            co-producción en la que se presentarán el reconocido dúo local Scape
+            From Reality, Isi Luis, quien nos visita desde Necochea, y, por
+            primera vez en la ciudad, cerrará la noche Cristian U, reconocido
+            artista de la ciudad de Buenos Aires, también conocido como Vasco.
           </Text>
         </Box>
         <Box>

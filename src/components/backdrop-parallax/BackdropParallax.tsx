@@ -4,6 +4,7 @@ import Lenis from "lenis";
 import React, {
   // MutableRefObject,
   useEffect,
+  useState,
   // useRef,
 } from "react";
 // import { motion, useTransform } from "framer-motion";
@@ -13,17 +14,32 @@ import { Flex } from "@chakra-ui/react";
 
 interface BackdropParallaxProps {
   rows?: { direction: "left" | "right" }[];
-  srcUrl: string;
   objectPosition?: string;
   height?: string;
 }
 
 const BackdropParallax: React.FC<BackdropParallaxProps> = ({
-  srcUrl,
   objectPosition,
   height,
 }) => {
   // const container: MutableRefObject<any> = useRef(null);
+  const srcDefault = "noel";
+
+  const [src, setSrc] = useState(
+    `/img/banners/${srcDefault}.png?cache=${Date.now()}`
+  );
+
+  useEffect(() => {
+    const updateDesktopSize = () => {
+      const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+      setSrc(
+        `/img/banners/noel${isDesktop ? "" : "-mobile"}.png?cache=${Date.now()}`
+      );
+    };
+    updateDesktopSize();
+    window.addEventListener("resize", updateDesktopSize);
+    return () => window.removeEventListener("resize", updateDesktopSize);
+  }, []);
 
   useEffect(() => {
     const lenis = new Lenis();
@@ -63,13 +79,14 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
         }}
       >
         <Image
-          src={srcUrl}
+          src={src}
           width={3000}
           height={0}
           alt="Banner Prensa"
           style={{
             objectFit: "cover",
-            objectPosition: objectPosition ?? "center",
+            // objectPosition: objectPosition ?? "center",
+            // objectPosition: "center",
           }}
         ></Image>
       </div>
