@@ -20,7 +20,6 @@ interface BackdropParallaxProps {
 }
 
 const BackdropParallax: React.FC<BackdropParallaxProps> = ({
-  objectPosition,
   height,
   srcUrl,
 }) => {
