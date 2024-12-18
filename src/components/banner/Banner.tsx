@@ -1,14 +1,29 @@
 "use client";
 
-import { Text, Box, Flex } from "@chakra-ui/react";
+import { Text, Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import "./Banner.css";
 import ButtonPrimary from "../button-primary/ButtonPrimary";
 import Arrow from "../arrow/Arrow";
 import BackdropParallax from "../backdrop-parallax/BackdropParallax";
+import { useState } from "react";
 // import TextScramble from "@/app/motions/TextScramble";
 
 export default function Banner() {
   const height = "100dvh";
+  // const textColor = "#eee";
+  const textColor = "#000";
+
+  const [isExpanded, setIsExpanded] = useState(false);
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
+  const toggleExpand = () => setIsExpanded(!isExpanded);
+
+  // const text = "Un espectáculo donde converge el arte, la música y los sueños.";
+  const text =
+    "15 años de la fiesta más grande de Tandil. Nos recibe una co-producción en la que se presentarán el reconocido dúo local Scape From Reality, Isi Luis, quien nos visita desde Necochea, y, por primera vez en la ciudad, cerrará la noche Cristian U, reconocido artista de la ciudad de Buenos Aires, también conocido como Vasco.";
+
+  // Calcula la longitud del texto a mostrar en modo contraído
+  const maxLength = Math.floor(text.length / 2);
 
   return (
     <Flex
@@ -22,6 +37,7 @@ export default function Banner() {
         height={height}
       ></BackdropParallax>
       <Box
+        display={"none"}
         w={"100%"}
         h={"100%"}
         bg={
@@ -47,7 +63,7 @@ export default function Banner() {
               backgroundColor: "#000",
             }}
             fontSize={{ base: "1.5em", lg: "3em" }}
-            color={"#eee"}
+            color={textColor}
           >
             Dreamplace ft. Noel Fest Press.
             {/* <TextScramble
@@ -62,7 +78,7 @@ export default function Banner() {
               backgroundColor: "#000",
             }}
             fontSize={".8em"}
-            color={"#eee"}
+            color={textColor}
             mb={"1em"}
           >
             <span style={{ fontWeight: 600 }}>Estadio Ferro, Tandil</span> | 24
@@ -73,14 +89,13 @@ export default function Banner() {
               backgroundColor: "#000",
             }}
             fontSize={".8em"}
-            color={"#eee"}
+            color={textColor}
+            onClick={toggleExpand}
+            cursor={isMobile ? "pointer" : "default"}
           >
-            {/* Un espectáculo donde converge el arte, la música y los sueños. */}
-            15 años de la fiesta más grande de Tandil. Nos recibe una
-            co-producción en la que se presentarán el reconocido dúo local Scape
-            From Reality, Isi Luis, quien nos visita desde Necochea, y, por
-            primera vez en la ciudad, cerrará la noche Cristian U, reconocido
-            artista de la ciudad de Buenos Aires, también conocido como Vasco.
+            {isMobile && !isExpanded
+              ? `${text.slice(0, maxLength)}... Leer más`
+              : text}
           </Text>
         </Box>
         <Box>

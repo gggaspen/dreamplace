@@ -16,6 +16,7 @@ enum ESocial {
 
 export default function Press() {
   const height = "100dvh";
+  const textColor = "#eee";
 
   const socialLinks = [
     {
@@ -89,7 +90,7 @@ export default function Press() {
               backgroundColor: "#000",
             }}
             fontSize={{ base: "2em", lg: "3em" }}
-            color={"#eee"}
+            color={textColor}
             fontWeight={600}
           >
             Agustin Pietrocola
@@ -101,7 +102,7 @@ export default function Press() {
               backgroundColor: "#000",
             }}
             fontSize={"1em"}
-            color={"#eee"}
+            color={textColor}
           >
             Mango Alley | UV | Long Way Records
           </Text>

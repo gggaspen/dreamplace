@@ -10,30 +10,36 @@ import React, {
 // import { motion, useTransform } from "framer-motion";
 // import { useScroll } from "framer-motion";
 import Image from "next/image";
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 
 interface BackdropParallaxProps {
   rows?: { direction: "left" | "right" }[];
   objectPosition?: string;
   height?: string;
+  srcUrl?: string;
 }
 
 const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   objectPosition,
   height,
+  srcUrl,
 }) => {
   // const container: MutableRefObject<any> = useRef(null);
   const srcDefault = "noel";
 
   const [src, setSrc] = useState(
-    `/img/banners/${srcDefault}.png?cache=${Date.now()}`
+    srcUrl ? srcUrl : `/img/banners/${srcDefault}.png?cache=${Date.now()}`
   );
 
   useEffect(() => {
     const updateDesktopSize = () => {
       const isDesktop = window.matchMedia("(min-width: 768px)").matches;
       setSrc(
-        `/img/banners/noel${isDesktop ? "" : "-mobile"}.png?cache=${Date.now()}`
+        srcUrl
+          ? srcUrl
+          : `/img/banners/noel${
+              isDesktop ? "" : "-mobile"
+            }.png?cache=${Date.now()}`
       );
     };
     updateDesktopSize();
@@ -60,23 +66,18 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
 
   return (
     <Flex
-      w={{ base: "800px", lg: "100%" }}
+      w={{ base: "100%", lg: "100%" }}
       h={height}
       justifyContent={"center"}
       position={"absolute"}
       // bottom={{ base: -300, lg: -300 }}
     >
-      <div
-        // <motion.div
-        style={{
-          // y: translateY,
-          // bottom: -100,
-          position: "absolute",
-          display: "flex",
-          justifyContent: "center",
-          width: "100%",
-          height: "100%",
-        }}
+      <Box
+        position={"absolute"}
+        display={{ base: "block", lg: "flex" }}
+        justifyContent={"center"}
+        width={"100%"}
+        height={"100%"}
       >
         <Image
           src={src}
@@ -89,8 +90,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
             // objectPosition: "center",
           }}
         ></Image>
-      </div>
-      {/* </motion.div> */}
+      </Box>
     </Flex>
   );
 };
