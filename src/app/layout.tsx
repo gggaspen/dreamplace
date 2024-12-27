@@ -46,6 +46,46 @@ export default function RootLayout({
         />
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Expires" content="0" />
+
+        {/* GPT Cloudflare solution: */}
+
+        {/* Seguridad y optimización */}
+        <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+        <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+        <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+        <meta name="referrer" content="no-referrer-when-downgrade" />
+
+        {/* Caching para Cloudflare */}
+        <meta
+          http-equiv="Cache-Control"
+          content="public, max-age=3600, must-revalidate"
+        />
+        <meta http-equiv="Pragma" content="public" />
+
+        {/* Compatibilidad con proxies */}
+        <meta name="cf-edge-cache" content="cache,platform=nextjs" />
+
+        {/* Cabeceras relacionadas con SEO y redes sociales */}
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:title" content="DREAMPLACE" />
+        <meta
+          property="og:description"
+          content="Explora nuestra plataforma de sueños"
+        />
+        <meta
+          property="og:image"
+          content="https://dreamplace.com.ar/img/logo.png"
+        />
+        <meta property="og:url" content="https://dreamplace.com.ar" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="DREAMPLACE" />
+        <meta name="twitter:description" content="DREAMPLACE.COM.AR" />
+        <meta
+          name="twitter:image"
+          content="https://dreamplace.com.ar/img/logo.png"
+        />
       </Head>
       <body
         // className={`${roboto.className} ${geistSans.variable} ${geistMono.variable} antialiased`}
