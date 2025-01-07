@@ -24,10 +24,11 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   srcUrl,
 }) => {
   // const container: MutableRefObject<any> = useRef(null);
-  const srcDefault = "noel";
+  // const srcDefault = "noel";
+  const srcDefault = "main";
 
   const [src, setSrc] = useState(
-    srcUrl ? srcUrl : `/img/banners/${srcDefault}.png?cache=${Date.now()}`
+    srcUrl ? srcUrl : `/img/banners/${srcDefault}.jpg?cache=${Date.now()}`
   );
 
   useEffect(() => {

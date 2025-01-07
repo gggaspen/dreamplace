@@ -11,7 +11,7 @@ import { useState } from "react";
 export default function Banner() {
   const height = "100dvh";
   // const textColor = "#eee";
-  const textColor = "#000";
+  const textColor = "#eee";
 
   const [isExpanded, setIsExpanded] = useState(false);
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -99,8 +99,8 @@ export default function Banner() {
           </Text>
         </Box>
         <Box>
-          <ButtonPrimary mode="light">
-            <Arrow color="#000" w="20px" direction="top-right"></Arrow>
+          <ButtonPrimary mode="dark">
+            <Arrow color="#eee" w="20px" direction="top-right"></Arrow>
           </ButtonPrimary>
         </Box>
       </Flex>
