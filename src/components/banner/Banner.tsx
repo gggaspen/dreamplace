@@ -39,11 +39,11 @@ export default function Banner() {
         height={height}
       ></BackdropParallax>
       <Box
-        display={"none"}
+        // display={"none"}
         w={"100%"}
         h={"100%"}
         bg={
-          "linear-gradient(0deg, rgb(0 0 0) 0%, transparent, rgb(255 255 255 / 0%) 100%)"
+          "linear-gradient(0deg, rgb(0 0 0) 0%, transparent, transparent, rgb(255 255 255 / 0%) 100%)"
         }
         position="absolute"
       />
