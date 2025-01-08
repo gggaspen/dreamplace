@@ -37,10 +37,19 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
       setSrc(
         srcUrl
           ? srcUrl
-          : `/img/banners/noel${
-              isDesktop ? "" : "-mobile"
-            }.png?cache=${Date.now()}`
+          : `${
+              isDesktop
+                ? "https://i.postimg.cc/rFD9yc6r/main.jpg"
+                : "https://i.postimg.cc/8kKHVcYG/main-mobile.jpg"
+            }`
       );
+      // setSrc(
+      //   srcUrl
+      //     ? srcUrl
+      //     : `/img/banners/noel${
+      //         isDesktop ? "" : "-mobile"
+      //       }.png?cache=${Date.now()}`
+      // );
     };
     updateDesktopSize();
     window.addEventListener("resize", updateDesktopSize);
