@@ -35,7 +35,7 @@ export const Iframe = () => {
           bgColor={"#000"}
         >
           <Flex
-            h={{ base: "70dvh", md: "60dvh" }}
+            h={{ base: "50dvh", md: "60dvh" }}
             bgColor={"#000"}
             px={{ base: "2em", md: "14em" }}
             pt={{ base: "3em", md: "3em" }}

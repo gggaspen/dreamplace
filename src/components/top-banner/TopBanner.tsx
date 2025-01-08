@@ -45,8 +45,14 @@ export default function TopBanner() {
     hidden: { opacity: 0, y: "-2rem" },
   };
 
+  const soon: boolean = true;
+
   return (
-    <Link href={url} target="_blank">
+    <Link
+      href={url}
+      target="_blank"
+      onClick={soon ? (e) => e.preventDefault() : undefined}
+    >
       <motion.div
         variants={parentVariants}
         animate={hidden ? "hidden" : "visible"}
@@ -65,7 +71,11 @@ export default function TopBanner() {
           }}
         >
           <MiniBanner
-            text="COMPRAR TICKETS AHORA"
+            text={
+              soon
+                ? "PRÓXIMAMENTE TICKETS A LA VENTA"
+                : "COMPRA TUS TICKETS AHORA"
+            }
             arrowDirection="top-right"
             delay={50}
           ></MiniBanner>
