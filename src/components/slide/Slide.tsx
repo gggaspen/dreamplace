@@ -7,13 +7,13 @@ import React from "react";
 import { poppins } from "@/app/ui/fonts";
 
 const dates = [
-  { text: "30 NOV 2024" },
-  { text: "30 NOV 2024" },
-  { text: "30 NOV 2024" },
-  { text: "30 NOV 2024" },
-  { text: "30 NOV 2024" },
-  { text: "30 NOV 2024" },
-  { text: "30 NOV 2024" },
+  { text: "30 NOV" },
+  { text: "30 NOV" },
+  { text: "30 NOV" },
+  { text: "30 NOV" },
+  { text: "30 NOV" },
+  { text: "30 NOV" },
+  { text: "30 NOV" },
 ];
 
 const Slide = ({ left, direction, progress, arrow }: any) => {

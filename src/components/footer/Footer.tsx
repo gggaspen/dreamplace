@@ -58,7 +58,7 @@ export default function Footer() {
           gap={"2em"}
         >
           <Text fontWeight={"bold"} fontSize={"1em"} my={"2em"}>
-            2024 EDITION
+            2025 EDITION
           </Text>
 
           <Link href="https://www.instagram.com/dreamplace.ar/" target="_blank">
@@ -76,7 +76,7 @@ export default function Footer() {
         </Flex>
 
         <Flex justifyContent={"center"} my={"4em"}>
-          <Logo w="100%" color="rgb(8, 8, 8)" />
+          <Logo w="100%" color="rgb(34, 34, 34)" />
         </Flex>
       </Flex>
     </>

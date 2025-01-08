@@ -62,10 +62,10 @@ export default function Banner() {
             _selection={{
               backgroundColor: "#000",
             }}
-            fontSize={{ base: "1.5em", lg: "3em" }}
+            fontSize={{ base: "2em", lg: "4em" }}
             color={textColor}
           >
-            Dreamplace ft. Noel Fest Press.
+            DREAMPLACE 2025
             {/* <TextScramble
               phrases={["DREAMPLACE ft. Rym & Retina press."]}
               className="text-white"
