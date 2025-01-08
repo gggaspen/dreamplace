@@ -14,6 +14,13 @@ const dates = [
   { text: "2025" },
   { text: "2025" },
   { text: "2025" },
+  { text: "2025" },
+  { text: "2025" },
+  { text: "2025" },
+  { text: "2025" },
+  { text: "2025" },
+  { text: "2025" },
+  { text: "2025" },
 ];
 
 const Slide = ({ left, direction, progress, arrow }: any) => {
