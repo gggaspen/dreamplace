@@ -33,9 +33,15 @@ const BottomBanner: React.FC<BottomBannerProps> = ({ rows }) => {
     layoutEffect: false,
   });
 
+  const soon: boolean = true;
+
   return (
     <Box>
-      <Link href={url} target="_blank">
+      <Link
+        href={url}
+        target="_blank"
+        onClick={soon ? (e) => e.preventDefault() : undefined}
+      >
         <Flex
           ref={container}
           flexDirection={"column"}

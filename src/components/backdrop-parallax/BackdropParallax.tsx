@@ -86,8 +86,14 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
         display={{ base: srcUrl ? "flex" : "block", lg: "flex" }}
         justifyContent={"center"}
         width={"100%"}
-        height={"100%"}
+        height={{ base: "100%", lg: "100%" }}
       >
+        <Box
+          position={"absolute"}
+          width={"100%"}
+          height={"100%"}
+          backgroundGradient={"linear(to-t, rgba(0, 0, 0, 1), transparent"}
+        ></Box>
         <Image
           src={src}
           width={3000}

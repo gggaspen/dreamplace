@@ -19,11 +19,13 @@ export default function Banner() {
   const toggleExpand = () => setIsExpanded(!isExpanded);
 
   // const text = "Un espectáculo donde converge el arte, la música y los sueños.";
+  // const text =
+  //   "15 años de la fiesta más grande de Tandil. Nos recibe una co-producción en la que se presentarán el reconocido dúo local Scape From Reality, Isi Luis, quien nos visita desde Necochea, y, por primera vez en la ciudad, cerrará la noche Cristian U, reconocido artista de la ciudad de Buenos Aires, también conocido como Vasco.";
   const text =
-    "15 años de la fiesta más grande de Tandil. Nos recibe una co-producción en la que se presentarán el reconocido dúo local Scape From Reality, Isi Luis, quien nos visita desde Necochea, y, por primera vez en la ciudad, cerrará la noche Cristian U, reconocido artista de la ciudad de Buenos Aires, también conocido como Vasco.";
+    "Una serie de espectáculos donde converge el arte, la música y los sueños. Desconecta de la realidad... bailando.";
 
   // Calcula la longitud del texto a mostrar en modo contraído
-  const maxLength = Math.floor(text.length / 2);
+  // const maxLength = Math.floor(text.length / 2);
 
   return (
     <Flex
@@ -73,7 +75,9 @@ export default function Banner() {
           </Text>
         </Box>
         <Box>
-          <Text
+          {/* Habilitar el subtitulo superior */}
+
+          {/* <Text
             _selection={{
               backgroundColor: "#000",
             }}
@@ -83,23 +87,28 @@ export default function Banner() {
           >
             <span style={{ fontWeight: 600 }}>Estadio Ferro, Tandil</span> | 24
             Dic | Edición Navidad
-          </Text>
+          </Text> */}
           <Text
             _selection={{
               backgroundColor: "#000",
             }}
-            fontSize={".8em"}
+            fontSize={"1em"}
             color={textColor}
             onClick={toggleExpand}
             cursor={isMobile ? "pointer" : "default"}
           >
-            {isMobile && !isExpanded
+            {text}
+            {/* {isMobile && !isExpanded
               ? `${text.slice(0, maxLength)}... Leer más`
-              : text}
+              : text} */}
           </Text>
         </Box>
         <Box>
-          <ButtonPrimary mode="dark">
+          <ButtonPrimary
+            disabled={true}
+            text="PRÓXIMAMENTE TICKETS A LA VENTA"
+            mode="dark"
+          >
             <Arrow color="#eee" w="20px" direction="top-right"></Arrow>
           </ButtonPrimary>
         </Box>
