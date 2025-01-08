@@ -23,7 +23,7 @@ const images = [
   /**
    * Noel:
    */
-  "/img/carousel/PIC (216).jpg",
+  // "/img/carousel/PIC (216).jpg",
   "/img/carousel/PIC (199).jpg",
   "/img/carousel/PIC (163).jpg",
   "/img/carousel/PIC (161).jpg",
@@ -34,6 +34,10 @@ const images = [
   "/img/carousel/PIC (45).jpg",
   "/img/carousel/PIC (40).jpg",
   "/img/carousel/PIC (36).jpg",
+
+  "/img/carousel/_MG_4644 (1).jpg",
+  "/img/carousel/_MG_4797 (1).jpg",
+  "/img/carousel/_MG_4807.jpg",
 ];
 
 export default function Carroussel() {
