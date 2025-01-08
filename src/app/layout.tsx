@@ -39,13 +39,15 @@ export default function RootLayout({
         <meta property="og:image:height" content="630" />
         <meta property="og:url" content="https://dreamplace.com.ar" />
 
-        {/* cache */}
+        {/* no cache */}
         <meta
           http-equiv="Cache-Control"
           content="no-cache, no-store, must-revalidate"
         />
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Expires" content="0" />
+        <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate" />
+        <meta http-equiv="Last-Modified" content="0" />
 
         {/* GPT Cloudflare solution: */}
 

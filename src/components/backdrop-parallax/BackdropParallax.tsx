@@ -24,10 +24,11 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   srcUrl,
 }) => {
   // const container: MutableRefObject<any> = useRef(null);
-  const srcDefault = "noel";
+  // const srcDefault = "noel";
+  const srcDefault = "main";
 
   const [src, setSrc] = useState(
-    srcUrl ? srcUrl : `/img/banners/${srcDefault}.png?cache=${Date.now()}`
+    srcUrl ? srcUrl : `/img/banners/${srcDefault}.jpg?cache=${Date.now()}`
   );
 
   useEffect(() => {
@@ -36,10 +37,19 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
       setSrc(
         srcUrl
           ? srcUrl
-          : `/img/banners/noel${
-              isDesktop ? "" : "-mobile"
-            }.png?cache=${Date.now()}`
+          : `${
+              isDesktop
+                ? "https://i.postimg.cc/rFD9yc6r/main.jpg"
+                : "https://i.postimg.cc/8kKHVcYG/main-mobile.jpg"
+            }`
       );
+      // setSrc(
+      //   srcUrl
+      //     ? srcUrl
+      //     : `/img/banners/noel${
+      //         isDesktop ? "" : "-mobile"
+      //       }.png?cache=${Date.now()}`
+      // );
     };
     updateDesktopSize();
     window.addEventListener("resize", updateDesktopSize);
