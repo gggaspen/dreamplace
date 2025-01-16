@@ -6,9 +6,47 @@ import ButtonPrimary from "../button-primary/ButtonPrimary";
 import Arrow from "../arrow/Arrow";
 import BackdropParallax from "../backdrop-parallax/BackdropParallax";
 import { useState } from "react";
+import IEvent from "@/interfaces/event.interface";
+import { dateToCustomString } from "@/utils/format-date";
+import IBannerData from "@/interfaces/banner-data.interface";
+import React from "react";
 // import TextScramble from "@/app/motions/TextScramble";
 
-export default function Banner() {
+export default function Banner({
+  event,
+  data,
+}: {
+  event: IEvent;
+  data: IBannerData;
+}) {
+  /**
+   * EVENTS
+   */
+  const { name, location, description, date, cover_desktop, cover_mobile } =
+    event;
+
+  const optimizedDesktopCover = React.useMemo(
+    () => cover_desktop,
+    [cover_desktop]
+  );
+  const optimizedMobileCover = React.useMemo(
+    () => cover_mobile[0],
+    [cover_mobile]
+  );
+
+  const _description = description[0].children[0].text;
+  const _location: string =
+    location.includes("http") || location.includes("maps.app")
+      ? location + "__"
+      : location;
+  const _date: string = dateToCustomString(new Date(date));
+
+  /**
+   * DATA
+   */
+  const { textoBotonPrincipal, linkBotonPrincipal } = data;
+
+  const moreInfo = false;
   const height = "100dvh";
   // const textColor = "#eee";
   const textColor = "#eee";
@@ -17,12 +55,6 @@ export default function Banner() {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   const toggleExpand = () => setIsExpanded(!isExpanded);
-
-  // const text = "Un espectáculo donde converge el arte, la música y los sueños.";
-  // const text =
-  //   "15 años de la fiesta más grande de Tandil. Nos recibe una co-producción en la que se presentarán el reconocido dúo local Scape From Reality, Isi Luis, quien nos visita desde Necochea, y, por primera vez en la ciudad, cerrará la noche Cristian U, reconocido artista de la ciudad de Buenos Aires, también conocido como Vasco.";
-  const text =
-    "Una serie de espectáculos donde converge el arte, la música y los sueños. Desconecta de la realidad... bailando.";
 
   // Calcula la longitud del texto a mostrar en modo contraído
   // const maxLength = Math.floor(text.length / 2);
@@ -35,7 +67,8 @@ export default function Banner() {
       height={height}
     >
       <BackdropParallax
-        // objectPosition="right"
+        srcUrlDesktop={optimizedDesktopCover}
+        srcUrlMobile={optimizedMobileCover}
         height={height}
       ></BackdropParallax>
       <Box
@@ -67,7 +100,7 @@ export default function Banner() {
             fontSize={{ base: "2em", lg: "4em" }}
             color={textColor}
           >
-            DREAMPLACE 2025
+            {name}
             {/* <TextScramble
               phrases={["DREAMPLACE ft. Rym & Retina press."]}
               className="text-white"
@@ -77,7 +110,7 @@ export default function Banner() {
         <Box>
           {/* Habilitar el subtitulo superior */}
 
-          {/* <Text
+          <Text
             _selection={{
               backgroundColor: "#000",
             }}
@@ -85,9 +118,9 @@ export default function Banner() {
             color={textColor}
             mb={"1em"}
           >
-            <span style={{ fontWeight: 600 }}>Estadio Ferro, Tandil</span> | 24
-            Dic | Edición Navidad
-          </Text> */}
+            <span style={{ fontWeight: 600 }}>{_location}</span> | {_date}{" "}
+            {moreInfo ? "Edición Navidad" : null}
+          </Text>
           <Text
             _selection={{
               backgroundColor: "#000",
@@ -97,16 +130,17 @@ export default function Banner() {
             onClick={toggleExpand}
             cursor={isMobile ? "pointer" : "default"}
           >
-            {text}
+            {_description}
             {/* {isMobile && !isExpanded
-              ? `${text.slice(0, maxLength)}... Leer más`
-              : text} */}
+              ? `${_description.slice(0, maxLength)}... Leer más`
+              : _description} */}
           </Text>
         </Box>
         <Box>
           <ButtonPrimary
-            disabled={true}
-            text="PRÓXIMAMENTE TICKETS A LA VENTA"
+            disabled={linkBotonPrincipal ? false : true}
+            text={textoBotonPrincipal}
+            linkUrl={linkBotonPrincipal}
             mode="dark"
           >
             <Arrow color="#eee" w="20px" direction="top-right"></Arrow>
