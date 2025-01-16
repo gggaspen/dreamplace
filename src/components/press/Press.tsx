@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Arrow from "../arrow/Arrow";
 import BackdropParallax from "../backdrop-parallax/BackdropParallax";
+import { ICover } from "@/interfaces/event.interface";
 
 enum ESocial {
   INSTAGRAM = "instagram",
@@ -14,7 +15,15 @@ enum ESocial {
   SOUNDCLOUD = "soundcloud",
 }
 
-export default function Press() {
+export default function Press({
+  srcUrlDesktop,
+  srcUrlMobile,
+}: {
+  srcUrlDesktop?: ICover;
+  srcUrlMobile?: ICover;
+}) {
+  console.log(srcUrlDesktop);
+  console.log(srcUrlMobile);
   const height = "100dvh";
   const textColor = "#eee";
 
@@ -60,7 +69,8 @@ export default function Press() {
       justifyContent={{ base: "center", lg: "center" }}
     >
       <BackdropParallax
-        srcUrl="https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png"
+        // srcUrlDesktop={srcUrlDesktop}
+        // srcUrlMobile={srcUrlMobile}
         height={height}
       ></BackdropParallax>
       <Box

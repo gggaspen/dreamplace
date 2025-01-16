@@ -17,8 +17,8 @@ interface BackdropParallaxProps {
   rows?: { direction: "left" | "right" }[];
   objectPosition?: string;
   height?: string;
-  srcUrlDesktop: ICover;
-  srcUrlMobile: ICover;
+  srcUrlDesktop?: ICover;
+  srcUrlMobile?: ICover;
 }
 
 const BackdropParallax: React.FC<BackdropParallaxProps> = ({
@@ -26,15 +26,14 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   srcUrlDesktop,
   srcUrlMobile,
 }) => {
-  console.log(srcUrlDesktop);
-  console.log(srcUrlMobile);
-
   // const container: MutableRefObject<any> = useRef(null);
   const [isDesktop, setIsDesktop] = useState<boolean>(false);
   const [src, setSrc] = useState<string | null>(
     isDesktop
-      ? srcUrlDesktop?.formats?.medium?.url || ""
-      : srcUrlMobile?.formats?.medium?.url || ""
+      ? srcUrlDesktop?.formats?.medium?.url ||
+          "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png"
+      : srcUrlMobile?.formats?.medium?.url ||
+          "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png"
   );
 
   useEffect(() => {

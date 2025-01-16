@@ -77,7 +77,14 @@ export default function Home() {
 
         <MiniBanner text="NUESTROS ARTISTAS" bgColor="#eee" />
 
-        <Press />
+        <Press
+          // srcUrlDesktop={{
+          //   formats: { url: "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png" },
+          // }}
+          // srcUrlMobile={{
+          //   formats: { url: "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png" },
+          // }}
+        />
 
         <Footer />
       </main>
