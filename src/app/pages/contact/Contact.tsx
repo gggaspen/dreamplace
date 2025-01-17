@@ -1,7 +1,7 @@
 import { Box, Text, Flex, Button } from "@chakra-ui/react";
 import React from "react";
 import "./Contact.css";
-import WhatsAppBtn from "../whatsapp/WhatsAppBtn";
+import WhatsAppBtn from "../../../components/whatsapp/WhatsAppBtn";
 
 interface IContactData {
   titulo: string;

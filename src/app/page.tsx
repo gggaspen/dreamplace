@@ -1,20 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Box } from "@chakra-ui/react";
-import Banner from "@/components/banner/Banner";
 import BottomBanner from "@/components/bottom-banner/BottomBanner";
-import TopBanner from "@/components/top-banner/TopBanner";
-import Nav from "@/components/nav/Nav";
-import { Iframe } from "@/components/iframe/Iframe";
-import Carroussel from "@/components/carousel/Carousel";
+import { Iframe } from "@/app/pages/resident/Iframe";
+import Carroussel from "@/app/pages/carousel/Carousel";
 import MiniBanner from "@/components/mini-banner/MiniBanner";
-import Contact from "@/components/contact/Contact";
-import Press from "@/components/press/Press";
-import Footer from "@/components/footer/Footer";
+import Contact from "@/app/pages/contact/Contact";
+import Press from "@/app/pages/press/Press";
+import Footer from "@/app/pages/footer/Footer";
 import { fetchAllData } from "@/services/data.service"; // Centralizamos las llamadas a servicios
 import { dateToCustomString } from "@/utils/format-date";
 import LoadingScreen from "@/components/loading-screen/LoadingScreen";
+import Hero from "./pages/hero/Hero";
 
 export default function Home() {
   const [data, setData] = useState<any>(null);
@@ -37,7 +34,6 @@ export default function Home() {
   }
 
   const {
-    // events,
     activeEvent,
     mainDate,
     bannerData,
@@ -50,14 +46,7 @@ export default function Home() {
   return (
     <>
       <main>
-        <Box h={"100dvh"}>
-          <Box position={"absolute"} zIndex={99} w={"100%"}>
-            <TopBanner text={bannerData?.textoMiniBannerSuperior} />
-            <Nav />
-          </Box>
-
-          <Banner event={activeEvent} data={bannerData} />
-        </Box>
+        <Hero bannerData={bannerData} activeEvent={activeEvent} />
 
         <MiniBanner text={carousel?.banner_text} bgColor="#eee" />
 

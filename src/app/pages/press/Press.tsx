@@ -1,10 +1,10 @@
 import { Text, Box, Flex } from "@chakra-ui/react";
 import "./Press.css";
-import ButtonPrimary from "../button-primary/ButtonPrimary";
+import ButtonPrimary from "../../../components/button-primary/ButtonPrimary";
 import Link from "next/link";
 import Image from "next/image";
-import Arrow from "../arrow/Arrow";
-import BackdropParallax from "../backdrop-parallax/BackdropParallax";
+import Arrow from "../../../components/arrow/Arrow";
+import BackdropParallax from "../../../components/backdrop-parallax/BackdropParallax";
 import { ICover } from "@/interfaces/event.interface";
 
 enum ESocial {

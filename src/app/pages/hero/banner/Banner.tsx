@@ -2,15 +2,14 @@
 
 import { Text, Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import "./Banner.css";
-import ButtonPrimary from "../button-primary/ButtonPrimary";
-import Arrow from "../arrow/Arrow";
-import BackdropParallax from "../backdrop-parallax/BackdropParallax";
 import { useState } from "react";
 import IEvent from "@/interfaces/event.interface";
 import { dateToCustomString } from "@/utils/format-date";
 import IBannerData from "@/interfaces/banner-data.interface";
 import React from "react";
-// import TextScramble from "@/app/motions/TextScramble";
+import BackdropParallax from "@/components/backdrop-parallax/BackdropParallax";
+import ButtonPrimary from "@/components/button-primary/ButtonPrimary";
+import Arrow from "@/components/arrow/Arrow";
 
 export default function Banner({
   event,

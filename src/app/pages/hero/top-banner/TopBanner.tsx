@@ -4,7 +4,7 @@ import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
 import "./TopBanner.css";
 import Link from "next/link";
-import MiniBanner from "../mini-banner/MiniBanner";
+import MiniBanner from "@/components/mini-banner/MiniBanner";
 
 export default function TopBanner({ text }: { text: string }) {
   const url =

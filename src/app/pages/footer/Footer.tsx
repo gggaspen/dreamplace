@@ -2,7 +2,7 @@
 
 import { Box, Text, Flex } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import Logo from "../logo/Logo";
+import Logo from "../../../components/logo/Logo";
 import Image from "next/image";
 import Link from "next/link";
 import YouTubeEmbed from "@/components/youtube-embed/YouTube-Embed";
