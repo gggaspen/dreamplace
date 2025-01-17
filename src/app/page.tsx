@@ -14,6 +14,7 @@ import Press from "@/components/press/Press";
 import Footer from "@/components/footer/Footer";
 import { fetchAllData } from "@/services/data.service"; // Centralizamos las llamadas a servicios
 import { dateToCustomString } from "@/utils/format-date";
+import LoadingScreen from "@/components/loading-screen/LoadingScreen";
 
 export default function Home() {
   const [data, setData] = useState<any>(null);
@@ -31,7 +32,9 @@ export default function Home() {
     fetchData();
   }, []);
 
-  if (!data) return <React.Fragment>Loading...</React.Fragment>;
+  if (!data) {
+    return <LoadingScreen />;
+  }
 
   const {
     // events,
