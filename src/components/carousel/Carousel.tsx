@@ -12,8 +12,6 @@ import { Box, Flex } from "@chakra-ui/react";
 import { ICover } from "@/interfaces/event.interface";
 
 export default function Carroussel({ fotos }: { fotos: ICover[] }) {
-  console.log(fotos);
-
   const [isDesktop, setIsDesktop] = useState(false);
   const [images, setImages] = useState<ICover[]>([]);
 

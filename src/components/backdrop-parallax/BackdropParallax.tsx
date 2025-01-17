@@ -40,7 +40,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
     const updateDesktopSize = () => {
       const isDesktopView = window.matchMedia("(min-width: 768px)").matches;
       setIsDesktop(isDesktopView);
-      console.log("isDesktop: ", isDesktop);
+      // console.log("isDesktop: ", isDesktop);
 
       const src = isDesktopView
         ? srcUrlDesktop?.formats?.medium?.url

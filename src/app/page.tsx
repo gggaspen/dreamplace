@@ -95,31 +95,31 @@ export default function Home() {
 
   useEffect(() => {
     if (bannerData) {
-      console.log("BannerData actualizado:", bannerData);
+      // console.log("BannerData actualizado:", bannerData);
     }
   }, [bannerData]);
 
   useEffect(() => {
     if (spotifySection) {
-      console.log("SpotifySection actualizado:", spotifySection);
+      // console.log("SpotifySection actualizado:", spotifySection);
     }
   }, [spotifySection]);
 
   useEffect(() => {
     if (contactSection) {
-      console.log("contactSection actualizado:", contactSection);
+      // console.log("contactSection actualizado:", contactSection);
     }
   }, [contactSection]);
 
   useEffect(() => {
     if (artistSection) {
-      console.log("artistSection actualizado:", artistSection);
+      // console.log("artistSection actualizado:", artistSection);
     }
   }, [artistSection]);
 
   useEffect(() => {
     if (footerSection) {
-      console.log("footerSection actualizado:", footerSection);
+      // console.log("footerSection actualizado:", footerSection);
     }
   }, [footerSection]);
 
