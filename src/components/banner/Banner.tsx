@@ -22,8 +22,15 @@ export default function Banner({
   /**
    * EVENTS
    */
-  const { name, location, description, date, cover_desktop, cover_mobile } =
-    event;
+  const {
+    name,
+    location,
+    description,
+    date,
+    cover_desktop,
+    cover_mobile,
+    ticket_link,
+  } = event;
 
   const optimizedDesktopCover = React.useMemo(
     () => cover_desktop,
@@ -44,7 +51,7 @@ export default function Banner({
   /**
    * DATA
    */
-  const { textoBotonPrincipal, linkBotonPrincipal } = data;
+  const { textoBotonPrincipal } = data;
 
   const moreInfo = false;
   const height = "100dvh";
@@ -138,9 +145,9 @@ export default function Banner({
         </Box>
         <Box>
           <ButtonPrimary
-            disabled={linkBotonPrincipal ? false : true}
+            disabled={ticket_link ? false : true}
             text={textoBotonPrincipal}
-            linkUrl={linkBotonPrincipal}
+            linkUrl={ticket_link}
             mode="dark"
           >
             <Arrow color="#eee" w="20px" direction="top-right"></Arrow>

@@ -10,9 +10,13 @@ import Link from "next/link";
 
 interface BottomBannerProps {
   rows?: { direction: "left" | "right" }[];
+  text: string;
 }
 
-const BottomBanner: React.FC<BottomBannerProps> = ({ rows }) => {
+const BottomBanner: React.FC<BottomBannerProps> = ({
+  rows,
+  text,
+}: BottomBannerProps) => {
   const container: MutableRefObject<any> = useRef(null);
   const url =
     // "https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito";
@@ -60,6 +64,7 @@ const BottomBanner: React.FC<BottomBannerProps> = ({ rows }) => {
               direction={row.direction}
               progress={scrollYProgress}
               arrow={row.direction === "left" ? "right" : "left"}
+              text={text}
             />
           ))}
         </Flex>

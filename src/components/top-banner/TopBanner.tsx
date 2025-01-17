@@ -6,7 +6,7 @@ import "./TopBanner.css";
 import Link from "next/link";
 import MiniBanner from "../mini-banner/MiniBanner";
 
-export default function TopBanner() {
+export default function TopBanner({ text }: { text: string }) {
   const url =
     // "https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito";
     "https://www.todopass.com.ar/inicio/355-fiesta-de-noel-xv.html";
@@ -71,11 +71,7 @@ export default function TopBanner() {
           }}
         >
           <MiniBanner
-            text={
-              soon
-                ? "PRÓXIMAMENTE TICKETS A LA VENTA"
-                : "COMPRA TUS TICKETS AHORA"
-            }
+            text={text}
             arrowDirection="top-right"
             delay={50}
           ></MiniBanner>

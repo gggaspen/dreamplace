@@ -12,10 +12,17 @@ import MiniBanner from "@/components/mini-banner/MiniBanner";
 import Contact from "@/components/contact/Contact";
 import Press from "@/components/press/Press";
 import Footer from "@/components/footer/Footer";
-import { getBannerData, getEvents } from "@/services/strapi.service";
+import {
+  getBannerData,
+  getCarousel,
+  getContactData,
+  getEvents,
+  getSpotifySection,
+} from "@/services/strapi.service";
 import { useEffect, useState } from "react";
 import IEvent from "@/interfaces/event.interface";
 import IBannerData from "@/interfaces/banner-data.interface";
+import { dateToCustomString } from "@/utils/format-date";
 
 export default function Home() {
   const [events, setEvents] = useState<IEvent[]>(null);
@@ -24,19 +31,44 @@ export default function Home() {
 
   const [bannerData, setBannerData] = useState<IBannerData>(null);
 
+  const [carousel, setCarousel] = useState<any>(null);
+
+  const [spotifySection, setSpotifySection] = useState<any>({});
+
+  const [contactSection, setContactSection] = useState<any>({});
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+        /**
+         * EVENTS
+         */
         const events: IEvent[] = await getEvents();
-        const portada: IBannerData = await getBannerData();
-
         const activeEvent: IEvent = events?.find((event) => event.active);
+        const portada: IBannerData = await getBannerData();
+        const _carousel: any = await getCarousel();
+        const _spotifySection: any = await getSpotifySection();
+        const _contactSection: any = await getContactData();
+
         setEvents(events);
         setActiveEvent(activeEvent);
         setMainDate(new Date(activeEvent.date));
-        console.log(mainDate);
-
+        /**
+         * POSTADA
+         */
         setBannerData(portada);
+        /**
+         * CAROUSEL
+         */
+        setCarousel(_carousel);
+        /**
+         * SPOTIFY SECTION
+         */
+        setSpotifySection(_spotifySection);
+        /**
+         * CONTACT SECTION
+         */
+        setContactSection(_contactSection);
       } catch (error) {
         console.error("Error: ", error);
       }
@@ -51,6 +83,18 @@ export default function Home() {
     }
   }, [bannerData]);
 
+  useEffect(() => {
+    if (spotifySection) {
+      console.log("SpotifySection actualizado:", spotifySection);
+    }
+  }, [spotifySection]);
+
+  useEffect(() => {
+    if (contactSection) {
+      console.log("contactSection actualizado:", contactSection);
+    }
+  }, [contactSection]);
+
   if (!events) return <React.Fragment>Loading...</React.Fragment>;
 
   return (
@@ -58,32 +102,38 @@ export default function Home() {
       <main className="">
         <Box h={"100dvh"}>
           <Box position={"absolute"} zIndex={99} w={"100%"}>
-            <TopBanner></TopBanner>
+            <TopBanner text={bannerData?.textoMiniBannerSuperior}></TopBanner>
             <Nav />
           </Box>
 
           <Banner event={activeEvent} data={bannerData}></Banner>
         </Box>
 
-        <MiniBanner text="PRODUCCIONES" bgColor="#eee" />
+        <MiniBanner text={carousel?.banner_text} bgColor="#eee" />
 
-        <Carroussel />
+        <Carroussel fotos={carousel?.fotos} />
 
-        <BottomBanner rows={[{ direction: "left" }]} />
+        <BottomBanner
+          text={dateToCustomString(mainDate)}
+          rows={[{ direction: "left" }]}
+        />
 
-        <Iframe />
+        <Iframe
+          config={spotifySection}
+          bannerDate={dateToCustomString(mainDate)}
+        />
 
-        <Contact />
+        <Contact config={contactSection} />
 
         <MiniBanner text="NUESTROS ARTISTAS" bgColor="#eee" />
 
         <Press
-          // srcUrlDesktop={{
-          //   formats: { url: "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png" },
-          // }}
-          // srcUrlMobile={{
-          //   formats: { url: "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png" },
-          // }}
+        // srcUrlDesktop={{
+        //   formats: { url: "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png" },
+        // }}
+        // srcUrlMobile={{
+        //   formats: { url: "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png" },
+        // }}
         />
 
         <Footer />

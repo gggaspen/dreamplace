@@ -19,6 +19,7 @@ export default interface IEvent {
   updatedAt: string;
   cover_mobile: ICover[];
   cover_desktop: ICover;
+  ticket_link: string;
 }
 
 export interface ICover {

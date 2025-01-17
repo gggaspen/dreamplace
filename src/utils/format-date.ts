@@ -1,4 +1,4 @@
-export function dateToCustomString(date: Date) {
+export function dateToCustomString(date: Date): string {
   const months = [
     "ENE",
     "FEB",

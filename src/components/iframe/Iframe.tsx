@@ -5,26 +5,18 @@ import BottomBanner from "../bottom-banner/BottomBanner";
 import Arrow from "../arrow/Arrow";
 import Link from "next/link";
 
-export const Iframe = () => {
-  /**
-  const [isDesktop] = useMediaQuery(["(min-width: 768px)"], {
-    ssr: true,
-  });
-  const height = isDesktop ? 352 : 152;
-  */
+interface IframeSection {
+  bannerDate: string;
+  config: {
+    titulo: string;
+    embed_url: string;
+    link_url: string;
+  };
+}
+
+export const Iframe = ({ bannerDate, config }: IframeSection) => {
   const height = 352;
-  /**
-  const [height, setHeight] = useState(152);
-  useEffect(() => {
-    const updateHeight = () => {
-      const isDesktop = window.matchMedia("(min-width: 768px)").matches;
-      setHeight(isDesktop ? 352 : 152);
-    };
-    updateHeight();
-    window.addEventListener("resize", updateHeight);
-    return () => window.removeEventListener("resize", updateHeight);
-  }, []);
-   */
+  const { titulo, embed_url, link_url } = config;
 
   return (
     <>
@@ -46,17 +38,14 @@ export const Iframe = () => {
               fontWeight={600}
               color={"#eee"}
             >
-              Residente
+              {titulo}
             </Text>
             <Flex
               alignItems={"flex-start"}
               zIndex={2}
               mt={{ base: "0", md: "1em" }}
             >
-              <Link
-                href="https://open.spotify.com/artist/6dd2fVevgttSYrLvsRqdTI"
-                target="_blank"
-              >
+              <Link href={link_url ? link_url : "#"} target="_blank">
                 <Arrow direction={"top-right"} w={"30px"} color={"#eee"} />
               </Link>
             </Flex>
@@ -77,13 +66,14 @@ export const Iframe = () => {
                 style={{
                   borderRadius: "14px",
                 }}
-                src="https://open.spotify.com/embed/artist/6dd2fVevgttSYrLvsRqdTI?utm_source=generator"
+                src={embed_url}
                 width="100%"
                 height={height + "px"}
                 loading="lazy"
               ></iframe>
             </Flex>
             <BottomBanner
+              text={bannerDate}
               rows={[
                 { direction: "right" },
                 { direction: "left" },
