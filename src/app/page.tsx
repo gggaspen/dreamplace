@@ -13,10 +13,12 @@ import Contact from "@/components/contact/Contact";
 import Press from "@/components/press/Press";
 import Footer from "@/components/footer/Footer";
 import {
+  getArtistSection,
   getBannerData,
   getCarousel,
   getContactData,
   getEvents,
+  getFooterSection,
   getSpotifySection,
 } from "@/services/strapi.service";
 import { useEffect, useState } from "react";
@@ -37,6 +39,10 @@ export default function Home() {
 
   const [contactSection, setContactSection] = useState<any>({});
 
+  const [artistSection, setArtistSection] = useState<any>({});
+
+  const [footerSection, setFooterSection] = useState<any>({});
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,6 +55,8 @@ export default function Home() {
         const _carousel: any = await getCarousel();
         const _spotifySection: any = await getSpotifySection();
         const _contactSection: any = await getContactData();
+        const _artistSection: any = await getArtistSection();
+        const _footerSection: any = await getFooterSection();
 
         setEvents(events);
         setActiveEvent(activeEvent);
@@ -69,6 +77,14 @@ export default function Home() {
          * CONTACT SECTION
          */
         setContactSection(_contactSection);
+        /**
+         * ARTISTS SECTION
+         */
+        setArtistSection(_artistSection);
+        /**
+         * FOOTER SECTION
+         */
+        setFooterSection(_footerSection);
       } catch (error) {
         console.error("Error: ", error);
       }
@@ -94,6 +110,18 @@ export default function Home() {
       console.log("contactSection actualizado:", contactSection);
     }
   }, [contactSection]);
+
+  useEffect(() => {
+    if (artistSection) {
+      console.log("artistSection actualizado:", artistSection);
+    }
+  }, [artistSection]);
+
+  useEffect(() => {
+    if (footerSection) {
+      console.log("footerSection actualizado:", footerSection);
+    }
+  }, [footerSection]);
 
   if (!events) return <React.Fragment>Loading...</React.Fragment>;
 
@@ -125,17 +153,11 @@ export default function Home() {
 
         <Contact config={contactSection} />
 
-        <MiniBanner text="NUESTROS ARTISTAS" bgColor="#eee" />
+        <MiniBanner text={bannerData.text_artists_banner} bgColor="#eee" />
 
-        <Press
-        // srcUrlDesktop={{
-        //   formats: { url: "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png" },
-        // }}
-        // srcUrlMobile={{
-        //   formats: { url: "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png" },
-        // }}
-        />
+        <Press config={artistSection} />
 
+        {/* <Footer config={footerSection} /> */}
         <Footer />
       </main>
     </>

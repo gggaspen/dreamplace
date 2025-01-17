@@ -1,10 +1,39 @@
+"use client";
+
+import { getFooterSection } from "@/services/strapi.service";
+import { getYouTubeVideoId } from "@/utils/get-youtube-id";
 import { Flex } from "@chakra-ui/react";
-import React from "react";
-const YouTubeEmbed = ({
-  // videoId = "_jrc-gAcAswzO9ZVbD6b56MTI2A",
-  videoId = "AOgVRaNa_UM?si=I6awtst76bApQvKP",
-  title = 'Agustin Pietrocola Playing "On My Mind" @Dreamplace [ 03/02/2024 ]',
-}) => {
+import React, { useEffect, useState } from "react";
+const YouTubeEmbed = () => {
+  const [footerSection, setFooterSection] = useState<any>({});
+
+  const [embedSrc, setEmbedSrc] = useState("");
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const _footerSection: any = await getFooterSection();
+        setFooterSection(_footerSection);
+      } catch (error) {
+        console.error("Error: ", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (footerSection) {
+      console.log("footerSection actualizado:", footerSection);
+      const { youtube_url, youtube_title } = footerSection;
+      const id = getYouTubeVideoId(youtube_url);
+      setEmbedSrc(
+        `https://www.youtube.com/embed/${id}&autoplay=1&mute=0&loop=1&controls=0`
+      );
+      setTitle(youtube_title);
+    }
+  }, [footerSection]);
+
   return (
     <Flex
       justifyContent={"center"}
@@ -14,7 +43,7 @@ const YouTubeEmbed = ({
       <iframe
         width="100%"
         height="315"
-        src={`https://www.youtube.com/embed/${videoId}&autoplay=1&mute=0&loop=1&controls=0`}
+        src={embedSrc}
         title={title}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       ></iframe>

@@ -8,6 +8,16 @@ import Link from "next/link";
 import YouTubeEmbed from "@/components/youtube-embed/YouTube-Embed";
 
 export default function Footer() {
+//   {
+//   config,
+// }: {
+//   config: {
+//     youtube_url: string;
+//     youtube_title: string;
+//   };
+// }
+  // const { youtube_url, youtube_title } = config;
+
   const [isVisible, setIsVisible] = useState(false);
   const observerRef = useRef(null); // El ref para el observador
 
@@ -48,6 +58,7 @@ export default function Footer() {
 
         {/* Renderiza el iframe cuando es visible */}
         {isVisible && <YouTubeEmbed />}
+        {/* {isVisible && <YouTubeEmbed title={youtube_title} src={youtube_url} />} */}
 
         <Flex
           color={"white"}
@@ -58,7 +69,7 @@ export default function Footer() {
           gap={"2em"}
         >
           <Text fontWeight={"bold"} fontSize={"1em"} my={"2em"}>
-            2025 EDITION
+            {new Date().getFullYear()} EDITION
           </Text>
 
           <Link href="https://www.instagram.com/dreamplace.ar/" target="_blank">

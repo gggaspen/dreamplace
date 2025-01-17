@@ -1,12 +1,9 @@
 import { API_URL } from "@/app/config";
-// import { QUERY_GET_ALL_EVENTS } from "./graphql";
 
 async function getEvents() {
-  // const res = await fetch(`${API_URL}/api/events`);
   const res = await fetch(
     `${API_URL}/api/events?fields[0]=name&fields[1]=location&fields[2]=description&fields[3]=date&fields[4]=active&fields[5]=ticket_link&populate[cover_mobile][fields][1]=formats&populate[cover_desktop][fields][1]=formats`
   );
-  // const res = await fetch(`${API_URL}/api/events?populate=*`);
   if (!res.ok) {
     throw new Error("Error al obtener los eventos");
   }
@@ -16,7 +13,7 @@ async function getEvents() {
 
 async function getBannerData() {
   const res = await fetch(
-    `${API_URL}/api/portadas?fields[0]=textoBotonPrincipal&fields[1]=textoMiniBannerSuperior`
+    `${API_URL}/api/portadas?fields[0]=textoBotonPrincipal&fields[1]=textoMiniBannerSuperior&fields[2]=text_artists_banner`
   );
   if (!res.ok) {
     throw new Error("Error al obtener la data del banner principal");
@@ -58,10 +55,34 @@ async function getContactData() {
   return data[0];
 }
 
+async function getArtistSection() {
+  const res = await fetch(
+    `${API_URL}/api/artist-sections?fields[0]=name&fields[1]=labels&fields[2]=links&fields[3]=text_button&fields[4]=link_button&populate[photo][fields][0]=formats`
+  );
+  if (!res.ok) {
+    throw new Error("Error al obtener la data de la sección de Spotify");
+  }
+  const { data } = await res.json();
+  return data;
+}
+
+async function getFooterSection() {
+  const res = await fetch(
+    `${API_URL}/api/footer-sections?fields[0]=youtube_url&fields[1]=youtube_title`
+  );
+  if (!res.ok) {
+    throw new Error("Error al obtener la data de la sección de Spotify");
+  }
+  const { data } = await res.json();
+  return data[0];
+}
+
 export {
   getEvents,
   getBannerData,
   getCarousel,
   getSpotifySection,
   getContactData,
+  getArtistSection,
+  getFooterSection,
 };

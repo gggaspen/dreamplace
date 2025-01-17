@@ -15,17 +15,26 @@ enum ESocial {
   SOUNDCLOUD = "soundcloud",
 }
 
-export default function Press({
-  srcUrlDesktop,
-  srcUrlMobile,
-}: {
-  srcUrlDesktop?: ICover;
-  srcUrlMobile?: ICover;
-}) {
-  console.log(srcUrlDesktop);
-  console.log(srcUrlMobile);
+interface IArtistPress {
+  name: string;
+  labels: string;
+  links: string[];
+  photo: ICover;
+  text_button: string;
+  link_button: string;
+}
+
+interface PressProps {
+  config: IArtistPress[];
+}
+
+export default function Press({ config }: PressProps) {
   const height = "100dvh";
   const textColor = "#eee";
+
+  const { name, labels, links, photo, text_button, link_button } = config[0];
+
+  console.log(links);
 
   const socialLinks = [
     {
@@ -69,8 +78,8 @@ export default function Press({
       justifyContent={{ base: "center", lg: "center" }}
     >
       <BackdropParallax
-        // srcUrlDesktop={srcUrlDesktop}
-        // srcUrlMobile={srcUrlMobile}
+        srcUrlDesktop={photo}
+        srcUrlMobile={photo}
         height={height}
       ></BackdropParallax>
       <Box
@@ -103,7 +112,7 @@ export default function Press({
             color={textColor}
             fontWeight={600}
           >
-            Agustin Pietrocola
+            {name}
           </Text>
         </Box>
         <Box>
@@ -114,7 +123,7 @@ export default function Press({
             fontSize={"1em"}
             color={textColor}
           >
-            Mango Alley | UV | Long Way Records
+            {labels}
           </Text>
         </Box>
 
@@ -136,7 +145,12 @@ export default function Press({
           ))}
         </Flex>
         <Box>
-          <ButtonPrimary mode="dark" text="Presskit" download={true}>
+          <ButtonPrimary
+            mode="dark"
+            text={text_button}
+            download={true}
+            linkUrl={link_button}
+          >
             <Arrow color="#000" w="20px" direction="top-right"></Arrow>
           </ButtonPrimary>
         </Box>
