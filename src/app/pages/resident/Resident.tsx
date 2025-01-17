@@ -5,7 +5,7 @@ import BottomBanner from "../../../components/bottom-banner/BottomBanner";
 import Arrow from "../../../components/arrow/Arrow";
 import Link from "next/link";
 
-interface IframeSection {
+interface ResidentSection {
   bannerDate: string;
   config: {
     titulo: string;
@@ -14,7 +14,7 @@ interface IframeSection {
   };
 }
 
-export const Iframe = ({ bannerDate, config }: IframeSection) => {
+export const Resident = ({ bannerDate, config }: ResidentSection) => {
   const height = 352;
   const { titulo, embed_url, link_url } = config;
 

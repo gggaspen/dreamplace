@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import BottomBanner from "@/components/bottom-banner/BottomBanner";
-import { Iframe } from "@/app/pages/resident/Iframe";
+import { Resident } from "@/app/pages/resident/Resident";
 import Carroussel from "@/app/pages/carousel/Carousel";
-import MiniBanner from "@/components/mini-banner/MiniBanner";
+// import MiniBanner from "@/components/mini-banner/MiniBanner";
 import Contact from "@/app/pages/contact/Contact";
 import Press from "@/app/pages/press/Press";
 import Footer from "@/app/pages/footer/Footer";
@@ -48,25 +48,27 @@ export default function Home() {
       <main>
         <Hero bannerData={bannerData} activeEvent={activeEvent} />
 
-        <MiniBanner text={carousel?.banner_text} bgColor="#eee" />
-
-        <Carroussel fotos={carousel?.fotos} />
+        <Carroussel
+          fotos={carousel?.fotos}
+          banner_text={carousel?.banner_text}
+        />
 
         <BottomBanner
           text={dateToCustomString(mainDate)}
           rows={[{ direction: "left" }]}
         />
 
-        <Iframe
+        <Resident
           config={spotifySection}
           bannerDate={dateToCustomString(mainDate)}
         />
 
         <Contact config={contactSection} />
 
-        <MiniBanner text={bannerData.text_artists_banner} bgColor="#eee" />
-
-        <Press config={artistSection} />
+        <Press
+          config={artistSection}
+          text_artists_banner={bannerData.text_artists_banner}
+        />
 
         <Footer />
       </main>

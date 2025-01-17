@@ -6,6 +6,7 @@ import Image from "next/image";
 import Arrow from "../../../components/arrow/Arrow";
 import BackdropParallax from "../../../components/backdrop-parallax/BackdropParallax";
 import { ICover } from "@/interfaces/event.interface";
+import MiniBanner from "@/components/mini-banner/MiniBanner";
 
 enum ESocial {
   INSTAGRAM = "instagram",
@@ -16,6 +17,7 @@ enum ESocial {
 }
 
 interface IArtistPress {
+  text_banner: string;
   name: string;
   labels: string;
   links: string[];
@@ -26,9 +28,10 @@ interface IArtistPress {
 
 interface PressProps {
   config: IArtistPress[];
+  text_artists_banner: string;
 }
 
-export default function Press({ config }: PressProps) {
+export default function Press({ config, text_artists_banner }: PressProps) {
   const height = "100dvh";
   const textColor = "#eee";
 
@@ -70,91 +73,95 @@ export default function Press({ config }: PressProps) {
   ];
 
   return (
-    <Flex
-      alignItems="flex-end"
-      position="relative"
-      overflow="hidden"
-      height={{ base: height, lg: height }}
-      justifyContent={{ base: "center", lg: "center" }}
-    >
-      <BackdropParallax
-        srcUrlDesktop={photo}
-        srcUrlMobile={photo}
-        height={height}
-      ></BackdropParallax>
-      <Box
-        w={"100%"}
-        h={"100%"}
-        bg={
-          "linear-gradient(0deg, rgb(0 0 0) 0%, transparent, rgb(255 255 255 / 0%) 100%)"
-        }
-        position="absolute"
-      />
+    <>
+      <MiniBanner text={text_artists_banner} bgColor="#eee" />
 
-      {/* Contenido */}
       <Flex
-        flexDirection="column"
-        justifyContent="flex-end"
-        gap="2"
-        w={"100%"}
-        h={height}
-        zIndex={1}
-        paddingBottom={"10%"}
-        paddingX={{ base: "2em", lg: "14em" }}
-        paddingRight={{ base: "2em", lg: "40%" }}
+        alignItems="flex-end"
+        position="relative"
+        overflow="hidden"
+        height={{ base: height, lg: height }}
+        justifyContent={{ base: "center", lg: "center" }}
       >
-        <Box>
-          <Text
-            _selection={{
-              backgroundColor: "#000",
-            }}
-            fontSize={{ base: "2em", lg: "3em" }}
-            color={textColor}
-            fontWeight={600}
-          >
-            {name}
-          </Text>
-        </Box>
-        <Box>
-          <Text
-            _selection={{
-              backgroundColor: "#000",
-            }}
-            fontSize={"1em"}
-            color={textColor}
-          >
-            {labels}
-          </Text>
-        </Box>
+        <BackdropParallax
+          srcUrlDesktop={photo}
+          srcUrlMobile={photo}
+          height={height}
+        ></BackdropParallax>
+        <Box
+          w={"100%"}
+          h={"100%"}
+          bg={
+            "linear-gradient(0deg, rgb(0 0 0) 0%, transparent, rgb(255 255 255 / 0%) 100%)"
+          }
+          position="absolute"
+        />
 
-        <Flex w={"100%"} alignItems={"center"} gap={"1.5em"} mt={"1em"}>
-          {socialLinks.map((link, index) => (
-            <Link
-              key={index}
-              href={link.href}
-              target="_blank"
-              style={{ maxWidth: "20px" }}
+        {/* Contenido */}
+        <Flex
+          flexDirection="column"
+          justifyContent="flex-end"
+          gap="2"
+          w={"100%"}
+          h={height}
+          zIndex={1}
+          paddingBottom={"10%"}
+          paddingX={{ base: "2em", lg: "14em" }}
+          paddingRight={{ base: "2em", lg: "40%" }}
+        >
+          <Box>
+            <Text
+              _selection={{
+                backgroundColor: "#000",
+              }}
+              fontSize={{ base: "2em", lg: "3em" }}
+              color={textColor}
+              fontWeight={600}
             >
-              <Image
-                src={link.src}
-                width={link.id === ESocial.BEATPORT ? 19 : 20}
-                height={20}
-                alt={link.alt}
-              />
-            </Link>
-          ))}
+              {name}
+            </Text>
+          </Box>
+          <Box>
+            <Text
+              _selection={{
+                backgroundColor: "#000",
+              }}
+              fontSize={"1em"}
+              color={textColor}
+            >
+              {labels}
+            </Text>
+          </Box>
+
+          <Flex w={"100%"} alignItems={"center"} gap={"1.5em"} mt={"1em"}>
+            {socialLinks.map((link, index) => (
+              <Link
+                key={index}
+                href={link.href}
+                target="_blank"
+                style={{ maxWidth: "20px" }}
+              >
+                <Image
+                  src={link.src}
+                  width={link.id === ESocial.BEATPORT ? 19 : 20}
+                  height={20}
+                  alt={link.alt}
+                />
+              </Link>
+            ))}
+          </Flex>
+          <Box>
+            <ButtonPrimary
+              mode="dark"
+              text={text_button}
+              download={true}
+              linkUrl={link_button}
+            >
+              <Arrow color="#000" w="20px" direction="top-right"></Arrow>
+            </ButtonPrimary>
+          </Box>
         </Flex>
-        <Box>
-          <ButtonPrimary
-            mode="dark"
-            text={text_button}
-            download={true}
-            linkUrl={link_button}
-          >
-            <Arrow color="#000" w="20px" direction="top-right"></Arrow>
-          </ButtonPrimary>
-        </Box>
       </Flex>
-    </Flex>
+    </>
   );
 }
