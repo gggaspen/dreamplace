@@ -12,6 +12,7 @@ import { fetchAllData } from "@/services/data.service"; // Centralizamos las lla
 import { dateToCustomString } from "@/utils/format-date";
 import LoadingScreen from "@/components/loading-screen/LoadingScreen";
 import Hero from "./pages/hero/Hero";
+import "./css/motions.css";
 
 export default function Home() {
   const [data, setData] = useState<any>(null);
@@ -45,7 +46,8 @@ export default function Home() {
 
   return (
     <>
-      <main>
+      {/* <div className="pulse-motion"></div> */}
+      <main className="pulse-motion">
         <Hero bannerData={bannerData} activeEvent={activeEvent} />
 
         <Carroussel
