@@ -7,74 +7,37 @@ import Arrow from "../../../components/arrow/Arrow";
 import BackdropParallax from "../../../components/backdrop-parallax/BackdropParallax";
 import { ICover } from "@/interfaces/event.interface";
 import MiniBanner from "@/components/mini-banner/MiniBanner";
+import { EPlatform } from "@/enums/platform.enum";
+import getPlatformUrl from "@/utils/get-platform-url";
 
-enum ESocial {
-  INSTAGRAM = "instagram",
-  YOUTUBE = "youtube",
-  BEATPORT = "beatport",
-  SPOTIFY = "spotify",
-  SOUNDCLOUD = "soundcloud",
-}
-
-interface IArtistPress {
-  text_banner: string;
+interface IArtist {
   name: string;
+  links: {
+    id: number;
+    platform: EPlatform;
+    url: string;
+  }[];
+  photos: ICover[];
   labels: string;
-  links: string[];
-  photo: ICover;
-  text_button: string;
-  link_button: string;
 }
 
 interface PressProps {
-  config: IArtistPress[];
-  text_artists_banner: string;
+  config: {
+    title: string;
+    artists: IArtist[];
+  };
 }
 
-export default function Press({ config, text_artists_banner }: PressProps) {
+export default function Press({ config }: PressProps) {
+  const { title, artists } = config;
+  const { name, labels, links, photos } = artists[2];
+
   const height = "100dvh";
   const textColor = "#eee";
 
-  const { name, labels, links, photo, text_button, link_button } = config[0];
-
-  console.log(links);
-
-  const socialLinks = [
-    {
-      id: ESocial.INSTAGRAM,
-      href: "https://www.instagram.com/agustinpietrocola/",
-      src: "/img/icon/ig.png",
-      alt: "Instagram link",
-    },
-    {
-      id: ESocial.YOUTUBE,
-      href: "https://www.youtube.com/channel/UCtCL9yJkw1gggaAKXaxcgPw",
-      src: "/img/icon/youtube.png",
-      alt: "YouTube link",
-    },
-    {
-      id: ESocial.BEATPORT,
-      href: "https://www.beatport.com/artist/agustin-pietrocola/629328?srsltid=ESocial.BEATPORT -Tx9",
-      src: "/img/icon/beatport.png",
-      alt: "Beatport link",
-    },
-    {
-      id: ESocial.SPOTIFY,
-      href: "https://open.spotify.com/artist/6dd2fVevgttSYrLvsRqdTI?si=zRQQL_oJRkCH8hKjrJgBZg",
-      src: "/img/icon/spotify.png",
-      alt: "Spotify link",
-    },
-    {
-      id: ESocial.SOUNDCLOUD,
-      href: "https://soundcloud.com/agus-pietrocola",
-      src: "/img/icon/soundcloud.png",
-      alt: "SoundCloud link",
-    },
-  ];
-
   return (
     <>
-      <MiniBanner text={text_artists_banner} bgColor="#eee" />
+      <MiniBanner text={title} bgColor="#eee" />
 
       <Flex
         alignItems="flex-end"
@@ -84,8 +47,8 @@ export default function Press({ config, text_artists_banner }: PressProps) {
         justifyContent={{ base: "center", lg: "center" }}
       >
         <BackdropParallax
-          srcUrlDesktop={photo}
-          srcUrlMobile={photo}
+          srcUrlDesktop={photos[0]}
+          srcUrlMobile={photos[0]}
           height={height}
         ></BackdropParallax>
         <Box
@@ -134,18 +97,18 @@ export default function Press({ config, text_artists_banner }: PressProps) {
           </Box>
 
           <Flex w={"100%"} alignItems={"center"} gap={"1.5em"} mt={"1em"}>
-            {socialLinks.map((link, index) => (
+            {links.map((link, index) => (
               <Link
                 key={index}
-                href={link.href}
+                href={link.url}
                 target="_blank"
                 style={{ maxWidth: "20px" }}
               >
                 <Image
-                  src={link.src}
-                  width={link.id === ESocial.BEATPORT ? 19 : 20}
+                  src={getPlatformUrl(link.platform)}
+                  width={link.platform === EPlatform.BEATPORT ? 19 : 20}
                   height={20}
-                  alt={link.alt}
+                  alt={link.platform}
                 />
               </Link>
             ))}
@@ -153,9 +116,9 @@ export default function Press({ config, text_artists_banner }: PressProps) {
           <Box>
             <ButtonPrimary
               mode="dark"
-              text={text_button}
+              text={links[0].platform}
               download={true}
-              linkUrl={link_button}
+              linkUrl={links[0].url}
             >
               <Arrow color="#000" w="20px" direction="top-right"></Arrow>
             </ButtonPrimary>

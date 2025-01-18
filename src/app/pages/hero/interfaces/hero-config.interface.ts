@@ -7,7 +7,7 @@ export default interface IHeroConfig {
   title: string;
   subtitle: string;
   paragraph: string;
-  navigator: NavigatorConfig[];
+  navigator: NavigatorConfig;
   button: Button;
   cover_mobile: ICover;
   cover_desktop: ICover;

@@ -14,7 +14,7 @@ interface HeroProps {
 
 export default function Hero({ config, activeEvent }: HeroProps) {
   const { navigator } = config;
-  const nav: NavigatorConfig = { ...navigator[0] };
+  const nav: NavigatorConfig = { ...navigator };
 
   return (
     <Box h={"100dvh"}>

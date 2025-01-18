@@ -65,13 +65,13 @@ async function getContactData() {
 
 async function getArtistSection() {
   const res = await fetch(
-    `${API_URL}/api/artist-sections?fields[0]=name&fields[1]=labels&fields[2]=links&fields[3]=text_button&fields[4]=link_button&populate[photo][fields][0]=formats`
+    `${API_URL}/api/artist-sections?populate[artists][populate][photos]=*&populate[artists][populate][links]=*`
   );
   if (!res.ok) {
     throw new Error("Error al obtener la data de la sección de Spotify");
   }
   const { data } = await res.json();
-  return data;
+  return data[0];
 }
 
 async function getFooterSection() {

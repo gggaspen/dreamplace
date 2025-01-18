@@ -62,10 +62,7 @@ export default function Home() {
 
         <Contact config={contactSection} />
 
-        <Press
-          config={artistSection}
-          text_artists_banner={"bannerData.text_artists_banner"}
-        />
+        <Press config={artistSection} />
 
         <Footer />
       </main>
