@@ -1,7 +1,6 @@
 import {
   getHeroData,
   getEvents,
-  getBannerData,
   getCarousel,
   getSpotifySection,
   getContactData,
@@ -13,7 +12,6 @@ export const fetchAllData = async () => {
   const [
     heroData,
     events,
-    bannerData,
     carousel,
     spotifySection,
     contactSection,
@@ -22,7 +20,6 @@ export const fetchAllData = async () => {
   ] = await Promise.all([
     getHeroData(),
     getEvents(),
-    getBannerData(),
     getCarousel(),
     getSpotifySection(),
     getContactData(),
@@ -38,7 +35,6 @@ export const fetchAllData = async () => {
     events,
     activeEvent,
     mainDate,
-    bannerData,
     carousel,
     spotifySection,
     contactSection,

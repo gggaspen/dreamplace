@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from "react";
 import BottomBanner from "@/components/bottom-banner/BottomBanner";
 import { Resident } from "@/app/pages/resident/Resident";
-import Carroussel from "@/app/pages/carousel/Carousel";
-// import MiniBanner from "@/components/mini-banner/MiniBanner";
+import Carousel from "@/app/pages/carousel/Carousel";
 import Contact from "@/app/pages/contact/Contact";
 import Press from "@/app/pages/press/Press";
 import Footer from "@/app/pages/footer/Footer";
@@ -38,7 +37,6 @@ export default function Home() {
     heroData,
     activeEvent,
     mainDate,
-    bannerData,
     carousel,
     spotifySection,
     contactSection,
@@ -50,10 +48,7 @@ export default function Home() {
       <main className="pulse-motion">
         <Hero config={heroData} activeEvent={activeEvent} />
 
-        <Carroussel
-          fotos={carousel?.fotos}
-          banner_text={carousel?.banner_text}
-        />
+        <Carousel fotos={carousel?.fotos} banner_text={carousel?.banner_text} />
 
         <BottomBanner
           text={dateToCustomString(mainDate)}
@@ -69,7 +64,7 @@ export default function Home() {
 
         <Press
           config={artistSection}
-          text_artists_banner={bannerData.text_artists_banner}
+          text_artists_banner={"bannerData.text_artists_banner"}
         />
 
         <Footer />

@@ -17,7 +17,7 @@ interface ICarouselProps {
   banner_text: string;
 }
 
-export default function Carroussel({ fotos, banner_text }: ICarouselProps) {
+export default function Carousel({ fotos, banner_text }: ICarouselProps) {
   const [isDesktop, setIsDesktop] = useState(false);
   const [images, setImages] = useState<ICover[]>([]);
 

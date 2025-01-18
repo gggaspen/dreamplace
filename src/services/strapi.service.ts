@@ -1,16 +1,9 @@
 import { API_URL } from "@/app/config";
 
-async function getHeroData() {
-  const res = await fetch(
-    `${API_URL}/api/hero-sections?fields[1]=title&fields[2]=subtitle&fields[3]=paragraph&populate[navigator][fields]=*&populate[button][fields]=*&populate[cover_mobile][fields][0]=formats&populate[cover_desktop][fields][0]=formats`
-  );
-  if (!res.ok) {
-    throw new Error("Error al obtener los eventos");
-  }
-  const { data } = await res.json();
-  return data[0];
-}
-
+/**
+ *
+ * @returns ALL EVENTS
+ */
 async function getEvents() {
   const res = await fetch(
     `${API_URL}/api/events?fields[0]=name&fields[1]=location&fields[2]=description&fields[3]=date&fields[4]=active&fields[5]=ticket_link&populate[cover_mobile][fields][1]=formats&populate[cover_desktop][fields][1]=formats`
@@ -22,12 +15,16 @@ async function getEvents() {
   return data;
 }
 
-async function getBannerData() {
+/**
+ *
+ * @returns SECTIONS
+ */
+async function getHeroData() {
   const res = await fetch(
-    `${API_URL}/api/portadas?fields[0]=textoBotonPrincipal&fields[1]=textoMiniBannerSuperior&fields[2]=text_artists_banner`
+    `${API_URL}/api/hero-sections?fields[1]=title&fields[2]=subtitle&fields[3]=paragraph&populate[navigator][fields]=*&populate[button][fields]=*&populate[cover_mobile][fields][0]=formats&populate[cover_desktop][fields][0]=formats`
   );
   if (!res.ok) {
-    throw new Error("Error al obtener la data del banner principal");
+    throw new Error("Error al obtener los eventos");
   }
   const { data } = await res.json();
   return data[0];
@@ -91,7 +88,6 @@ async function getFooterSection() {
 export {
   getHeroData,
   getEvents,
-  getBannerData,
   getCarousel,
   getSpotifySection,
   getContactData,
