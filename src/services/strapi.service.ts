@@ -65,7 +65,7 @@ async function getContactData() {
 
 async function getArtistSection() {
   const res = await fetch(
-    `${API_URL}/api/artist-sections?populate[artists][populate][photos]=*&populate[artists][populate][links]=*`
+    `${API_URL}/api/artist-sections?populate[artists][populate][photos]=*&populate[artists][populate][links]=*&populate[artists][populate][labels]=*`
   );
   if (!res.ok) {
     throw new Error("Error al obtener la data de la sección de Spotify");

@@ -5,4 +5,5 @@ export enum EPlatform {
   SPOTIFY = "spotify",
   SOUNDCLOUD = "soundcloud",
   WEB = "web",
+  PRESSKIT = "presskit",
 }
