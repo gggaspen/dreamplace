@@ -8,18 +8,10 @@ import Link from "next/link";
 import YouTubeEmbed from "@/components/youtube-embed/YouTube-Embed";
 
 export default function Footer() {
-//   {
-//   config,
-// }: {
-//   config: {
-//     youtube_url: string;
-//     youtube_title: string;
-//   };
-// }
-  // const { youtube_url, youtube_title } = config;
-
   const [isVisible, setIsVisible] = useState(false);
   const observerRef = useRef(null); // El ref para el observador
+
+  const [counter, setCounter] = useState<number>(0);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -41,6 +33,15 @@ export default function Footer() {
       }
     };
   }, []);
+
+  const openAdmin = () => {
+    setCounter(counter + 1);
+    const isAdminOpen = counter >= 10;
+    if (isAdminOpen) {
+      window.open("https://dreamplace-strapi.up.railway.app/admin", "_blank");
+      setCounter(0);
+    }
+  };
 
   return (
     <>
@@ -87,7 +88,9 @@ export default function Footer() {
         </Flex>
 
         <Flex justifyContent={"center"} my={"4em"}>
-          <Logo w="100%" color="rgb(34, 34, 34)" />
+          <Box onClick={() => openAdmin()}>
+            <Logo w="100%" color="rgb(34, 34, 34)" />
+          </Box>
         </Flex>
       </Flex>
     </>
