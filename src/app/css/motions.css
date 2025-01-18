@@ -2,6 +2,10 @@
   animation: pulse 0.5s ease-in;
 }
 
+.pulse-motion-2 {
+  animation: pulse 3s ease-in-out;
+}
+
 @keyframes pulse {
   0% {
     opacity: 0;

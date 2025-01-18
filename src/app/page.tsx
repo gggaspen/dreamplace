@@ -35,6 +35,7 @@ export default function Home() {
   }
 
   const {
+    heroData,
     activeEvent,
     mainDate,
     bannerData,
@@ -46,9 +47,8 @@ export default function Home() {
 
   return (
     <>
-      {/* <div className="pulse-motion"></div> */}
       <main className="pulse-motion">
-        <Hero bannerData={bannerData} activeEvent={activeEvent} />
+        <Hero config={heroData} activeEvent={activeEvent} />
 
         <Carroussel
           fotos={carousel?.fotos}

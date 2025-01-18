@@ -1,4 +1,5 @@
 import {
+  getHeroData,
   getEvents,
   getBannerData,
   getCarousel,
@@ -10,6 +11,7 @@ import {
 
 export const fetchAllData = async () => {
   const [
+    heroData,
     events,
     bannerData,
     carousel,
@@ -18,6 +20,7 @@ export const fetchAllData = async () => {
     artistSection,
     footerSection,
   ] = await Promise.all([
+    getHeroData(),
     getEvents(),
     getBannerData(),
     getCarousel(),
@@ -31,6 +34,7 @@ export const fetchAllData = async () => {
   const mainDate = activeEvent ? new Date(activeEvent.date) : new Date();
 
   return {
+    heroData,
     events,
     activeEvent,
     mainDate,

@@ -5,7 +5,7 @@ export default function ButtonPrimary({
   text,
   download,
   mode,
-  disabled,
+  disabled = false,
   linkUrl,
 }: Readonly<{
   children: React.ReactNode;

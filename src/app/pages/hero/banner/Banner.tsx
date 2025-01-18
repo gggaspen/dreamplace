@@ -5,56 +5,36 @@ import "./Banner.css";
 import { useState } from "react";
 import IEvent from "@/interfaces/event.interface";
 import { dateToCustomString } from "@/utils/format-date";
-import IBannerData from "@/interfaces/banner-data.interface";
+// import IBannerData from "@/interfaces/banner-data.interface";
 import React from "react";
 import BackdropParallax from "@/components/backdrop-parallax/BackdropParallax";
 import ButtonPrimary from "@/components/button-primary/ButtonPrimary";
 import Arrow from "@/components/arrow/Arrow";
+import IHeroConfig from "../interfaces/hero-config.interface";
 
 export default function Banner({
+  config,
   event,
-  data,
 }: {
+  config: IHeroConfig;
   event: IEvent;
-  data: IBannerData;
 }) {
-  /**
-   * EVENTS
-   */
-  const {
-    name,
-    location,
-    description,
-    date,
-    cover_desktop,
-    cover_mobile,
-    ticket_link,
-  } = event;
+  const { title, subtitle, paragraph, button, cover_desktop, cover_mobile } =
+    config;
+  const { date } = event;
 
   const optimizedDesktopCover = React.useMemo(
     () => cover_desktop,
     [cover_desktop]
   );
   const optimizedMobileCover = React.useMemo(
-    () => cover_mobile[0],
+    () => cover_mobile,
     [cover_mobile]
   );
 
-  const _description = description[0].children[0].text;
-  const _location: string =
-    location.includes("http") || location.includes("maps.app")
-      ? location + "__"
-      : location;
   const _date: string = dateToCustomString(new Date(date));
 
-  /**
-   * DATA
-   */
-  const { textoBotonPrincipal } = data;
-
-  const moreInfo = false;
   const height = "100dvh";
-  // const textColor = "#eee";
   const textColor = "#eee";
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -106,7 +86,7 @@ export default function Banner({
             fontSize={{ base: "2em", lg: "4em" }}
             color={textColor}
           >
-            {name}
+            {title}
             {/* <TextScramble
               phrases={["DREAMPLACE ft. Rym & Retina press."]}
               className="text-white"
@@ -124,8 +104,7 @@ export default function Banner({
             color={textColor}
             mb={"1em"}
           >
-            <span style={{ fontWeight: 600 }}>{_location}</span> | {_date}{" "}
-            {moreInfo ? "Edición Navidad" : null}
+            <span style={{ fontWeight: 600 }}>{subtitle}</span> | {_date}
           </Text>
           <Text
             _selection={{
@@ -136,17 +115,17 @@ export default function Banner({
             onClick={toggleExpand}
             cursor={isMobile ? "pointer" : "default"}
           >
-            {_description}
+            {paragraph}
             {/* {isMobile && !isExpanded
-              ? `${_description.slice(0, maxLength)}... Leer más`
-              : _description} */}
+              ? `${_paragraph.slice(0, maxLength)}... Leer más`
+              : _paragraph} */}
           </Text>
         </Box>
         <Box>
           <ButtonPrimary
-            disabled={ticket_link ? false : true}
-            text={textoBotonPrincipal}
-            linkUrl={ticket_link}
+            // disabled={!button.link ? false : true}
+            text={button.text}
+            linkUrl={button.link}
             mode="dark"
           >
             <Arrow color="#eee" w="20px" direction="top-right"></Arrow>

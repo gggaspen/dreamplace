@@ -63,7 +63,7 @@ export default function Carroussel({ fotos, banner_text }: ICarouselProps) {
             speed={100}
           >
             {images.map((image, index) => (
-              <React.Fragment key={index}>
+              <React.Fragment key={image.id}>
                 <SwiperSlide>
                   <Flex
                     justifyContent={"center"}

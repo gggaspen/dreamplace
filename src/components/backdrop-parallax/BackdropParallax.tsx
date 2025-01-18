@@ -12,6 +12,7 @@ import React, {
 import Image from "next/image";
 import { Box, Flex } from "@chakra-ui/react";
 import { ICover } from "@/interfaces/event.interface";
+import "@/app/css/motions.css";
 
 interface BackdropParallaxProps {
   rows?: { direction: "left" | "right" }[];
@@ -40,7 +41,6 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
     const updateDesktopSize = () => {
       const isDesktopView = window.matchMedia("(min-width: 768px)").matches;
       setIsDesktop(isDesktopView);
-      // console.log("isDesktop: ", isDesktop);
 
       const src = isDesktopView
         ? srcUrlDesktop?.formats?.medium?.url
@@ -101,6 +101,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
             objectFit: "cover",
             height: "100%",
           }}
+          className="pulse-motion-2"
         ></Image>
       </Box>
     </Flex>

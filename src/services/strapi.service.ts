@@ -1,5 +1,16 @@
 import { API_URL } from "@/app/config";
 
+async function getHeroData() {
+  const res = await fetch(
+    `${API_URL}/api/hero-sections?fields[1]=title&fields[2]=subtitle&fields[3]=paragraph&populate[navigator][fields]=*&populate[button][fields]=*&populate[cover_mobile][fields][0]=formats&populate[cover_desktop][fields][0]=formats`
+  );
+  if (!res.ok) {
+    throw new Error("Error al obtener los eventos");
+  }
+  const { data } = await res.json();
+  return data[0];
+}
+
 async function getEvents() {
   const res = await fetch(
     `${API_URL}/api/events?fields[0]=name&fields[1]=location&fields[2]=description&fields[3]=date&fields[4]=active&fields[5]=ticket_link&populate[cover_mobile][fields][1]=formats&populate[cover_desktop][fields][1]=formats`
@@ -78,6 +89,7 @@ async function getFooterSection() {
 }
 
 export {
+  getHeroData,
   getEvents,
   getBannerData,
   getCarousel,

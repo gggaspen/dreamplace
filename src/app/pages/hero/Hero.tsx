@@ -3,23 +3,30 @@ import { Box } from "@chakra-ui/react";
 import Banner from "./banner/Banner";
 import TopBanner from "./top-banner/TopBanner";
 import Nav from "./nav/Nav";
-import IBannerData from "@/interfaces/banner-data.interface";
 import IEvent from "@/interfaces/event.interface";
+import IHeroConfig from "./interfaces/hero-config.interface";
+import NavigatorConfig from "./interfaces/navigator-config.interface";
 
 interface HeroProps {
-  bannerData: IBannerData;
+  config: IHeroConfig;
   activeEvent: IEvent;
 }
 
-export default function Hero({ bannerData, activeEvent }: HeroProps) {
+export default function Hero({ config, activeEvent }: HeroProps) {
+  const { navigator } = config;
+  const nav: NavigatorConfig = { ...navigator[0] };
+
   return (
     <Box h={"100dvh"}>
       <Box position={"absolute"} zIndex={99} w={"100%"}>
-        <TopBanner text={bannerData?.textoMiniBannerSuperior} />
+        <TopBanner
+          banner_link={nav.banner_link}
+          banner_text={nav.banner_text}
+        />
         <Nav />
       </Box>
 
-      <Banner event={activeEvent} data={bannerData} />
+      <Banner config={config} event={activeEvent} />
     </Box>
   );
 }
