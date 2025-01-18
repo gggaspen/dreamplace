@@ -14,13 +14,21 @@ const nextConfig = {
         hostname: "i.postimg.cc",
         pathname: "/**",
       },
-    ],
-    domains: [
-      "localhost",
-      "dreamplace.com.ar",
-      "https://dreamplace-production.up.railway.app/",
-      "i.postimg.cc",
-      "res.cloudinary.com",
+      {
+        protocol: "https",
+        hostname: "dreamplace.com.ar",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "https://dreamplace-production.up.railway.app/",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
     ],
   },
   output: "standalone",
