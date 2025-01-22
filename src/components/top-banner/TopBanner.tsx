@@ -4,17 +4,20 @@ import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
 import "./TopBanner.css";
 import Link from "next/link";
-import MiniBanner from "@/components/mini-banner/MiniBanner";
+import MiniBanner from "../mini-banner/MiniBanner";
 
-interface NavigatorProps {
-  banner_link: string;
-  banner_text: string;
-}
+export default function TopBanner() {
+  const url =
+    // "https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito";
+    "https://www.todopass.com.ar/inicio/355-fiesta-de-noel-xv.html";
 
-export default function TopBanner({
-  banner_text,
-  banner_link,
-}: NavigatorProps) {
+  // const phrases = [
+  //   "BUY TICKETS NOW",
+  //   "COMPRA TUS TICKETS AHORA",
+  //   "VAGAR MORGULIS",
+  //   "AHORA O NEVER",
+  // ];
+
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [prev, setPrev] = useState(0);
@@ -42,13 +45,13 @@ export default function TopBanner({
     hidden: { opacity: 0, y: "-2rem" },
   };
 
-  const blockAction: boolean = banner_link ? false : true;
+  const soon: boolean = true;
 
   return (
     <Link
-      href={banner_link}
+      href={url}
       target="_blank"
-      onClick={blockAction ? (e) => e.preventDefault() : undefined}
+      onClick={soon ? (e) => e.preventDefault() : undefined}
     >
       <motion.div
         variants={parentVariants}
@@ -68,7 +71,11 @@ export default function TopBanner({
           }}
         >
           <MiniBanner
-            text={banner_text}
+            text={
+              soon
+                ? "PRÓXIMAMENTE TICKETS A LA VENTA"
+                : "COMPRA TUS TICKETS AHORA"
+            }
             arrowDirection="top-right"
             delay={50}
           ></MiniBanner>

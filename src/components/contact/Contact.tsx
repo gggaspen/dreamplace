@@ -1,17 +1,12 @@
 import { Box, Text, Flex, Button } from "@chakra-ui/react";
 import React from "react";
 import "./Contact.css";
-import WhatsAppBtn from "../../../components/whatsapp/WhatsAppBtn";
+import WhatsAppBtn from "../whatsapp/WhatsAppBtn";
+// import Arrow from "../arrow/Arrow";
 
-interface IContactData {
-  titulo: string;
-  texto_boton: string;
-  numero_telefono: string;
-  mensaje_default: string;
-}
-
-export default function Contact({ config }: { config: IContactData }) {
-  const { titulo, texto_boton, numero_telefono, mensaje_default } = config;
+export default function PressInfo() {
+  // const description =
+  //   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit.";
 
   return (
     <>
@@ -24,7 +19,7 @@ export default function Contact({ config }: { config: IContactData }) {
           color={"#eee"}
           textAlign={"center"}
         >
-          {titulo}
+          Contactanos
         </Text>
         <Flex
           alignItems={"center"}
@@ -58,11 +53,7 @@ export default function Contact({ config }: { config: IContactData }) {
             // h={"60px"}
           >
             {/* <Arrow direction={"top-right"} color={"#eee"}></Arrow> */}
-            <WhatsAppBtn
-              text={texto_boton}
-              numero_telefono={numero_telefono}
-              mensaje_default={mensaje_default}
-            />
+            <WhatsAppBtn text="Click aquí" />
           </Button>
         </Flex>
         {/* <Text

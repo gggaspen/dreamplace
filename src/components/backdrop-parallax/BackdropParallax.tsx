@@ -11,46 +11,50 @@ import React, {
 // import { useScroll } from "framer-motion";
 import Image from "next/image";
 import { Box, Flex } from "@chakra-ui/react";
-import { ICover } from "@/interfaces/event.interface";
-import "@/app/css/motions.css";
 
 interface BackdropParallaxProps {
   rows?: { direction: "left" | "right" }[];
   objectPosition?: string;
   height?: string;
-  srcUrlDesktop?: ICover;
-  srcUrlMobile?: ICover;
+  srcUrl?: string;
 }
 
 const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   height,
-  srcUrlDesktop,
-  srcUrlMobile,
+  srcUrl,
 }) => {
   // const container: MutableRefObject<any> = useRef(null);
-  const [isDesktop, setIsDesktop] = useState<boolean>(false);
-  const [src, setSrc] = useState<string | null>(
-    isDesktop
-      ? srcUrlDesktop?.formats?.medium?.url ||
-          "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png"
-      : srcUrlMobile?.formats?.medium?.url ||
-          "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png"
+  // const srcDefault = "noel";
+  const srcDefault = "main";
+
+  const [src, setSrc] = useState(
+    srcUrl ? srcUrl : `/img/banners/${srcDefault}.jpg?cache=${Date.now()}`
   );
 
   useEffect(() => {
     const updateDesktopSize = () => {
-      const isDesktopView = window.matchMedia("(min-width: 768px)").matches;
-      setIsDesktop(isDesktopView);
-
-      const src = isDesktopView
-        ? srcUrlDesktop?.formats?.medium?.url
-        : srcUrlMobile?.formats?.medium?.url;
-      setSrc(src);
+      const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+      setSrc(
+        srcUrl
+          ? srcUrl
+          : `${
+              isDesktop
+                ? "https://i.postimg.cc/rFD9yc6r/main.jpg"
+                : "https://i.postimg.cc/8kKHVcYG/main-mobile.jpg"
+            }`
+      );
+      // setSrc(
+      //   srcUrl
+      //     ? srcUrl
+      //     : `/img/banners/noel${
+      //         isDesktop ? "" : "-mobile"
+      //       }.png?cache=${Date.now()}`
+      // );
     };
     updateDesktopSize();
     window.addEventListener("resize", updateDesktopSize);
     return () => window.removeEventListener("resize", updateDesktopSize);
-  }, [srcUrlDesktop, srcUrlMobile]);
+  }, []);
 
   useEffect(() => {
     const lenis = new Lenis();
@@ -75,13 +79,11 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
       h={height}
       justifyContent={"center"}
       position={"absolute"}
+      // bottom={{ base: -300, lg: -300 }}
     >
       <Box
         position={"absolute"}
-        display={{
-          base: src ? "flex" : "block",
-          lg: "flex",
-        }}
+        display={{ base: srcUrl ? "flex" : "block", lg: "flex" }}
         justifyContent={"center"}
         width={"100%"}
         height={{ base: "100%", lg: "100%" }}
@@ -100,8 +102,9 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
           style={{
             objectFit: "cover",
             height: "100%",
+            // objectPosition: objectPosition ?? "center",
+            // objectPosition: "center",
           }}
-          className="pulse-motion-2"
         ></Image>
       </Box>
     </Flex>

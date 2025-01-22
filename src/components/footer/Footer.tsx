@@ -2,7 +2,7 @@
 
 import { Box, Text, Flex } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import Logo from "../../../components/logo/Logo";
+import Logo from "../logo/Logo";
 import Image from "next/image";
 import Link from "next/link";
 import YouTubeEmbed from "@/components/youtube-embed/YouTube-Embed";
@@ -10,8 +10,6 @@ import YouTubeEmbed from "@/components/youtube-embed/YouTube-Embed";
 export default function Footer() {
   const [isVisible, setIsVisible] = useState(false);
   const observerRef = useRef(null); // El ref para el observador
-
-  const [counter, setCounter] = useState<number>(0);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -34,15 +32,6 @@ export default function Footer() {
     };
   }, []);
 
-  const openAdmin = () => {
-    setCounter(counter + 1);
-    const isAdminOpen = counter >= 10;
-    if (isAdminOpen) {
-      window.open("https://dreamplace-strapi.up.railway.app/admin", "_blank");
-      setCounter(0);
-    }
-  };
-
   return (
     <>
       <Flex
@@ -59,7 +48,6 @@ export default function Footer() {
 
         {/* Renderiza el iframe cuando es visible */}
         {isVisible && <YouTubeEmbed />}
-        {/* {isVisible && <YouTubeEmbed title={youtube_title} src={youtube_url} />} */}
 
         <Flex
           color={"white"}
@@ -70,7 +58,7 @@ export default function Footer() {
           gap={"2em"}
         >
           <Text fontWeight={"bold"} fontSize={"1em"} my={"2em"}>
-            {new Date().getFullYear()} EDITION
+            2025 EDITION
           </Text>
 
           <Link href="https://www.instagram.com/dreamplace.ar/" target="_blank">
@@ -88,9 +76,7 @@ export default function Footer() {
         </Flex>
 
         <Flex justifyContent={"center"} my={"4em"}>
-          <Box onClick={() => openAdmin()}>
-            <Logo w="100%" color="rgb(34, 34, 34)" />
-          </Box>
+          <Logo w="100%" color="rgb(34, 34, 34)" />
         </Flex>
       </Flex>
     </>
