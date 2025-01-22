@@ -96,16 +96,18 @@ export default function Banner({
         <Box>
           {/* Habilitar el subtitulo superior */}
 
-          <Text
-            _selection={{
-              backgroundColor: "#000",
-            }}
-            fontSize={".8em"}
-            color={textColor}
-            mb={"1em"}
-          >
-            <span style={{ fontWeight: 600 }}>{subtitle}</span> | {_date}
-          </Text>
+          {subtitle && (
+            <Text
+              _selection={{
+                backgroundColor: "#000",
+              }}
+              fontSize={".8em"}
+              color={textColor}
+              mb={"1em"}
+            >
+              <span style={{ fontWeight: 600 }}>{subtitle}</span> | {_date}
+            </Text>
+          )}
           <Text
             _selection={{
               backgroundColor: "#000",

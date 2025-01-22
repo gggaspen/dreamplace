@@ -43,7 +43,7 @@ async function getCarousel() {
 
 async function getSpotifySection() {
   const res = await fetch(
-    `${API_URL}/api/spotify-sections?&fields[0]=titulo&fields[1]=embed_url&fields[2]=link_url`
+    `${API_URL}/api/spotify-sections?&fields[0]=titulo&fields[1]=embed_url&fields[2]=link_url&fields[3]=banner_text&fields[4]=banner_url`
   );
   if (!res.ok) {
     throw new Error("Error al obtener la data de la sección de Spotify");

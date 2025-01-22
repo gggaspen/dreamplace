@@ -1,14 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import BottomBanner from "@/components/bottom-banner/BottomBanner";
 import { Resident } from "@/app/pages/resident/Resident";
 import Carousel from "@/app/pages/carousel/Carousel";
 import Contact from "@/app/pages/contact/Contact";
 import Press from "@/app/pages/press/Press";
 import Footer from "@/app/pages/footer/Footer";
 import { fetchAllData } from "@/services/data.service"; // Centralizamos las llamadas a servicios
-import { dateToCustomString } from "@/utils/format-date";
 import LoadingScreen from "@/components/loading-screen/LoadingScreen";
 import Hero from "./pages/hero/Hero";
 import "./css/motions.css";
@@ -36,7 +34,6 @@ export default function Home() {
   const {
     heroData,
     activeEvent,
-    mainDate,
     carousel,
     spotifySection,
     contactSection,
@@ -50,15 +47,7 @@ export default function Home() {
 
         <Carousel fotos={carousel?.fotos} banner_text={carousel?.banner_text} />
 
-        <BottomBanner
-          text={dateToCustomString(mainDate)}
-          rows={[{ direction: "left" }]}
-        />
-
-        <Resident
-          config={spotifySection}
-          bannerDate={dateToCustomString(mainDate)}
-        />
+        <Resident config={spotifySection} />
 
         <Contact config={contactSection} />
 

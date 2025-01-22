@@ -11,16 +11,15 @@ import Link from "next/link";
 interface BottomBannerProps {
   rows?: { direction: "left" | "right" }[];
   text: string;
+  url?: string;
 }
 
 const BottomBanner: React.FC<BottomBannerProps> = ({
   rows,
   text,
+  url,
 }: BottomBannerProps) => {
   const container: MutableRefObject<any> = useRef(null);
-  const url =
-    // "https://www.passline.com/eventos/sab-3011-agustin-pietrocola-ailen-dc-naza-rv-facukid-ariel-stamile-meline-323995/lean-gorosito";
-    "https://www.todopass.com.ar/inicio/355-fiesta-de-noel-xv.html";
 
   useEffect(() => {
     const lenis = new Lenis();
@@ -37,14 +36,12 @@ const BottomBanner: React.FC<BottomBannerProps> = ({
     layoutEffect: false,
   });
 
-  const soon: boolean = true;
-
   return (
     <Box>
       <Link
-        href={url}
+        href={url ? url : "#"}
         target="_blank"
-        onClick={soon ? (e) => e.preventDefault() : undefined}
+        onClick={url === null ? (e) => e.preventDefault() : undefined}
       >
         <Flex
           ref={container}

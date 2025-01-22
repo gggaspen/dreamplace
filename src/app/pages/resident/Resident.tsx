@@ -4,22 +4,29 @@ import { Text, Box, Flex } from "@chakra-ui/react";
 import BottomBanner from "../../../components/bottom-banner/BottomBanner";
 import Arrow from "../../../components/arrow/Arrow";
 import Link from "next/link";
+import generateSpotifyEmbedSrc from "@/utils/generateSpotifySrc";
 
 interface ResidentSection {
-  bannerDate: string;
   config: {
     titulo: string;
     embed_url: string;
     link_url: string;
+    banner_text: string;
+    banner_url: string;
   };
 }
 
-export const Resident = ({ bannerDate, config }: ResidentSection) => {
+export const Resident = ({ config }: ResidentSection) => {
   const height = 352;
-  const { titulo, embed_url, link_url } = config;
+  const { titulo, embed_url, link_url, banner_text, banner_url } = config;
 
   return (
     <>
+      <BottomBanner
+        text={banner_text}
+        url={banner_url}
+        rows={[{ direction: "left" }]}
+      />
       <Box pos={"relative"}>
         <Flex
           flexDirection={"column"}
@@ -66,14 +73,15 @@ export const Resident = ({ bannerDate, config }: ResidentSection) => {
                 style={{
                   borderRadius: "14px",
                 }}
-                src={embed_url}
+                src={generateSpotifyEmbedSrc(embed_url)}
                 width="100%"
                 height={height + "px"}
                 loading="lazy"
               ></iframe>
             </Flex>
             <BottomBanner
-              text={bannerDate}
+              text={banner_text}
+              url={banner_url}
               rows={[
                 { direction: "right" },
                 { direction: "left" },
