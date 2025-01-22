@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  },
   experimental: {
     optimizePackageImports: ["@chakra-ui/react"],
   },
@@ -11,12 +14,21 @@ const nextConfig = {
         hostname: "i.postimg.cc",
         pathname: "/**",
       },
-    ],
-    domains: [
-      "localhost",
-      "dreamplace.com.ar",
-      "https://dreamplace-production.up.railway.app/",
-      "i.postimg.cc",
+      {
+        protocol: "https",
+        hostname: "dreamplace.com.ar",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "https://dreamplace-production.up.railway.app/",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
     ],
   },
   output: "standalone",
