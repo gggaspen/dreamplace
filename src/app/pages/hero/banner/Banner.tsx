@@ -2,27 +2,45 @@
 
 import { Text, Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import "./Banner.css";
-import ButtonPrimary from "../button-primary/ButtonPrimary";
-import Arrow from "../arrow/Arrow";
-import BackdropParallax from "../backdrop-parallax/BackdropParallax";
 import { useState } from "react";
-// import TextScramble from "@/app/motions/TextScramble";
+import IEvent from "@/interfaces/event.interface";
+import { dateToCustomString } from "@/utils/format-date";
+// import IBannerData from "@/interfaces/banner-data.interface";
+import React from "react";
+import BackdropParallax from "@/components/backdrop-parallax/BackdropParallax";
+import ButtonPrimary from "@/components/button-primary/ButtonPrimary";
+import Arrow from "@/components/arrow/Arrow";
+import IHeroConfig from "../interfaces/hero-config.interface";
 
-export default function Banner() {
+export default function Banner({
+  config,
+  event,
+}: {
+  config: IHeroConfig;
+  event: IEvent;
+}) {
+  const { title, subtitle, paragraph, button, cover_desktop, cover_mobile } =
+    config;
+  const { date } = event;
+
+  const optimizedDesktopCover = React.useMemo(
+    () => cover_desktop,
+    [cover_desktop]
+  );
+  const optimizedMobileCover = React.useMemo(
+    () => cover_mobile,
+    [cover_mobile]
+  );
+
+  const _date: string = dateToCustomString(new Date(date));
+
   const height = "100dvh";
-  // const textColor = "#eee";
   const textColor = "#eee";
 
   const [isExpanded, setIsExpanded] = useState(false);
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   const toggleExpand = () => setIsExpanded(!isExpanded);
-
-  // const text = "Un espectáculo donde converge el arte, la música y los sueños.";
-  // const text =
-  //   "15 años de la fiesta más grande de Tandil. Nos recibe una co-producción en la que se presentarán el reconocido dúo local Scape From Reality, Isi Luis, quien nos visita desde Necochea, y, por primera vez en la ciudad, cerrará la noche Cristian U, reconocido artista de la ciudad de Buenos Aires, también conocido como Vasco.";
-  const text =
-    "Una serie de espectáculos donde converge el arte, la música y los sueños. Desconecta de la realidad... bailando.";
 
   // Calcula la longitud del texto a mostrar en modo contraído
   // const maxLength = Math.floor(text.length / 2);
@@ -35,7 +53,8 @@ export default function Banner() {
       height={height}
     >
       <BackdropParallax
-        // objectPosition="right"
+        srcUrlDesktop={optimizedDesktopCover}
+        srcUrlMobile={optimizedMobileCover}
         height={height}
       ></BackdropParallax>
       <Box
@@ -67,7 +86,7 @@ export default function Banner() {
             fontSize={{ base: "2em", lg: "4em" }}
             color={textColor}
           >
-            DREAMPLACE 2025
+            {title}
             {/* <TextScramble
               phrases={["DREAMPLACE ft. Rym & Retina press."]}
               className="text-white"
@@ -77,17 +96,18 @@ export default function Banner() {
         <Box>
           {/* Habilitar el subtitulo superior */}
 
-          {/* <Text
-            _selection={{
-              backgroundColor: "#000",
-            }}
-            fontSize={".8em"}
-            color={textColor}
-            mb={"1em"}
-          >
-            <span style={{ fontWeight: 600 }}>Estadio Ferro, Tandil</span> | 24
-            Dic | Edición Navidad
-          </Text> */}
+          {subtitle && (
+            <Text
+              _selection={{
+                backgroundColor: "#000",
+              }}
+              fontSize={".8em"}
+              color={textColor}
+              mb={"1em"}
+            >
+              <span style={{ fontWeight: 600 }}>{subtitle}</span> | {_date}
+            </Text>
+          )}
           <Text
             _selection={{
               backgroundColor: "#000",
@@ -97,16 +117,17 @@ export default function Banner() {
             onClick={toggleExpand}
             cursor={isMobile ? "pointer" : "default"}
           >
-            {text}
+            {paragraph}
             {/* {isMobile && !isExpanded
-              ? `${text.slice(0, maxLength)}... Leer más`
-              : text} */}
+              ? `${_paragraph.slice(0, maxLength)}... Leer más`
+              : _paragraph} */}
           </Text>
         </Box>
         <Box>
           <ButtonPrimary
-            disabled={true}
-            text="PRÓXIMAMENTE TICKETS A LA VENTA"
+            // disabled={!button.link ? false : true}
+            text={button.text}
+            linkUrl={button.link}
             mode="dark"
           >
             <Arrow color="#eee" w="20px" direction="top-right"></Arrow>

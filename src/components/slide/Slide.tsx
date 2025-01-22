@@ -3,28 +3,25 @@
 import { Text, Flex } from "@chakra-ui/react";
 import { motion, useTransform } from "framer-motion";
 import Arrow from "../arrow/Arrow";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { poppins } from "@/app/ui/fonts";
 
-const dates = [
-  { text: "2025" },
-  { text: "2025" },
-  { text: "2025" },
-  { text: "2025" },
-  { text: "2025" },
-  { text: "2025" },
-  { text: "2025" },
-  { text: "2025" },
-  { text: "2025" },
-  { text: "2025" },
-  { text: "2025" },
-  { text: "2025" },
-  { text: "2025" },
-  { text: "2025" },
-];
+interface TextItem {
+  text: string;
+}
 
-const Slide = ({ left, direction, progress, arrow }: any) => {
+const Slide = ({ left, direction, progress, arrow, text }: any) => {
   const _direction = direction == "left" ? -1 : 1;
+  const [texts, setTexts] = useState<TextItem[]>([]);
+
+  useEffect(() => {
+    const _texts: TextItem[] = [];
+    for (let i = 0; i < 14; i++) {
+      const item: TextItem = { text };
+      _texts.push(item);
+    }
+    setTexts(_texts);
+  }, []);
 
   const translateX = useTransform(
     progress,
@@ -38,7 +35,7 @@ const Slide = ({ left, direction, progress, arrow }: any) => {
     >
       <Flex alignItems={"center"}>
         <Flex alignItems={"center"}>
-          {dates.map((date, index) => (
+          {texts.map((date, index) => (
             <React.Fragment key={index}>
               <Text
                 // fontWeight={"bold"}
