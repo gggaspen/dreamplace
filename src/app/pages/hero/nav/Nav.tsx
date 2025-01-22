@@ -4,7 +4,7 @@ import { Flex } from "@chakra-ui/react";
 import "./Nav.css";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useEffect, useState } from "react";
-import Logo from "../logo/Logo";
+import Logo from "@/components/logo/Logo";
 
 export default function Nav() {
   const linkList: string[] = ["Events", "Artists"];
