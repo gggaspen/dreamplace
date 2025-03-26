@@ -40,7 +40,7 @@ const BottomBanner: React.FC<BottomBannerProps> = ({
     <Box>
       <Link
         href={url ? url : "#"}
-        target="_blank"
+        target={url ? "_blank" : "_self"}
         onClick={url === null ? (e) => e.preventDefault() : undefined}
       >
         <Flex

@@ -52,7 +52,10 @@ export const Resident = ({ config }: ResidentSection) => {
               zIndex={2}
               mt={{ base: "0", md: "1em" }}
             >
-              <Link href={link_url ? link_url : "#"} target="_blank">
+              <Link
+                href={link_url ? link_url : "#"}
+                target={link_url ? "_blank" : "_self"}
+              >
                 <Arrow direction={"top-right"} w={"30px"} color={"#eee"} />
               </Link>
             </Flex>
