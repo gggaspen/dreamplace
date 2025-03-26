@@ -11,21 +11,24 @@ interface NavigatorProps {
   banner_text: string;
 }
 
-export default function TopBanner({
+const TopBanner: React.FC<NavigatorProps> = ({
   banner_text,
   banner_link,
-}: NavigatorProps) {
+}: NavigatorProps) => {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [prev, setPrev] = useState(0);
 
-  function update(latest: number, prev: number): void {
+  const update: (latest: number, prev: number) => void = (
+    latest: number,
+    prev: number
+  ) => {
     if (latest < prev) {
       setHidden(false);
     } else if (latest > 100 && latest > prev) {
       setHidden(true);
     }
-  }
+  };
 
   useMotionValueEvent(scrollY, "change", (latest: number) => {
     update(latest, prev);
@@ -46,8 +49,8 @@ export default function TopBanner({
 
   return (
     <Link
-      href={banner_link}
-      target="_blank"
+      href={banner_link || "#"}
+      target={banner_link ? "_blank" : "_self"}
       onClick={blockAction ? (e) => e.preventDefault() : undefined}
     >
       <motion.div
@@ -77,4 +80,6 @@ export default function TopBanner({
       </motion.div>
     </Link>
   );
-}
+};
+
+export default TopBanner;
