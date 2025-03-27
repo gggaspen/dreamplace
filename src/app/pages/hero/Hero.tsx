@@ -14,16 +14,15 @@ interface HeroProps {
 
 export default function Hero({ config, activeEvent }: HeroProps) {
   const { navigator } = config;
-  const nav: NavigatorConfig = { ...navigator };
+  const { banner_link, banner_text, show_banner }: NavigatorConfig = {
+    ...navigator,
+  };
 
   return (
     <Box h={"100dvh"}>
       <Box position={"absolute"} zIndex={99} w={"100%"}>
-        <TopBanner
-          banner_link={nav.banner_link}
-          banner_text={nav.banner_text}
-        />
-        <Nav />
+        <TopBanner banner_link={banner_link} banner_text={banner_text} />
+        <Nav show_banner={show_banner} />
       </Box>
 
       <Banner config={config} event={activeEvent} />
