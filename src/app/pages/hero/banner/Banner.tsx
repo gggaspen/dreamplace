@@ -2,7 +2,7 @@
 
 import { Text, Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import "./Banner.css";
-import { useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import IEvent from "@/interfaces/event.interface";
 import { dateToCustomString } from "@/utils/format-date";
 // import IBannerData from "@/interfaces/banner-data.interface";
@@ -45,6 +45,16 @@ export default function Banner({
   // Calcula la longitud del texto a mostrar en modo contraído
   // const maxLength = Math.floor(text.length / 2);
 
+  const [windowHeight, setWindowHeight] = useState("0");
+
+  useEffect(() => {
+    setWindowHeight(window.innerHeight + "px");
+  }, []);
+
+  const styles: CSSProperties = {
+    height: windowHeight,
+  };
+
   return (
     <Flex
       alignItems="flex-end"
@@ -55,7 +65,7 @@ export default function Banner({
       <BackdropParallax
         srcUrlDesktop={optimizedDesktopCover}
         srcUrlMobile={optimizedMobileCover}
-        height={height}
+        height={styles.height.toString()}
       ></BackdropParallax>
       <Box
         // display={"none"}
