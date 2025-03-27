@@ -6,7 +6,7 @@ import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useEffect, useState } from "react";
 import Logo from "@/components/logo/Logo";
 
-export default function Nav() {
+export default function Nav({ show_banner }: { show_banner: boolean }) {
   const linkList: string[] = ["Events", "Artists"];
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
@@ -55,6 +55,7 @@ export default function Nav() {
         duration: 0.6,
         staggerChildren: 0.05,
       }}
+      className={show_banner ? "mt-40-nav" : null}
     >
       <Flex>
         <Logo
