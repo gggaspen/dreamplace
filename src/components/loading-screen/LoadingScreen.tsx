@@ -8,7 +8,7 @@ import Logo from "../logo/Logo";
 export default function LoadingScreen() {
   return (
     <>
-      <Box height="100dvh">
+      <Box height="100dvh" bg={"#000"}>
         <ProgressRoot w="100%" value={null}>
           <ProgressBar colorPalette="red" h={"4px"} />
         </ProgressRoot>

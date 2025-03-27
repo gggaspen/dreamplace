@@ -6,7 +6,7 @@ import Carousel from "@/app/pages/carousel/Carousel";
 import Contact from "@/app/pages/contact/Contact";
 import Press from "@/app/pages/press/Press";
 import Footer from "@/app/pages/footer/Footer";
-import { fetchAllData } from "@/services/data.service"; // Centralizamos las llamadas a servicios
+import { fetchAllData } from "@/services/data.service";
 import LoadingScreen from "@/components/loading-screen/LoadingScreen";
 import Hero from "./pages/hero/Hero";
 import "./css/motions.css";
