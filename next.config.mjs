@@ -32,7 +32,7 @@ const nextConfig = {
     ],
   },
   output: "standalone",
-  reactStrictMode: false,
+  // reactStrictMode: false,
 };
 
 export default nextConfig;

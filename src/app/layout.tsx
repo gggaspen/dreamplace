@@ -4,7 +4,6 @@ import "./globals.css";
 import { Provider } from "@/components/ui/provider";
 import { poppins } from "./ui/fonts";
 import Head from "next/head";
-import { postCounter } from "@/services/counter.service";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,16 +28,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  /**
-   * Envío de contador
-   */
-  try {
-    const counter = await postCounter();
-    console.log(counter);
-  } catch (error) {
-    console.error("Error al enviar el contador:", error);
-  }
-
   return (
     <html lang="en" suppressHydrationWarning>
       <Head>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Resident } from "@/app/pages/resident/Resident";
 import Carousel from "@/app/pages/carousel/Carousel";
 import Contact from "@/app/pages/contact/Contact";
@@ -13,8 +13,12 @@ import "./css/motions.css";
 
 export default function Home() {
   const [data, setData] = useState<any>(null);
+  const isFetching: React.MutableRefObject<boolean> = useRef(false);
 
   useEffect(() => {
+    if (isFetching.current) return;
+    isFetching.current = true;
+
     const fetchData = async () => {
       try {
         const response = await fetchAllData();
