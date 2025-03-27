@@ -54,7 +54,7 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
               type: "progressbar",
               progressbarOpposite: false,
             }}
-            loop={true}
+            loop={images.length > 1}
             autoplay={{
               delay: 2000,
               disableOnInteraction: !isDesktop,
@@ -63,22 +63,20 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
             speed={100}
           >
             {images.map((image, index) => (
-              <React.Fragment key={image.id}>
-                <SwiperSlide>
-                  <Flex
-                    justifyContent={"center"}
-                    h={{ base: "40dvh", lg: "100dvh" }}
-                  >
-                    <Image
-                      width={4000}
-                      height={0}
-                      alt={`Image ${index + 1}`}
-                      src={image.formats?.large?.url}
-                      style={{ objectFit: "cover" }}
-                    />
-                  </Flex>
-                </SwiperSlide>
-              </React.Fragment>
+              <SwiperSlide key={image.id}>
+                <Flex
+                  justifyContent={"center"}
+                  h={{ base: "40dvh", lg: "100dvh" }}
+                >
+                  <Image
+                    width={4000}
+                    height={0}
+                    alt={`Image ${index + 1}`}
+                    src={image.formats?.large?.url}
+                    style={{ objectFit: "cover" }}
+                  />
+                </Flex>
+              </SwiperSlide>
             ))}
           </Swiper>
         </Box>
