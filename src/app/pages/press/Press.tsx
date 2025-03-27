@@ -117,6 +117,7 @@ export default function Press({ config }: PressProps) {
                       src={getPlatformUrl(link.platform)}
                       width={link.platform === EPlatform.BEATPORT ? 19 : 20}
                       height={20}
+                      style={{ height: "auto" }}
                       alt={link.platform}
                     />
                   </Link>

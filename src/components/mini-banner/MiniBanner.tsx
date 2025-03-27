@@ -56,7 +56,7 @@ export default function MiniBanner({
                 display={"flex"}
                 fontSize={"1em"}
               >
-                <Text whiteSpace={"nowrap"}>{text}</Text>
+                <span style={{ whiteSpace: "nowrap" }}>{text}</span>
                 <Arrow
                   direction={arrowDirection ? arrowDirection : "bottom"}
                   color={bgColor === "#eee" ? "#000" : "#eee"}

@@ -80,6 +80,7 @@ export const Resident = ({ config }: ResidentSection) => {
                 width="100%"
                 height={height + "px"}
                 loading="lazy"
+                allow="encrypted-media"
               ></iframe>
             </Flex>
             <BottomBanner

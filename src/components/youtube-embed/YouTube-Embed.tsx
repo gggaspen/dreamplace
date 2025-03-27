@@ -13,15 +13,23 @@ const YouTubeEmbed = () => {
     const fetchData = async () => {
       try {
         const _footerSection: any = await getFooterSection();
+        if (!_footerSection || !_footerSection.youtube_url) {
+          console.error("Datos del footer incompletos o no encontrados.");
+          return;
+        }
         const { youtube_url, youtube_title } = _footerSection;
+        const id: string | undefined = getYouTubeVideoId(youtube_url);
+        if (!id) {
+          console.error("No se pudo extraer el ID del video de YouTube.");
+          return;
+        }
 
-        const id: string = getYouTubeVideoId(youtube_url);
-        if (!embedSrc) {
+        if (id) {
           setEmbedSrc(
             `https://www.youtube.com/embed/${id}?autoplay=1&mute=0&loop=1&controls=0`
           );
         }
-        setTitle(youtube_title);
+        setTitle(youtube_title || "Dreamplace Video");
       } catch (error) {
         console.error("Error al obtener datos del footer:", error);
       }
@@ -31,7 +39,7 @@ const YouTubeEmbed = () => {
 
   useEffect(() => {
     if (embedSrc) {
-      console.log("embedSrc actualizado:", embedSrc);
+      // console.log("embedSrc actualizado:", embedSrc);
     }
   }, [embedSrc]);
 
@@ -41,13 +49,15 @@ const YouTubeEmbed = () => {
       alignItems={"center"}
       py={{ base: "2em", lg: "4em" }}
     >
-      <iframe
-        width="100%"
-        height="315"
-        src={embedSrc}
-        title={title}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      ></iframe>
+      {embedSrc && (
+        <iframe
+          width="100%"
+          height="315"
+          src={embedSrc}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        ></iframe>
+      )}
     </Flex>
   );
 };
