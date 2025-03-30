@@ -1,4 +1,6 @@
-import React from "react";
+// #region imports
+
+import React, { CSSProperties, useEffect, useState } from "react";
 import { Text, Box, Flex } from "@chakra-ui/react";
 import "./Press.css";
 import ButtonPrimary from "../../../components/button-primary/ButtonPrimary";
@@ -10,6 +12,8 @@ import { ICover } from "@/interfaces/event.interface";
 import MiniBanner from "@/components/mini-banner/MiniBanner";
 import { EPlatform } from "@/enums/platform.enum";
 import getPlatformUrl from "@/utils/get-platform-url";
+
+// #endregion imports
 
 interface IArtist {
   name: string;
@@ -34,8 +38,22 @@ export default function Press({ config }: PressProps) {
   const { title, artists } = config;
   const { name, labels, links, photos } = artists[0];
 
-  const height = "100dvh";
+  // const height = "100dvh";
   const textColor = "#eee";
+
+  const [windowHeight, setWindowHeight] = useState<CSSProperties["height"]>(0);
+
+  useEffect(() => {
+    setWindowHeight(window.innerHeight + "px");
+  }, []);
+
+  useEffect(() => {
+    console.log(windowHeight);
+  }, [windowHeight]);
+
+  const styles: CSSProperties = {
+    height: windowHeight,
+  };
 
   return (
     <>
@@ -45,14 +63,19 @@ export default function Press({ config }: PressProps) {
         alignItems="flex-end"
         position="relative"
         overflow="hidden"
-        height={{ base: height, lg: height }}
+        // height={{ base: height, lg: height }}
         justifyContent={{ base: "center", lg: "center" }}
+        style={{ height: styles.height }}
       >
         <BackdropParallax
           srcUrlDesktop={photos[1]}
           srcUrlMobile={photos[1]}
-          height={height}
+          height={styles.height}
+          parent={"press"}
         ></BackdropParallax>
+
+        {/* Gradient */}
+
         <Box
           w={"100%"}
           h={"100%"}
@@ -68,7 +91,7 @@ export default function Press({ config }: PressProps) {
           justifyContent="flex-end"
           gap="2"
           w={"100%"}
-          h={height}
+          h={"100%"}
           zIndex={1}
           paddingBottom={"10%"}
           paddingX={{ base: "2em", lg: "14em" }}

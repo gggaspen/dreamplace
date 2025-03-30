@@ -52,6 +52,7 @@ export default function Banner({
         srcUrlDesktop={optimizedDesktopCover}
         srcUrlMobile={optimizedMobileCover}
         height={"100%"}
+        parent={"banner"}
       ></BackdropParallax>
       <Box
         // display={"none"}

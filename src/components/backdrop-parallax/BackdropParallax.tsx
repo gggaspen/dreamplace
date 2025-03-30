@@ -1,19 +1,22 @@
 "use client";
 
-import Lenis from "lenis";
-import React, { useEffect, useState } from "react";
+// import Lenis from "lenis";
+import React, { CSSProperties, useEffect, useState } from "react";
 import { motion, useTransform, useScroll } from "framer-motion";
 import Image from "next/image";
 import { Box } from "@chakra-ui/react";
 import { ICover } from "@/interfaces/event.interface";
 import "@/app/css/motions.css";
 
+type InputRange = number[];
+
 interface BackdropParallaxProps {
   rows?: { direction: "left" | "right" }[];
   objectPosition?: string;
-  height?: string;
+  height?: CSSProperties["height"];
   srcUrlDesktop?: ICover;
   srcUrlMobile?: ICover;
+  parent: "banner" | "press";
 }
 
 const AUX_IMG_BG: string = "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png";
@@ -22,6 +25,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   height,
   srcUrlDesktop,
   srcUrlMobile,
+  parent,
 }) => {
   // const container: MutableRefObject<any> = useRef(null);
   const [isDesktop, setIsDesktop] = useState<boolean>(false);
@@ -30,6 +34,8 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
       ? srcUrlDesktop?.formats?.medium?.url || AUX_IMG_BG
       : srcUrlMobile?.formats?.medium?.url || AUX_IMG_BG
   );
+  const [outputRange, setOutputRange] = useState<number[]>([0, 0]);
+  const [inputRange, setInputRange] = useState<InputRange>([0, 0]);
 
   useEffect(() => {
     const updateDesktopSize = () => {
@@ -46,15 +52,22 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
     return () => window.removeEventListener("resize", updateDesktopSize);
   }, [srcUrlDesktop, srcUrlMobile]);
 
-  useEffect(() => {
-    const lenis = new Lenis();
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-  }, []);
+  // useEffect(() => {
+  //   const lenis = new Lenis();
+  //   function raf(time: number) {
+  //     lenis.raf(time);
+  //     requestAnimationFrame(raf);
+  //   }
+  //   requestAnimationFrame(raf);
+  // }, []);
 
+  useEffect(() => {
+    setInputRange(parent === "banner" ? [0, 800] : [0, 800]);
+    setOutputRange(parent === "banner" ? [0, 200] : [0, 0]);
+  }, [parent]);
+
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, inputRange, outputRange);
   // const { scrollYProgress } = useScroll({
   //   target: container,
   //   offset: ["start end", "end start"],
@@ -62,8 +75,6 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   // });
 
   // const translateY = useTransform(scrollYProgress, [0, 1], [500 * 1, -500 * 1]);
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 800], [0, 200]);
   // const [ref, inView, entry] = useInView({
   //   /* Optional options */
   //   threshold: 0.5,

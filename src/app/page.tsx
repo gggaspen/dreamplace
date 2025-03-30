@@ -1,5 +1,7 @@
 "use client";
 
+// #region imports
+
 import React, { useEffect, useRef, useState } from "react";
 import { Resident } from "@/app/pages/resident/Resident";
 import Carousel from "@/app/pages/carousel/Carousel";
@@ -10,6 +12,8 @@ import { fetchAllData } from "@/services/data.service";
 import LoadingScreen from "@/components/loading-screen/LoadingScreen";
 import Hero from "./pages/hero/Hero";
 import "./css/motions.css";
+
+// #endregion imports
 
 export default function Home() {
   const [data, setData] = useState<any>(null);
