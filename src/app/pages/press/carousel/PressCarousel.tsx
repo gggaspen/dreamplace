@@ -41,6 +41,7 @@ export default function PressCarousel({ artists }: IPressCarouselProps) {
         bgColor={"#000"}
       >
         <Swiper
+          // onUpdate={(swiper: any) => onSwiper(swiper)}
           className="progress-slide-carousel"
           modules={[Autoplay, Pagination, EffectCards]}
           pagination={{
@@ -56,6 +57,14 @@ export default function PressCarousel({ artists }: IPressCarouselProps) {
           }}
           speed={600}
           effect={"cards"}
+          cardsEffect={
+            {
+              // slideShadows: true,
+              // rotate: true,
+              // perSlideOffset: 0,
+              // perGroupOffset: 0,
+            }
+          }
           // cubeEffect={{
           //   shadow: true,
           //   slideShadows: true,
