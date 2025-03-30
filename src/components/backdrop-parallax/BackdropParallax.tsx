@@ -128,7 +128,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
             objectFit: "cover",
             height: "100%",
           }}
-          className="pulse-motion-2"
+          className={parent === "banner" ? "pulse-motion-2" : "pulse-motion"}
         ></Image>
       </Box>
     </motion.div>

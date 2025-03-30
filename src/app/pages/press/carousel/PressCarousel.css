@@ -1,0 +1,30 @@
+/* @import "swiper/swiper-bundle.min.css"; */
+@import "swiper/css";
+@import "swiper/css/autoplay";
+@import "swiper/css/pagination";
+
+.swiper-slide div {
+  /* height: 50dvh; */
+}
+.swiper-wrapper {
+  width: 100%;
+  height: max-content !important;
+  -webkit-transition-timing-function: linear !important;
+  transition-timing-function: linear !important;
+  position: relative;
+  background: none;
+}
+
+.swiper-pagination-progressbar-fill {
+  background: linear-gradient(-45deg, #ff0062, #d52323) !important;
+}
+
+.swiper-horizontal > .swiper-pagination-progressbar,
+.swiper-pagination-progressbar.swiper-pagination-horizontal,
+.swiper-vertical
+  > .swiper-pagination-progressbar.swiper-pagination-progressbar-opposite,
+.swiper-pagination-progressbar.swiper-pagination-vertical.swiper-pagination-progressbar-opposite {
+  top: auto;
+  margin-top: -4px;
+  position: absolute;
+}

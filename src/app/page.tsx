@@ -6,12 +6,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Resident } from "@/app/pages/resident/Resident";
 import Carousel from "@/app/pages/carousel/Carousel";
 import Contact from "@/app/pages/contact/Contact";
-import Press from "@/app/pages/press/Press";
 import Footer from "@/app/pages/footer/Footer";
 import { fetchAllData } from "@/services/data.service";
 import LoadingScreen from "@/components/loading-screen/LoadingScreen";
 import Hero from "./pages/hero/Hero";
 import "./css/motions.css";
+import PressCarousel from "./pages/press/carousel/PressCarousel";
 
 // #endregion imports
 
@@ -59,7 +59,7 @@ export default function Home() {
 
         <Contact config={contactSection} />
 
-        <Press config={artistSection} />
+        <PressCarousel artists={artistSection.artists} />
 
         <Footer />
       </main>
