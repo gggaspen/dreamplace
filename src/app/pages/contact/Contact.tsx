@@ -15,7 +15,9 @@ export default function Contact({ config }: { config: IContactData }) {
 
   return (
     <>
-      <Box h={"auto"} bg={"#000"} py={"2em"} px={{ base: "2em", md: "14em" }}>
+      <Box 
+      h={"auto"}
+      bg={"#000"} py={"2em"} px={{ base: "2em", md: "14em" }}>
         <Text
           fontSize={{ base: "1.5em", md: "3em" }}
           fontWeight={600}

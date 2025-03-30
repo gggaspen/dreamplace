@@ -1,4 +1,4 @@
-import { API_URL } from "@/app/config";
+import { NEXT_PUBLIC_API_URL as API_URL } from "@/app/config";
 
 /**
  *

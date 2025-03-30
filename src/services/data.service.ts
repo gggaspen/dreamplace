@@ -7,6 +7,7 @@ import {
   getArtistSection,
   getFooterSection,
 } from "@/services/strapi.service";
+import { postCounter } from "./counter.service";
 
 export const fetchAllData = async () => {
   const [
@@ -17,7 +18,9 @@ export const fetchAllData = async () => {
     contactSection,
     artistSection,
     footerSection,
+    counter,
   ] = await Promise.all([
+    // strapi service
     getHeroData(),
     getEvents(),
     getCarousel(),
@@ -25,6 +28,8 @@ export const fetchAllData = async () => {
     getContactData(),
     getArtistSection(),
     getFooterSection(),
+    // touch counter service
+    postCounter(),
   ]);
 
   const activeEvent = events?.find((event) => event.active);
@@ -40,5 +45,6 @@ export const fetchAllData = async () => {
     contactSection,
     artistSection,
     footerSection,
+    counter,
   };
 };

@@ -34,7 +34,6 @@ export default function Banner({
 
   const _date: string = dateToCustomString(new Date(date));
 
-  const height = "100dvh";
   const textColor = "#eee";
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -42,20 +41,18 @@ export default function Banner({
 
   const toggleExpand = () => setIsExpanded(!isExpanded);
 
-  // Calcula la longitud del texto a mostrar en modo contraído
-  // const maxLength = Math.floor(text.length / 2);
-
   return (
     <Flex
       alignItems="flex-end"
       position="relative"
       overflow="hidden"
-      height={height}
+      height={"100%"}
     >
       <BackdropParallax
         srcUrlDesktop={optimizedDesktopCover}
         srcUrlMobile={optimizedMobileCover}
-        height={height}
+        height={"100%"}
+        parent={"banner"}
       ></BackdropParallax>
       <Box
         // display={"none"}
