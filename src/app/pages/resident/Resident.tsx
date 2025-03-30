@@ -17,7 +17,7 @@ interface ResidentSection {
 }
 
 export const Resident = ({ config }: ResidentSection) => {
-  const height = 352;
+  const IFRAME_HEIGHT = 352;
   const { titulo, embed_url, link_url, banner_text, banner_url } = config;
 
   return (
@@ -34,7 +34,7 @@ export const Resident = ({ config }: ResidentSection) => {
           bgColor={"#000"}
         >
           <Flex
-            h={{ base: "50dvh", md: "60dvh" }}
+            style={{ height: IFRAME_HEIGHT }}
             bgColor={"#000"}
             px={{ base: "2em", md: "14em" }}
             pt={{ base: "3em", md: "3em" }}
@@ -70,7 +70,7 @@ export const Resident = ({ config }: ResidentSection) => {
               justifyContent={"center"}
               alignItems={"center"}
               px={{ base: "2em", md: "14em" }}
-              mt={{ base: "-218px", md: "-12.5em" }}
+              mt={{ base: "-200px", md: "-12.5em" }}
             >
               <iframe
                 style={{
@@ -78,7 +78,7 @@ export const Resident = ({ config }: ResidentSection) => {
                 }}
                 src={generateSpotifyEmbedSrc(embed_url)}
                 width="100%"
-                height={height + "px"}
+                height={IFRAME_HEIGHT}
                 loading="lazy"
                 allow="encrypted-media"
               ></iframe>

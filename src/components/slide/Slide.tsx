@@ -16,7 +16,7 @@ const Slide = ({ left, direction, progress, arrow, text }: any) => {
 
   useEffect(() => {
     const _texts: TextItem[] = [];
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < 24; i++) {
       const item: TextItem = { text };
       _texts.push(item);
     }

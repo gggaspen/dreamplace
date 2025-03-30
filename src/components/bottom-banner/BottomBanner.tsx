@@ -46,7 +46,7 @@ const BottomBanner: React.FC<BottomBannerProps> = ({
         <Flex
           ref={container}
           flexDirection={"column"}
-          gap={"1em"}
+          gap={"1.5em"}
           py={".5em"}
           overflow={"hidden"}
           className="bg-gradient"
