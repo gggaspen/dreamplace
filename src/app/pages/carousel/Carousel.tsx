@@ -63,11 +63,11 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
           <Swiper
             className="progress-slide-carousel"
             modules={[Autoplay, Pagination]}
-            pagination={{
-              clickable: true,
-              type: "progressbar",
-              progressbarOpposite: false,
-            }}
+            // pagination={{
+            //   clickable: true,
+            //   type: "progressbar",
+            //   progressbarOpposite: false,
+            // }}
             loop={images.length > 1}
             autoplay={{
               delay: 2000,
