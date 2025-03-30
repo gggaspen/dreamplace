@@ -12,7 +12,7 @@ async function postCounter() {
     }
     const { data } = await res.json();
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error al obtener los eventos:", error);
   }
 }

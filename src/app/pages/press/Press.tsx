@@ -47,9 +47,9 @@ export default function Press({ config }: PressProps) {
     setWindowHeight(window.innerHeight + "px");
   }, []);
 
-  useEffect(() => {
-    console.log(windowHeight);
-  }, [windowHeight]);
+  // useEffect(() => {
+  //   console.log(windowHeight);
+  // }, [windowHeight]);
 
   const styles: CSSProperties = {
     height: windowHeight,
