@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { CSSProperties, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -11,6 +11,7 @@ import "./Carousel.css";
 import { Box, Flex } from "@chakra-ui/react";
 import { ICover } from "@/interfaces/event.interface";
 import MiniBanner from "@/components/mini-banner/MiniBanner";
+import { extractNumericValue } from "@/app/utils/extract-numeric-value";
 
 interface ICarouselProps {
   fotos: ICover[];
@@ -33,7 +34,17 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
     return () => {
       mediaQuery.removeEventListener("change", handleResize);
     };
+  }, [fotos]);
+
+  const [windowHeight, setWindowHeight] = useState("0");
+
+  useEffect(() => {
+    setWindowHeight(window.innerHeight + "px");
   }, []);
+
+  const styles: CSSProperties = {
+    height: windowHeight,
+  };
 
   return (
     <>
@@ -42,7 +53,10 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
       <Flex>
         <Box
           w={"100%"}
-          h={{ base: "40dvh", lg: "100dvh" }}
+          h={{
+            base: extractNumericValue(`${styles.height}`) / 2.5,
+            lg: styles.height,
+          }}
           position={"relative"}
           bgColor={"#000"}
         >
