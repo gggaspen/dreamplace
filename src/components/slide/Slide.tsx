@@ -21,7 +21,7 @@ const Slide = ({ left, direction, progress, arrow, text }: any) => {
       _texts.push(item);
     }
     setTexts(_texts);
-  }, []);
+  }, [text]);
 
   const translateX = useTransform(
     progress,
