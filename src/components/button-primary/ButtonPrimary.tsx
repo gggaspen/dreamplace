@@ -63,7 +63,7 @@ export default function ButtonPrimary({
       ) : (
         <Link
           href={
-            download ? "./pdf/Presskit 2024 - Agustin Pietrocola.pdf" : linkUrl
+            download ? "./pdf/Presskit 2025 - Agustin Pietrocola.pdf" : linkUrl
           }
           target="_blank"
           w={"100%"}
