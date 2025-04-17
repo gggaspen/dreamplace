@@ -8,8 +8,8 @@ import { dateToCustomString } from "@/utils/format-date";
 // import IBannerData from "@/interfaces/banner-data.interface";
 import React from "react";
 import BackdropParallax from "@/components/backdrop-parallax/BackdropParallax";
-import ButtonPrimary from "@/components/button-primary/ButtonPrimary";
-import Arrow from "@/components/arrow/Arrow";
+// import ButtonPrimary from "@/components/button-primary/ButtonPrimary";
+// import Arrow from "@/components/arrow/Arrow";
 import IHeroConfig from "../interfaces/hero-config.interface";
 
 export default function Banner({
@@ -19,8 +19,14 @@ export default function Banner({
   config: IHeroConfig;
   event: IEvent;
 }) {
-  const { title, subtitle, paragraph, button, cover_desktop, cover_mobile } =
-    config;
+  const {
+    title,
+    subtitle,
+    paragraph,
+    // button,
+    cover_desktop,
+    cover_mobile,
+  } = config;
   const { date } = event;
 
   const optimizedDesktopCover = React.useMemo(
@@ -120,7 +126,7 @@ export default function Banner({
               : _paragraph} */}
           </Text>
         </Box>
-        <Box>
+        {/* <Box>
           <ButtonPrimary
             // disabled={!button.link ? false : true}
             text={button.text}
@@ -129,7 +135,7 @@ export default function Banner({
           >
             <Arrow color="#eee" w="20px" direction="top-right"></Arrow>
           </ButtonPrimary>
-        </Box>
+        </Box> */}
       </Flex>
     </Flex>
   );
