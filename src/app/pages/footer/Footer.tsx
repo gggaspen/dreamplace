@@ -44,55 +44,53 @@ export default function Footer() {
   };
 
   return (
-    <>
+    <Flex
+      flexDirection={"column"}
+      justifyContent={"space-between"}
+      bg={"#000"}
+      py={"1em"}
+      paddingX={{ base: "2em", lg: "14em" }}
+    >
+      <Box h={""} borderBottom={"1px solid #eee"} mb={"2em"} />
+
+      {/* El contenedor observado siempre está presente */}
+      <div ref={observerRef} style={{ visibility: "hidden" }} />
+
+      {/* Renderiza el iframe cuando es visible */}
+      {isVisible && <YouTubeEmbed />}
+      {/* {isVisible && <YouTubeEmbed title={youtube_title} src={youtube_url} />} */}
+
       <Flex
+        color={"white"}
+        w={"100%"}
+        alignItems={"center"}
+        justifyContent={"center"}
         flexDirection={"column"}
-        justifyContent={"space-between"}
-        bg={"#000"}
-        py={"1em"}
-        paddingX={{ base: "2em", lg: "14em" }}
+        gap={"2em"}
       >
-        <Box h={""} borderBottom={"1px solid #eee"} mb={"2em"} />
+        <Text fontWeight={"bold"} fontSize={"1em"} my={"2em"}>
+          {new Date().getFullYear()} EDITION
+        </Text>
 
-        {/* El contenedor observado siempre está presente */}
-        <div ref={observerRef} style={{ visibility: "hidden" }} />
+        <Link href="https://www.instagram.com/dreamplace.ar/" target="_blank">
+          <Text>@dreamplace.ar</Text>
+        </Link>
 
-        {/* Renderiza el iframe cuando es visible */}
-        {isVisible && <YouTubeEmbed />}
-        {/* {isVisible && <YouTubeEmbed title={youtube_title} src={youtube_url} />} */}
-
-        <Flex
-          color={"white"}
-          w={"100%"}
-          alignItems={"center"}
-          justifyContent={"center"}
-          flexDirection={"column"}
-          gap={"2em"}
-        >
-          <Text fontWeight={"bold"} fontSize={"1em"} my={"2em"}>
-            {new Date().getFullYear()} EDITION
-          </Text>
-
-          <Link href="https://www.instagram.com/dreamplace.ar/" target="_blank">
-            <Text>@dreamplace.ar</Text>
-          </Link>
-
-          <Link href="https://www.instagram.com/dreamplace.ar/" target="_blank">
-            <Image
-              src="https://i.postimg.cc/0NM8hg7n/ig.png"
-              width={30}
-              height={30}
-              alt="Instagram icon"
-            />
-          </Link>
-        </Flex>
-
-        <Flex justifyContent={"center"} my={"4em"}>
-          <Box onClick={() => openAdmin()}>
-            <Logo w="100%" color="rgb(34, 34, 34)" />
-          </Box>
-        </Flex>
+        <Link href="https://www.instagram.com/dreamplace.ar/" target="_blank">
+          <Image
+            src="https://i.postimg.cc/0NM8hg7n/ig.png"
+            width={30}
+            height={30}
+            alt="Instagram icon"
+          />
+        </Link>
       </Flex>
-    </>
+
+      <Flex justifyContent={"center"} my={"4em"}>
+        <Box onClick={() => openAdmin()}>
+          <Logo mode="full" w={"calc(100dvw - 40em)"} color="rgb(34, 34, 34)" />
+        </Box>
+      </Flex>
+    </Flex>
   );
 }

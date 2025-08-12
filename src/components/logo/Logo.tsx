@@ -1,4 +1,16 @@
-const Logo = ({ color = "#eee", w = "100%", h = "100%", mode = "full" }) => {
+export interface ILogoProps {
+  color?: string;
+  w?: string;
+  h?: string;
+  mode?: "full" | "mini";
+}
+
+const Logo = ({
+  color = "#eee",
+  w = "100%",
+  h = "100%",
+  mode = "full",
+}: ILogoProps) => {
   if (mode === "full") {
     return (
       <svg width={w} height={h} viewBox="0 0 3086.38 604.17">

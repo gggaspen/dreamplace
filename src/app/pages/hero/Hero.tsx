@@ -10,8 +10,8 @@ import IHeroConfig from "./interfaces/hero-config.interface";
 import NavigatorConfig from "./interfaces/navigator-config.interface";
 
 interface HeroProps {
-  config: IHeroConfig;
-  activeEvent: IEvent;
+  readonly config: IHeroConfig;
+  readonly activeEvent: IEvent;
 }
 
 export default function Hero({ config, activeEvent }: HeroProps) {
