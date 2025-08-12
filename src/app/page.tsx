@@ -52,7 +52,9 @@ export default function Home() {
     <main className="pulse-motion">
       <Hero config={heroData} activeEvent={activeEvent} />
 
-      <Carousel fotos={carousel?.fotos} banner_text={carousel?.banner_text} />
+      <div style={{ zIndex: 888 }}>
+        <Carousel fotos={carousel?.fotos} banner_text={carousel?.banner_text} />
+      </div>
 
       <div style={{ zIndex: 999 }}>
         <Resident config={spotifySection} />

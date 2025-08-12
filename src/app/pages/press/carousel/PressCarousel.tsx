@@ -11,7 +11,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import Press, { IArtist } from "../Press";
 
 interface IPressCarouselProps {
-  artists: IArtist[];
+  readonly artists: IArtist[];
 }
 
 export default function PressCarousel({ artists }: IPressCarouselProps) {
