@@ -31,8 +31,8 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   const [isDesktop, setIsDesktop] = useState<boolean>(false);
   const [src, setSrc] = useState<string | null>(
     isDesktop
-      ? srcUrlDesktop?.formats?.large?.url || AUX_IMG_BG
-      : srcUrlMobile?.formats?.large?.url || AUX_IMG_BG
+      ? srcUrlDesktop?.url || AUX_IMG_BG
+      : srcUrlMobile?.url || AUX_IMG_BG
   );
   const [outputRange, setOutputRange] = useState<number[]>([0, 0]);
   const [inputRange, setInputRange] = useState<InputRange>([0, 0]);
@@ -42,9 +42,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
       const isDesktopView = window.matchMedia("(min-width: 768px)").matches;
       setIsDesktop(isDesktopView);
 
-      const src = isDesktopView
-        ? srcUrlDesktop?.formats?.large?.url
-        : srcUrlMobile?.formats?.large?.url;
+      const src = isDesktopView ? srcUrlDesktop?.url : srcUrlMobile?.url;
       setSrc(src);
     };
     updateDesktopSize();

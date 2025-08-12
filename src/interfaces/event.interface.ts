@@ -31,6 +31,7 @@ export interface ICover {
     medium: IFormat;
     thumbnail: IFormat;
   };
+  url: string;
 }
 
 export interface IFormat {
