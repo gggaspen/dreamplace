@@ -21,7 +21,7 @@ async function getEvents() {
  */
 async function getHeroData() {
   const res = await fetch(
-    `${API_URL}/api/hero-sections?fields[1]=title&fields[2]=subtitle&fields[3]=paragraph&populate[navigator][fields]=*&populate[button][fields]=*&populate[cover_mobile][fields][0]=formats&populate[cover_desktop][fields][0]=formats`
+    `${API_URL}/api/hero-sections?fields[0]=title&fields[1]=subtitle&fields[2]=paragraph&populate[cover_mobile][fields][0]=url&populate[cover_mobile][fields][1]=formats&populate[cover_desktop][fields][0]=url&populate[cover_desktop][fields][1]=formats`
   );
   if (!res.ok) {
     throw new Error("Error al obtener los eventos");
