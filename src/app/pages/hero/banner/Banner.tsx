@@ -62,7 +62,7 @@ export default function Banner({
           "linear-gradient(0deg, rgb(0 0 0) 0%, transparent, transparent, rgb(255 255 255 / 0%) 100%)"
         }
         position="absolute"
-        zIndex={59}
+        zIndex={3}
       />
 
       {/* Contenido */}
@@ -71,7 +71,7 @@ export default function Banner({
         justifyContent="flex-end"
         gap="2"
         h="100dvh"
-        zIndex={59}
+        zIndex={3}
         paddingBottom={"10%"}
         paddingX={{ base: "2em", lg: "14em" }}
         paddingRight={{ base: "2em", lg: "40%" }}

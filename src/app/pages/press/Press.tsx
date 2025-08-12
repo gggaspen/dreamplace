@@ -59,13 +59,6 @@ export default function Press({ artist }: PressProps) {
       justifyContent={{ base: "center", lg: "center" }}
       style={{ height: styles.height }}
     >
-      <BackdropParallax
-        srcUrlDesktop={photos[0]}
-        srcUrlMobile={photos[0]}
-        height={styles.height}
-        parent={"press"}
-      ></BackdropParallax>
-
       {/* Gradient */}
 
       <Box
@@ -75,6 +68,7 @@ export default function Press({ artist }: PressProps) {
           "linear-gradient(0deg, rgb(0 0 0) 0%, transparent, rgb(255 255 255 / 0%) 100%)"
         }
         position="absolute"
+        zIndex={3}
       />
 
       {/* Contenido */}
@@ -84,10 +78,10 @@ export default function Press({ artist }: PressProps) {
         gap="2"
         w={"100%"}
         h={"100%"}
-        zIndex={1}
         paddingBottom={"10%"}
         paddingX={{ base: "2em", lg: "14em" }}
         paddingRight={{ base: "2em", lg: "40%" }}
+        zIndex={3}
       >
         <Box>
           <Text
@@ -151,6 +145,13 @@ export default function Press({ artist }: PressProps) {
           </ButtonPrimary>
         </Box>
       </Flex>
+
+      <BackdropParallax
+        srcUrlDesktop={photos[0]}
+        srcUrlMobile={photos[0]}
+        height={styles.height}
+        parent={"press"}
+      ></BackdropParallax>
     </Flex>
   );
 }
