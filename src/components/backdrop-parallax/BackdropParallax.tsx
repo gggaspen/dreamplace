@@ -161,7 +161,8 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                   filter: "blur(2px)",
                 }}
                 className={
-                  parent === "banner" ? "pulse-motion-2" : "pulse-motion"
+                  // parent === "banner" ? "pulse-motion-2" : "pulse-motion"
+                  parent === "banner" ? "" : "pulse-motion"
                 }
               />
             </motion.div>
@@ -192,7 +193,8 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                     height: "100%",
                   }}
                   className={
-                    parent === "banner" ? "pulse-motion-2" : "pulse-motion"
+                    // parent === "banner" ? "pulse-motion-2" : "pulse-motion"
+                    parent === "banner" ? "" : "pulse-motion"
                   }
                 />
               </motion.div>
