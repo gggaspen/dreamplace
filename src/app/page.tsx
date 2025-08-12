@@ -54,7 +54,9 @@ export default function Home() {
 
       <Carousel fotos={carousel?.fotos} banner_text={carousel?.banner_text} />
 
-      <Resident config={spotifySection} />
+      <div style={{ zIndex: 999 }}>
+        <Resident config={spotifySection} />
+      </div>
 
       <Contact config={contactSection} />
 

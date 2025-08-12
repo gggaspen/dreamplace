@@ -21,7 +21,7 @@ export const Resident = ({ config }: ResidentSection) => {
   const { titulo, embed_url, link_url, banner_text, banner_url } = config;
 
   return (
-    <div style={{ zIndex: 80 }}>
+    <div style={{ zIndex: 999 }}>
       <BottomBanner
         text={banner_text}
         url={banner_url}
