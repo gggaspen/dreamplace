@@ -21,14 +21,12 @@ export const Resident = ({ config }: ResidentSection) => {
   const { titulo, embed_url, link_url, banner_text, banner_url } = config;
 
   return (
-    <>
-      <div style={{ zIndex: 30 }}>
-        <BottomBanner
-          text={banner_text}
-          url={banner_url}
-          rows={[{ direction: "left" }]}
-        />
-      </div>
+    <div style={{ zIndex: 80 }}>
+      <BottomBanner
+        text={banner_text}
+        url={banner_url}
+        rows={[{ direction: "left" }]}
+      />
       <Box pos={"relative"}>
         <Flex
           flexDirection={"column"}
@@ -97,6 +95,6 @@ export const Resident = ({ config }: ResidentSection) => {
           </Box>
         </Flex>
       </Box>
-    </>
+    </div>
   );
 };
