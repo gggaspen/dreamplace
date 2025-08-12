@@ -22,11 +22,13 @@ export const Resident = ({ config }: ResidentSection) => {
 
   return (
     <>
-      <BottomBanner
-        text={banner_text}
-        url={banner_url}
-        rows={[{ direction: "left" }]}
-      />
+      <div style={{ zIndex: 30 }}>
+        <BottomBanner
+          text={banner_text}
+          url={banner_url}
+          rows={[{ direction: "left" }]}
+        />
+      </div>
       <Box pos={"relative"}>
         <Flex
           flexDirection={"column"}
