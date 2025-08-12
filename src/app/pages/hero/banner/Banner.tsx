@@ -54,12 +54,6 @@ export default function Banner({
       overflow="hidden"
       height={"100%"}
     >
-      <BackdropParallax
-        srcUrlDesktop={optimizedDesktopCover}
-        srcUrlMobile={optimizedMobileCover}
-        height={"100%"}
-        parent={"banner"}
-      ></BackdropParallax>
       <Box
         // display={"none"}
         w={"100%"}
@@ -76,7 +70,7 @@ export default function Banner({
         justifyContent="flex-end"
         gap="2"
         h="100dvh"
-        zIndex={1}
+        zIndex={59}
         paddingBottom={"10%"}
         paddingX={{ base: "2em", lg: "14em" }}
         paddingRight={{ base: "2em", lg: "40%" }}
@@ -137,6 +131,13 @@ export default function Banner({
           </ButtonPrimary>
         </Box> */}
       </Flex>
+
+      <BackdropParallax
+        srcUrlDesktop={optimizedDesktopCover}
+        srcUrlMobile={optimizedMobileCover}
+        height={"100%"}
+        parent={"banner"}
+      ></BackdropParallax>
     </Flex>
   );
 }

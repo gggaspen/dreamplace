@@ -49,20 +49,18 @@ export default function Home() {
   } = data;
 
   return (
-    <>
-      <main className="pulse-motion">
-        <Hero config={heroData} activeEvent={activeEvent} />
+    <main className="pulse-motion">
+      <Hero config={heroData} activeEvent={activeEvent} />
 
-        <Carousel fotos={carousel?.fotos} banner_text={carousel?.banner_text} />
+      <Carousel fotos={carousel?.fotos} banner_text={carousel?.banner_text} />
 
-        <Resident config={spotifySection} />
+      <Resident config={spotifySection} />
 
-        <Contact config={contactSection} />
+      <Contact config={contactSection} />
 
-        <PressCarousel artists={artistSection.artists} />
+      <PressCarousel artists={artistSection.artists} />
 
-        <Footer />
-      </main>
-    </>
+      <Footer />
+    </main>
   );
 }
