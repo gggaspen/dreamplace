@@ -62,6 +62,7 @@ export default function Banner({
           "linear-gradient(0deg, rgb(0 0 0) 0%, transparent, transparent, rgb(255 255 255 / 0%) 100%)"
         }
         position="absolute"
+        zIndex={59}
       />
 
       {/* Contenido */}

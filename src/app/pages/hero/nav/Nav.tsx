@@ -55,7 +55,7 @@ export default function Nav({ show_banner }: { show_banner: boolean }) {
         duration: 0.6,
         staggerChildren: 0.05,
       }}
-      className={show_banner ? "mt-40-nav" : null}
+      className={show_banner ? "mt-40-nav" : ""}
     >
       <Flex>
         <Logo
