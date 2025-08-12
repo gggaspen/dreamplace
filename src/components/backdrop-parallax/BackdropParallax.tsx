@@ -2,7 +2,12 @@
 
 // import Lenis from "lenis";
 import React, { CSSProperties, useEffect, useState, useCallback } from "react";
-import { motion, useTransform, useScroll, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useTransform,
+  useScroll,
+  AnimatePresence,
+} from "framer-motion";
 import Image from "next/image";
 import { Box } from "@chakra-ui/react";
 import { ICover } from "@/interfaces/event.interface";
@@ -36,18 +41,22 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
     lowQuality: AUX_IMG_BG,
     highQuality: AUX_IMG_BG,
   });
-  const [isHighQualityLoaded, setIsHighQualityLoaded] = useState<boolean>(false);
+  const [isHighQualityLoaded, setIsHighQualityLoaded] =
+    useState<boolean>(false);
   const [outputRange, setOutputRange] = useState<number[]>([0, 0]);
   const [inputRange, setInputRange] = useState<InputRange>([0, 0]);
 
-  const getImageUrls = useCallback((isDesktopView: boolean): ImageUrls => {
-    const coverData = isDesktopView ? srcUrlDesktop : srcUrlMobile;
-    
-    const lowQuality = coverData?.formats?.large?.url || AUX_IMG_BG;
-    const highQuality = coverData?.url || AUX_IMG_BG;
+  const getImageUrls = useCallback(
+    (isDesktopView: boolean): ImageUrls => {
+      const coverData = isDesktopView ? srcUrlDesktop : srcUrlMobile;
 
-    return { lowQuality, highQuality };
-  }, [srcUrlDesktop, srcUrlMobile]);
+      const lowQuality = coverData?.formats?.large?.url || AUX_IMG_BG;
+      const highQuality = coverData?.url || AUX_IMG_BG;
+
+      return { lowQuality, highQuality };
+    },
+    [srcUrlDesktop, srcUrlMobile]
+  );
 
   const preloadHighQualityImage = useCallback((url: string): Promise<void> => {
     return new Promise((resolve, reject) => {
@@ -94,7 +103,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   const imageTransitionVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
-    exit: { opacity: 0 }
+    exit: { opacity: 0 },
   };
 
   return (
@@ -123,7 +132,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
           height={"100%"}
           backgroundGradient={"linear(to-t, rgba(0, 0, 0, 1), transparent"}
         ></Box>
-        
+
         <Box position="relative" width="100%" height="100%">
           {!isHighQualityLoaded && (
             <motion.div
@@ -137,7 +146,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                 position: "absolute",
                 width: "100%",
                 height: "100%",
-                zIndex: 1
+                zIndex: 1,
               }}
             >
               <Image
@@ -151,7 +160,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                   height: "100%",
                   filter: "blur(2px)",
                 }}
-                className={parent === "banner" ? "pulse-motion-2" : "pulse-motion"}
+                className={parent === "banner" ? "" : "pulse-motion"}
               />
             </motion.div>
           )}
@@ -168,7 +177,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                   position: "absolute",
                   width: "100%",
                   height: "100%",
-                  zIndex: 2
+                  zIndex: 2,
                 }}
               >
                 <Image
@@ -180,7 +189,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                     objectFit: "cover",
                     height: "100%",
                   }}
-                  className={parent === "banner" ? "pulse-motion-2" : "pulse-motion"}
+                  className={parent === "banner" ? "" : "pulse-motion"}
                 />
               </motion.div>
             )}
