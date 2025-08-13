@@ -13,7 +13,7 @@ Copy and paste this prompt to Claude Code when you're ready to begin the refacto
 ## **REFACTORING EXECUTION PROMPT**
 
 ```
-I need you to help me execute the comprehensive refactoring plan for my DreamPlace application. Please read the REFACTORING_TASKLIST.md file first to understand the complete strategy and context.
+I need you to help me execute the comprehensive refactoring plan for my DreamPlace application. Please read REFACTORING_TASKLIST.md and work on Phase 3: Component Architecture Modernization. Focus on design system implementation, component refactoring, and performance optimization. Verify that Phases 1-2 are completed first.
 
 IMPORTANT INSTRUCTIONS:
 
@@ -53,11 +53,9 @@ IMPORTANT INSTRUCTIONS:
    - Provide progress updates at logical stopping points
 
 8. **STARTING POINT**: 
-   Begin with Phase 1: Foundation & Infrastructure Setup, specifically:
-   - Task 1.1: Development Environment Enhancement
-   - Start with subtask 1.1.1: Configure Prettier with consistent formatting rules
+   Begin with Phase 3: Component Architecture Modernization
 
-CURRENT REQUEST: Please start by reading the REFACTORING_TASKLIST.md file and then begin Phase 1, Task 1.1. Update the tasklist file to mark your progress as you complete each subtask.
+CURRENT REQUEST: Please start by reading the REFACTORING_TASKLIST.md file and then begin Phase 2, Task 1.1. Update the tasklist file to mark your progress as you complete each subtask.
 
 Ready to begin the transformation? Let's build something amazing! 🚀
 ```

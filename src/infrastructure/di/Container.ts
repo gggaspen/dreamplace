@@ -7,7 +7,7 @@ export interface ServiceDefinition<T = any> {
   singleton: boolean;
 }
 
-export class Container {
+export class DIContainer {
   private readonly services = new Map<ServiceIdentifier, ServiceDefinition>();
   private readonly singletonInstances = new Map<ServiceIdentifier, any>();
 
@@ -110,19 +110,52 @@ export class Container {
 }
 
 // Global container instance
-let globalContainer: Container | null = null;
+let globalContainer: DIContainer | null = null;
 
-export const createContainer = (): Container => {
-  return new Container();
+export const createContainer = (): DIContainer => {
+  return new DIContainer();
 };
 
-export const getContainer = (): Container => {
+export const getContainer = (): DIContainer => {
   if (!globalContainer) {
     globalContainer = createContainer();
   }
   return globalContainer;
 };
 
-export const setContainer = (container: Container): void => {
+export const setContainer = (container: DIContainer): void => {
   globalContainer = container;
 };
+
+// Static interface for easier usage
+export class ContainerSingleton {
+  static get<T>(identifier: ServiceIdentifier): T {
+    return getContainer().resolveSync<T>(identifier);
+  }
+
+  static async resolve<T>(identifier: ServiceIdentifier): Promise<T> {
+    return getContainer().resolve<T>(identifier);
+  }
+
+  static register<T>(
+    identifier: ServiceIdentifier,
+    factory: Factory<T> | AsyncFactory<T>,
+    options?: { singleton?: boolean }
+  ): void {
+    return getContainer().register(identifier, factory, options);
+  }
+
+  static registerSingleton<T>(
+    identifier: ServiceIdentifier,
+    factory: Factory<T> | AsyncFactory<T>
+  ): void {
+    return getContainer().registerSingleton(identifier, factory);
+  }
+
+  static isRegistered(identifier: ServiceIdentifier): boolean {
+    return getContainer().isRegistered(identifier);
+  }
+}
+
+// Default export for static usage
+export { ContainerSingleton as Container };

@@ -1,4 +1,4 @@
-import { Container } from './Container';
+import { Container, DIContainer } from './Container';
 import { SERVICE_TOKENS } from './ServiceTokens';
 
 // Configuration
@@ -21,7 +21,7 @@ import { GetActiveEventUseCase } from '../../core/application/use-cases/GetActiv
 import { GetAllArtistsUseCase } from '../../core/application/use-cases/GetAllArtistsUseCase';
 import { GetAppDataUseCase } from '../../core/application/use-cases/GetAppDataUseCase';
 
-export const setupContainer = (container: Container): void => {
+export const setupContainer = (container: DIContainer): void => {
   // Configuration
   container.registerSingleton(SERVICE_TOKENS.CONFIG_SERVICE, () => configService);
 

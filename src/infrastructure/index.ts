@@ -17,6 +17,18 @@ export { StrapiHeroSectionRepository } from './repositories/StrapiHeroSectionRep
 export { StrapiContactInfoRepository } from './repositories/StrapiContactInfoRepository';
 
 // Dependency Injection
-export { Container, createContainer, getContainer, setContainer, type ServiceIdentifier, type Factory, type AsyncFactory } from './di/Container';
+export { Container, DIContainer, createContainer, getContainer, setContainer, type ServiceIdentifier, type Factory, type AsyncFactory } from './di/Container';
 export { SERVICE_TOKENS, type ServiceToken } from './di/ServiceTokens';
 export { setupContainer } from './di/ContainerSetup';
+
+// Initialize the container with all services
+const initializeInfrastructure = () => {
+  const container = getContainer();
+  setupContainer(container);
+  return container;
+};
+
+// Auto-initialize the container
+initializeInfrastructure();
+
+export { initializeInfrastructure };

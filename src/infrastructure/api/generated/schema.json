@@ -1,0 +1,406 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "DreamPlace API",
+    "version": "1.0.0",
+    "description": "Auto-generated API schema for DreamPlace application"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:1337",
+      "description": "API Server"
+    }
+  ],
+  "paths": {
+    "/api/events": {
+      "get": {
+        "summary": "Get all events",
+        "responses": {
+          "200": {
+            "description": "List of events",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/events/{id}": {
+      "get": {
+        "summary": "Get event by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/artists": {
+      "get": {
+        "summary": "Get all artists",
+        "responses": {
+          "200": {
+            "description": "List of artists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtistListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/hero-sections": {
+      "get": {
+        "summary": "Get hero sections",
+        "responses": {
+          "200": {
+            "description": "Hero section data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeroSectionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StrapiEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "attributes": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "attributes"
+        ]
+      },
+      "StrapiResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object"
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "pagination": {
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "type": "number"
+                  },
+                  "pageSize": {
+                    "type": "number"
+                  },
+                  "pageCount": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "location": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "ticketUrl": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "startDate",
+          "endDate"
+        ]
+      },
+      "Artist": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "bio": {
+            "type": "string"
+          },
+          "genre": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "socialLinks": {
+            "type": "object",
+            "properties": {
+              "spotify": {
+                "type": "string"
+              },
+              "instagram": {
+                "type": "string"
+              },
+              "soundcloud": {
+                "type": "string"
+              },
+              "website": {
+                "type": "string"
+              }
+            }
+          },
+          "isResident": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "HeroSection": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "subtitle": {
+            "type": "string"
+          },
+          "backgroundImageUrl": {
+            "type": "string"
+          },
+          "ctaText": {
+            "type": "string"
+          },
+          "ctaUrl": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "title"
+        ]
+      },
+      "ContactInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "socialLinks": {
+            "type": "object",
+            "properties": {
+              "instagram": {
+                "type": "string"
+              },
+              "facebook": {
+                "type": "string"
+              },
+              "twitter": {
+                "type": "string"
+              }
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "email"
+        ]
+      },
+      "EventResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StrapiResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/Event"
+              }
+            }
+          }
+        ]
+      },
+      "EventListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StrapiResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "ArtistResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StrapiResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/Artist"
+              }
+            }
+          }
+        ]
+      },
+      "ArtistListResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StrapiResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Artist"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "HeroSectionResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StrapiResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/HeroSection"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

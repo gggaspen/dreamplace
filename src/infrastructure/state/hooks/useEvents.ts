@@ -1,5 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Event } from '../../../core/domain/entities/Event';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Container } from '../../di/Container';
 import { SERVICE_TOKENS } from '../../di/ServiceTokens';
 import { IEventRepository } from '../../../core/domain/repositories/IEventRepository';
