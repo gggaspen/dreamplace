@@ -1,4 +1,4 @@
-export const QUERY_GET_ALL_EVENTS: string = `
+export const QUERY_GET_ALL_EVENTS = `
     query GetEventById($id: String!) {
         events(documentId: $id) {
             date

@@ -1,16 +1,16 @@
 // #region imports
 
-import React, { CSSProperties, useEffect, useState } from "react";
-import { Text, Box, Flex } from "@chakra-ui/react";
-import "./Press.css";
-import ButtonPrimary from "../../../components/button-primary/ButtonPrimary";
-import Link from "next/link";
-import Image from "next/image";
-import Arrow from "../../../components/arrow/Arrow";
-import BackdropParallax from "../../../components/backdrop-parallax/BackdropParallax";
-import { ICover } from "@/interfaces/event.interface";
-import { EPlatform } from "@/enums/platform.enum";
-import getPlatformUrl from "@/utils/get-platform-url";
+import React, { CSSProperties, useEffect, useState } from 'react';
+import { Text, Box, Flex } from '@chakra-ui/react';
+import './Press.css';
+import ButtonPrimary from '../../../components/button-primary/ButtonPrimary';
+import Link from 'next/link';
+import Image from 'next/image';
+import Arrow from '../../../components/arrow/Arrow';
+import BackdropParallax from '../../../components/backdrop-parallax/BackdropParallax';
+import { ICover } from '@/interfaces/event.interface';
+import { EPlatform } from '@/enums/platform.enum';
+import getPlatformUrl from '@/utils/get-platform-url';
 
 // #endregion imports
 
@@ -38,12 +38,12 @@ export default function Press({ artist }: PressProps) {
   const { name, labels, links, photos } = artist;
 
   // const height = "100dvh";
-  const textColor = "#eee";
+  const textColor = '#eee';
 
-  const [windowHeight, setWindowHeight] = useState<CSSProperties["height"]>(0);
+  const [windowHeight, setWindowHeight] = useState<CSSProperties['height']>(0);
 
   useEffect(() => {
-    setWindowHeight(window.innerHeight + "px");
+    setWindowHeight(window.innerHeight + 'px');
   }, []);
 
   const styles: CSSProperties = {
@@ -52,50 +52,48 @@ export default function Press({ artist }: PressProps) {
 
   return (
     <Flex
-      alignItems="flex-end"
-      position="relative"
-      overflow="hidden"
+      alignItems='flex-end'
+      position='relative'
+      overflow='hidden'
       // height={{ base: height, lg: height }}
-      justifyContent={{ base: "center", lg: "center" }}
+      justifyContent={{ base: 'center', lg: 'center' }}
       h={styles.height}
     >
       <BackdropParallax
         srcUrlDesktop={photos[0]}
         srcUrlMobile={photos[0]}
         height={styles.height}
-        parent={"press"}
+        parent={'press'}
       ></BackdropParallax>
 
       {/* Gradient */}
 
       <Box
-        w={"100%"}
-        h={"100%"}
-        bg={
-          "linear-gradient(0deg, rgb(0 0 0) 0%, transparent, rgb(255 255 255 / 0%) 100%)"
-        }
-        position="absolute"
+        w={'100%'}
+        h={'100%'}
+        bg={'linear-gradient(0deg, rgb(0 0 0) 0%, transparent, rgb(255 255 255 / 0%) 100%)'}
+        position='absolute'
         zIndex={3}
       />
 
       {/* Contenido */}
       <Flex
-        flexDirection="column"
-        justifyContent="flex-end"
-        gap="2"
-        w={"100%"}
-        h={"100%"}
-        paddingBottom={"10%"}
-        paddingX={{ base: "2em", lg: "14em" }}
-        paddingRight={{ base: "2em", lg: "40%" }}
+        flexDirection='column'
+        justifyContent='flex-end'
+        gap='2'
+        w={'100%'}
+        h={'100%'}
+        paddingBottom={'10%'}
+        paddingX={{ base: '2em', lg: '14em' }}
+        paddingRight={{ base: '2em', lg: '40%' }}
         zIndex={3}
       >
         <Box>
           <Text
             _selection={{
-              backgroundColor: "#000",
+              backgroundColor: '#000',
             }}
-            fontSize={{ base: "2em", lg: "3em" }}
+            fontSize={{ base: '2em', lg: '3em' }}
             color={textColor}
             fontWeight={600}
           >
@@ -105,50 +103,46 @@ export default function Press({ artist }: PressProps) {
         <Box>
           <Text
             _selection={{
-              backgroundColor: "#000",
+              backgroundColor: '#000',
             }}
-            fontSize={"1em"}
+            fontSize={'1em'}
             color={textColor}
           >
             {labels.map((l, i) => (
               <React.Fragment key={i}>
                 <span>{l.name}</span>
-                <span>{i !== labels.length - 1 ? " | " : ""}</span>
+                <span>{i !== labels.length - 1 ? ' | ' : ''}</span>
               </React.Fragment>
             ))}
           </Text>
         </Box>
 
-        <Flex w={"100%"} alignItems={"center"} gap={"1.5em"} mt={"1em"}>
+        <Flex w={'100%'} alignItems={'center'} gap={'1.5em'} mt={'1em'}>
           {links.map((link, index) => {
             if (link.platform !== EPlatform.PRESSKIT) {
               return (
-                <Link
-                  key={index}
-                  href={link.url}
-                  target="_blank"
-                  style={{ maxWidth: "20px" }}
-                >
+                <Link key={index} href={link.url} target='_blank' style={{ maxWidth: '20px' }}>
                   <Image
                     src={getPlatformUrl(link.platform)}
                     width={link.platform === EPlatform.BEATPORT ? 19 : 20}
                     height={20}
-                    style={{ height: "auto" }}
+                    style={{ height: 'auto' }}
                     alt={link.platform}
                   />
                 </Link>
               );
             }
+            return null;
           })}
         </Flex>
         <Box>
           <ButtonPrimary
-            mode="dark"
-            text={links.find((l) => l.primary)?.platform.toUpperCase()}
+            mode='dark'
+            text={links.find(l => l.primary)?.platform.toUpperCase()}
             download={true}
-            linkUrl={links.find((l) => l.primary)?.url}
+            linkUrl={links.find(l => l.primary)?.url}
           >
-            <Arrow color="#000" w="20px" direction="top-right"></Arrow>
+            <Arrow color='#000' w='20px' direction='top-right'></Arrow>
           </ButtonPrimary>
         </Box>
       </Flex>

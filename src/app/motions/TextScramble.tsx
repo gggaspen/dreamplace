@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 
 class TextScrambleClass {
   el: HTMLElement;
   chars: string;
-  queue: Array<{
+  queue: {
     from: string;
     to: string;
     start: number;
     end: number;
     char?: string;
-  }>;
+  }[];
   resolve!: () => void;
   frameRequest!: number;
   frame: number;
 
   constructor(el: HTMLElement) {
     this.el = el;
-    this.chars = "!<>-_\\/[]{}—=+*^?#________";
+    this.chars = '!<>-_\\/[]{}—=+*^?#________';
     this.queue = [];
     this.frame = 0;
     this.update = this.update.bind(this);
@@ -27,14 +27,14 @@ class TextScrambleClass {
   setText(newText: string) {
     const oldText = this.el.innerText;
     const length = Math.max(oldText.length, newText.length);
-    const promise = new Promise<void>((resolve) => {
+    const promise = new Promise<void>(resolve => {
       this.resolve = resolve as () => void;
     });
     this.queue = [];
 
     for (let i = 0; i < length; i++) {
-      const from = oldText[i] || "";
-      const to = newText[i] || "";
+      const from = oldText[i] || '';
+      const to = newText[i] || '';
       const start = Math.floor(Math.random() * 40);
       const end = start + Math.floor(Math.random() * 40);
       this.queue.push({ from, to, start, end });
@@ -47,12 +47,14 @@ class TextScrambleClass {
   }
 
   update() {
-    let output = "";
+    let output = '';
     let complete = 0;
 
     for (let i = 0, n = this.queue.length; i < n; i++) {
-      const { from, to, start, end } = this.queue[i];
-      let { char } = this.queue[i];
+      const queueItem = this.queue[i];
+      if (!queueItem) continue;
+      const { from, to, start, end } = queueItem;
+      let { char } = queueItem;
 
       if (this.frame >= end) {
         complete++;
@@ -60,7 +62,9 @@ class TextScrambleClass {
       } else if (this.frame >= start) {
         if (!char || Math.random() < 0.28) {
           char = this.randomChar();
-          this.queue[i].char = char;
+          if (this.queue[i]) {
+            this.queue[i]!.char = char;
+          }
         }
         output += `<span style="color:#eee;">${char}</span>`;
       } else {
@@ -117,9 +121,12 @@ const TextScramble: React.FC<TextScrambleProps> = ({
 
       const runScramble = async () => {
         while (true) {
-          await fx.setText(phrases[currentIndex]);
+          const currentPhrase = phrases[currentIndex];
+          if (currentPhrase) {
+            await fx.setText(currentPhrase);
+          }
           currentIndex = (currentIndex + 1) % phrases.length;
-          await new Promise((resolve) => setTimeout(resolve, duration));
+          await new Promise(resolve => setTimeout(resolve, duration));
         }
       };
 

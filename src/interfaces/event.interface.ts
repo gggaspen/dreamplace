@@ -40,7 +40,7 @@ export interface IFormat {
   hash: string;
   mime: string;
   name: string;
-  path: any;
+  path: string | null;
   size: number;
   width: number;
   height: number;

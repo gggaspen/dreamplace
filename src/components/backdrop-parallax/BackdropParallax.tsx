@@ -1,27 +1,22 @@
-"use client";
+'use client';
 
 // import Lenis from "lenis";
-import React, { CSSProperties, useEffect, useState } from "react";
-import {
-  motion,
-  useTransform,
-  useScroll,
-  AnimatePresence,
-} from "framer-motion";
-import Image from "next/image";
-import { Box } from "@chakra-ui/react";
-import { ICover } from "@/interfaces/event.interface";
-import "@/app/css/motions.css";
+import React, { CSSProperties, useEffect, useState } from 'react';
+import { motion, useTransform, useScroll, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
+import { Box } from '@chakra-ui/react';
+import { ICover } from '@/interfaces/event.interface';
+import '@/app/css/motions.css';
 
 type InputRange = number[];
 
 interface BackdropParallaxProps {
-  rows?: { direction: "left" | "right" }[];
+  rows?: { direction: 'left' | 'right' }[];
   objectPosition?: string;
-  height?: CSSProperties["height"];
+  height?: CSSProperties['height'];
   srcUrlDesktop?: ICover;
   srcUrlMobile?: ICover;
-  parent: "banner" | "press";
+  parent: 'banner' | 'press';
 }
 
 interface ImageUrls {
@@ -29,7 +24,7 @@ interface ImageUrls {
   highQuality: string;
 }
 
-const AUX_IMG_BG: string = "https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png";
+const AUX_IMG_BG = 'https://i.postimg.cc/fWtDqKQB/Banner-Prensa.png';
 
 const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   height,
@@ -41,14 +36,13 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
     lowQuality: AUX_IMG_BG,
     highQuality: AUX_IMG_BG,
   });
-  const [isHighQualityLoaded, setIsHighQualityLoaded] =
-    useState<boolean>(false);
+  const [isHighQualityLoaded, setIsHighQualityLoaded] = useState<boolean>(false);
   const [outputRange, setOutputRange] = useState<number[]>([0, 0]);
   const [inputRange, setInputRange] = useState<InputRange>([0, 0]);
 
   useEffect(() => {
     const updateDesktopSize = async () => {
-      const isDesktopView = window.matchMedia("(min-width: 768px)").matches;
+      const isDesktopView = window.matchMedia('(min-width: 768px)').matches;
       const coverData = isDesktopView ? srcUrlDesktop : srcUrlMobile;
 
       const lowQuality = coverData?.formats?.large?.url || AUX_IMG_BG;
@@ -58,11 +52,8 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
 
       // Solo actualizar si las URLs han cambiado realmente
       let urlsChanged = false;
-      setImageUrls((prevUrls) => {
-        if (
-          prevUrls.lowQuality === urls.lowQuality &&
-          prevUrls.highQuality === urls.highQuality
-        ) {
+      setImageUrls(prevUrls => {
+        if (prevUrls.lowQuality === urls.lowQuality && prevUrls.highQuality === urls.highQuality) {
           return prevUrls;
         }
         urlsChanged = true;
@@ -81,13 +72,12 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
           const img = new window.Image();
           await new Promise<void>((resolve, reject) => {
             img.onload = () => resolve();
-            img.onerror = () =>
-              reject(new Error(`Failed to load image: ${urls.highQuality}`));
+            img.onerror = () => reject(new Error(`Failed to load image: ${urls.highQuality}`));
             img.src = urls.highQuality;
           });
           setIsHighQualityLoaded(true);
         } catch (error) {
-          console.warn("Failed to preload high quality image:", error);
+          console.warn('Failed to preload high quality image:', error);
           setIsHighQualityLoaded(false);
         }
       } else {
@@ -96,13 +86,13 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
     };
 
     updateDesktopSize();
-    window.addEventListener("resize", updateDesktopSize);
-    return () => window.removeEventListener("resize", updateDesktopSize);
+    window.addEventListener('resize', updateDesktopSize);
+    return () => window.removeEventListener('resize', updateDesktopSize);
   }, [srcUrlDesktop, srcUrlMobile]);
 
   useEffect(() => {
     setInputRange([0, 800]);
-    setOutputRange(parent === "banner" ? [0, 200] : [0, 0]);
+    setOutputRange(parent === 'banner' ? [0, 200] : [0, 0]);
   }, [parent]);
 
   const { scrollY } = useScroll();
@@ -118,42 +108,42 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
     <motion.div
       style={{
         y: y1,
-        position: "absolute",
-        width: "100%",
+        position: 'absolute',
+        width: '100%',
         height,
-        justifyContent: "center",
+        justifyContent: 'center',
       }}
     >
       <Box
-        position={"absolute"}
+        position={'absolute'}
         display={{
-          base: imageUrls.lowQuality ? "flex" : "block",
-          lg: "flex",
+          base: imageUrls.lowQuality ? 'flex' : 'block',
+          lg: 'flex',
         }}
-        justifyContent={"center"}
-        width={"100%"}
-        height={{ base: "100%", lg: "100%" }}
+        justifyContent={'center'}
+        width={'100%'}
+        height={{ base: '100%', lg: '100%' }}
       >
         <Box
-          position={"absolute"}
-          width={"100%"}
-          height={"100%"}
-          backgroundGradient={"linear(to-t, rgba(0, 0, 0, 1), transparent"}
+          position={'absolute'}
+          width={'100%'}
+          height={'100%'}
+          backgroundGradient={'linear(to-t, rgba(0, 0, 0, 1), transparent'}
         ></Box>
 
-        <Box position="relative" width="100%" height="100%">
+        <Box position='relative' width='100%' height='100%'>
           {!isHighQualityLoaded && (
             <motion.div
-              key="low-quality"
-              initial="visible"
-              animate="visible"
-              exit="exit"
+              key='low-quality'
+              initial='visible'
+              animate='visible'
+              exit='exit'
               variants={imageTransitionVariants}
               transition={{ duration: 0.3 }}
               style={{
-                position: "absolute",
-                width: "100%",
-                height: "100%",
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
                 zIndex: 1,
               }}
             >
@@ -161,16 +151,16 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                 src={imageUrls.lowQuality}
                 width={3000}
                 height={0}
-                alt="Banner Prensa - Low Quality"
+                alt='Banner Prensa - Low Quality'
                 priority
                 style={{
-                  objectFit: "cover",
-                  height: "100%",
-                  filter: "blur(2px)",
+                  objectFit: 'cover',
+                  height: '100%',
+                  filter: 'blur(2px)',
                 }}
                 className={
                   // parent === "banner" ? "pulse-motion-2" : "pulse-motion"
-                  ""
+                  ''
                 }
               />
             </motion.div>
@@ -179,15 +169,15 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
           <AnimatePresence>
             {isHighQualityLoaded && (
               <motion.div
-                key="high-quality"
-                initial="hidden"
-                animate="visible"
+                key='high-quality'
+                initial='hidden'
+                animate='visible'
                 variants={imageTransitionVariants}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
                 style={{
-                  position: "absolute",
-                  width: "100%",
-                  height: "100%",
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
                   zIndex: 2,
                 }}
               >
@@ -195,14 +185,14 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                   src={imageUrls.highQuality}
                   width={3000}
                   height={0}
-                  alt="Banner Prensa - High Quality"
+                  alt='Banner Prensa - High Quality'
                   style={{
-                    objectFit: "cover",
-                    height: "100%",
+                    objectFit: 'cover',
+                    height: '100%',
                   }}
                   className={
                     // parent === "banner" ? "pulse-motion-2" : "pulse-motion"
-                    ""
+                    ''
                   }
                 />
               </motion.div>

@@ -6,8 +6,9 @@ import {
   getContactData,
   getArtistSection,
   getFooterSection,
-} from "@/services/strapi.service";
-import { postCounter } from "./counter.service";
+} from '@/services/strapi.service';
+import { postCounter } from './counter.service';
+import IEvent from '@/interfaces/event.interface';
 
 export const fetchAllData = async () => {
   const [
@@ -32,7 +33,7 @@ export const fetchAllData = async () => {
     postCounter(),
   ]);
 
-  const activeEvent = events?.find((event) => event.active);
+  const activeEvent = events?.find((event: IEvent) => event.active);
   const mainDate = activeEvent ? new Date(activeEvent.date) : new Date();
 
   return {

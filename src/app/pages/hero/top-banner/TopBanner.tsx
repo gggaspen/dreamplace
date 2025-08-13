@@ -1,28 +1,22 @@
-"use client";
+'use client';
 
-import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { useState } from "react";
-import "./TopBanner.css";
-import Link from "next/link";
-import MiniBanner from "@/components/mini-banner/MiniBanner";
+import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
+import { useState } from 'react';
+import './TopBanner.css';
+import Link from 'next/link';
+import MiniBanner from '@/components/mini-banner/MiniBanner';
 
 interface NavigatorProps {
   banner_link: string;
   banner_text: string;
 }
 
-const TopBanner: React.FC<NavigatorProps> = ({
-  banner_text,
-  banner_link,
-}: NavigatorProps) => {
+const TopBanner: React.FC<NavigatorProps> = ({ banner_text, banner_link }: NavigatorProps) => {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [prev, setPrev] = useState(0);
 
-  const update: (latest: number, prev: number) => void = (
-    latest: number,
-    prev: number
-  ) => {
+  const update: (latest: number, prev: number) => void = (latest: number, prev: number) => {
     if (latest < prev) {
       setHidden(false);
     } else if (latest > 100 && latest > prev) {
@@ -30,38 +24,38 @@ const TopBanner: React.FC<NavigatorProps> = ({
     }
   };
 
-  useMotionValueEvent(scrollY, "change", (latest: number) => {
+  useMotionValueEvent(scrollY, 'change', (latest: number) => {
     update(latest, prev);
     setPrev(latest);
   });
 
   const parentVariants = {
     visible: { opacity: 1, y: 0 },
-    hidden: { opacity: 0, y: "-4rem" },
+    hidden: { opacity: 0, y: '-4rem' },
   };
 
   const childVariants = {
     visible: { opacity: 1, y: 0 },
-    hidden: { opacity: 0, y: "-2rem" },
+    hidden: { opacity: 0, y: '-2rem' },
   };
 
   const blockAction: boolean = banner_link ? false : true;
 
   return (
     <Link
-      href={banner_link || "#"}
-      target={banner_link ? "_blank" : "_self"}
-      onClick={blockAction ? (e) => e.preventDefault() : undefined}
+      href={banner_link || '#'}
+      target={banner_link ? '_blank' : '_self'}
+      onClick={blockAction ? e => e.preventDefault() : undefined}
     >
       <motion.div
         variants={parentVariants}
-        animate={hidden ? "hidden" : "visible"}
+        animate={hidden ? 'hidden' : 'visible'}
         transition={{
           ease: [0.1, 0.25, 0.3, 1],
           duration: 0.6,
           staggerChildren: 0.05,
         }}
-        className="text-container"
+        className='text-container'
       >
         <motion.div
           variants={childVariants}
@@ -71,8 +65,9 @@ const TopBanner: React.FC<NavigatorProps> = ({
           }}
         >
           <MiniBanner
+            bgColor='#000'
             text={banner_text}
-            arrowDirection="top-right"
+            arrowDirection='top-right'
             delay={50}
           ></MiniBanner>
         </motion.div>

@@ -1,17 +1,25 @@
-"use client";
+'use client';
 
-import { Text, Flex } from "@chakra-ui/react";
-import { motion, useTransform } from "framer-motion";
-import Arrow from "../arrow/Arrow";
-import React, { useEffect, useState } from "react";
-import { poppins } from "@/app/ui/fonts";
+import { Text, Flex } from '@chakra-ui/react';
+import { motion, useTransform, MotionValue } from 'framer-motion';
+import Arrow from '../arrow/Arrow';
+import React, { useEffect, useState } from 'react';
+import { poppins } from '@/app/ui/fonts';
 
 interface TextItem {
   text: string;
 }
 
-const Slide = ({ left, direction, progress, arrow, text }: any) => {
-  const _direction = direction == "left" ? -1 : 1;
+interface SlideProps {
+  left: string | number;
+  direction: 'left' | 'right';
+  progress: MotionValue<number>;
+  arrow: string;
+  text: string;
+}
+
+const Slide = ({ left, direction, progress, arrow, text }: SlideProps) => {
+  const _direction = direction == 'left' ? -1 : 1;
   const [texts, setTexts] = useState<TextItem[]>([]);
 
   useEffect(() => {
@@ -23,33 +31,26 @@ const Slide = ({ left, direction, progress, arrow, text }: any) => {
     setTexts(_texts);
   }, [text]);
 
-  const translateX = useTransform(
-    progress,
-    [0, 1],
-    [500 * _direction, -500 * _direction]
-  );
+  const translateX = useTransform(progress, [0, 1], [500 * _direction, -500 * _direction]);
   return (
-    <motion.div
-      style={{ x: translateX, left }}
-      className="relative flex whitespace-nowrap"
-    >
-      <Flex alignItems={"center"}>
-        <Flex alignItems={"center"}>
+    <motion.div style={{ x: translateX, left }} className='relative flex whitespace-nowrap'>
+      <Flex alignItems={'center'}>
+        <Flex alignItems={'center'}>
           {texts.map((date, index) => (
             <React.Fragment key={index}>
               <Text
                 // fontWeight={"bold"}
-                fontSize={{ base: "2em", lg: "5em" }}
-                color={"#000"}
-                transition={"color 0.2s ease-out, color 0.2s ease-out"}
+                fontSize={{ base: '2em', lg: '5em' }}
+                color={'#000'}
+                transition={'color 0.2s ease-out, color 0.2s ease-out'}
                 _hover={{
-                  color: "#fff",
+                  color: '#fff',
                 }}
                 className={`${poppins.className}`}
               >
                 {date.text}
               </Text>
-              <Arrow direction={arrow} h={"50px"} w={"50px"} color="#000" />
+              <Arrow direction={arrow} h={'50px'} w={'50px'} color='#000' />
             </React.Fragment>
           ))}
         </Flex>
