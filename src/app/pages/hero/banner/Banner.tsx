@@ -2,41 +2,26 @@
 
 import { Text, Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import "./Banner.css";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import IEvent from "@/interfaces/event.interface";
 import { dateToCustomString } from "@/utils/format-date";
-// import IBannerData from "@/interfaces/banner-data.interface";
-import React from "react";
 import BackdropParallax from "@/components/backdrop-parallax/BackdropParallax";
-// import ButtonPrimary from "@/components/button-primary/ButtonPrimary";
-// import Arrow from "@/components/arrow/Arrow";
 import IHeroConfig from "../interfaces/hero-config.interface";
+import ButtonPrimary from "@/components/button-primary/ButtonPrimary";
+import Arrow from "@/components/arrow/Arrow";
 
-export default function Banner({
-  config,
-  event,
-}: {
-  config: IHeroConfig;
-  event: IEvent;
-}) {
-  const {
-    title,
-    subtitle,
-    paragraph,
-    // button,
-    cover_desktop,
-    cover_mobile,
-  } = config;
+interface IBannerProps {
+  readonly config: IHeroConfig;
+  readonly event: IEvent;
+}
+
+export default function Banner({ config, event }: IBannerProps): JSX.Element {
+  const { title, subtitle, paragraph, button, cover_desktop, cover_mobile } =
+    config;
   const { date } = event;
 
-  const optimizedDesktopCover = React.useMemo(
-    () => cover_desktop,
-    [cover_desktop]
-  );
-  const optimizedMobileCover = React.useMemo(
-    () => cover_mobile,
-    [cover_mobile]
-  );
+  const optimizedDesktopCover = useMemo(() => cover_desktop, [cover_desktop]);
+  const optimizedMobileCover = useMemo(() => cover_mobile, [cover_mobile]);
 
   const _date: string = dateToCustomString(new Date(date));
 
@@ -54,6 +39,14 @@ export default function Banner({
       overflow="hidden"
       height={"100%"}
     >
+      <BackdropParallax
+        srcUrlDesktop={optimizedDesktopCover}
+        srcUrlMobile={optimizedMobileCover}
+        height={"100%"}
+        parent={"banner"}
+      ></BackdropParallax>
+
+      {/* Black gradient */}
       <Box
         // display={"none"}
         w={"100%"}
@@ -65,7 +58,7 @@ export default function Banner({
         zIndex={3}
       />
 
-      {/* Contenido */}
+      {/* Content */}
       <Flex
         flexDirection="column"
         justifyContent="flex-end"
@@ -103,7 +96,8 @@ export default function Banner({
               color={textColor}
               mb={"1em"}
             >
-              <span style={{ fontWeight: 600 }}>{subtitle}</span> | {_date}
+              {/* <span style={{ fontWeight: 600 }}>{subtitle}</span> | {_date} */}
+              <span style={{ fontWeight: 600 }}>{subtitle}</span>
             </Text>
           )}
           <Text
@@ -121,24 +115,19 @@ export default function Banner({
               : _paragraph} */}
           </Text>
         </Box>
-        {/* <Box>
-          <ButtonPrimary
-            // disabled={!button.link ? false : true}
-            text={button.text}
-            linkUrl={button.link}
-            mode="dark"
-          >
-            <Arrow color="#eee" w="20px" direction="top-right"></Arrow>
-          </ButtonPrimary>
-        </Box> */}
+        {button.text && button.link && (
+          <Box>
+            <ButtonPrimary
+              // disabled={!button.link ? false : true}
+              text={button.text}
+              linkUrl={button.link}
+              mode="dark"
+            >
+              <Arrow color="#eee" w="20px" direction="top-right" />
+            </ButtonPrimary>
+          </Box>
+        )}
       </Flex>
-
-      <BackdropParallax
-        srcUrlDesktop={optimizedDesktopCover}
-        srcUrlMobile={optimizedMobileCover}
-        height={"100%"}
-        parent={"banner"}
-      ></BackdropParallax>
     </Flex>
   );
 }

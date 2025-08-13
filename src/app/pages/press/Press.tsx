@@ -59,6 +59,13 @@ export default function Press({ artist }: PressProps) {
       justifyContent={{ base: "center", lg: "center" }}
       h={styles.height}
     >
+      <BackdropParallax
+        srcUrlDesktop={photos[0]}
+        srcUrlMobile={photos[0]}
+        height={styles.height}
+        parent={"press"}
+      ></BackdropParallax>
+
       {/* Gradient */}
 
       <Box
@@ -145,13 +152,6 @@ export default function Press({ artist }: PressProps) {
           </ButtonPrimary>
         </Box>
       </Flex>
-
-      <BackdropParallax
-        srcUrlDesktop={photos[0]}
-        srcUrlMobile={photos[0]}
-        height={styles.height}
-        parent={"press"}
-      ></BackdropParallax>
     </Flex>
   );
 }
