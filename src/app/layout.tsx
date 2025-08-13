@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Provider } from "@/components/ui/provider";
+import { QueryProvider } from "@/infrastructure/providers/QueryProvider";
 import { poppins } from "./ui/fonts";
 import Head from "next/head";
 
@@ -93,7 +94,9 @@ export default async function RootLayout({
         // className={`${roboto.className} ${geistSans.variable} ${geistMono.variable} antialiased`}
         className={`${poppins.className} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Provider>{children}</Provider>
+        <QueryProvider>
+          <Provider>{children}</Provider>
+        </QueryProvider>
       </body>
     </html>
   );
