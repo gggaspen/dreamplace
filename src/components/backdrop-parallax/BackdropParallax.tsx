@@ -46,41 +46,46 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   const [outputRange, setOutputRange] = useState<number[]>([0, 0]);
   const [inputRange, setInputRange] = useState<InputRange>([0, 0]);
 
-  const getImageUrls = useCallback(
-    (isDesktopView: boolean): ImageUrls => {
-      const coverData = isDesktopView ? srcUrlDesktop : srcUrlMobile;
-
-      const lowQuality = coverData?.formats?.large?.url || AUX_IMG_BG;
-      const highQuality = coverData?.url || AUX_IMG_BG;
-
-      return { lowQuality, highQuality };
-    },
-    [srcUrlDesktop, srcUrlMobile]
-  );
-
-  const preloadHighQualityImage = useCallback((url: string): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      const img = new window.Image();
-      img.onload = () => resolve();
-      img.onerror = () => reject(new Error(`Failed to load image: ${url}`));
-      img.src = url;
-    });
-  }, []);
 
   useEffect(() => {
     const updateDesktopSize = async () => {
       const isDesktopView = window.matchMedia("(min-width: 768px)").matches;
-
-      const urls = getImageUrls(isDesktopView);
-      setImageUrls(urls);
-      setIsHighQualityLoaded(false);
+      const coverData = isDesktopView ? srcUrlDesktop : srcUrlMobile;
+      
+      const lowQuality = coverData?.formats?.large?.url || AUX_IMG_BG;
+      const highQuality = coverData?.url || AUX_IMG_BG;
+      
+      const urls = { lowQuality, highQuality };
+      
+      // Solo actualizar si las URLs han cambiado realmente
+      let urlsChanged = false;
+      setImageUrls(prevUrls => {
+        if (prevUrls.lowQuality === urls.lowQuality && prevUrls.highQuality === urls.highQuality) {
+          return prevUrls;
+        }
+        urlsChanged = true;
+        return urls;
+      });
+      
+      // Solo resetear la carga si las URLs han cambiado
+      if (urlsChanged) {
+        setIsHighQualityLoaded(false);
+      } else {
+        return; // No hacer nada si las URLs no cambiaron
+      }
 
       if (urls.lowQuality !== urls.highQuality) {
         try {
-          await preloadHighQualityImage(urls.highQuality);
+          const img = new window.Image();
+          await new Promise<void>((resolve, reject) => {
+            img.onload = () => resolve();
+            img.onerror = () => reject(new Error(`Failed to load image: ${urls.highQuality}`));
+            img.src = urls.highQuality;
+          });
           setIsHighQualityLoaded(true);
         } catch (error) {
           console.warn("Failed to preload high quality image:", error);
+          setIsHighQualityLoaded(false);
         }
       } else {
         setIsHighQualityLoaded(true);
@@ -90,7 +95,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
     updateDesktopSize();
     window.addEventListener("resize", updateDesktopSize);
     return () => window.removeEventListener("resize", updateDesktopSize);
-  }, [srcUrlDesktop, srcUrlMobile, getImageUrls, preloadHighQualityImage]);
+  }, [srcUrlDesktop, srcUrlMobile]);
 
   useEffect(() => {
     setInputRange([0, 800]);
