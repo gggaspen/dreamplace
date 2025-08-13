@@ -11,7 +11,7 @@ import "./Carousel.css";
 import { Box, Flex } from "@chakra-ui/react";
 import { ICover } from "@/interfaces/event.interface";
 import MiniBanner from "@/components/mini-banner/MiniBanner";
-import { extractNumericValue } from "@/app/utils/extract-numeric-value";
+// import { extractNumericValue } from "@/app/utils/extract-numeric-value";
 
 interface ICarouselProps {
   fotos: ICover[];
