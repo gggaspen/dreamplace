@@ -1,7 +1,7 @@
 "use client";
 
 // import Lenis from "lenis";
-import React, { CSSProperties, useEffect, useState, useCallback } from "react";
+import React, { CSSProperties, useEffect, useState } from "react";
 import {
   motion,
   useTransform,
@@ -46,27 +46,29 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   const [outputRange, setOutputRange] = useState<number[]>([0, 0]);
   const [inputRange, setInputRange] = useState<InputRange>([0, 0]);
 
-
   useEffect(() => {
     const updateDesktopSize = async () => {
       const isDesktopView = window.matchMedia("(min-width: 768px)").matches;
       const coverData = isDesktopView ? srcUrlDesktop : srcUrlMobile;
-      
+
       const lowQuality = coverData?.formats?.large?.url || AUX_IMG_BG;
       const highQuality = coverData?.url || AUX_IMG_BG;
-      
+
       const urls = { lowQuality, highQuality };
-      
+
       // Solo actualizar si las URLs han cambiado realmente
       let urlsChanged = false;
-      setImageUrls(prevUrls => {
-        if (prevUrls.lowQuality === urls.lowQuality && prevUrls.highQuality === urls.highQuality) {
+      setImageUrls((prevUrls) => {
+        if (
+          prevUrls.lowQuality === urls.lowQuality &&
+          prevUrls.highQuality === urls.highQuality
+        ) {
           return prevUrls;
         }
         urlsChanged = true;
         return urls;
       });
-      
+
       // Solo resetear la carga si las URLs han cambiado
       if (urlsChanged) {
         setIsHighQualityLoaded(false);
@@ -79,7 +81,8 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
           const img = new window.Image();
           await new Promise<void>((resolve, reject) => {
             img.onload = () => resolve();
-            img.onerror = () => reject(new Error(`Failed to load image: ${urls.highQuality}`));
+            img.onerror = () =>
+              reject(new Error(`Failed to load image: ${urls.highQuality}`));
             img.src = urls.highQuality;
           });
           setIsHighQualityLoaded(true);

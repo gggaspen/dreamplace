@@ -16,9 +16,10 @@ interface IBannerProps {
 }
 
 export default function Banner({ config, event }: IBannerProps): JSX.Element {
+  console.log(event);
   const { title, subtitle, paragraph, button, cover_desktop, cover_mobile } =
     config;
-  const { date } = event;
+  // const { date } = event;
 
   const optimizedDesktopCover = useMemo(() => cover_desktop, [cover_desktop]);
   const optimizedMobileCover = useMemo(() => cover_mobile, [cover_mobile]);
