@@ -4,7 +4,7 @@ import { Text, Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import "./Banner.css";
 import { useMemo, useState } from "react";
 import IEvent from "@/interfaces/event.interface";
-import { dateToCustomString } from "@/utils/format-date";
+// import { dateToCustomString } from "@/utils/format-date";
 import BackdropParallax from "@/components/backdrop-parallax/BackdropParallax";
 import IHeroConfig from "../interfaces/hero-config.interface";
 import ButtonPrimary from "@/components/button-primary/ButtonPrimary";
@@ -23,7 +23,7 @@ export default function Banner({ config, event }: IBannerProps): JSX.Element {
   const optimizedDesktopCover = useMemo(() => cover_desktop, [cover_desktop]);
   const optimizedMobileCover = useMemo(() => cover_mobile, [cover_mobile]);
 
-  const _date: string = dateToCustomString(new Date(date));
+  // const _date: string = dateToCustomString(new Date(date));
 
   const textColor = "#eee";
 
