@@ -52,13 +52,14 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
 
       <Flex
         h={{
-          base: extractNumericValue(`${styles.height}`) / 2.5,
+          // base: extractNumericValue(`${styles.height}`) / 2.5,
+          base: "auto",
           lg: styles.height,
         }}
       >
         <Box
           w={"100%"}
-          h={"100%"}
+          // h={"100%"}
           // h={{
           //   base: extractNumericValue(`${styles.height}`) / 2.5,
           //   lg: styles.height,
@@ -86,7 +87,7 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
               <SwiperSlide key={image.id}>
                 <Flex
                   justifyContent={"center"}
-                  h={{ base: "40dvh", lg: "100dvh" }}
+                  h={{ base: "100%", lg: "100%" }}
                 >
                   <Image
                     width={4000}

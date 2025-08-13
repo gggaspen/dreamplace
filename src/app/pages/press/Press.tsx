@@ -57,7 +57,7 @@ export default function Press({ artist }: PressProps) {
       overflow="hidden"
       // height={{ base: height, lg: height }}
       justifyContent={{ base: "center", lg: "center" }}
-      style={{ height: styles.height }}
+      h={styles.height}
     >
       {/* Gradient */}
 
