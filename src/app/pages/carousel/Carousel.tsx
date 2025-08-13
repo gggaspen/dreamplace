@@ -36,7 +36,7 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
     };
   }, [fotos]);
 
-  const [windowHeight, setWindowHeight] = useState("0");
+  const [windowHeight, setWindowHeight] = useState<CSSProperties["height"]>(0);
 
   useEffect(() => {
     setWindowHeight(window.innerHeight + "px");
@@ -50,13 +50,19 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
     <>
       <MiniBanner text={banner_text} bgColor="#eee" />
 
-      <Flex>
+      <Flex
+        h={{
+          base: extractNumericValue(`${styles.height}`) / 2.5,
+          lg: styles.height,
+        }}
+      >
         <Box
           w={"100%"}
-          h={{
-            base: extractNumericValue(`${styles.height}`) / 2.5,
-            lg: styles.height,
-          }}
+          h={"100%"}
+          // h={{
+          //   base: extractNumericValue(`${styles.height}`) / 2.5,
+          //   lg: styles.height,
+          // }}
           position={"relative"}
           bgColor={"#000"}
         >
