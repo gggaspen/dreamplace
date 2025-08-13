@@ -1,5 +1,9 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"],
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:storybook/recommended"
+  ],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "rules": {
@@ -8,9 +12,15 @@
     "@typescript-eslint/no-empty-object-type": "error",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-inferrable-types": "error",
-    "@typescript-eslint/array-type": ["error", { "default": "array" }],
+    "@typescript-eslint/array-type": [
+      "error",
+      {
+        "default": "array"
+      }
+    ],
     "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
     "react/no-unescaped-entities": "off",
     "@next/next/no-page-custom-font": "off"
-  }
+  },
+  "ignorePatterns": [".storybook/**/*"]
 }

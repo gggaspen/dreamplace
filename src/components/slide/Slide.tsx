@@ -10,11 +10,14 @@ interface TextItem {
   text: string;
 }
 
+type SlideDirection = 'left' | 'right';
+type ArrowDirection = 'up' | 'down' | 'left' | 'right';
+
 interface SlideProps {
   left: string | number;
-  direction: 'left' | 'right';
+  direction: SlideDirection;
   progress: MotionValue<number>;
-  arrow: string;
+  arrow: ArrowDirection;
   text: string;
 }
 
@@ -37,7 +40,7 @@ const Slide = ({ left, direction, progress, arrow, text }: SlideProps) => {
       <Flex alignItems={'center'}>
         <Flex alignItems={'center'}>
           {texts.map((date, index) => (
-            <React.Fragment key={index}>
+            <React.Fragment key={`text-${index}-${date.text}`}>
               <Text
                 // fontWeight={"bold"}
                 fontSize={{ base: '2em', lg: '5em' }}

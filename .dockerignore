@@ -1,0 +1,82 @@
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Build outputs
+.next
+out
+build
+
+# Environment files
+.env*
+!.env.example
+
+# Version control
+.git
+.gitignore
+
+# IDE files
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation
+README.md
+CLAUDE.md
+*.md
+!package.json
+
+# Test files
+coverage
+jest.config.js
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+__tests__
+__mocks__
+
+# Development tools
+.storybook
+stories
+**/*.stories.*
+
+# Docker files
+Dockerfile*
+docker-compose*.yml
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
