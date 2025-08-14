@@ -1,6 +1,6 @@
 /**
  * useErrorHandling Hook
- * 
+ *
  * Custom hook for managing error states and error recovery.
  * Provides consistent error handling patterns across components.
  */
@@ -29,20 +29,23 @@ export const useErrorHandling = ({
   });
 
   // Handle error
-  const handleError = useCallback((error: Error | string) => {
-    const errorObj = typeof error === 'string' ? new Error(error) : error;
-    const message = errorObj.message || defaultErrorMessage;
+  const handleError = useCallback(
+    (error: Error | string) => {
+      const errorObj = typeof error === 'string' ? new Error(error) : error;
+      const message = errorObj.message || defaultErrorMessage;
 
-    if (logErrors) {
-      console.error('Error caught by useErrorHandling:', errorObj);
-    }
+      if (logErrors) {
+        console.error('Error caught by useErrorHandling:', errorObj);
+      }
 
-    setErrorState({
-      hasError: true,
-      error: errorObj,
-      errorMessage: message,
-    });
-  }, [defaultErrorMessage, logErrors]);
+      setErrorState({
+        hasError: true,
+        error: errorObj,
+        errorMessage: message,
+      });
+    },
+    [defaultErrorMessage, logErrors]
+  );
 
   // Clear error
   const clearError = useCallback(() => {
@@ -55,10 +58,7 @@ export const useErrorHandling = ({
 
   // Try/catch wrapper
   const withErrorHandling = useCallback(
-    <T extends any[], R>(
-      fn: (...args: T) => R,
-      errorCallback?: (error: Error) => void
-    ) => {
+    <T extends any[], R>(fn: (...args: T) => R, errorCallback?: (error: Error) => void) => {
       return (...args: T): R | undefined => {
         try {
           return fn(...args);
@@ -98,11 +98,11 @@ export const useErrorHandling = ({
     hasError: errorState.hasError,
     error: errorState.error,
     errorMessage: errorState.errorMessage,
-    
+
     // Actions
     handleError,
     clearError,
-    
+
     // Utilities
     withErrorHandling,
     withAsyncErrorHandling,

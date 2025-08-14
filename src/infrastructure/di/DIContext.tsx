@@ -19,17 +19,15 @@ interface DIProviderProps {
 
 export function DIProvider({ children, container }: DIProviderProps) {
   // Create and setup container if not provided
-  const diContainer = container || (() => {
-    const newContainer = new Container();
-    setupContainer(newContainer);
-    return newContainer;
-  })();
+  const diContainer =
+    container ||
+    (() => {
+      const newContainer = new Container();
+      setupContainer(newContainer);
+      return newContainer;
+    })();
 
-  return (
-    <DIContext.Provider value={diContainer}>
-      {children}
-    </DIContext.Provider>
-  );
+  return <DIContext.Provider value={diContainer}>{children}</DIContext.Provider>;
 }
 
 export function useDI(): DIContainer {
@@ -48,7 +46,9 @@ export function useDependency<T>(token: ServiceToken): T {
   try {
     const dependency = container.resolve<T>(token);
     if (dependency instanceof Promise) {
-      throw new Error(`Async dependency ${token.toString()} cannot be used directly in React component. Use a loading state or Suspense.`);
+      throw new Error(
+        `Async dependency ${token.toString()} cannot be used directly in React component. Use a loading state or Suspense.`
+      );
     }
     return dependency;
   } catch (error) {

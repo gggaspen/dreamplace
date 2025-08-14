@@ -9,19 +9,22 @@ export class PerformanceDecorator extends BaseDecorator {
   private performanceEntries: Map<string, PerformanceEntry[]> = new Map();
 
   constructor() {
-    super({
-      name: 'performance',
-      description: 'Adds performance monitoring for render times and interactions',
-      version: '1.0.0',
-      dependencies: [],
-      requiresProps: [],
-    }, 90); // High order = applied late to measure other decorators
+    super(
+      {
+        name: 'performance',
+        description: 'Adds performance monitoring for render times and interactions',
+        version: '1.0.0',
+        dependencies: [],
+        requiresProps: [],
+      },
+      90
+    ); // High order = applied late to measure other decorators
   }
 
   canDecorate(component: ComponentType, props?: any): boolean {
-    return this.isValidComponent(component) && 
-           typeof window !== 'undefined' && 
-           'performance' in window;
+    return (
+      this.isValidComponent(component) && typeof window !== 'undefined' && 'performance' in window
+    );
   }
 
   decorate(component: ComponentType, config?: DecoratorConfig): ComponentType {
@@ -30,10 +33,10 @@ export class PerformanceDecorator extends BaseDecorator {
     }
 
     const perfConfig = config as PerformanceDecoratorConfig;
-    
+
     return this.createHOC(
       component,
-      (props) => this.enhanceWithPerformanceMonitoring(props, perfConfig),
+      props => this.enhanceWithPerformanceMonitoring(props, perfConfig),
       `Performance(${component.displayName || component.name || 'Component'})`
     );
   }
@@ -68,7 +71,7 @@ export class PerformanceDecorator extends BaseDecorator {
           // Measure unmount time
           const unmountTime = performance.now();
           const totalMountedTime = mountTime ? unmountTime - mountTime : 0;
-          
+
           this.recordPerformanceMetric('component_unmount', {
             component: componentName,
             totalMountedTime,
@@ -91,7 +94,7 @@ export class PerformanceDecorator extends BaseDecorator {
 
           if (config?.options?.measureRender) {
             this.recordRenderMetric(componentName, renderTime, renderCountRef.current);
-            
+
             // Check performance threshold
             const threshold = config.options.threshold || 16; // 16ms for 60fps
             if (renderTime > threshold) {
@@ -117,11 +120,7 @@ export class PerformanceDecorator extends BaseDecorator {
       });
 
       // Measure interaction performance
-      const enhancedProps = this.enhanceWithInteractionTracking(
-        restProps,
-        componentName,
-        config
-      );
+      const enhancedProps = this.enhanceWithInteractionTracking(restProps, componentName, config);
 
       // Add performance overlay in development
       if (process.env.NODE_ENV === 'development' && renderMetrics) {
@@ -134,7 +133,11 @@ export class PerformanceDecorator extends BaseDecorator {
       const wrappedComponent = React.createElement(component, enhancedProps, children);
 
       // Add performance overlay in development
-      if (process.env.NODE_ENV === 'development' && renderMetrics && config?.options?.measureRender) {
+      if (
+        process.env.NODE_ENV === 'development' &&
+        renderMetrics &&
+        config?.options?.measureRender
+      ) {
         return React.createElement(
           'div',
           { style: { position: 'relative' } },
@@ -164,24 +167,26 @@ export class PerformanceDecorator extends BaseDecorator {
     if (props.onClick) {
       enhancedProps.onClick = (event: any) => {
         const startTime = performance.now();
-        
+
         const result = props.onClick(event);
-        
+
         // Measure synchronous execution time
         const syncTime = performance.now() - startTime;
-        
+
         // If it returns a promise, measure async time too
         if (result && typeof result.then === 'function') {
-          result.then(() => {
-            const totalTime = performance.now() - startTime;
-            this.recordInteractionMetric('click', componentName, totalTime, { syncTime });
-          }).catch((error: Error) => {
-            const totalTime = performance.now() - startTime;
-            this.recordInteractionMetric('click_error', componentName, totalTime, { 
-              syncTime, 
-              error: error.message 
+          result
+            .then(() => {
+              const totalTime = performance.now() - startTime;
+              this.recordInteractionMetric('click', componentName, totalTime, { syncTime });
+            })
+            .catch((error: Error) => {
+              const totalTime = performance.now() - startTime;
+              this.recordInteractionMetric('click_error', componentName, totalTime, {
+                syncTime,
+                error: error.message,
+              });
             });
-          });
         } else {
           this.recordInteractionMetric('click', componentName, syncTime);
         }
@@ -198,13 +203,13 @@ export class PerformanceDecorator extends BaseDecorator {
           const startTime = performance.now();
           const result = originalHandler(event);
           const endTime = performance.now();
-          
+
           this.recordInteractionMetric(
             eventType.toLowerCase().replace('on', ''),
             componentName,
             endTime - startTime
           );
-          
+
           return result;
         };
       }
@@ -235,11 +240,7 @@ export class PerformanceDecorator extends BaseDecorator {
     this.sendToPerformanceService(type, data);
   }
 
-  private recordRenderMetric(
-    componentName: string,
-    renderTime: number,
-    renderCount: number
-  ): void {
+  private recordRenderMetric(componentName: string, renderTime: number, renderCount: number): void {
     this.recordPerformanceMetric('component_render', {
       component: componentName,
       renderTime,
@@ -290,37 +291,37 @@ export class PerformanceDecorator extends BaseDecorator {
 
   private getAverageRenderTime(componentName: string): number {
     const entries = this.performanceEntries.get(componentName) || [];
-    const renderEntries = entries.filter(entry => 
-      entry.name.includes('component_render')
-    );
+    const renderEntries = entries.filter(entry => entry.name.includes('component_render'));
 
     if (renderEntries.length === 0) return 0;
 
-    const totalTime = renderEntries.reduce((sum, entry) => 
-      sum + ((entry as any).detail?.renderTime || 0), 0
+    const totalTime = renderEntries.reduce(
+      (sum, entry) => sum + ((entry as any).detail?.renderTime || 0),
+      0
     );
 
     return totalTime / renderEntries.length;
   }
 
   private getComponentName(props: any): string {
-    return props?.performanceName || 
-           props?.id || 
-           props?.className?.split(' ')[0] || 
-           'unknown_component';
+    return (
+      props?.performanceName || props?.id || props?.className?.split(' ')[0] || 'unknown_component'
+    );
   }
 
   private sanitizeProps(props: any): Record<string, unknown> {
     const sanitized: Record<string, unknown> = {};
-    
+
     Object.keys(props).forEach(key => {
       const value = props[key];
-      
+
       // Only include serializable values
-      if (typeof value === 'string' || 
-          typeof value === 'number' || 
-          typeof value === 'boolean' ||
-          value === null) {
+      if (
+        typeof value === 'string' ||
+        typeof value === 'number' ||
+        typeof value === 'boolean' ||
+        value === null
+      ) {
         sanitized[key] = value;
       } else if (Array.isArray(value)) {
         sanitized[key] = `Array(${value.length})`;
@@ -359,12 +360,9 @@ export class PerformanceDecorator extends BaseDecorator {
     }
   }
 
-  private renderPerformanceOverlay(
-    metrics: any,
-    componentName: string
-  ): React.ReactElement {
+  private renderPerformanceOverlay(metrics: any, componentName: string): React.ReactElement {
     const isSlowRender = metrics.renderTime > 16;
-    
+
     return React.createElement(
       'div',
       {

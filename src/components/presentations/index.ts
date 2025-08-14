@@ -1,6 +1,6 @@
 /**
  * Presentation Components Index
- * 
+ *
  * Barrel export for all presentational components that handle only rendering
  */
 

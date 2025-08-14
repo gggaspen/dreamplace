@@ -20,7 +20,7 @@ export class ContactInfo extends BaseEntity {
 
   constructor(props: ContactInfoProps) {
     super(props.id, props.createdAt, props.updatedAt);
-    
+
     this._text = props.text;
     this._email = props.email;
     this._whatsapp = this.validateWhatsApp(props.whatsapp);
@@ -62,12 +62,12 @@ export class ContactInfo extends BaseEntity {
     if (!whatsapp || whatsapp.trim().length === 0) {
       throw new Error('WhatsApp number cannot be empty');
     }
-    
+
     const cleanNumber = whatsapp.replace(/[^\d+]/g, '');
     if (cleanNumber.length < 10) {
       throw new Error('WhatsApp number must have at least 10 digits');
     }
-    
+
     return whatsapp.trim();
   }
 }

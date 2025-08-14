@@ -1,17 +1,12 @@
 import { StrapiApiClient, StrapiQueryParams, StrapiEntity } from './StrapiApiClient';
-import { 
-  Event, 
-  Artist, 
-  HeroSection, 
-  ContactInfo 
-} from '../../../core/domain/entities';
+import { Event, Artist, HeroSection, ContactInfo } from '../../../core/domain/entities';
 
 /**
  * API endpoint definitions with strict typing
  */
 export interface ApiEndpoints {
-  'events': Event;
-  'artists': Artist;
+  events: Event;
+  artists: Artist;
   'hero-sections': HeroSection;
   'contact-infos': ContactInfo;
   'carousel-sections': any; // TODO: Add typed interface when available
@@ -129,33 +124,40 @@ export class TypedApiClient {
   /**
    * Typed media upload
    */
-  public async uploadFile(file: File, options?: {
-    refId?: string;
-    ref?: keyof ApiEndpoints;
-    field?: string;
-  }): Promise<StrapiEntity<{ 
-    name: string;
-    alternativeText: string;
-    caption: string;
-    width: number;
-    height: number;
-    formats: Record<string, any>;
-    hash: string;
-    ext: string;
-    mime: string;
-    size: number;
-    url: string;
-    previewUrl: string | null;
-    provider: string;
-    provider_metadata: any;
-  }>> {
+  public async uploadFile(
+    file: File,
+    options?: {
+      refId?: string;
+      ref?: keyof ApiEndpoints;
+      field?: string;
+    }
+  ): Promise<
+    StrapiEntity<{
+      name: string;
+      alternativeText: string;
+      caption: string;
+      width: number;
+      height: number;
+      formats: Record<string, any>;
+      hash: string;
+      ext: string;
+      mime: string;
+      size: number;
+      url: string;
+      previewUrl: string | null;
+      provider: string;
+      provider_metadata: any;
+    }>
+  > {
     return this.strapiClient.uploadFile(file, options);
   }
 
   /**
    * Get typed media files
    */
-  public async getMediaFiles(params?: StrapiQueryParams): Promise<TypedApiResponse<StrapiEntity<any>[]>> {
+  public async getMediaFiles(
+    params?: StrapiQueryParams
+  ): Promise<TypedApiResponse<StrapiEntity<any>[]>> {
     const response = await this.strapiClient.getMediaFiles(params);
     return {
       data: response.data,

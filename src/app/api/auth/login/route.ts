@@ -29,7 +29,7 @@ interface LoginResponse {
  */
 async function handleLogin(req: NextRequest): Promise<NextResponse> {
   try {
-    const body = await req.json() as LoginRequest;
+    const body = (await req.json()) as LoginRequest;
 
     // Sanitize input
     const email = InputSanitizer.sanitizeEmail(body.email);
@@ -46,10 +46,10 @@ async function handleLogin(req: NextRequest): Promise<NextResponse> {
     const passwordValidation = SecurityUtils.validatePassword(password);
     if (!passwordValidation.valid && process.env.ENFORCE_STRONG_PASSWORDS === 'true') {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           message: 'Password does not meet security requirements',
-          errors: passwordValidation.errors 
+          errors: passwordValidation.errors,
         },
         { status: 400 }
       );
@@ -61,10 +61,7 @@ async function handleLogin(req: NextRequest): Promise<NextResponse> {
 
     if (!user) {
       // Return generic error message to prevent user enumeration
-      return NextResponse.json(
-        { success: false, message: 'Invalid credentials' },
-        { status: 401 }
-      );
+      return NextResponse.json({ success: false, message: 'Invalid credentials' }, { status: 401 });
     }
 
     // Generate JWT tokens
@@ -75,7 +72,7 @@ async function handleLogin(req: NextRequest): Promise<NextResponse> {
       role: user.role as any,
       permissions: user.permissions,
       sessionId: SecurityUtils.generateRandomString(32),
-      lastLogin: Date.now()
+      lastLogin: Date.now(),
     });
 
     // Create response
@@ -85,8 +82,8 @@ async function handleLogin(req: NextRequest): Promise<NextResponse> {
       user: {
         id: user.id,
         email: user.email,
-        role: user.role
-      }
+        role: user.role,
+      },
     });
 
     // Set secure HTTP-only cookies
@@ -99,7 +96,7 @@ async function handleLogin(req: NextRequest): Promise<NextResponse> {
       secure,
       sameSite: 'strict',
       maxAge: accessTokenExpiry,
-      path: '/'
+      path: '/',
     });
 
     response.cookies.set('refresh-token', tokenPair.refreshToken, {
@@ -107,7 +104,7 @@ async function handleLogin(req: NextRequest): Promise<NextResponse> {
       secure,
       sameSite: 'strict',
       maxAge: refreshTokenExpiry,
-      path: '/'
+      path: '/',
     });
 
     // Set user role cookie for middleware (less sensitive)
@@ -116,17 +113,13 @@ async function handleLogin(req: NextRequest): Promise<NextResponse> {
       secure,
       sameSite: 'strict',
       maxAge: refreshTokenExpiry,
-      path: '/'
+      path: '/',
     });
 
     return response;
-
   } catch (error) {
     console.error('Login error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -134,7 +127,10 @@ async function handleLogin(req: NextRequest): Promise<NextResponse> {
  * Mock user authentication function
  * In a real application, this would query your database
  */
-async function authenticateUser(email: string, password: string): Promise<{
+async function authenticateUser(
+  email: string,
+  password: string
+): Promise<{
   id: string;
   email: string;
   role: string;
@@ -142,22 +138,31 @@ async function authenticateUser(email: string, password: string): Promise<{
 } | null> {
   // TODO: Replace with actual database query
   // This is a mock implementation for demonstration
-  
+
   const mockUsers = [
     {
       id: '1',
       email: 'admin@dreamplace.com.ar',
       password: 'admin123', // In real app, this would be hashed
       role: 'admin',
-      permissions: ['user.read', 'user.create', 'user.update', 'user.delete', 'content.read', 'content.create', 'content.update', 'content.delete']
+      permissions: [
+        'user.read',
+        'user.create',
+        'user.update',
+        'user.delete',
+        'content.read',
+        'content.create',
+        'content.update',
+        'content.delete',
+      ],
     },
     {
       id: '2',
       email: 'user@dreamplace.com.ar',
       password: 'user123', // In real app, this would be hashed
       role: 'user',
-      permissions: ['content.read', 'profile.read', 'profile.update']
-    }
+      permissions: ['content.read', 'profile.read', 'profile.update'],
+    },
   ];
 
   // Find user by email
@@ -174,23 +179,19 @@ async function authenticateUser(email: string, password: string): Promise<{
     id: user.id,
     email: user.email,
     role: user.role,
-    permissions: user.permissions
+    permissions: user.permissions,
   };
 }
 
 /**
  * Rate limited POST handler for login
  */
-export const POST = withRateLimit(
-  'auth-login',
-  handleLogin,
-  (req) => {
-    // Use IP + user agent for more specific rate limiting
-    const ip = req.headers.get('x-forwarded-for') || req.ip || 'unknown';
-    const userAgent = req.headers.get('user-agent') || 'unknown';
-    return `${ip}:${userAgent.slice(0, 50)}`;
-  }
-);
+export const POST = withRateLimit('auth-login', handleLogin, req => {
+  // Use IP + user agent for more specific rate limiting
+  const ip = req.headers.get('x-forwarded-for') || req.ip || 'unknown';
+  const userAgent = req.headers.get('user-agent') || 'unknown';
+  return `${ip}:${userAgent.slice(0, 50)}`;
+});
 
 /**
  * Handle OPTIONS requests for CORS
@@ -203,7 +204,7 @@ export async function OPTIONS(): Promise<NextResponse> {
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Max-Age': '86400'
-    }
+      'Access-Control-Max-Age': '86400',
+    },
   });
 }

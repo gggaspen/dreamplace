@@ -1,6 +1,6 @@
 /**
  * Enhanced Form Component
- * 
+ *
  * Advanced form component that combines BaseForm with persistence,
  * auto-save functionality, and additional features.
  */
@@ -8,14 +8,7 @@
 import React, { useEffect, ReactNode } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { ZodSchema } from 'zod';
-import {
-  Box,
-  HStack,
-  Text,
-  Icon,
-  Spinner,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, HStack, Text, Icon, Spinner, useColorModeValue } from '@chakra-ui/react';
 import { FiSave, FiCheck, FiAlertCircle } from 'react-icons/fi';
 import { BaseForm, useFormContext } from './BaseForm';
 import { useFormPersistence } from './hooks/useFormPersistence';
@@ -28,13 +21,13 @@ interface EnhancedFormProps<T extends FieldValues> {
   onSubmit: (data: T) => Promise<void> | void;
   onError?: (errors: any) => void;
   children: ReactNode;
-  
+
   // Form options
   submitButtonText?: string;
   showResetButton?: boolean;
   disabled?: boolean;
   className?: string;
-  
+
   // Persistence options
   persistenceKey?: string;
   enablePersistence?: boolean;
@@ -43,7 +36,7 @@ interface EnhancedFormProps<T extends FieldValues> {
     encryptData?: boolean;
     expiryMinutes?: number;
   };
-  
+
   // Auto-save options
   enableAutoSave?: boolean;
   autoSaveEndpoint?: string;
@@ -53,7 +46,7 @@ interface EnhancedFormProps<T extends FieldValues> {
     saveOnBlur?: boolean;
     excludeFields?: (keyof T)[];
   };
-  
+
   // Display options
   showAutoSaveStatus?: boolean;
   showPersistenceIndicator?: boolean;
@@ -97,7 +90,7 @@ function AutoSaveIndicator({ status }: { status: AutoSaveStatus }) {
   const config = getStatusConfig();
 
   return (
-    <HStack spacing={2} fontSize="sm" color={config.color}>
+    <HStack spacing={2} fontSize='sm' color={config.color}>
       <Icon as={config.icon} />
       <Text>{config.text}</Text>
     </HStack>
@@ -170,10 +163,10 @@ function FormContent<T extends FieldValues>({
   return (
     <Box>
       {children}
-      
+
       {/* Auto-save status indicator */}
       {showAutoSaveStatus && enableAutoSave && onAutoSave && (
-        <Box mt={4} textAlign="right">
+        <Box mt={4} textAlign='right'>
           <AutoSaveIndicator status={autoSave.status} />
         </Box>
       )}

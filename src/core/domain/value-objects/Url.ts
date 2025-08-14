@@ -18,7 +18,7 @@ export class Url {
 
   public getDomain(): string | null {
     if (!this.isExternal()) return null;
-    
+
     try {
       const urlObj = new URL(this._value);
       return urlObj.hostname;
@@ -35,7 +35,7 @@ export class Url {
     if (url.startsWith('/') || url.startsWith('#')) {
       return true; // Internal URLs
     }
-    
+
     try {
       new URL(url);
       return true;

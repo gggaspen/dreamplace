@@ -1,6 +1,6 @@
 /**
  * Generic List Components with TypeScript Generics
- * 
+ *
  * Type-safe, reusable list components that can handle any data type
  * while maintaining full TypeScript support and inference.
  */
@@ -28,7 +28,7 @@ interface ListProps<T extends ListItem> extends StackProps {
 export function List<T extends ListItem>({
   items,
   renderItem,
-  keyExtractor = (item) => item.id,
+  keyExtractor = item => item.id,
   emptyComponent = null,
   direction = 'vertical',
   divider,
@@ -47,16 +47,9 @@ export function List<T extends ListItem>({
   const StackComponent = direction === 'vertical' ? VStack : HStack;
 
   return (
-    <StackComponent
-      spacing={0}
-      align="stretch"
-      divider={divider}
-      {...props}
-    >
+    <StackComponent spacing={0} align='stretch' divider={divider} {...props}>
       {items.map((item, index) => (
-        <Box key={keyExtractor(item)}>
-          {renderItem(item, index)}
-        </Box>
+        <Box key={keyExtractor(item)}>{renderItem(item, index)}</Box>
       ))}
     </StackComponent>
   );
@@ -77,7 +70,7 @@ interface GridListProps<T extends ListItem> extends FlexProps {
 export function GridList<T extends ListItem>({
   items,
   renderItem,
-  keyExtractor = (item) => item.id,
+  keyExtractor = item => item.id,
   columns = 1,
   gap = 4,
   emptyComponent = null,
@@ -108,16 +101,9 @@ export function GridList<T extends ListItem>({
   };
 
   return (
-    <Box
-      display="grid"
-      gridTemplateColumns={getTemplateColumns()}
-      gap={gap}
-      {...props}
-    >
+    <Box display='grid' gridTemplateColumns={getTemplateColumns()} gap={gap} {...props}>
       {items.map((item, index) => (
-        <Box key={keyExtractor(item)}>
-          {renderItem(item, index)}
-        </Box>
+        <Box key={keyExtractor(item)}>{renderItem(item, index)}</Box>
       ))}
     </Box>
   );
@@ -140,24 +126,24 @@ export const listUtils = {
   },
 
   // Group items by a key
-  groupBy: <T extends ListItem, K extends keyof T>(
-    items: T[],
-    key: K
-  ): Record<string, T[]> => {
-    return items.reduce((groups, item) => {
-      const groupKey = String(item[key]);
-      if (!groups[groupKey]) {
-        groups[groupKey] = [];
-      }
-      groups[groupKey].push(item);
-      return groups;
-    }, {} as Record<string, T[]>);
+  groupBy: <T extends ListItem, K extends keyof T>(items: T[], key: K): Record<string, T[]> => {
+    return items.reduce(
+      (groups, item) => {
+        const groupKey = String(item[key]);
+        if (!groups[groupKey]) {
+          groups[groupKey] = [];
+        }
+        groups[groupKey].push(item);
+        return groups;
+      },
+      {} as Record<string, T[]>
+    );
   },
 
   // Paginate items
   paginate: <T extends ListItem>(
-    items: T[], 
-    page: number, 
+    items: T[],
+    page: number,
     pageSize: number
   ): { items: T[]; totalPages: number; hasNext: boolean; hasPrev: boolean } => {
     const startIndex = (page - 1) * pageSize;

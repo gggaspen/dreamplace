@@ -1,6 +1,6 @@
 /**
  * Dynamic Form Example
- * 
+ *
  * Example implementation of a dynamic form created using the form builder
  * with conditional logic and various field types.
  */
@@ -76,18 +76,16 @@ export function DynamicFormExample({ onSubmit }: DynamicFormExampleProps) {
               { value: 'no', label: 'No, this is my first time' },
             ],
           }),
-          
+
           // Conditional field - only show if visited before
           createField({
             id: 'favorite-event',
             type: 'text',
             label: 'What was your favorite event?',
             placeholder: 'Tell us about your favorite event',
-            showIf: [
-              { field: 'visited-before', operator: 'not_equals', value: 'no' }
-            ],
+            showIf: [{ field: 'visited-before', operator: 'not_equals', value: 'no' }],
           }),
-          
+
           createField({
             id: 'rating',
             type: 'radio',
@@ -118,20 +116,20 @@ export function DynamicFormExample({ onSubmit }: DynamicFormExampleProps) {
             placeholder: 'Share your suggestions for improvements...',
             rows: 4,
           }),
-          
+
           createField({
             id: 'recommend',
             type: 'switch',
             label: 'Would you recommend us to friends?',
           }),
-          
+
           createField({
             id: 'newsletter',
             type: 'checkbox',
             name: 'newsletter',
             helperText: 'Stay updated with our latest events and news',
           }),
-          
+
           createField({
             id: 'contact-permission',
             type: 'checkbox',
@@ -168,10 +166,6 @@ export function DynamicFormExample({ onSubmit }: DynamicFormExampleProps) {
   };
 
   return (
-    <DynamicFormBuilder
-      config={formConfig}
-      defaultValues={defaultValues}
-      onSubmit={handleSubmit}
-    />
+    <DynamicFormBuilder config={formConfig} defaultValues={defaultValues} onSubmit={handleSubmit} />
   );
 }

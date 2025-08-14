@@ -1,5 +1,5 @@
 const generateSpotifyEmbedSrc = (url: string): string | null => {
-  const embedBase = "https://open.spotify.com/embed/artist/";
+  const embedBase = 'https://open.spotify.com/embed/artist/';
   const idRegex = /\/artist\/([a-zA-Z0-9]+)/;
   const match = url.match(idRegex);
 

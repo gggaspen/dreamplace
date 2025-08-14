@@ -1,6 +1,6 @@
 /**
  * CarouselProvider Render Props Component
- * 
+ *
  * Provides carousel functionality and state management through render props.
  * Allows complete customization of carousel UI while managing logic.
  */

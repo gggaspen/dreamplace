@@ -35,7 +35,7 @@ export class Event extends BaseEntity {
 
   constructor(props: EventProps) {
     super(props.id, props.createdAt, props.updatedAt);
-    
+
     this._name = this.validateName(props.name);
     this._description = props.description;
     this._date = props.date;
@@ -109,10 +109,12 @@ export class Event extends BaseEntity {
   public isToday(): boolean {
     const today = new Date();
     const eventDate = this._date;
-    
-    return today.getDate() === eventDate.getDate() &&
-           today.getMonth() === eventDate.getMonth() &&
-           today.getFullYear() === eventDate.getFullYear();
+
+    return (
+      today.getDate() === eventDate.getDate() &&
+      today.getMonth() === eventDate.getMonth() &&
+      today.getFullYear() === eventDate.getFullYear()
+    );
   }
 
   public hasTag(tag: string): boolean {

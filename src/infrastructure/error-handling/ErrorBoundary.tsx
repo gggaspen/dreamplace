@@ -1,5 +1,5 @@
 import React, { ErrorInfo, ReactNode } from 'react';
-import { Logger } from '../logging/Logger';
+import { getLogger, ILogger } from '../logging/Logger';
 
 /**
  * Error boundary state interface
@@ -35,21 +35,32 @@ function generateErrorId(): string {
  * Enhanced React Error Boundary with comprehensive error handling
  */
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  private logger: Logger;
+  private logger: ILogger;
   private resetTimeoutId: number | null = null;
   private previousResetKeys: Array<string | number> = [];
 
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    
+
     this.state = {
       hasError: false,
       error: null,
       errorInfo: null,
       errorId: null,
     };
-    
-    this.logger = new Logger('ErrorBoundary');
+
+    try {
+      this.logger = getLogger({ component: 'ErrorBoundary' });
+    } catch (error) {
+      // Fallback to console logging if logger not initialized
+      this.logger = {
+        debug: console.debug.bind(console),
+        info: console.info.bind(console),
+        warn: console.warn.bind(console),
+        error: console.error.bind(console),
+        child: () => this.logger,
+      };
+    }
     this.previousResetKeys = this.props.resetKeys || [];
   }
 
@@ -69,13 +80,13 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
    */
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     const errorId = this.state.errorId || generateErrorId();
-    
+
     // Update state with error info
     this.setState({ errorInfo, errorId });
-    
+
     // Log the error
     this.logError(error, errorInfo, errorId);
-    
+
     // Call optional error handler
     if (this.props.onError) {
       try {
@@ -84,7 +95,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
         this.logger.error('Error in onError handler:', handlerError);
       }
     }
-    
+
     // Report to external services if needed
     this.reportError(error, errorInfo, errorId);
   }
@@ -95,18 +106,18 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   componentDidUpdate(prevProps: ErrorBoundaryProps): void {
     const { resetKeys, resetOnPropsChange } = this.props;
     const { hasError } = this.state;
-    
+
     // Check if component should reset based on resetKeys
     if (hasError && resetKeys && prevProps.resetKeys) {
       const hasResetKeyChanged = resetKeys.some((key, index) => {
         return prevProps.resetKeys?.[index] !== key;
       });
-      
+
       if (hasResetKeyChanged) {
         this.resetError();
       }
     }
-    
+
     // Check if component should reset based on props change
     if (hasError && resetOnPropsChange && prevProps !== this.props) {
       this.resetError();
@@ -138,7 +149,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown',
       props: this.props.isolate ? '[ISOLATED]' : this.filterSensitiveProps(),
     };
-    
+
     this.logger.error('React Error Boundary caught error:', errorData);
   }
 
@@ -182,7 +193,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     if (this.resetTimeoutId) {
       clearTimeout(this.resetTimeoutId);
     }
-    
+
     this.resetTimeoutId = window.setTimeout(() => {
       this.resetError();
     }, delay);
@@ -191,7 +202,11 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   /**
    * Get error summary for external use
    */
-  public getErrorSummary(): { hasError: boolean; errorId: string | null; errorMessage: string | null } {
+  public getErrorSummary(): {
+    hasError: boolean;
+    errorId: string | null;
+    errorMessage: string | null;
+  } {
     return {
       hasError: this.state.hasError,
       errorId: this.state.errorId,
@@ -202,7 +217,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   render(): ReactNode {
     const { hasError, error, errorInfo } = this.state;
     const { fallback, children } = this.props;
-    
+
     if (hasError && error) {
       // If custom fallback provided, use it
       if (fallback) {
@@ -217,11 +232,11 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
           return fallback;
         }
       }
-      
+
       // Default error UI based on error level
       return this.renderDefaultErrorUI();
     }
-    
+
     return children;
   }
 
@@ -231,7 +246,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   private renderDefaultErrorUI(): ReactNode {
     const { level = 'component' } = this.props;
     const { error, errorId } = this.state;
-    
+
     const baseStyles: React.CSSProperties = {
       padding: '1rem',
       margin: '0.5rem',
@@ -241,7 +256,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       color: '#dc2626',
       fontFamily: 'system-ui, sans-serif',
     };
-    
+
     const levelStyles: Record<string, React.CSSProperties> = {
       page: {
         ...baseStyles,
@@ -265,46 +280,53 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
         fontSize: '0.875rem',
       },
     };
-    
+
     return (
-      <div style={levelStyles[level]} role="alert">
+      <div style={levelStyles[level]} role='alert'>
         <h2 style={{ margin: '0 0 1rem 0', fontSize: '1.25em' }}>
-          {level === 'page' ? 'Application Error' : 
-           level === 'section' ? 'Section Error' : 
-           'Component Error'}
+          {level === 'page'
+            ? 'Application Error'
+            : level === 'section'
+              ? 'Section Error'
+              : 'Component Error'}
         </h2>
-        
+
         <p style={{ margin: '0 0 1rem 0', textAlign: 'center' }}>
-          {level === 'page' 
+          {level === 'page'
             ? 'We encountered an unexpected error. Please try refreshing the page.'
-            : 'This section encountered an error and could not be displayed.'
-          }
+            : 'This section encountered an error and could not be displayed.'}
         </p>
-        
+
         {process.env.NODE_ENV === 'development' && (
           <>
             <details style={{ marginTop: '1rem', width: '100%' }}>
               <summary style={{ cursor: 'pointer', marginBottom: '0.5rem' }}>
                 Error Details (Development Only)
               </summary>
-              <div style={{ 
-                background: '#fff', 
-                padding: '0.5rem', 
-                borderRadius: '0.25rem',
-                fontSize: '0.75rem',
-                fontFamily: 'monospace',
-                whiteSpace: 'pre-wrap',
-                overflow: 'auto',
-                maxHeight: '200px',
-              }}>
-                <strong>Error ID:</strong> {errorId}<br/>
-                <strong>Message:</strong> {error?.message}<br/>
-                <strong>Stack:</strong><br/>{error?.stack}
+              <div
+                style={{
+                  background: '#fff',
+                  padding: '0.5rem',
+                  borderRadius: '0.25rem',
+                  fontSize: '0.75rem',
+                  fontFamily: 'monospace',
+                  whiteSpace: 'pre-wrap',
+                  overflow: 'auto',
+                  maxHeight: '200px',
+                }}
+              >
+                <strong>Error ID:</strong> {errorId}
+                <br />
+                <strong>Message:</strong> {error?.message}
+                <br />
+                <strong>Stack:</strong>
+                <br />
+                {error?.stack}
               </div>
             </details>
           </>
         )}
-        
+
         <button
           onClick={this.resetError}
           style={{
@@ -317,10 +339,10 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
             cursor: 'pointer',
             fontSize: '0.875rem',
           }}
-          onMouseOver={(e) => {
+          onMouseOver={e => {
             e.currentTarget.style.backgroundColor = '#b91c1c';
           }}
-          onMouseOut={(e) => {
+          onMouseOut={e => {
             e.currentTarget.style.backgroundColor = '#dc2626';
           }}
         >

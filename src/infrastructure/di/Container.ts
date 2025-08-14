@@ -20,21 +20,15 @@ export class DIContainer {
 
     this.services.set(identifier, {
       factory,
-      singleton
+      singleton,
     });
   }
 
-  registerSingleton<T>(
-    identifier: ServiceIdentifier,
-    factory: Factory<T> | AsyncFactory<T>
-  ): void {
+  registerSingleton<T>(identifier: ServiceIdentifier, factory: Factory<T> | AsyncFactory<T>): void {
     this.register(identifier, factory, { singleton: true });
   }
 
-  registerTransient<T>(
-    identifier: ServiceIdentifier,
-    factory: Factory<T> | AsyncFactory<T>
-  ): void {
+  registerTransient<T>(identifier: ServiceIdentifier, factory: Factory<T> | AsyncFactory<T>): void {
     this.register(identifier, factory, { singleton: false });
   }
 
@@ -75,9 +69,11 @@ export class DIContainer {
 
     // Create new instance (must be synchronous)
     const result = serviceDefinition.factory();
-    
+
     if (result instanceof Promise) {
-      throw new Error(`Service ${String(identifier)} factory returns a Promise. Use resolve() instead of resolveSync()`);
+      throw new Error(
+        `Service ${String(identifier)} factory returns a Promise. Use resolve() instead of resolveSync()`
+      );
     }
 
     const instance = result as T;

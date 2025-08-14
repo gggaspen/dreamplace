@@ -18,7 +18,8 @@ export class MemoryCacheService implements ICacheService {
   private readonly maxSize?: number;
   private cleanupInterval?: NodeJS.Timeout;
 
-  constructor(defaultTtl: number = 300000, maxSize?: number) { // 5 minutes default
+  constructor(defaultTtl: number = 300000, maxSize?: number) {
+    // 5 minutes default
     this.defaultTtl = defaultTtl;
     this.maxSize = maxSize;
     this.startCleanup();
@@ -26,7 +27,7 @@ export class MemoryCacheService implements ICacheService {
 
   async get<T>(key: string): Promise<T | null> {
     const entry = this.cache.get(key) as CacheEntry<T> | undefined;
-    
+
     if (!entry) {
       return null;
     }
@@ -50,7 +51,7 @@ export class MemoryCacheService implements ICacheService {
 
     this.cache.set(key, {
       value,
-      expiresAt
+      expiresAt,
     });
   }
 
@@ -117,7 +118,10 @@ export class MemoryCacheService implements ICacheService {
 }
 
 export class RedisCacheService implements ICacheService {
-  constructor(private readonly redisUrl: string, private readonly defaultTtl: number = 300000) {
+  constructor(
+    private readonly redisUrl: string,
+    private readonly defaultTtl: number = 300000
+  ) {
     // Redis implementation would go here
     throw new Error('Redis cache service not implemented yet');
   }
@@ -148,9 +152,9 @@ export class RedisCacheService implements ICacheService {
 }
 
 export const createCacheService = (
-  provider: 'memory' | 'redis', 
-  ttl: number, 
-  maxSize?: number, 
+  provider: 'memory' | 'redis',
+  ttl: number,
+  maxSize?: number,
   redisUrl?: string
 ): ICacheService => {
   switch (provider) {

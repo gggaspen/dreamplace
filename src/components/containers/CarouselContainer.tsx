@@ -2,7 +2,7 @@
 
 /**
  * Carousel Container Component
- * 
+ *
  * Modernized with custom hooks for better separation of concerns.
  * Uses useCarousel hook to encapsulate carousel business logic.
  */
@@ -19,11 +19,14 @@ interface CarouselContainerProps {
 
 export const CarouselContainer: React.FC<CarouselContainerProps> = ({ fotos, banner_text }) => {
   // Business logic: Memoize carousel configuration for performance
-  const carouselConfig = React.useMemo(() => ({
-    autoplayDelay: 2000,
-    pauseOnHover: true,
-    disableOnMobile: true,
-  }), []);
+  const carouselConfig = React.useMemo(
+    () => ({
+      autoplayDelay: 2000,
+      pauseOnHover: true,
+      disableOnMobile: true,
+    }),
+    []
+  );
 
   // Business logic: Use custom carousel hook with memoized config
   const {

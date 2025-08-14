@@ -1,9 +1,9 @@
-import { 
-  IRenderingEngine, 
-  IRenderStrategy, 
-  RenderData, 
-  RenderContext, 
-  RenderResult 
+import {
+  IRenderingEngine,
+  IRenderStrategy,
+  RenderData,
+  RenderContext,
+  RenderResult,
 } from './types';
 
 /**
@@ -64,7 +64,7 @@ export class RenderingEngine implements IRenderingEngine {
     // Render using the selected strategy
     try {
       const result = await strategy.render(data, context);
-      
+
       // Cache the result if applicable
       if (cacheKey && result.element) {
         this.addToCache(cacheKey, result);
@@ -97,7 +97,7 @@ export class RenderingEngine implements IRenderingEngine {
 
     // Sort by priority (higher is better)
     candidates.sort((a, b) => b.priority - a.priority);
-    
+
     return candidates[0].strategy;
   }
 
@@ -145,7 +145,10 @@ export class RenderingEngine implements IRenderingEngine {
   }
 
   // Strategy evaluation helper
-  evaluateAllStrategies(data: RenderData, context: RenderContext): Array<{
+  evaluateAllStrategies(
+    data: RenderData,
+    context: RenderContext
+  ): Array<{
     strategy: string;
     canHandle: boolean;
     priority: number;
@@ -153,9 +156,7 @@ export class RenderingEngine implements IRenderingEngine {
     return Array.from(this.strategies.values()).map(strategy => ({
       strategy: strategy.name,
       canHandle: strategy.canHandle(data, context),
-      priority: strategy.canHandle(data, context) 
-        ? strategy.getPriority(data, context) 
-        : 0,
+      priority: strategy.canHandle(data, context) ? strategy.getPriority(data, context) : 0,
     }));
   }
 

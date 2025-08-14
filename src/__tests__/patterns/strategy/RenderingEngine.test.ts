@@ -9,8 +9,8 @@ class MockRenderStrategy extends BaseRenderStrategy {
   private renderResult: React.ReactElement | null;
 
   constructor(
-    name: string, 
-    priority: number = 5, 
+    name: string,
+    priority: number = 5,
     canHandleResult: boolean = true,
     renderResult: React.ReactElement | null = null
   ) {
@@ -30,14 +30,14 @@ class MockRenderStrategy extends BaseRenderStrategy {
 
   async render(data: RenderData, context: RenderContext): Promise<RenderResult> {
     const startTime = this.startPerformanceTracking();
-    
+
     // Simulate some work
     await new Promise(resolve => setTimeout(resolve, 10));
-    
+
     const renderTime = this.endPerformanceTracking(startTime);
-    
+
     return this.createRenderResult(
-      this.renderResult || { type: 'div', props: { children: 'Mock render' } } as any,
+      this.renderResult || ({ type: 'div', props: { children: 'Mock render' } } as any),
       renderTime
     );
   }
@@ -58,7 +58,7 @@ describe('RenderingEngine', () => {
 
   beforeEach(() => {
     engine = new RenderingEngine();
-    
+
     mockContext = {
       viewport: {
         width: 1024,
@@ -107,7 +107,7 @@ describe('RenderingEngine', () => {
       engine.addStrategy(strategy);
 
       expect(engine.getAvailableStrategies()).toHaveLength(1);
-      
+
       const removed = engine.removeStrategy('test-strategy');
       expect(removed).toBe(true);
       expect(engine.getAvailableStrategies()).toHaveLength(0);
@@ -175,11 +175,11 @@ describe('RenderingEngine', () => {
 
     it('should cache results when strategy supports caching', async () => {
       const strategy = new MockRenderStrategy('cacheable');
-      
+
       // Override shouldCache to return true
       strategy.shouldCache = () => true;
       strategy.getCacheKey = () => 'test-cache-key';
-      
+
       engine.addStrategy(strategy);
 
       // First render
@@ -196,10 +196,10 @@ describe('RenderingEngine', () => {
     it('should manage cache size limit', async () => {
       const smallEngine = new RenderingEngine(2); // Max 2 cached items
       const strategy = new MockRenderStrategy('test');
-      
+
       strategy.shouldCache = () => true;
-      strategy.getCacheKey = (data) => `key-${JSON.stringify(data.content)}`;
-      
+      strategy.getCacheKey = data => `key-${JSON.stringify(data.content)}`;
+
       smallEngine.addStrategy(strategy);
 
       // Render 3 different items
@@ -215,16 +215,16 @@ describe('RenderingEngine', () => {
       const strategy = new MockRenderStrategy('test');
       strategy.shouldCache = () => true;
       strategy.getCacheKey = () => 'test-key';
-      
+
       engine.addStrategy(strategy);
 
       await engine.render(mockData, mockContext);
-      
+
       let stats = engine.getCacheStatistics();
       expect(stats.size).toBe(1);
 
       engine.clearCache();
-      
+
       stats = engine.getCacheStatistics();
       expect(stats.size).toBe(0);
     });
@@ -250,12 +250,12 @@ describe('RenderingEngine', () => {
       const strategy = new MockRenderStrategy('test');
       strategy.shouldCache = () => true;
       strategy.getCacheKey = () => 'test-key';
-      
+
       engine.addStrategy(strategy);
 
       // First render (cache miss)
       await engine.render(mockData, mockContext);
-      
+
       // Second render (cache hit)
       await engine.render(mockData, mockContext);
 

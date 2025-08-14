@@ -1,6 +1,6 @@
 /**
  * useWindowDimensions Hook
- * 
+ *
  * Custom hook for tracking window dimensions and viewport size.
  * Handles client-side rendering and provides safe defaults.
  */

@@ -1,6 +1,6 @@
 /**
  * Facade Pattern Implementation for Complex API Interactions
- * 
+ *
  * The Facade pattern provides a simplified interface to a complex subsystem.
  * It defines a higher-level interface that makes the subsystem easier to use
  * by hiding the complexity of the underlying API interactions.
@@ -79,25 +79,25 @@ export interface TransformConfig {
 
 export interface IAPIFacade {
   name: string;
-  
+
   // Core methods
   get<T>(endpoint: string, config?: RequestConfig): Promise<APIResponse<T>>;
   post<T>(endpoint: string, data?: unknown, config?: RequestConfig): Promise<APIResponse<T>>;
   put<T>(endpoint: string, data?: unknown, config?: RequestConfig): Promise<APIResponse<T>>;
   patch<T>(endpoint: string, data?: unknown, config?: RequestConfig): Promise<APIResponse<T>>;
   delete<T>(endpoint: string, config?: RequestConfig): Promise<APIResponse<T>>;
-  
+
   // Batch operations
   batch<T>(requests: BatchRequest[]): Promise<APIResponse<T[]>>;
-  
+
   // Configuration
   configure(config: FacadeConfig): void;
   getConfiguration(): FacadeConfig;
-  
+
   // Cache management
   clearCache(pattern?: string): void;
   getCacheStats(): CacheStats;
-  
+
   // Health and monitoring
   getHealthStatus(): Promise<HealthStatus>;
   getMetrics(): FacadeMetrics;
@@ -171,12 +171,12 @@ export interface IContentFacade extends IAPIFacade {
   getEvents(filters?: EventFilters): Promise<APIResponse<any[]>>;
   getArtists(pagination?: Pagination): Promise<APIResponse<any[]>>;
   getCarousels(type?: string): Promise<APIResponse<any[]>>;
-  
+
   // Content operations
   createContent(type: string, data: unknown): Promise<APIResponse<any>>;
   updateContent(type: string, id: string, data: unknown): Promise<APIResponse<any>>;
   deleteContent(type: string, id: string): Promise<APIResponse<any>>;
-  
+
   // Content search and filtering
   searchContent(query: string, filters?: SearchFilters): Promise<APIResponse<any[]>>;
   getContentByTag(tag: string): Promise<APIResponse<any[]>>;
@@ -187,11 +187,11 @@ export interface IMediaFacade extends IAPIFacade {
   uploadMedia(file: File, metadata?: MediaMetadata): Promise<APIResponse<MediaUploadResult>>;
   getMediaInfo(id: string): Promise<APIResponse<MediaInfo>>;
   deleteMedia(id: string): Promise<APIResponse<void>>;
-  
+
   // Media processing
   processMedia(id: string, options: ProcessingOptions): Promise<APIResponse<ProcessingResult>>;
   getProcessingStatus(jobId: string): Promise<APIResponse<ProcessingStatus>>;
-  
+
   // Media optimization
   optimizeImage(id: string, options: ImageOptimizationOptions): Promise<APIResponse<any>>;
   generateThumbnails(id: string, sizes: ThumbnailSize[]): Promise<APIResponse<any[]>>;
@@ -202,12 +202,12 @@ export interface IAnalyticsFacade extends IAPIFacade {
   trackEvent(event: AnalyticsEvent): Promise<APIResponse<void>>;
   trackPageView(page: string, metadata?: Record<string, unknown>): Promise<APIResponse<void>>;
   trackUser(userId: string, properties: UserProperties): Promise<APIResponse<void>>;
-  
+
   // Analytics retrieval
   getPageViews(dateRange: DateRange): Promise<APIResponse<PageViewStats>>;
   getEventStats(eventType: string, dateRange: DateRange): Promise<APIResponse<EventStats>>;
   getUserStats(dateRange: DateRange): Promise<APIResponse<UserStats>>;
-  
+
   // Real-time analytics
   getRealtimeStats(): Promise<APIResponse<RealtimeStats>>;
 }

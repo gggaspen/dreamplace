@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { 
-  RenderingEngine, 
+import {
+  RenderingEngine,
   IRenderStrategy,
-  RenderData, 
-  RenderContext, 
+  RenderData,
+  RenderContext,
   RenderResult,
   PerformanceRenderStrategy,
   AccessibleRenderStrategy,
-  QualityRenderStrategy
+  QualityRenderStrategy,
 } from '@/patterns/strategy';
 
 /**
@@ -23,23 +23,23 @@ export function useAdaptiveRenderer() {
   useEffect(() => {
     if (!engineRef.current) {
       engineRef.current = new RenderingEngine();
-      
+
       // Register default strategies
       setupDefaultStrategies();
-      
+
       // Initialize context
       updateContext();
-      
+
       setIsInitialized(true);
     }
 
     // Update context on viewport changes
     const handleResize = () => updateContext();
     const handleVisibilityChange = () => updateContext();
-    
+
     window.addEventListener('resize', handleResize);
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    
+
     return () => {
       window.removeEventListener('resize', handleResize);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
@@ -51,10 +51,10 @@ export function useAdaptiveRenderer() {
 
     // Add performance strategy
     engineRef.current.addStrategy(new PerformanceRenderStrategy());
-    
+
     // Add accessibility strategy
     engineRef.current.addStrategy(new AccessibleRenderStrategy());
-    
+
     // Add quality strategy
     engineRef.current.addStrategy(new QualityRenderStrategy());
   }, []);
@@ -96,22 +96,28 @@ export function useAdaptiveRenderer() {
   }, []);
 
   // Render content using the best strategy
-  const render = useCallback(async (data: RenderData): Promise<RenderResult> => {
-    if (!engineRef.current || !context) {
-      throw new Error('Renderer not initialized');
-    }
+  const render = useCallback(
+    async (data: RenderData): Promise<RenderResult> => {
+      if (!engineRef.current || !context) {
+        throw new Error('Renderer not initialized');
+      }
 
-    return engineRef.current.render(data, context);
-  }, [context]);
+      return engineRef.current.render(data, context);
+    },
+    [context]
+  );
 
   // Get the best strategy for given data
-  const getBestStrategy = useCallback((data: RenderData): IRenderStrategy | null => {
-    if (!engineRef.current || !context) {
-      return null;
-    }
+  const getBestStrategy = useCallback(
+    (data: RenderData): IRenderStrategy | null => {
+      if (!engineRef.current || !context) {
+        return null;
+      }
 
-    return engineRef.current.getBestStrategy(data, context);
-  }, [context]);
+      return engineRef.current.getBestStrategy(data, context);
+    },
+    [context]
+  );
 
   // Add a custom strategy
   const addStrategy = useCallback((strategy: IRenderStrategy) => {
@@ -149,34 +155,37 @@ export function useAdaptiveRenderer() {
   }, [context]);
 
   // Evaluate all strategies for debugging
-  const evaluateStrategies = useCallback((data: RenderData) => {
-    if (!engineRef.current || !context) {
-      return [];
-    }
+  const evaluateStrategies = useCallback(
+    (data: RenderData) => {
+      if (!engineRef.current || !context) {
+        return [];
+      }
 
-    return engineRef.current.evaluateAllStrategies(data, context);
-  }, [context]);
+      return engineRef.current.evaluateAllStrategies(data, context);
+    },
+    [context]
+  );
 
   return {
     // Core rendering
     render,
     getBestStrategy,
-    
+
     // Strategy management
     addStrategy,
     removeStrategy,
     getAvailableStrategies,
-    
+
     // Context management
     context,
     refreshContext,
     getCurrentContext,
-    
+
     // Utilities
     getStatistics,
     clearCache,
     evaluateStrategies,
-    
+
     // State
     isInitialized,
   };
@@ -214,7 +223,7 @@ function getConnectionSpeed(): 'slow' | 'medium' | 'fast' {
   if ('connection' in navigator) {
     const connection = (navigator as any).connection;
     const effectiveType = connection.effectiveType;
-    
+
     if (effectiveType === 'slow-2g' || effectiveType === '2g') return 'slow';
     if (effectiveType === '3g') return 'medium';
     return 'fast';
@@ -228,10 +237,11 @@ function detectScreenReader(): boolean {
   if (typeof window === 'undefined') return false;
 
   // Simple heuristics for screen reader detection
-  return window.speechSynthesis !== undefined && 
-         window.navigator.userAgent.includes('NVDA') ||
-         window.navigator.userAgent.includes('JAWS') ||
-         window.navigator.userAgent.includes('VoiceOver');
+  return (
+    (window.speechSynthesis !== undefined && window.navigator.userAgent.includes('NVDA')) ||
+    window.navigator.userAgent.includes('JAWS') ||
+    window.navigator.userAgent.includes('VoiceOver')
+  );
 }
 
 function detectWebGL(): boolean {

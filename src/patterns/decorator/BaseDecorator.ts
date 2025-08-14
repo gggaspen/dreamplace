@@ -1,9 +1,9 @@
 import { ComponentType } from 'react';
-import { 
-  ComponentDecorator, 
-  DecoratorConfig, 
+import {
+  ComponentDecorator,
+  DecoratorConfig,
   DecoratorMetadata,
-  DecoratorCondition 
+  DecoratorCondition,
 } from './types';
 
 /**
@@ -37,9 +37,10 @@ export abstract class BaseDecorator<P = any> implements ComponentDecorator<P> {
     // Check conditions if provided
     if (config.conditions) {
       // Conditions will be evaluated at runtime, so we just validate structure here
-      return config.conditions.every(condition => 
-        typeof condition.check === 'function' && 
-        ['prop', 'context', 'environment', 'custom'].includes(condition.type)
+      return config.conditions.every(
+        condition =>
+          typeof condition.check === 'function' &&
+          ['prop', 'context', 'environment', 'custom'].includes(condition.type)
       );
     }
 
@@ -83,7 +84,9 @@ export abstract class BaseDecorator<P = any> implements ComponentDecorator<P> {
       }
     };
 
-    HOC.displayName = displayName || `${this.name}(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
+    HOC.displayName =
+      displayName ||
+      `${this.name}(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
     (HOC as any).WrappedComponent = WrappedComponent;
     (HOC as any).decoratorName = this.name;
 
@@ -104,7 +107,9 @@ export abstract class BaseDecorator<P = any> implements ComponentDecorator<P> {
       );
     };
 
-    HOC.displayName = displayName || `${this.name}Provider(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
+    HOC.displayName =
+      displayName ||
+      `${this.name}Provider(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
     (HOC as any).WrappedComponent = WrappedComponent;
     (HOC as any).decoratorName = this.name;
 
@@ -125,15 +130,14 @@ export abstract class BaseDecorator<P = any> implements ComponentDecorator<P> {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
       const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = (hash << 5) - hash + char;
       hash = hash & hash; // Convert to 32-bit integer
     }
     return Math.abs(hash).toString(36);
   }
 
   protected isValidComponent(component: ComponentType<P>): boolean {
-    return typeof component === 'function' || 
-           (typeof component === 'object' && component !== null);
+    return typeof component === 'function' || (typeof component === 'object' && component !== null);
   }
 
   protected hasRequiredProps(props: P): boolean {
@@ -141,8 +145,8 @@ export abstract class BaseDecorator<P = any> implements ComponentDecorator<P> {
       return true;
     }
 
-    return this.metadata.requiresProps.every(propName => 
-      props && typeof props === 'object' && propName in props
+    return this.metadata.requiresProps.every(
+      propName => props && typeof props === 'object' && propName in props
     );
   }
 

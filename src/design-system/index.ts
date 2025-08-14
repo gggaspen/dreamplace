@@ -1,6 +1,6 @@
 /**
  * DreamPlace Design System - Main Export
- * 
+ *
  * Complete design system including tokens, components, theme, hooks, and utilities.
  * Provides everything needed for consistent UI development.
  */

@@ -1,6 +1,6 @@
 /**
  * compose utility
- * 
+ *
  * Utility function for composing multiple Higher-Order Components.
  * Allows clean chaining of HOCs without deep nesting.
  */

@@ -1,4 +1,4 @@
-import IEvent from "./event.interface";
+import IEvent from './event.interface';
 
 export default interface DataConfig {
   data: IEvent[];

@@ -1,6 +1,6 @@
 /**
  * Infinite Scroll Hook
- * 
+ *
  * Custom hook that provides infinite scrolling functionality with
  * cursor-based pagination for GraphQL queries.
  */
@@ -52,12 +52,7 @@ export function useInfiniteScroll(
       const [entry] = entries;
       isIntersectingRef.current = entry.isIntersecting;
 
-      if (
-        entry.isIntersecting &&
-        hasNextPage &&
-        !loading &&
-        !disabled
-      ) {
+      if (entry.isIntersecting && hasNextPage && !loading && !disabled) {
         fetchMore();
       }
     },
@@ -134,24 +129,23 @@ export function useApolloInfiniteScroll<TData, TVariables extends OperationVaria
         variables: {
           after: endCursor,
         } as Partial<TVariables>,
-        updateQuery: updateQuery || ((previousResult, { fetchMoreResult }) => {
-          if (!fetchMoreResult) return previousResult;
-          
-          const previousConnection = getConnection(previousResult);
-          const newConnection = getConnection(fetchMoreResult);
-          
-          return {
-            ...previousResult,
-            [Object.keys(fetchMoreResult)[0]]: {
-              ...newConnection,
-              edges: [
-                ...previousConnection.edges,
-                ...newConnection.edges,
-              ],
-              pageInfo: newConnection.pageInfo,
-            },
-          } as TData;
-        }),
+        updateQuery:
+          updateQuery ||
+          ((previousResult, { fetchMoreResult }) => {
+            if (!fetchMoreResult) return previousResult;
+
+            const previousConnection = getConnection(previousResult);
+            const newConnection = getConnection(fetchMoreResult);
+
+            return {
+              ...previousResult,
+              [Object.keys(fetchMoreResult)[0]]: {
+                ...newConnection,
+                edges: [...previousConnection.edges, ...newConnection.edges],
+                pageInfo: newConnection.pageInfo,
+              },
+            } as TData;
+          }),
       });
     } catch (err) {
       console.error('Error loading more data:', err);

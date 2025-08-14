@@ -1,6 +1,6 @@
 /**
  * Events Infinite Scroll Hook
- * 
+ *
  * Specialized hook for infinite scrolling through events with
  * filtering, sorting, and search capabilities.
  */
@@ -112,7 +112,7 @@ export function useFeaturedEventsInfiniteScroll() {
 // Specialized hook for upcoming events
 export function useUpcomingEventsInfiniteScroll() {
   const now = new Date().toISOString();
-  
+
   return useEventsInfiniteScroll({
     where: {
       status: 'PUBLISHED',

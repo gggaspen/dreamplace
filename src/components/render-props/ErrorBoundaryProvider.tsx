@@ -1,6 +1,6 @@
 /**
  * ErrorBoundaryProvider Render Props Component
- * 
+ *
  * Provides error boundary functionality through render props pattern.
  * Gives full control over error UI while managing error state.
  */

@@ -95,7 +95,7 @@ class ConfigService {
 
   private loadConfig(): AppConfig {
     const env = process.env.NODE_ENV || 'development';
-    
+
     return {
       environment: env as AppConfig['environment'],
       port: parseInt(process.env.PORT || '3000', 10),
@@ -103,30 +103,28 @@ class ConfigService {
         strapiBaseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337',
         timeout: parseInt(process.env.API_TIMEOUT || '10000', 10),
         retries: parseInt(process.env.API_RETRIES || '3', 10),
-        rateLimitRps: process.env.API_RATE_LIMIT_RPS 
-          ? parseInt(process.env.API_RATE_LIMIT_RPS, 10) 
-          : undefined
+        rateLimitRps: process.env.API_RATE_LIMIT_RPS
+          ? parseInt(process.env.API_RATE_LIMIT_RPS, 10)
+          : undefined,
       },
       logging: {
         level: (process.env.LOG_LEVEL as LoggingConfig['level']) || 'info',
         format: (process.env.LOG_FORMAT as LoggingConfig['format']) || 'pretty',
-        outputs: process.env.LOG_OUTPUTS?.split(',') as LoggingConfig['outputs'] || ['console'],
-        filename: process.env.LOG_FILENAME
+        outputs: (process.env.LOG_OUTPUTS?.split(',') as LoggingConfig['outputs']) || ['console'],
+        filename: process.env.LOG_FILENAME,
       },
       cache: {
         provider: (process.env.CACHE_PROVIDER as CacheConfig['provider']) || 'memory',
         ttl: parseInt(process.env.CACHE_TTL || '300000', 10), // 5 minutes default
-        maxSize: process.env.CACHE_MAX_SIZE 
-          ? parseInt(process.env.CACHE_MAX_SIZE, 10) 
-          : undefined,
-        redisUrl: process.env.REDIS_URL
+        maxSize: process.env.CACHE_MAX_SIZE ? parseInt(process.env.CACHE_MAX_SIZE, 10) : undefined,
+        redisUrl: process.env.REDIS_URL,
       },
       security: {
         corsOrigins: process.env.CORS_ORIGINS?.split(',') || ['*'],
         rateLimitWindowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10), // 15 minutes
         rateLimitMaxRequests: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100', 10),
-        enableHelmet: process.env.ENABLE_HELMET !== 'false'
-      }
+        enableHelmet: process.env.ENABLE_HELMET !== 'false',
+      },
     };
   }
 
@@ -168,3 +166,6 @@ class ConfigService {
 }
 
 export const configService = ConfigService.getInstance();
+
+// Default export for backward compatibility
+export default configService;

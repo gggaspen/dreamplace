@@ -1,6 +1,6 @@
 /**
  * GraphQL Infrastructure Exports
- * 
+ *
  * Centralized exports for GraphQL client, hooks, components, and utilities.
  */
 

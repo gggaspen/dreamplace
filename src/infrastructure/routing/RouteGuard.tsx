@@ -9,7 +9,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../auth/AuthContext';
 import { UserRole } from '../../domain/auth/entities/User';
-import { LoadingScreen } from '@/components/loading-screen/LoadingScreen';
+import { LoadingScreen } from '../../components/loading-screen/LoadingScreen';
 
 export interface RouteGuardProps {
   children: ReactNode;
@@ -24,7 +24,7 @@ export function RouteGuard({
   requireAuth = false,
   requireRoles = [],
   fallbackComponent,
-  redirectTo = '/login'
+  redirectTo = '/login',
 }: RouteGuardProps) {
   const { user, isLoading, isAuthenticated } = useAuth();
   const router = useRouter();
@@ -61,17 +61,15 @@ export function RouteGuard({
     if (fallbackComponent) {
       return <>{fallbackComponent}</>;
     }
-    
+
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Access Denied</h1>
-          <p className="text-gray-600 mb-4">
-            You don't have permission to access this page.
-          </p>
+      <div className='min-h-screen flex items-center justify-center'>
+        <div className='text-center'>
+          <h1 className='text-2xl font-bold mb-4'>Access Denied</h1>
+          <p className='text-gray-600 mb-4'>You don't have permission to access this page.</p>
           <button
             onClick={() => router.push('/')}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
           >
             Go Home
           </button>
@@ -115,9 +113,5 @@ export function ArtistGuard({ children }: { children: ReactNode }) {
 }
 
 export function AuthGuard({ children }: { children: ReactNode }) {
-  return (
-    <RouteGuard requireAuth>
-      {children}
-    </RouteGuard>
-  );
+  return <RouteGuard requireAuth>{children}</RouteGuard>;
 }

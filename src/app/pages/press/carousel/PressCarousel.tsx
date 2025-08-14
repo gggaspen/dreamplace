@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectCards, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/autoplay";
-import "swiper/css/pagination";
-import "./PressCarousel.css";
-import { Box, Flex } from "@chakra-ui/react";
-import Press, { IArtist } from "../Press";
+import React, { useEffect, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, EffectCards, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/pagination';
+import './PressCarousel.css';
+import { Box, Flex } from '@chakra-ui/react';
+import Press, { IArtist } from '../Press';
 
 interface IPressCarouselProps {
   readonly artists: IArtist[];
@@ -21,32 +21,27 @@ export default function PressCarousel({ artists }: IPressCarouselProps) {
   useEffect(() => {
     setArtists(artists);
 
-    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
     setIsDesktop(mediaQuery.matches);
 
     const handleResize = () => setIsDesktop(mediaQuery.matches);
-    mediaQuery.addEventListener("change", handleResize);
+    mediaQuery.addEventListener('change', handleResize);
 
     return () => {
-      mediaQuery.removeEventListener("change", handleResize);
+      mediaQuery.removeEventListener('change', handleResize);
     };
   }, []);
 
   return (
     <Flex>
-      <Box
-        w={"100%"}
-        h={{ base: "100dvh", lg: "100dvh" }}
-        position={"relative"}
-        bgColor={"#000"}
-      >
+      <Box w={'100%'} h={{ base: '100dvh', lg: '100dvh' }} position={'relative'} bgColor={'#000'}>
         <Swiper
           // onUpdate={(swiper: any) => onSwiper(swiper)}
-          className="progress-slide-carousel"
+          className='progress-slide-carousel'
           modules={[Autoplay, Pagination, EffectCards]}
           pagination={{
             clickable: true,
-            type: "progressbar",
+            type: 'progressbar',
             progressbarOpposite: false,
           }}
           loop={_artists.length > 1}
@@ -56,7 +51,7 @@ export default function PressCarousel({ artists }: IPressCarouselProps) {
             pauseOnMouseEnter: isDesktop,
           }}
           speed={600}
-          effect={"cards"}
+          effect={'cards'}
           cardsEffect={
             {
               // slideShadows: true,

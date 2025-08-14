@@ -1,12 +1,17 @@
 /**
  * Typography Atom Components
- * 
+ *
  * Semantic typography components based on design tokens
  * for consistent text rendering across the application.
  */
 
 import { forwardRef } from 'react';
-import { Text as ChakraText, Heading as ChakraHeading, TextProps, HeadingProps } from '@chakra-ui/react';
+import {
+  Text as ChakraText,
+  Heading as ChakraHeading,
+  TextProps,
+  HeadingProps,
+} from '@chakra-ui/react';
 import { typographyScale, responsiveTypography } from '@/design-system/tokens/typography';
 
 // Display Text Component (Hero sections, large headlines)
@@ -17,22 +22,15 @@ export interface DisplayProps extends Omit<HeadingProps, 'size'> {
 
 export const Display = forwardRef<HTMLHeadingElement, DisplayProps>(
   ({ size = 'lg', responsive = false, ...props }, ref) => {
-    const styles = responsive && size === 'lg' 
-      ? {
-          fontSize: { base: '4xl', md: '6xl', lg: '7xl' },
-          lineHeight: { base: 'tight', md: 'none' }
-        }
-      : typographyScale.display[size];
+    const styles =
+      responsive && size === 'lg'
+        ? {
+            fontSize: { base: '4xl', md: '6xl', lg: '7xl' },
+            lineHeight: { base: 'tight', md: 'none' },
+          }
+        : typographyScale.display[size];
 
-    return (
-      <ChakraHeading
-        ref={ref}
-        as="h1"
-        fontFamily="display"
-        {...styles}
-        {...props}
-      />
-    );
+    return <ChakraHeading ref={ref} as='h1' fontFamily='display' {...styles} {...props} />;
   }
 );
 
@@ -45,14 +43,9 @@ export interface CustomHeadingProps extends Omit<HeadingProps, 'size'> {
 export const Heading = forwardRef<HTMLHeadingElement, CustomHeadingProps>(
   ({ size = 'md', level = 2, ...props }, ref) => {
     const headingTag = `h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-    
+
     return (
-      <ChakraHeading
-        ref={ref}
-        as={headingTag}
-        {...typographyScale.heading[size]}
-        {...props}
-      />
+      <ChakraHeading ref={ref} as={headingTag} {...typographyScale.heading[size]} {...props} />
     );
   }
 );
@@ -68,16 +61,11 @@ export const Body = forwardRef<HTMLParagraphElement, BodyProps>(
     const colorMap = {
       default: 'fg.default',
       muted: 'fg.muted',
-      subtle: 'fg.subtle'
+      subtle: 'fg.subtle',
     };
 
     return (
-      <ChakraText
-        ref={ref}
-        color={colorMap[variant]}
-        {...typographyScale.body[size]}
-        {...props}
-      />
+      <ChakraText ref={ref} color={colorMap[variant]} {...typographyScale.body[size]} {...props} />
     );
   }
 );
@@ -93,14 +81,14 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>(
     return (
       <ChakraText
         ref={ref}
-        as="label"
-        color="fg.default"
+        as='label'
+        color='fg.default'
         {...typographyScale.label[size]}
         {...props}
       >
         {children}
         {required && (
-          <ChakraText as="span" color="red.500" ml={1}>
+          <ChakraText as='span' color='red.500' ml={1}>
             *
           </ChakraText>
         )}
@@ -124,7 +112,7 @@ export const Code = forwardRef<HTMLElement, CodeProps>(
         bg={block ? 'bg.subtle' : 'bg.muted'}
         px={block ? 4 : 1}
         py={block ? 2 : 0.5}
-        borderRadius="sm"
+        borderRadius='sm'
         {...typographyScale.code[size]}
         {...props}
       />
@@ -142,15 +130,15 @@ export const Caption = forwardRef<HTMLParagraphElement, CaptionProps>(
     const colorMap = {
       default: 'fg.default',
       muted: 'fg.muted',
-      subtle: 'fg.subtle'
+      subtle: 'fg.subtle',
     };
 
     return (
       <ChakraText
         ref={ref}
-        fontSize="xs"
+        fontSize='xs'
         color={colorMap[variant]}
-        lineHeight="normal"
+        lineHeight='normal'
         {...props}
       />
     );

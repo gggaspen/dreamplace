@@ -27,14 +27,14 @@ export class AnalyticsObserver extends BaseObserver<AnalyticsEvent> {
   }
 
   async update(
-    data: AnalyticsEvent, 
-    eventType: string, 
+    data: AnalyticsEvent,
+    eventType: string,
     source: IObservable<AnalyticsEvent>
   ): Promise<void> {
     if (!this.isActive()) return;
 
     const enrichedEvent = this.enrichEvent(data, eventType);
-    
+
     if (this.shouldBatch()) {
       this.addToBatch(enrichedEvent);
     } else {
@@ -44,7 +44,7 @@ export class AnalyticsObserver extends BaseObserver<AnalyticsEvent> {
 
   onError(error: Error, eventType: string): void {
     this.log(`Analytics tracking failed for event ${eventType}`, error);
-    
+
     // Track the error as an analytics event
     const errorEvent: AnalyticsEvent = {
       action: 'error',
@@ -55,7 +55,7 @@ export class AnalyticsObserver extends BaseObserver<AnalyticsEvent> {
         stack: error.stack,
       },
     };
-    
+
     // Don't batch error events, send immediately
     this.trackEvent(errorEvent).catch(console.error);
   }
@@ -80,7 +80,7 @@ export class AnalyticsObserver extends BaseObserver<AnalyticsEvent> {
 
   private addToBatch(event: AnalyticsEvent): void {
     this.eventBatch.push(event);
-    
+
     if (this.eventBatch.length >= this.batchSize) {
       this.flushBatch();
     } else if (!this.batchTimeout) {
@@ -94,7 +94,7 @@ export class AnalyticsObserver extends BaseObserver<AnalyticsEvent> {
 
     const eventsToSend = [...this.eventBatch];
     this.eventBatch = [];
-    
+
     if (this.batchTimeout) {
       clearTimeout(this.batchTimeout);
       this.batchTimeout = null;
@@ -109,7 +109,7 @@ export class AnalyticsObserver extends BaseObserver<AnalyticsEvent> {
           await this.trackEvent(event);
         }
       }
-      
+
       this.log(`Flushed batch of ${eventsToSend.length} analytics events`);
     } catch (error) {
       this.log(`Failed to flush analytics batch`, error);

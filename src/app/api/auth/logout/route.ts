@@ -23,11 +23,11 @@ async function handleLogout(req: NextRequest): Promise<NextResponse> {
     // Verify tokens to get user information for session invalidation
     if (accessToken || refreshToken) {
       const jwtManager = createJWTManager();
-      
+
       try {
         // Get user claims to invalidate session
         let userClaims = null;
-        
+
         if (accessToken) {
           userClaims = await jwtManager.verifyAccessToken(accessToken);
         } else if (refreshToken) {
@@ -42,7 +42,6 @@ async function handleLogout(req: NextRequest): Promise<NextResponse> {
         if (userClaims?.sessionId) {
           await invalidateSession(userClaims.sessionId);
         }
-
       } catch (error) {
         // Token verification failed, but we still want to clear cookies
         console.warn('Token verification failed during logout:', error);
@@ -52,7 +51,7 @@ async function handleLogout(req: NextRequest): Promise<NextResponse> {
     // Create response
     const response = NextResponse.json<LogoutResponse>({
       success: true,
-      message: 'Logged out successfully'
+      message: 'Logged out successfully',
     });
 
     // Clear all authentication cookies
@@ -63,7 +62,7 @@ async function handleLogout(req: NextRequest): Promise<NextResponse> {
       secure,
       sameSite: 'strict',
       maxAge: 0,
-      path: '/'
+      path: '/',
     });
 
     response.cookies.set('refresh-token', '', {
@@ -71,7 +70,7 @@ async function handleLogout(req: NextRequest): Promise<NextResponse> {
       secure,
       sameSite: 'strict',
       maxAge: 0,
-      path: '/'
+      path: '/',
     });
 
     response.cookies.set('user-role', '', {
@@ -79,17 +78,13 @@ async function handleLogout(req: NextRequest): Promise<NextResponse> {
       secure,
       sameSite: 'strict',
       maxAge: 0,
-      path: '/'
+      path: '/',
     });
 
     return response;
-
   } catch (error) {
     console.error('Logout error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -104,13 +99,12 @@ async function invalidateSession(sessionId: string): Promise<void> {
     // - Remove from Redis cache
     // - Mark as invalid in database
     // - Add to blacklist
-    
+
     console.log(`Session invalidated: ${sessionId}`);
-    
+
     // Mock implementation
     // await redis.del(`session:${sessionId}`);
     // await db.sessions.update({ where: { id: sessionId }, data: { isValid: false } });
-    
   } catch (error) {
     console.error('Failed to invalidate session:', error);
     // Don't throw error as logout should still succeed
@@ -142,7 +136,7 @@ export async function OPTIONS(): Promise<NextResponse> {
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Max-Age': '86400'
-    }
+      'Access-Control-Max-Age': '86400',
+    },
   });
 }

@@ -4,17 +4,10 @@
  */
 
 // Security Headers
-export {
-  SecurityHeaders,
-  createSecurityConfig,
-  type SecurityConfig
-} from './SecurityHeaders';
+export { SecurityHeaders, createSecurityConfig, type SecurityConfig } from './SecurityHeaders';
 
 // Input Sanitization
-export {
-  InputSanitizer,
-  type SanitizationOptions
-} from './InputSanitizer';
+export { InputSanitizer, type SanitizationOptions } from './InputSanitizer';
 
 // JWT Management
 export {
@@ -22,7 +15,7 @@ export {
   createJWTManager,
   type UserClaims,
   type TokenPair,
-  type JWTConfig
+  type JWTConfig,
 } from './JWTManager';
 
 // Role-Based Access Control
@@ -33,7 +26,7 @@ export {
   usePermissions,
   type Permission,
   type Role,
-  type User
+  type User,
 } from './RBAC';
 
 // Rate Limiting
@@ -44,7 +37,7 @@ export {
   withRateLimit,
   type RateLimitRule,
   type RateLimitEntry,
-  type RateLimitResult
+  type RateLimitResult,
 } from './RateLimiter';
 
 // Environment Encryption
@@ -54,7 +47,7 @@ export {
   createSecureEnvironmentManager,
   envUtils,
   type EncryptedValue,
-  type EncryptionConfig
+  type EncryptionConfig,
 } from './EnvironmentEncryption';
 
 /**
@@ -102,7 +95,7 @@ export const SecurityUtils = {
 
     return {
       valid: errors.length === 0,
-      errors
+      errors,
     };
   },
 
@@ -114,49 +107,55 @@ export const SecurityUtils = {
     const lowercase = 'abcdefghijklmnopqrstuvwxyz';
     const numbers = '0123456789';
     const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
-    
+
     const allChars = uppercase + lowercase + numbers + symbols;
-    
+
     let password = '';
-    
+
     // Ensure at least one character from each category
     password += uppercase[Math.floor(Math.random() * uppercase.length)];
     password += lowercase[Math.floor(Math.random() * lowercase.length)];
     password += numbers[Math.floor(Math.random() * numbers.length)];
     password += symbols[Math.floor(Math.random() * symbols.length)];
-    
+
     // Fill the rest randomly
     for (let i = 4; i < length; i++) {
       password += allChars[Math.floor(Math.random() * allChars.length)];
     }
-    
+
     // Shuffle the password
-    return password.split('').sort(() => Math.random() - 0.5).join('');
+    return password
+      .split('')
+      .sort(() => Math.random() - 0.5)
+      .join('');
   },
 
   /**
    * Hash password using Web Crypto API
    */
-  hashPassword: async (password: string, salt?: string): Promise<{ hash: string; salt: string }> => {
+  hashPassword: async (
+    password: string,
+    salt?: string
+  ): Promise<{ hash: string; salt: string }> => {
     const encoder = new TextEncoder();
     const data = encoder.encode(password);
-    
+
     // Generate salt if not provided
     if (!salt) {
       const saltArray = new Uint8Array(16);
       crypto.getRandomValues(saltArray);
       salt = Array.from(saltArray, byte => byte.toString(16).padStart(2, '0')).join('');
     }
-    
+
     const saltData = encoder.encode(salt);
     const combinedData = new Uint8Array(data.length + saltData.length);
     combinedData.set(data);
     combinedData.set(saltData, data.length);
-    
+
     const hashBuffer = await crypto.subtle.digest('SHA-256', combinedData);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    
+
     return { hash, salt };
   },
 
@@ -191,7 +190,7 @@ export const SecurityUtils = {
     }
 
     return result === 0;
-  }
+  },
 };
 
 /**
@@ -201,24 +200,24 @@ export const SecurityConstants = {
   // Password requirements
   MIN_PASSWORD_LENGTH: 8,
   RECOMMENDED_PASSWORD_LENGTH: 12,
-  
+
   // Token expiry times
   ACCESS_TOKEN_EXPIRY: '15m',
   REFRESH_TOKEN_EXPIRY: '7d',
   PASSWORD_RESET_EXPIRY: '1h',
-  
+
   // Rate limiting windows
   LOGIN_RATE_LIMIT_WINDOW: 15 * 60 * 1000, // 15 minutes
   API_RATE_LIMIT_WINDOW: 60 * 1000, // 1 minute
-  
+
   // Security headers
   HSTS_MAX_AGE: 31536000, // 1 year
   CSP_REPORT_SAMPLE_RATE: 0.1, // 10% of violations
-  
+
   // Encryption
   DEFAULT_ALGORITHM: 'aes-256-gcm',
   KEY_LENGTH: 32,
   IV_LENGTH: 16,
   SALT_LENGTH: 32,
-  TAG_LENGTH: 16
+  TAG_LENGTH: 16,
 } as const;

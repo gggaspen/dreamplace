@@ -1,11 +1,11 @@
 module.exports = ({ env }) => ({
   upload: {
     config: {
-      provider: "cloudinary", // o 'local'
+      provider: 'cloudinary', // o 'local'
       providerOptions: {
-        cloud_name: env("CLOUDINARY_NAME"),
-        api_key: env("CLOUDINARY_KEY"),
-        api_secret: env("CLOUDINARY_SECRET"),
+        cloud_name: env('CLOUDINARY_NAME'),
+        api_key: env('CLOUDINARY_KEY'),
+        api_secret: env('CLOUDINARY_SECRET'),
       },
       breakpoints: {
         xlarge: 1920, // tu nuevo tamaño

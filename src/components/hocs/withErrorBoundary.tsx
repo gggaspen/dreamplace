@@ -1,6 +1,6 @@
 /**
  * withErrorBoundary HOC
- * 
+ *
  * Higher-Order Component that wraps components with error boundary functionality.
  * Provides automatic error handling and fallback UI for any wrapped component.
  */
@@ -29,8 +29,8 @@ export function withErrorBoundary<P extends object>(
     return (
       <ErrorBoundary
         fallback={({ error, resetErrorBoundary }) => (
-          <FallbackComponent 
-            error={error} 
+          <FallbackComponent
+            error={error}
             resetErrorBoundary={resetErrorBoundary}
             message={error?.message || 'Something went wrong'}
           />

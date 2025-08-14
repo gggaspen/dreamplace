@@ -2,7 +2,15 @@ import { BaseEntity } from './BaseEntity';
 import { Url } from '../value-objects/Url';
 
 export interface ArtistLinkProps {
-  platform: 'spotify' | 'instagram' | 'soundcloud' | 'facebook' | 'twitter' | 'youtube' | 'bandcamp' | 'website';
+  platform:
+    | 'spotify'
+    | 'instagram'
+    | 'soundcloud'
+    | 'facebook'
+    | 'twitter'
+    | 'youtube'
+    | 'bandcamp'
+    | 'website';
   url: Url;
   displayName?: string;
 }
@@ -45,7 +53,7 @@ export class Artist extends BaseEntity {
 
   constructor(props: ArtistProps) {
     super(props.id, props.createdAt, props.updatedAt);
-    
+
     this._name = this.validateName(props.name);
     this._photos = props.photos || [];
     this._links = props.links.map(link => new ArtistLink(link));

@@ -1,6 +1,6 @@
 /**
  * Design System Tokens - Main Export
- * 
+ *
  * Centralized export of all design tokens for the DreamPlace design system.
  * This file provides a single source of truth for all design decisions.
  */
@@ -20,24 +20,24 @@ export const tokens = {
   colors: colorTokens,
   spacing: spacingTokens,
   typography: typographyScale,
-  shadows: shadowTokens
+  shadows: shadowTokens,
 } as const;
 
 export const themeTokens = {
   light: {
     colors: lightThemeColors,
-    shadows: shadowTokens
+    shadows: shadowTokens,
   },
   dark: {
     colors: darkThemeColors,
-    shadows: shadowTokens // Could use darkShadowTokens here if needed
-  }
+    shadows: shadowTokens, // Could use darkShadowTokens here if needed
+  },
 } as const;
 
 export const componentTokens = {
   spacing: componentSpacing,
   shadows: componentShadows,
-  typography: responsiveTypography
+  typography: responsiveTypography,
 } as const;
 
 // Utility function to create consistent theme objects
@@ -48,7 +48,7 @@ export const createTheme = (mode: 'light' | 'dark') => ({
   shadows: shadowTokens,
   fonts: fontFamilyTokens,
   breakpoints,
-  glowEffects
+  glowEffects,
 });
 
 // Export design system metadata
@@ -60,6 +60,6 @@ export const designSystemMeta = {
     colors: Object.keys(colorTokens).length,
     spacing: Object.keys(spacingTokens).length,
     typography: Object.keys(typographyScale).length,
-    shadows: Object.keys(shadowTokens).length
-  }
+    shadows: Object.keys(shadowTokens).length,
+  },
 } as const;

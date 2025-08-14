@@ -2,9 +2,9 @@
 
 /**
  * Home Page
- * 
+ *
  * This page now follows the container/presentational pattern.
- * All business logic has been moved to HomeContainer, 
+ * All business logic has been moved to HomeContainer,
  * and this page serves as the entry point.
  */
 

@@ -27,19 +27,19 @@ function ensureOutputDir() {
  */
 async function generateSchema() {
   console.log('📥 Fetching OpenAPI schema from Strapi...');
-  
+
   try {
     // Try to fetch from Strapi's documentation plugin
     const schemaUrl = `${API_BASE_URL}/api/documentation/1.0.0/full_documentation.json`;
-    
+
     const response = await fetch(schemaUrl);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const schema = await response.json();
     fs.writeFileSync(SCHEMA_FILE, JSON.stringify(schema, null, 2));
-    
+
     console.log('✅ Schema generated successfully');
     return true;
   } catch (error) {
@@ -53,37 +53,37 @@ async function generateSchema() {
  */
 function generateBasicSchema() {
   console.log('📝 Generating basic schema from domain entities...');
-  
+
   const basicSchema = {
     openapi: '3.0.0',
     info: {
       title: 'DreamPlace API',
       version: '1.0.0',
-      description: 'Auto-generated API schema for DreamPlace application'
+      description: 'Auto-generated API schema for DreamPlace application',
     },
     servers: [
       {
         url: API_BASE_URL,
-        description: 'API Server'
-      }
+        description: 'API Server',
+      },
     ],
     paths: {
       '/api/events': {
         get: {
           summary: 'Get all events',
           responses: {
-            '200': {
+            200: {
               description: 'List of events',
               content: {
                 'application/json': {
                   schema: {
-                    $ref: '#/components/schemas/EventListResponse'
-                  }
-                }
-              }
-            }
-          }
-        }
+                    $ref: '#/components/schemas/EventListResponse',
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/events/{id}': {
         get: {
@@ -93,57 +93,57 @@ function generateBasicSchema() {
               name: 'id',
               in: 'path',
               required: true,
-              schema: { type: 'string' }
-            }
+              schema: { type: 'string' },
+            },
           ],
           responses: {
-            '200': {
+            200: {
               description: 'Event details',
               content: {
                 'application/json': {
                   schema: {
-                    $ref: '#/components/schemas/EventResponse'
-                  }
-                }
-              }
-            }
-          }
-        }
+                    $ref: '#/components/schemas/EventResponse',
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/artists': {
         get: {
           summary: 'Get all artists',
           responses: {
-            '200': {
+            200: {
               description: 'List of artists',
               content: {
                 'application/json': {
                   schema: {
-                    $ref: '#/components/schemas/ArtistListResponse'
-                  }
-                }
-              }
-            }
-          }
-        }
+                    $ref: '#/components/schemas/ArtistListResponse',
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/hero-sections': {
         get: {
           summary: 'Get hero sections',
           responses: {
-            '200': {
+            200: {
               description: 'Hero section data',
               content: {
                 'application/json': {
                   schema: {
-                    $ref: '#/components/schemas/HeroSectionResponse'
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+                    $ref: '#/components/schemas/HeroSectionResponse',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
     components: {
       schemas: {
@@ -151,9 +151,9 @@ function generateBasicSchema() {
           type: 'object',
           properties: {
             id: { type: 'number' },
-            attributes: { type: 'object' }
+            attributes: { type: 'object' },
           },
-          required: ['id', 'attributes']
+          required: ['id', 'attributes'],
         },
         StrapiResponse: {
           type: 'object',
@@ -168,13 +168,13 @@ function generateBasicSchema() {
                     page: { type: 'number' },
                     pageSize: { type: 'number' },
                     pageCount: { type: 'number' },
-                    total: { type: 'number' }
-                  }
-                }
-              }
-            }
+                    total: { type: 'number' },
+                  },
+                },
+              },
+            },
           },
-          required: ['data']
+          required: ['data'],
         },
         Event: {
           type: 'object',
@@ -189,9 +189,9 @@ function generateBasicSchema() {
             imageUrl: { type: 'string' },
             ticketUrl: { type: 'string' },
             createdAt: { type: 'string', format: 'date-time' },
-            updatedAt: { type: 'string', format: 'date-time' }
+            updatedAt: { type: 'string', format: 'date-time' },
           },
-          required: ['id', 'name', 'startDate', 'endDate']
+          required: ['id', 'name', 'startDate', 'endDate'],
         },
         Artist: {
           type: 'object',
@@ -207,14 +207,14 @@ function generateBasicSchema() {
                 spotify: { type: 'string' },
                 instagram: { type: 'string' },
                 soundcloud: { type: 'string' },
-                website: { type: 'string' }
-              }
+                website: { type: 'string' },
+              },
             },
             isResident: { type: 'boolean' },
             createdAt: { type: 'string', format: 'date-time' },
-            updatedAt: { type: 'string', format: 'date-time' }
+            updatedAt: { type: 'string', format: 'date-time' },
           },
-          required: ['id', 'name']
+          required: ['id', 'name'],
         },
         HeroSection: {
           type: 'object',
@@ -226,9 +226,9 @@ function generateBasicSchema() {
             ctaText: { type: 'string' },
             ctaUrl: { type: 'string' },
             createdAt: { type: 'string', format: 'date-time' },
-            updatedAt: { type: 'string', format: 'date-time' }
+            updatedAt: { type: 'string', format: 'date-time' },
           },
-          required: ['id', 'title']
+          required: ['id', 'title'],
         },
         ContactInfo: {
           type: 'object',
@@ -242,13 +242,13 @@ function generateBasicSchema() {
               properties: {
                 instagram: { type: 'string' },
                 facebook: { type: 'string' },
-                twitter: { type: 'string' }
-              }
+                twitter: { type: 'string' },
+              },
             },
             createdAt: { type: 'string', format: 'date-time' },
-            updatedAt: { type: 'string', format: 'date-time' }
+            updatedAt: { type: 'string', format: 'date-time' },
           },
-          required: ['id', 'email']
+          required: ['id', 'email'],
         },
         EventResponse: {
           allOf: [
@@ -256,10 +256,10 @@ function generateBasicSchema() {
             {
               type: 'object',
               properties: {
-                data: { $ref: '#/components/schemas/Event' }
-              }
-            }
-          ]
+                data: { $ref: '#/components/schemas/Event' },
+              },
+            },
+          ],
         },
         EventListResponse: {
           allOf: [
@@ -269,11 +269,11 @@ function generateBasicSchema() {
               properties: {
                 data: {
                   type: 'array',
-                  items: { $ref: '#/components/schemas/Event' }
-                }
-              }
-            }
-          ]
+                  items: { $ref: '#/components/schemas/Event' },
+                },
+              },
+            },
+          ],
         },
         ArtistResponse: {
           allOf: [
@@ -281,10 +281,10 @@ function generateBasicSchema() {
             {
               type: 'object',
               properties: {
-                data: { $ref: '#/components/schemas/Artist' }
-              }
-            }
-          ]
+                data: { $ref: '#/components/schemas/Artist' },
+              },
+            },
+          ],
         },
         ArtistListResponse: {
           allOf: [
@@ -294,11 +294,11 @@ function generateBasicSchema() {
               properties: {
                 data: {
                   type: 'array',
-                  items: { $ref: '#/components/schemas/Artist' }
-                }
-              }
-            }
-          ]
+                  items: { $ref: '#/components/schemas/Artist' },
+                },
+              },
+            },
+          ],
         },
         HeroSectionResponse: {
           allOf: [
@@ -306,13 +306,13 @@ function generateBasicSchema() {
             {
               type: 'object',
               properties: {
-                data: { $ref: '#/components/schemas/HeroSection' }
-              }
-            }
-          ]
-        }
-      }
-    }
+                data: { $ref: '#/components/schemas/HeroSection' },
+              },
+            },
+          ],
+        },
+      },
+    },
   };
 
   fs.writeFileSync(SCHEMA_FILE, JSON.stringify(basicSchema, null, 2));
@@ -324,13 +324,13 @@ function generateBasicSchema() {
  */
 function generateTypes() {
   console.log('🔧 Generating TypeScript types...');
-  
+
   try {
     // Use openapi-typescript to generate types
     execSync(`npx openapi-typescript "${SCHEMA_FILE}" --output "${TYPES_FILE}"`, {
-      stdio: 'inherit'
+      stdio: 'inherit',
     });
-    
+
     console.log('✅ TypeScript types generated successfully');
     return true;
   } catch (error) {
@@ -344,19 +344,22 @@ function generateTypes() {
  */
 function generateClient() {
   console.log('🏗️  Generating API client...');
-  
+
   const clientFile = path.join(OUTPUT_DIR, 'api-client.ts');
-  
+
   try {
-    execSync(`npx swagger-typescript-api -p "${SCHEMA_FILE}" -o "${OUTPUT_DIR}" -n "api-client.ts" --modular --axios`, {
-      stdio: 'inherit'
-    });
-    
+    execSync(
+      `npx swagger-typescript-api -p "${SCHEMA_FILE}" -o "${OUTPUT_DIR}" -n "api-client.ts" --modular --axios`,
+      {
+        stdio: 'inherit',
+      }
+    );
+
     console.log('✅ API client generated successfully');
     return true;
   } catch (error) {
     console.warn('⚠️  Could not generate full API client, creating basic client...');
-    
+
     // Create a basic typed client wrapper
     const basicClientContent = `
 // Auto-generated API client
@@ -368,7 +371,7 @@ export type { ApiEndpoints, TypedApiResponse } from '../client/TypedApiClient';
 // Export the generated types
 export type * from './api-types';
 `;
-    
+
     fs.writeFileSync(clientFile, basicClientContent.trim());
     return true;
   }
@@ -379,25 +382,25 @@ export type * from './api-types';
  */
 async function main() {
   console.log('🚀 Starting API type generation...\n');
-  
+
   ensureOutputDir();
-  
+
   // Try to generate schema from Strapi, fallback to basic schema
   const schemaGenerated = await generateSchema();
   if (!schemaGenerated) {
     generateBasicSchema();
   }
-  
+
   // Generate TypeScript types
   const typesGenerated = generateTypes();
   if (!typesGenerated) {
     console.error('❌ Failed to generate types, exiting...');
     process.exit(1);
   }
-  
+
   // Generate API client
   generateClient();
-  
+
   console.log('\n🎉 API type generation completed!');
   console.log(`📁 Generated files:`);
   console.log(`   - ${SCHEMA_FILE}`);
@@ -411,7 +414,7 @@ if (typeof fetch === 'undefined') {
 }
 
 // Run the script
-main().catch((error) => {
+main().catch(error => {
   console.error('❌ Script failed:', error);
   process.exit(1);
 });

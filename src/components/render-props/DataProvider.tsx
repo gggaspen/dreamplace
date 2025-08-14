@@ -1,6 +1,6 @@
 /**
  * DataProvider Render Props Component
- * 
+ *
  * Flexible data provider that uses render props pattern to provide
  * data fetching capabilities to any component structure.
  */

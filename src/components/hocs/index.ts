@@ -1,6 +1,6 @@
 /**
  * Higher-Order Components Index
- * 
+ *
  * Barrel export for all HOCs and composition utilities
  */
 

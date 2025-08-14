@@ -11,7 +11,7 @@ const createQueryClient = (): QueryClient => {
         // Retry failed requests up to 3 times
         retry: 3,
         // Retry with exponential backoff
-        retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+        retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
         // Don't refetch on window focus in development
         refetchOnWindowFocus: process.env.NODE_ENV === 'production',
         // Don't refetch on reconnect unless data is stale

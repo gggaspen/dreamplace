@@ -20,8 +20,4 @@ export {
   ErrorSeverity,
   ErrorCategory,
 } from './ErrorHandlingService';
-export type {
-  ErrorReport,
-  ErrorHandler,
-  RecoveryStrategy,
-} from './ErrorHandlingService';
+export type { ErrorReport, ErrorHandler, RecoveryStrategy } from './ErrorHandlingService';

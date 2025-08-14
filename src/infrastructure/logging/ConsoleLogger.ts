@@ -45,9 +45,9 @@ export class ConsoleLogger implements Logger {
   private log(level: LogLevel, message: string, context?: LogContext): void {
     const timestamp = new Date().toISOString();
     const prefix = `[${timestamp}] [${this.namespace}] [${level.toUpperCase()}]`;
-    
+
     const logMethod = this.getConsoleMethod(level);
-    
+
     if (context && Object.keys(context).length > 0) {
       logMethod(`${prefix} ${message}`, context);
     } else {

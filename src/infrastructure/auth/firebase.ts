@@ -8,12 +8,13 @@ import { getAuth, Auth, connectAuthEmulator } from 'firebase/auth';
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyA913BIgo1rvgH-iZ3n_o_qgVIwIpjwEk0",
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "dreamplace-front.firebaseapp.com",
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "dreamplace-front",
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "dreamplace-front.firebasestorage.app",
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "379558549848",
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:379558549848:web:6c64b4e39fc3cdda43ad2d",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyA913BIgo1rvgH-iZ3n_o_qgVIwIpjwEk0',
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'dreamplace-front.firebaseapp.com',
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'dreamplace-front',
+  storageBucket:
+    process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || 'dreamplace-front.firebasestorage.app',
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '379558549848',
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '1:379558549848:web:6c64b4e39fc3cdda43ad2d',
 };
 
 // Initialize Firebase

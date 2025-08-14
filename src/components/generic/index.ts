@@ -1,6 +1,6 @@
 /**
  * Generic Components Index
- * 
+ *
  * Barrel export for all generic components with TypeScript generics
  */
 

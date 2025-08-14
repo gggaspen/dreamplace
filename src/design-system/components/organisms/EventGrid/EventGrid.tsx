@@ -1,22 +1,22 @@
 /**
  * EventGrid Organism Component
- * 
+ *
  * A compound component that displays a responsive grid of event cards
  * with filtering, sorting, and pagination capabilities.
  */
 
 import { useState, useMemo } from 'react';
-import { 
-  Grid, 
-  VStack, 
-  HStack, 
-  Select, 
-  Input, 
-  InputGroup, 
+import {
+  Grid,
+  VStack,
+  HStack,
+  Select,
+  Input,
+  InputGroup,
   InputLeftElement,
   Spinner,
   Text,
-  Box
+  Box,
 } from '@chakra-ui/react';
 import { FiSearch, FiFilter } from 'react-icons/fi';
 import { EventCard } from '../../molecules/EventCard';
@@ -37,17 +37,17 @@ export interface EventGridProps {
     genre?: string;
     status?: 'upcoming' | 'live' | 'ended';
   }>;
-  
+
   /**
    * Grid title
    */
   title?: string;
-  
+
   /**
    * Show search and filter controls
    */
   showControls?: boolean;
-  
+
   /**
    * Number of columns (responsive)
    */
@@ -58,22 +58,22 @@ export interface EventGridProps {
     lg?: number;
     xl?: number;
   };
-  
+
   /**
    * Items per page for pagination
    */
   itemsPerPage?: number;
-  
+
   /**
    * Loading state
    */
   loading?: boolean;
-  
+
   /**
    * Empty state message
    */
   emptyMessage?: string;
-  
+
   /**
    * Event handlers
    */
@@ -86,7 +86,7 @@ const defaultColumns = {
   sm: 1,
   md: 2,
   lg: 3,
-  xl: 4
+  xl: 4,
 };
 
 export const EventGrid: React.FC<EventGridProps> = ({
@@ -96,9 +96,9 @@ export const EventGrid: React.FC<EventGridProps> = ({
   columns = defaultColumns,
   itemsPerPage = 12,
   loading = false,
-  emptyMessage = "No events found",
+  emptyMessage = 'No events found',
   onEventClick,
-  onTicketClick
+  onTicketClick,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [genreFilter, setGenreFilter] = useState('all');
@@ -117,13 +117,14 @@ export const EventGrid: React.FC<EventGridProps> = ({
   // Filter and search events
   const filteredEvents = useMemo(() => {
     return events.filter(event => {
-      const matchesSearch = !searchTerm || 
+      const matchesSearch =
+        !searchTerm ||
         event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         event.location.toLowerCase().includes(searchTerm.toLowerCase());
-      
+
       const matchesGenre = genreFilter === 'all' || event.genre === genreFilter;
       const matchesStatus = statusFilter === 'all' || event.status === statusFilter;
-      
+
       return matchesSearch && matchesGenre && matchesStatus;
     });
   }, [events, searchTerm, genreFilter, statusFilter]);
@@ -153,33 +154,33 @@ export const EventGrid: React.FC<EventGridProps> = ({
   if (loading) {
     return (
       <VStack spacing={8} py={8}>
-        <Spinner size="xl" color="brand.500" />
+        <Spinner size='xl' color='brand.500' />
         <Text>Loading events...</Text>
       </VStack>
     );
   }
 
   return (
-    <VStack spacing={6} align="stretch">
+    <VStack spacing={6} align='stretch'>
       {/* Header */}
       {title && (
-        <Heading size="xl" textAlign="center">
+        <Heading size='xl' textAlign='center'>
           {title}
         </Heading>
       )}
 
       {/* Controls */}
       {showControls && (
-        <VStack spacing={4} align="stretch">
+        <VStack spacing={4} align='stretch'>
           {/* Search */}
-          <InputGroup maxW="md" mx="auto">
+          <InputGroup maxW='md' mx='auto'>
             <InputLeftElement>
-              <FiSearch color="var(--chakra-colors-fg-muted)" />
+              <FiSearch color='var(--chakra-colors-fg-muted)' />
             </InputLeftElement>
             <Input
-              placeholder="Search events..."
+              placeholder='Search events...'
               value={searchTerm}
-              onChange={(e) => {
+              onChange={e => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
@@ -187,17 +188,19 @@ export const EventGrid: React.FC<EventGridProps> = ({
           </InputGroup>
 
           {/* Filters */}
-          <HStack spacing={4} justify="center" wrap="wrap">
-            <HStack spacing={2} align="center">
+          <HStack spacing={4} justify='center' wrap='wrap'>
+            <HStack spacing={2} align='center'>
               <FiFilter />
-              <Text fontSize="sm" color="fg.muted">Filters:</Text>
+              <Text fontSize='sm' color='fg.muted'>
+                Filters:
+              </Text>
             </HStack>
 
-            <Select 
-              size="sm" 
-              w="auto" 
+            <Select
+              size='sm'
+              w='auto'
               value={genreFilter}
-              onChange={(e) => {
+              onChange={e => {
                 setGenreFilter(e.target.value);
                 setCurrentPage(1);
               }}
@@ -209,22 +212,22 @@ export const EventGrid: React.FC<EventGridProps> = ({
               ))}
             </Select>
 
-            <Select 
-              size="sm" 
-              w="auto"
+            <Select
+              size='sm'
+              w='auto'
               value={statusFilter}
-              onChange={(e) => {
+              onChange={e => {
                 setStatusFilter(e.target.value);
                 setCurrentPage(1);
               }}
             >
-              <option value="all">All Status</option>
-              <option value="upcoming">Upcoming</option>
-              <option value="live">Live</option>
-              <option value="ended">Ended</option>
+              <option value='all'>All Status</option>
+              <option value='upcoming'>Upcoming</option>
+              <option value='live'>Live</option>
+              <option value='ended'>Ended</option>
             </Select>
 
-            <Button size="sm" variant="ghost" onClick={resetFilters}>
+            <Button size='sm' variant='ghost' onClick={resetFilters}>
               Clear
             </Button>
           </HStack>
@@ -232,7 +235,7 @@ export const EventGrid: React.FC<EventGridProps> = ({
       )}
 
       {/* Results Info */}
-      <Text textAlign="center" fontSize="sm" color="fg.muted">
+      <Text textAlign='center' fontSize='sm' color='fg.muted'>
         Showing {paginatedEvents.length} of {filteredEvents.length} events
       </Text>
 
@@ -244,7 +247,7 @@ export const EventGrid: React.FC<EventGridProps> = ({
             sm: `repeat(${columns.sm || 1}, 1fr)`,
             md: `repeat(${columns.md || 2}, 1fr)`,
             lg: `repeat(${columns.lg || 3}, 1fr)`,
-            xl: `repeat(${columns.xl || 4}, 1fr)`
+            xl: `repeat(${columns.xl || 4}, 1fr)`,
           }}
           gap={6}
           px={{ base: 4, md: 0 }}
@@ -259,12 +262,12 @@ export const EventGrid: React.FC<EventGridProps> = ({
           ))}
         </Grid>
       ) : (
-        <Box textAlign="center" py={12}>
-          <Text fontSize="lg" color="fg.muted">
+        <Box textAlign='center' py={12}>
+          <Text fontSize='lg' color='fg.muted'>
             {emptyMessage}
           </Text>
           {(searchTerm || genreFilter !== 'all' || statusFilter !== 'all') && (
-            <Button mt={4} variant="outline" onClick={resetFilters}>
+            <Button mt={4} variant='outline' onClick={resetFilters}>
               Clear Filters
             </Button>
           )}
@@ -273,10 +276,10 @@ export const EventGrid: React.FC<EventGridProps> = ({
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <HStack spacing={2} justify="center" pt={4}>
+        <HStack spacing={2} justify='center' pt={4}>
           <Button
-            size="sm"
-            variant="outline"
+            size='sm'
+            variant='outline'
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -286,7 +289,7 @@ export const EventGrid: React.FC<EventGridProps> = ({
           {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
             <Button
               key={page}
-              size="sm"
+              size='sm'
               variant={page === currentPage ? 'brand' : 'ghost'}
               onClick={() => handlePageChange(page)}
             >
@@ -295,8 +298,8 @@ export const EventGrid: React.FC<EventGridProps> = ({
           ))}
 
           <Button
-            size="sm"
-            variant="outline"
+            size='sm'
+            variant='outline'
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >

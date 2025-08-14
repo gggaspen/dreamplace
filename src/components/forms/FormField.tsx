@@ -1,29 +1,22 @@
 /**
  * Form Field Components with React Hook Form Integration
- * 
+ *
  * Reusable form field components that integrate with React Hook Form
  * and provide consistent styling and validation feedback.
  */
 
 import React from 'react';
 import { FieldValues, Path } from 'react-hook-form';
+import { Field } from '@/components/ui/field';
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Checkbox } from '@/components/ui/checkbox';
+import { NumberInput } from '@/components/ui/number-input';
+import { Radio } from '@/components/ui/radio';
 import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Input,
   Textarea,
   Select,
-  Checkbox,
-  Switch,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Radio,
-  RadioGroup,
   Stack,
   InputGroup,
   InputLeftElement,
@@ -65,20 +58,20 @@ export function InputField<T extends FieldValues>({
   const error = errors[name];
 
   return (
-    <FormControl isInvalid={!!error} isRequired={isRequired} isDisabled={isDisabled}>
-      {label && <FormLabel>{label}</FormLabel>}
+    <Field
+      label={label}
+      invalid={!!error}
+      errorText={error?.message}
+      helperText={!error ? helperText : undefined}
+      required={isRequired}
+      disabled={isDisabled}
+    >
       <InputGroup size={size}>
         {leftElement && <InputLeftElement>{leftElement}</InputLeftElement>}
-        <Input
-          {...register(name)}
-          type={type}
-          placeholder={placeholder}
-        />
+        <Input {...register(name)} type={type} placeholder={placeholder} />
         {rightElement && <InputRightElement>{rightElement}</InputRightElement>}
       </InputGroup>
-      {error && <FormErrorMessage>{error.message}</FormErrorMessage>}
-      {helperText && !error && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
+    </Field>
   );
 }
 
@@ -102,17 +95,16 @@ export function TextareaField<T extends FieldValues>({
   const error = errors[name];
 
   return (
-    <FormControl isInvalid={!!error} isRequired={isRequired} isDisabled={isDisabled}>
-      {label && <FormLabel>{label}</FormLabel>}
-      <Textarea
-        {...register(name)}
-        placeholder={placeholder}
-        rows={rows}
-        resize={resize}
-      />
-      {error && <FormErrorMessage>{error.message}</FormErrorMessage>}
-      {helperText && !error && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
+    <Field
+      label={label}
+      invalid={!!error}
+      errorText={error?.message}
+      helperText={!error ? helperText : undefined}
+      required={isRequired}
+      disabled={isDisabled}
+    >
+      <Textarea {...register(name)} placeholder={placeholder} rows={rows} resize={resize} />
+    </Field>
   );
 }
 
@@ -135,22 +127,22 @@ export function SelectField<T extends FieldValues>({
   const error = errors[name];
 
   return (
-    <FormControl isInvalid={!!error} isRequired={isRequired} isDisabled={isDisabled}>
-      {label && <FormLabel>{label}</FormLabel>}
+    <Field
+      label={label}
+      invalid={!!error}
+      errorText={error?.message}
+      helperText={!error ? helperText : undefined}
+      required={isRequired}
+      disabled={isDisabled}
+    >
       <Select {...register(name)} placeholder={placeholder}>
-        {options.map((option) => (
-          <option
-            key={option.value}
-            value={option.value}
-            disabled={option.disabled}
-          >
+        {options.map(option => (
+          <option key={option.value} value={option.value} disabled={option.disabled}>
             {option.label}
           </option>
         ))}
       </Select>
-      {error && <FormErrorMessage>{error.message}</FormErrorMessage>}
-      {helperText && !error && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
+    </Field>
   );
 }
 
@@ -181,30 +173,26 @@ export function NumberField<T extends FieldValues>({
   const value = watch(name) as number;
 
   return (
-    <FormControl isInvalid={!!error} isRequired={isRequired} isDisabled={isDisabled}>
-      {label && <FormLabel>{label}</FormLabel>}
-      <NumberInput
-        value={value || ''}
-        onChange={(_, valueAsNumber) => setValue(name, valueAsNumber as any)}
+    <Field
+      label={label}
+      invalid={!!error}
+      errorText={error?.message}
+      helperText={!error ? helperText : undefined}
+      required={isRequired}
+      disabled={isDisabled}
+    >
+      <NumberInput.Root
+        value={String(value || '')}
+        onValueChange={({ valueAsNumber }) => setValue(name, valueAsNumber as any)}
         min={min}
         max={max}
         step={step}
-        precision={precision}
+        formatOptions={{ maximumFractionDigits: precision }}
       >
-        <NumberInputField
-          {...register(name)}
-          placeholder={placeholder}
-        />
-        {showStepper && (
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        )}
-      </NumberInput>
-      {error && <FormErrorMessage>{error.message}</FormErrorMessage>}
-      {helperText && !error && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
+        <NumberInput.Field {...register(name)} placeholder={placeholder} />
+        {showStepper && <NumberInput.Control />}
+      </NumberInput.Root>
+    </Field>
   );
 }
 
@@ -225,16 +213,16 @@ export function CheckboxField<T extends FieldValues>({
   const error = errors[name];
 
   return (
-    <FormControl isInvalid={!!error} isDisabled={isDisabled}>
-      <Checkbox
-        {...register(name)}
-        colorScheme={colorScheme}
-      >
+    <Field
+      invalid={!!error}
+      errorText={error?.message}
+      helperText={!error ? helperText : undefined}
+      disabled={isDisabled}
+    >
+      <Checkbox {...register(name)}>
         {children}
       </Checkbox>
-      {error && <FormErrorMessage>{error.message}</FormErrorMessage>}
-      {helperText && !error && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
+    </Field>
   );
 }
 
@@ -256,18 +244,15 @@ export function SwitchField<T extends FieldValues>({
   const error = errors[name];
 
   return (
-    <FormControl isInvalid={!!error} isDisabled={isDisabled}>
-      <Stack direction="row" align="center" justify="space-between">
-        {label && <FormLabel mb="0">{label}</FormLabel>}
-        <Switch
-          {...register(name)}
-          colorScheme={colorScheme}
-          size={size}
-        />
-      </Stack>
-      {error && <FormErrorMessage>{error.message}</FormErrorMessage>}
-      {helperText && !error && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
+    <Field
+      label={label}
+      invalid={!!error}
+      errorText={error?.message}
+      helperText={!error ? helperText : undefined}
+      disabled={isDisabled}
+    >
+      <Switch {...register(name)} size={size} />
+    </Field>
   );
 }
 
@@ -293,28 +278,32 @@ export function RadioGroupField<T extends FieldValues>({
   const value = watch(name) as string;
 
   return (
-    <FormControl isInvalid={!!error} isRequired={isRequired} isDisabled={isDisabled}>
-      {label && <FormLabel>{label}</FormLabel>}
-      <RadioGroup
+    <Field
+      label={label}
+      invalid={!!error}
+      errorText={error?.message}
+      helperText={!error ? helperText : undefined}
+      required={isRequired}
+      disabled={isDisabled}
+    >
+      <Radio.Root
         value={value}
-        onChange={(val) => setValue(name, val as any)}
-        colorScheme={colorScheme}
+        onValueChange={val => setValue(name, val as any)}
       >
         <Stack direction={direction}>
-          {options.map((option) => (
-            <Radio
+          {options.map(option => (
+            <Radio.Item
               key={option.value}
               value={option.value}
-              isDisabled={option.disabled}
+              disabled={option.disabled}
               {...register(name)}
             >
-              {option.label}
-            </Radio>
+              <Radio.ItemControl />
+              <Radio.ItemText>{option.label}</Radio.ItemText>
+            </Radio.Item>
           ))}
         </Stack>
-      </RadioGroup>
-      {error && <FormErrorMessage>{error.message}</FormErrorMessage>}
-      {helperText && !error && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
+      </Radio.Root>
+    </Field>
   );
 }

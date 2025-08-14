@@ -8,25 +8,20 @@
 import React from 'react';
 import {
   Box,
-  Card,
-  CardBody,
-  CardHeader,
-  Heading,
   VStack,
   HStack,
-  FormControl,
-  FormLabel,
-  Input,
-  Switch,
-  Select,
-  Button,
+  Heading,
   Text,
   Badge,
   Divider,
   Code,
-  Alert,
-  AlertIcon
 } from '@chakra-ui/react';
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Alert } from '@/components/ui/alert';
+import { Field } from '@/components/ui/field';
+import { Card, CardHeader, CardBody } from '@/components/composite/Card';
+import { Input, Select } from '@chakra-ui/react';
 import {
   useURLString,
   useURLNumber,
@@ -35,7 +30,7 @@ import {
   useURLPagination,
   useURLFilters,
   useURLSearch,
-  useURLDate
+  useURLDate,
 } from '@/hooks/useURLState';
 import { URLStateConfigs } from '@/infrastructure/routing/URLStateManager';
 
@@ -53,7 +48,7 @@ export function DeepLinkDemo() {
     page: 1,
     limit: 10,
     sortBy: 'name',
-    sortOrder: 'asc'
+    sortOrder: 'asc',
   });
 
   // Complex filters example
@@ -61,7 +56,7 @@ export function DeepLinkDemo() {
     venue: URLStateConfigs.string('venue', ''),
     genre: URLStateConfigs.string('genre', ''),
     priceRange: URLStateConfigs.array('priceRange', [], String, String),
-    dateRange: URLStateConfigs.string('dateRange', '')
+    dateRange: URLStateConfigs.string('dateRange', ''),
   });
 
   // Current URL display
@@ -78,87 +73,84 @@ export function DeepLinkDemo() {
   };
 
   return (
-    <Box maxW="container.xl" mx="auto" p={6}>
-      <VStack spacing={8} align="stretch">
+    <Box maxW='container.xl' mx='auto' p={6}>
+      <VStack spacing={8} align='stretch'>
         <Box>
-          <Heading size="lg" mb={2}>Deep Linking Demo</Heading>
-          <Text color="gray.600">
-            All form controls below are synchronized with URL parameters. 
-            Try changing values and notice how the URL updates, then refresh the page or share the link.
+          <Heading size='lg' mb={2}>
+            Deep Linking Demo
+          </Heading>
+          <Text color='gray.600'>
+            All form controls below are synchronized with URL parameters. Try changing values and
+            notice how the URL updates, then refresh the page or share the link.
           </Text>
         </Box>
 
-        <Alert status="info">
-          <AlertIcon />
-          <Text fontSize="sm">
-            <strong>Current URL:</strong> <Code fontSize="xs">{currentURL}</Code>
+        <Alert status='info' title="Current URL">
+          <Text fontSize='sm'>
+            <Code fontSize='xs'>{currentURL}</Code>
           </Text>
         </Alert>
 
         {/* Basic Controls */}
         <Card>
           <CardHeader>
-            <Heading size="md">Basic URL State Controls</Heading>
+            <Heading size='md'>Basic URL State Controls</Heading>
           </CardHeader>
           <CardBody>
-            <VStack spacing={4} align="stretch">
-              <FormControl>
-                <FormLabel>Search Query (debounced 500ms)</FormLabel>
+            <VStack spacing={4} align='stretch'>
+              <Field label="Search Query (debounced 500ms)">
                 <Input
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search for something..."
+                  onChange={e => setSearchQuery(e.target.value)}
+                  placeholder='Search for something...'
                 />
-              </FormControl>
+              </Field>
 
-              <FormControl>
-                <FormLabel>Category</FormLabel>
+              <Field label="Category">
                 <Select
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  onChange={e => setSelectedCategory(e.target.value)}
                 >
-                  <option value="all">All Categories</option>
-                  <option value="events">Events</option>
-                  <option value="artists">Artists</option>
-                  <option value="venues">Venues</option>
+                  <option value='all'>All Categories</option>
+                  <option value='events'>Events</option>
+                  <option value='artists'>Artists</option>
+                  <option value='venues'>Venues</option>
                 </Select>
-              </FormControl>
+              </Field>
 
-              <FormControl>
-                <FormLabel>Minimum Price</FormLabel>
+              <Field label="Minimum Price">
                 <Input
-                  type="number"
+                  type='number'
                   value={minPrice}
-                  onChange={(e) => setMinPrice(Number(e.target.value))}
+                  onChange={e => setMinPrice(Number(e.target.value))}
                   min={0}
                 />
-              </FormControl>
+              </Field>
 
-              <FormControl>
-                <FormLabel>Date</FormLabel>
+              <Field label="Date">
                 <Input
-                  type="date"
+                  type='date'
                   value={selectedDate.toISOString().split('T')[0]}
-                  onChange={(e) => setSelectedDate(new Date(e.target.value))}
+                  onChange={e => setSelectedDate(new Date(e.target.value))}
                 />
-              </FormControl>
+              </Field>
 
-              <FormControl display="flex" alignItems="center">
-                <FormLabel mb="0">Show only available items</FormLabel>
+              <HStack alignItems='center'>
                 <Switch
-                  isChecked={showOnlyAvailable}
-                  onChange={(e) => setShowOnlyAvailable(e.target.checked)}
-                />
-              </FormControl>
+                  checked={showOnlyAvailable}
+                  onCheckedChange={setShowOnlyAvailable}
+                >
+                  Show only available items
+                </Switch>
+              </HStack>
 
-              <FormControl>
-                <FormLabel>Tags</FormLabel>
+              <Field label="Tags">
                 <HStack spacing={2} mb={2}>
                   {selectedTags.map(tag => (
                     <Badge
                       key={tag}
-                      colorScheme="blue"
-                      cursor="pointer"
+                      colorScheme='blue'
+                      cursor='pointer'
                       onClick={() => removeTag(tag)}
                     >
                       {tag} ×
@@ -166,20 +158,20 @@ export function DeepLinkDemo() {
                   ))}
                 </HStack>
                 <HStack spacing={2}>
-                  <Button size="sm" onClick={() => addTag('electronic')}>
+                  <Button size='sm' onClick={() => addTag('electronic')}>
                     + Electronic
                   </Button>
-                  <Button size="sm" onClick={() => addTag('house')}>
+                  <Button size='sm' onClick={() => addTag('house')}>
                     + House
                   </Button>
-                  <Button size="sm" onClick={() => addTag('techno')}>
+                  <Button size='sm' onClick={() => addTag('techno')}>
                     + Techno
                   </Button>
-                  <Button size="sm" onClick={() => addTag('ambient')}>
+                  <Button size='sm' onClick={() => addTag('ambient')}>
                     + Ambient
                   </Button>
                 </HStack>
-              </FormControl>
+              </Field>
             </VStack>
           </CardBody>
         </Card>
@@ -187,72 +179,65 @@ export function DeepLinkDemo() {
         {/* Pagination */}
         <Card>
           <CardHeader>
-            <Heading size="md">Pagination State</Heading>
+            <Heading size='md'>Pagination State</Heading>
           </CardHeader>
           <CardBody>
-            <VStack spacing={4} align="stretch">
+            <VStack spacing={4} align='stretch'>
               <HStack spacing={4}>
-                <FormControl>
-                  <FormLabel>Page</FormLabel>
+                <Field label="Page">
                   <Input
-                    type="number"
+                    type='number'
                     value={pagination.page}
-                    onChange={(e) => setPagination({ page: Number(e.target.value) })}
+                    onChange={e => setPagination({ page: Number(e.target.value) })}
                     min={1}
                   />
-                </FormControl>
+                </Field>
 
-                <FormControl>
-                  <FormLabel>Items per page</FormLabel>
+                <Field label="Items per page">
                   <Select
                     value={pagination.limit}
-                    onChange={(e) => setPagination({ limit: Number(e.target.value) })}
+                    onChange={e => setPagination({ limit: Number(e.target.value) })}
                   >
                     <option value={5}>5</option>
                     <option value={10}>10</option>
                     <option value={25}>25</option>
                     <option value={50}>50</option>
                   </Select>
-                </FormControl>
+                </Field>
 
-                <FormControl>
-                  <FormLabel>Sort by</FormLabel>
+                <Field label="Sort by">
                   <Select
                     value={pagination.sortBy}
-                    onChange={(e) => setPagination({ sortBy: e.target.value })}
+                    onChange={e => setPagination({ sortBy: e.target.value })}
                   >
-                    <option value="name">Name</option>
-                    <option value="date">Date</option>
-                    <option value="price">Price</option>
-                    <option value="popularity">Popularity</option>
+                    <option value='name'>Name</option>
+                    <option value='date'>Date</option>
+                    <option value='price'>Price</option>
+                    <option value='popularity'>Popularity</option>
                   </Select>
-                </FormControl>
+                </Field>
 
-                <FormControl>
-                  <FormLabel>Order</FormLabel>
+                <Field label="Order">
                   <Select
                     value={pagination.sortOrder}
-                    onChange={(e) => setPagination({ sortOrder: e.target.value as 'asc' | 'desc' })}
+                    onChange={e => setPagination({ sortOrder: e.target.value as 'asc' | 'desc' })}
                   >
-                    <option value="asc">Ascending</option>
-                    <option value="desc">Descending</option>
+                    <option value='asc'>Ascending</option>
+                    <option value='desc'>Descending</option>
                   </Select>
-                </FormControl>
+                </Field>
               </HStack>
 
               <HStack spacing={2}>
                 <Button
-                  size="sm"
+                  size='sm'
                   onClick={() => setPagination({ page: Math.max(1, pagination.page - 1) })}
                   disabled={pagination.page <= 1}
                 >
                   Previous
                 </Button>
                 <Text>Page {pagination.page}</Text>
-                <Button
-                  size="sm"
-                  onClick={() => setPagination({ page: pagination.page + 1 })}
-                >
+                <Button size='sm' onClick={() => setPagination({ page: pagination.page + 1 })}>
                   Next
                 </Button>
               </HStack>
@@ -263,61 +248,60 @@ export function DeepLinkDemo() {
         {/* Event Filters */}
         <Card>
           <CardHeader>
-            <HStack justify="space-between">
-              <Heading size="md">Event Filters</Heading>
-              <Button size="sm" onClick={clearEventFilters} colorScheme="red" variant="outline">
+            <HStack justify='space-between'>
+              <Heading size='md'>Event Filters</Heading>
+              <Button size='sm' onClick={clearEventFilters} colorScheme='red' variant='outline'>
                 Clear Filters
               </Button>
             </HStack>
           </CardHeader>
           <CardBody>
-            <VStack spacing={4} align="stretch">
+            <VStack spacing={4} align='stretch'>
               <HStack spacing={4}>
-                <FormControl>
-                  <FormLabel>Venue</FormLabel>
+                <Field label="Venue">
                   <Input
                     value={eventFilters.venue}
-                    onChange={(e) => setEventFilters({ venue: e.target.value })}
-                    placeholder="Enter venue name"
+                    onChange={e => setEventFilters({ venue: e.target.value })}
+                    placeholder='Enter venue name'
                   />
-                </FormControl>
+                </Field>
 
-                <FormControl>
-                  <FormLabel>Genre</FormLabel>
+                <Field label="Genre">
                   <Select
                     value={eventFilters.genre}
-                    onChange={(e) => setEventFilters({ genre: e.target.value })}
+                    onChange={e => setEventFilters({ genre: e.target.value })}
                   >
-                    <option value="">All Genres</option>
-                    <option value="electronic">Electronic</option>
-                    <option value="house">House</option>
-                    <option value="techno">Techno</option>
-                    <option value="trance">Trance</option>
+                    <option value=''>All Genres</option>
+                    <option value='electronic'>Electronic</option>
+                    <option value='house'>House</option>
+                    <option value='techno'>Techno</option>
+                    <option value='trance'>Trance</option>
                   </Select>
-                </FormControl>
+                </Field>
 
-                <FormControl>
-                  <FormLabel>Date Range</FormLabel>
+                <Field label="Date Range">
                   <Select
                     value={eventFilters.dateRange}
-                    onChange={(e) => setEventFilters({ dateRange: e.target.value })}
+                    onChange={e => setEventFilters({ dateRange: e.target.value })}
                   >
-                    <option value="">All Dates</option>
-                    <option value="today">Today</option>
-                    <option value="week">This Week</option>
-                    <option value="month">This Month</option>
-                    <option value="year">This Year</option>
+                    <option value=''>All Dates</option>
+                    <option value='today'>Today</option>
+                    <option value='week'>This Week</option>
+                    <option value='month'>This Month</option>
+                    <option value='year'>This Year</option>
                   </Select>
-                </FormControl>
+                </Field>
               </HStack>
 
               <Box>
-                <Text fontWeight="medium" mb={2}>Price Range</Text>
+                <Text fontWeight='medium' mb={2}>
+                  Price Range
+                </Text>
                 <HStack spacing={2}>
                   {['0-25', '25-50', '50-100', '100+'].map(range => (
                     <Button
                       key={range}
-                      size="sm"
+                      size='sm'
                       variant={eventFilters.priceRange.includes(range) ? 'solid' : 'outline'}
                       colorScheme={eventFilters.priceRange.includes(range) ? 'blue' : 'gray'}
                       onClick={() => {
@@ -339,20 +323,24 @@ export function DeepLinkDemo() {
         {/* Current State Display */}
         <Card>
           <CardHeader>
-            <Heading size="md">Current State (JSON)</Heading>
+            <Heading size='md'>Current State (JSON)</Heading>
           </CardHeader>
           <CardBody>
-            <Code display="block" whiteSpace="pre" fontSize="sm" p={4}>
-              {JSON.stringify({
-                search: searchQuery,
-                category: selectedCategory,
-                minPrice,
-                showOnlyAvailable,
-                tags: selectedTags,
-                date: selectedDate.toISOString().split('T')[0],
-                pagination,
-                eventFilters
-              }, null, 2)}
+            <Code display='block' whiteSpace='pre' fontSize='sm' p={4}>
+              {JSON.stringify(
+                {
+                  search: searchQuery,
+                  category: selectedCategory,
+                  minPrice,
+                  showOnlyAvailable,
+                  tags: selectedTags,
+                  date: selectedDate.toISOString().split('T')[0],
+                  pagination,
+                  eventFilters,
+                },
+                null,
+                2
+              )}
             </Code>
           </CardBody>
         </Card>

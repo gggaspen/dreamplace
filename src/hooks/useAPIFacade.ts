@@ -1,11 +1,11 @@
 import { useRef, useEffect, useCallback } from 'react';
-import { 
+import {
   ContentFacade,
   IContentFacade,
   APIResponse,
   EventFilters,
   Pagination,
-  SearchFilters 
+  SearchFilters,
 } from '@/patterns/facade';
 
 /**
@@ -150,24 +150,27 @@ export function useAPIFacade() {
   }, []);
 
   // Error handling utility
-  const handleAPIResponse = useCallback(<T>(
-    response: APIResponse<T>,
-    onSuccess?: (data: T) => void,
-    onError?: (error: any) => void
-  ) => {
-    if (response.error) {
-      console.error('API Error:', response.error);
-      onError?.(response.error);
+  const handleAPIResponse = useCallback(
+    <T>(
+      response: APIResponse<T>,
+      onSuccess?: (data: T) => void,
+      onError?: (error: any) => void
+    ) => {
+      if (response.error) {
+        console.error('API Error:', response.error);
+        onError?.(response.error);
+        return null;
+      }
+
+      if (response.data) {
+        onSuccess?.(response.data);
+        return response.data;
+      }
+
       return null;
-    }
-
-    if (response.data) {
-      onSuccess?.(response.data);
-      return response.data;
-    }
-
-    return null;
-  }, []);
+    },
+    []
+  );
 
   return {
     // Content operations
@@ -179,15 +182,15 @@ export function useAPIFacade() {
     getCarousels,
     searchContent,
     getContentByTag,
-    
+
     // Batch operations
     getAllPageData,
-    
+
     // Content management
     createContent,
     updateContent,
     deleteContent,
-    
+
     // Facade management
     configureFacade,
     getFacadeConfiguration,
@@ -195,7 +198,7 @@ export function useAPIFacade() {
     getCacheStats,
     getHealthStatus,
     getMetrics,
-    
+
     // Utilities
     handleAPIResponse,
   };

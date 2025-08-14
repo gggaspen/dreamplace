@@ -1,6 +1,6 @@
 /**
  * GraphQL TypeScript Type Definitions
- * 
+ *
  * TypeScript interfaces and types generated from GraphQL schema.
  * These provide type safety for GraphQL operations.
  */

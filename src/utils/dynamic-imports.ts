@@ -1,6 +1,6 @@
 /**
  * Dynamic Import Utilities
- * 
+ *
  * Utilities for implementing code splitting with dynamic imports.
  * Provides type-safe lazy loading of components and modules.
  */
@@ -13,12 +13,12 @@ export function lazyLoad<T extends ComponentType<any>>(
   fallback?: ComponentType<any>
 ): T {
   const LazyComponent = lazy(factory) as T;
-  
+
   if (fallback) {
     // Add fallback display name for debugging
     LazyComponent.displayName = `Lazy(${factory.name || 'Component'})`;
   }
-  
+
   return LazyComponent;
 }
 
@@ -39,7 +39,7 @@ export function lazyLoadWithRetry<T extends ComponentType<any>>(
 ): T {
   return lazyLoad(() => {
     let retryCount = 0;
-    
+
     const tryLoad = async (): Promise<{ default: T }> => {
       try {
         return await factory();
@@ -52,15 +52,13 @@ export function lazyLoadWithRetry<T extends ComponentType<any>>(
         throw error;
       }
     };
-    
+
     return tryLoad();
   });
 }
 
 // Dynamic import for non-component modules
-export async function dynamicImport<T = any>(
-  moduleFactory: () => Promise<T>
-): Promise<T> {
+export async function dynamicImport<T = any>(moduleFactory: () => Promise<T>): Promise<T> {
   try {
     return await moduleFactory();
   } catch (error) {
@@ -76,10 +74,10 @@ export function conditionalImport<T extends ComponentType<any>>(
   fallback: T
 ): T {
   const shouldLoad = typeof condition === 'function' ? condition() : condition;
-  
+
   if (shouldLoad) {
     return lazyLoad(factory);
   }
-  
+
   return fallback;
 }

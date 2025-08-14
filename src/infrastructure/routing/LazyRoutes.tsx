@@ -5,29 +5,20 @@
 
 import React from 'react';
 import { createLazyComponent } from './LazyLoader';
-import { LoadingScreen } from '@/components/loading-screen/LoadingScreen';
+import { LoadingScreen } from '../../components/loading-screen/LoadingScreen';
 
 // Custom loading components for different sections
-const DashboardFallback = () => (
-  <LoadingScreen message="Loading dashboard..." />
-);
+const DashboardFallback = () => <LoadingScreen message='Loading dashboard...' />;
 
-const AdminFallback = () => (
-  <LoadingScreen message="Loading admin panel..." />
-);
+const AdminFallback = () => <LoadingScreen message='Loading admin panel...' />;
 
-const ArtistFallback = () => (
-  <LoadingScreen message="Loading artist dashboard..." />
-);
+const ArtistFallback = () => <LoadingScreen message='Loading artist dashboard...' />;
 
 // Lazy-loaded route components
 export const LazyRoutes = {
   // Authentication routes
-  Login: createLazyComponent(
-    () => import('@/app/login/page'),
-    { chunkName: 'auth-login' }
-  ),
-  
+  Login: createLazyComponent(() => import('../../app/login/page'), { chunkName: 'auth-login' }),
+
   // Register: createLazyComponent(
   //   () => import('@/components/auth/RegisterForm'),
   //   { chunkName: 'auth-register' }
@@ -39,13 +30,10 @@ export const LazyRoutes = {
   // ),
 
   // User routes
-  Dashboard: createLazyComponent(
-    () => import('@/app/dashboard/page'),
-    { 
-      fallback: DashboardFallback,
-      chunkName: 'user-dashboard' 
-    }
-  ),
+  Dashboard: createLazyComponent(() => import('../../app/dashboard/page'), {
+    fallback: DashboardFallback,
+    chunkName: 'user-dashboard',
+  }),
 
   // Profile: createLazyComponent(
   //   () => import('@/components/user/ProfilePage'),
@@ -58,13 +46,10 @@ export const LazyRoutes = {
   // ),
 
   // Admin routes
-  Admin: createLazyComponent(
-    () => import('@/app/admin/page'),
-    { 
-      fallback: AdminFallback,
-      chunkName: 'admin-dashboard' 
-    }
-  ),
+  Admin: createLazyComponent(() => import('../../app/admin/page'), {
+    fallback: AdminFallback,
+    chunkName: 'admin-dashboard',
+  }),
 
   // AdminUsers: createLazyComponent(
   //   () => import('@/components/admin/UserManagement'),
@@ -84,9 +69,9 @@ export const LazyRoutes = {
   // Artist routes
   // ArtistDashboard: createLazyComponent(
   //   () => import('@/components/artist/ArtistDashboard'),
-  //   { 
+  //   {
   //     fallback: ArtistFallback,
-  //     chunkName: 'artist-dashboard' 
+  //     chunkName: 'artist-dashboard'
   //   }
   // ),
 
@@ -122,10 +107,7 @@ export const LazyRoutes = {
   // ),
 
   // Demo and utility routes
-  Demo: createLazyComponent(
-    () => import('@/app/demo/page'),
-    { chunkName: 'demo' }
-  ),
+  Demo: createLazyComponent(() => import('../../app/demo/page'), { chunkName: 'demo' }),
 
   // Heavy components (charts, analytics, etc.)
   // Analytics: createLazyComponent(
@@ -142,10 +124,7 @@ export const LazyRoutes = {
 // Route groups for preloading strategies
 export const ROUTE_GROUPS = {
   // Critical routes - preload immediately
-  CRITICAL: [
-    LazyRoutes.Login,
-    LazyRoutes.Dashboard
-  ],
+  CRITICAL: [LazyRoutes.Login, LazyRoutes.Dashboard],
 
   // High priority routes - preload on user interaction
   HIGH_PRIORITY: [
@@ -173,7 +152,7 @@ export const ROUTE_GROUPS = {
   HEAVY: [
     // LazyRoutes.Analytics,
     // LazyRoutes.Reports
-  ]
+  ],
 } as const;
 
 // Preloading utilities
@@ -182,7 +161,7 @@ export class RoutePreloader {
 
   static async preloadRoute(routeComponent: React.LazyExoticComponent<any>): Promise<void> {
     const componentName = routeComponent.displayName || 'Unknown';
-    
+
     if (this.preloadedRoutes.has(componentName)) {
       return; // Already preloaded
     }
@@ -229,11 +208,7 @@ export class RoutePreloader {
 }
 
 // React component for route preloading
-export function RoutePreloadManager({ 
-  userRoles = [] 
-}: { 
-  userRoles?: string[] 
-}) {
+export function RoutePreloadManager({ userRoles = [] }: { userRoles?: string[] }) {
   React.useEffect(() => {
     // Preload critical routes on mount
     RoutePreloader.preloadCriticalRoutes();

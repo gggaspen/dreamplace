@@ -8,14 +8,14 @@ export interface AppState {
   isLoading: boolean;
   isMobileNavOpen: boolean;
   isDarkMode: boolean;
-  
+
   // User preferences
   hasSeenWelcomeMessage: boolean;
   preferredLanguage: string;
-  
+
   // Error state
   globalError: string | null;
-  
+
   // Cache invalidation
   lastDataRefresh: number;
 }
@@ -24,26 +24,26 @@ export interface AppState {
 export interface AppActions {
   // Loading actions
   setLoading: (loading: boolean) => void;
-  
+
   // Navigation actions
   toggleMobileNav: () => void;
   closeMobileNav: () => void;
-  
+
   // Theme actions
   toggleDarkMode: () => void;
   setDarkMode: (isDark: boolean) => void;
-  
+
   // User preference actions
   markWelcomeMessageSeen: () => void;
   setPreferredLanguage: (language: string) => void;
-  
+
   // Error actions
   setGlobalError: (error: string | null) => void;
   clearGlobalError: () => void;
-  
+
   // Cache actions
   refreshData: () => void;
-  
+
   // Reset actions
   resetAppState: () => void;
 }
@@ -67,69 +67,69 @@ export const useAppStore = create<AppStore>()(
     persist(
       immer((set, get) => ({
         ...initialState,
-        
+
         // Loading actions
         setLoading: (loading: boolean) =>
-          set((state) => {
+          set(state => {
             state.isLoading = loading;
           }),
-        
+
         // Navigation actions
         toggleMobileNav: () =>
-          set((state) => {
+          set(state => {
             state.isMobileNavOpen = !state.isMobileNavOpen;
           }),
-        
+
         closeMobileNav: () =>
-          set((state) => {
+          set(state => {
             state.isMobileNavOpen = false;
           }),
-        
+
         // Theme actions
         toggleDarkMode: () =>
-          set((state) => {
+          set(state => {
             state.isDarkMode = !state.isDarkMode;
           }),
-        
+
         setDarkMode: (isDark: boolean) =>
-          set((state) => {
+          set(state => {
             state.isDarkMode = isDark;
           }),
-        
+
         // User preference actions
         markWelcomeMessageSeen: () =>
-          set((state) => {
+          set(state => {
             state.hasSeenWelcomeMessage = true;
           }),
-        
+
         setPreferredLanguage: (language: string) =>
-          set((state) => {
+          set(state => {
             state.preferredLanguage = language;
           }),
-        
+
         // Error actions
         setGlobalError: (error: string | null) =>
-          set((state) => {
+          set(state => {
             state.globalError = error;
           }),
-        
+
         clearGlobalError: () =>
-          set((state) => {
+          set(state => {
             state.globalError = null;
           }),
-        
+
         // Cache actions
         refreshData: () =>
-          set((state) => {
+          set(state => {
             state.lastDataRefresh = Date.now();
           }),
-        
+
         // Reset actions
         resetAppState: () => set(() => initialState),
       })),
       {
         name: 'dreamplace-app-store',
-        partialize: (state) => ({
+        partialize: state => ({
           isDarkMode: state.isDarkMode,
           hasSeenWelcomeMessage: state.hasSeenWelcomeMessage,
           preferredLanguage: state.preferredLanguage,
@@ -143,11 +143,12 @@ export const useAppStore = create<AppStore>()(
 );
 
 // Selector hooks for common state slices
-export const useLoadingState = () => useAppStore((state) => state.isLoading);
-export const useMobileNavState = () => useAppStore((state) => state.isMobileNavOpen);
-export const useDarkModeState = () => useAppStore((state) => state.isDarkMode);
-export const useGlobalError = () => useAppStore((state) => state.globalError);
-export const usePreferences = () => useAppStore((state) => ({
-  language: state.preferredLanguage,
-  hasSeenWelcome: state.hasSeenWelcomeMessage,
-}));
+export const useLoadingState = () => useAppStore(state => state.isLoading);
+export const useMobileNavState = () => useAppStore(state => state.isMobileNavOpen);
+export const useDarkModeState = () => useAppStore(state => state.isDarkMode);
+export const useGlobalError = () => useAppStore(state => state.globalError);
+export const usePreferences = () =>
+  useAppStore(state => ({
+    language: state.preferredLanguage,
+    hasSeenWelcome: state.hasSeenWelcomeMessage,
+  }));

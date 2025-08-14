@@ -14,9 +14,9 @@ export default function DemoPage() {
   return (
     <Box>
       <PageHeader
-        title="Deep Linking Demo"
-        subtitle="URL State Management"
-        description="Experience how application state can be synchronized with URL parameters for shareable links and browser navigation."
+        title='Deep Linking Demo'
+        subtitle='URL State Management'
+        description='Experience how application state can be synchronized with URL parameters for shareable links and browser navigation.'
       />
       <DeepLinkDemo />
     </Box>

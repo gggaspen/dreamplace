@@ -10,5 +10,5 @@ export {
   type BodyProps,
   type LabelProps,
   type CodeProps,
-  type CaptionProps
+  type CaptionProps,
 } from './Typography';

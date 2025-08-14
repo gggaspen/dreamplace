@@ -16,7 +16,7 @@ export const eventKeys = {
 // Get all events
 export const useEvents = () => {
   const eventRepository = Container.get<IEventRepository>(SERVICE_TOKENS.EVENT_REPOSITORY);
-  
+
   return useQuery({
     queryKey: eventKeys.lists(),
     queryFn: () => eventRepository.getAllEvents(),
@@ -28,7 +28,7 @@ export const useEvents = () => {
 // Get active event
 export const useActiveEvent = () => {
   const eventRepository = Container.get<IEventRepository>(SERVICE_TOKENS.EVENT_REPOSITORY);
-  
+
   return useQuery({
     queryKey: eventKeys.active(),
     queryFn: () => eventRepository.getActiveEvent(),
@@ -40,7 +40,7 @@ export const useActiveEvent = () => {
 // Get event by ID
 export const useEvent = (id: string) => {
   const eventRepository = Container.get<IEventRepository>(SERVICE_TOKENS.EVENT_REPOSITORY);
-  
+
   return useQuery({
     queryKey: eventKeys.detail(id),
     queryFn: () => eventRepository.getEventById(id),
@@ -54,7 +54,7 @@ export const useEvent = (id: string) => {
 export const usePrefetchEvents = () => {
   const queryClient = useQueryClient();
   const eventRepository = Container.get<IEventRepository>(SERVICE_TOKENS.EVENT_REPOSITORY);
-  
+
   return () => {
     queryClient.prefetchQuery({
       queryKey: eventKeys.lists(),
@@ -67,7 +67,7 @@ export const usePrefetchEvents = () => {
 // Invalidate events cache
 export const useInvalidateEvents = () => {
   const queryClient = useQueryClient();
-  
+
   return () => {
     queryClient.invalidateQueries({ queryKey: eventKeys.all });
   };

@@ -28,8 +28,8 @@ export class ErrorObserver extends BaseObserver<ErrorEvent> {
   }
 
   async update(
-    data: ErrorEvent, 
-    eventType: string, 
+    data: ErrorEvent,
+    eventType: string,
     source: IObservable<ErrorEvent>
   ): Promise<void> {
     if (!this.isActive()) return;
@@ -42,7 +42,7 @@ export class ErrorObserver extends BaseObserver<ErrorEvent> {
 
     // Add to history
     this.errorHistory.push(errorWithMetadata);
-    
+
     // Maintain history size
     if (this.errorHistory.length > this.maxHistorySize) {
       this.errorHistory.shift();
@@ -77,7 +77,7 @@ export class ErrorObserver extends BaseObserver<ErrorEvent> {
 
   private logError(errorEvent: ErrorEvent & { timestamp: Date; id: string }): void {
     const { error, context, severity, component, action, timestamp, id } = errorEvent;
-    
+
     const severityEmoji = {
       low: '📝',
       medium: '⚠️',
@@ -145,19 +145,14 @@ export class ErrorObserver extends BaseObserver<ErrorEvent> {
     }
   }
 
-  private analyzeErrorPatterns(
-    errorEvent: ErrorEvent & { timestamp: Date; id: string }
-  ): void {
+  private analyzeErrorPatterns(errorEvent: ErrorEvent & { timestamp: Date; id: string }): void {
     const errorKey = this.getErrorKey(errorEvent.error);
     const errorCount = this.errorCounts.get(errorKey) || 0;
 
     // Check for repeated errors
     if (errorCount > 5) {
-      console.warn(
-        `🔁 Repeated error detected: ${errorKey}`,
-        `Occurred ${errorCount} times`
-      );
-      
+      console.warn(`🔁 Repeated error detected: ${errorKey}`, `Occurred ${errorCount} times`);
+
       // Escalate if it's becoming frequent
       if (errorCount > 20) {
         this.escalateError(errorEvent, `Frequent error: ${errorCount} occurrences`);
@@ -166,13 +161,11 @@ export class ErrorObserver extends BaseObserver<ErrorEvent> {
 
     // Check for error bursts (multiple errors in short time)
     const recentErrors = this.errorHistory.filter(
-      e => (Date.now() - e.timestamp.getTime()) < 60000 // Last minute
+      e => Date.now() - e.timestamp.getTime() < 60000 // Last minute
     );
 
     if (recentErrors.length > 10) {
-      console.warn(
-        `💥 Error burst detected: ${recentErrors.length} errors in the last minute`
-      );
+      console.warn(`💥 Error burst detected: ${recentErrors.length} errors in the last minute`);
       this.escalateError(errorEvent, `Error burst: ${recentErrors.length} errors/minute`);
     }
 
@@ -187,7 +180,7 @@ export class ErrorObserver extends BaseObserver<ErrorEvent> {
     reason: string
   ): void {
     console.error(`🚨 ESCALATED ERROR: ${reason}`, errorEvent);
-    
+
     // In a real application, this might:
     // - Send alerts to monitoring systems
     // - Notify development team
@@ -204,16 +197,22 @@ export class ErrorObserver extends BaseObserver<ErrorEvent> {
     recentErrorRate: number;
   } {
     const totalErrors = this.errorHistory.length;
-    
-    const errorsByContext = this.errorHistory.reduce((acc, event) => {
-      acc[event.context] = (acc[event.context] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
 
-    const errorsBySeverity = this.errorHistory.reduce((acc, event) => {
-      acc[event.severity] = (acc[event.severity] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const errorsByContext = this.errorHistory.reduce(
+      (acc, event) => {
+        acc[event.context] = (acc[event.context] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
+
+    const errorsBySeverity = this.errorHistory.reduce(
+      (acc, event) => {
+        acc[event.severity] = (acc[event.severity] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     const mostFrequentErrors = Array.from(this.errorCounts.entries())
       .map(([error, count]) => ({ error, count }))
@@ -221,10 +220,8 @@ export class ErrorObserver extends BaseObserver<ErrorEvent> {
       .slice(0, 10);
 
     // Calculate recent error rate (errors per minute in last 10 minutes)
-    const tenMinutesAgo = Date.now() - (10 * 60 * 1000);
-    const recentErrors = this.errorHistory.filter(
-      e => e.timestamp.getTime() > tenMinutesAgo
-    );
+    const tenMinutesAgo = Date.now() - 10 * 60 * 1000;
+    const recentErrors = this.errorHistory.filter(e => e.timestamp.getTime() > tenMinutesAgo);
     const recentErrorRate = recentErrors.length / 10; // errors per minute
 
     return {

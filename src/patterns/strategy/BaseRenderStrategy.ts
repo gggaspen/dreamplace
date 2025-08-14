@@ -93,7 +93,7 @@ export abstract class BaseRenderStrategy implements IRenderStrategy {
       reducedMotion: context.user.accessibility?.reducedMotion,
       highContrast: context.user.accessibility?.highContrast,
     };
-    
+
     const str = JSON.stringify(relevantContext);
     return this.simpleHash(str);
   }
@@ -102,7 +102,7 @@ export abstract class BaseRenderStrategy implements IRenderStrategy {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
       const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = (hash << 5) - hash + char;
       hash = hash & hash; // Convert to 32-bit integer
     }
     return Math.abs(hash).toString(36);

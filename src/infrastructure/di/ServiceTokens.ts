@@ -27,10 +27,10 @@ export const SERVICE_TOKENS = {
   LOGIN_USE_CASE: Symbol('LoginUseCase'),
 
   // Services
-  APP_SERVICE: Symbol('AppService')
+  APP_SERVICE: Symbol('AppService'),
 } as const;
 
-export type ServiceToken = typeof SERVICE_TOKENS[keyof typeof SERVICE_TOKENS];
+export type ServiceToken = (typeof SERVICE_TOKENS)[keyof typeof SERVICE_TOKENS];
 
 // Legacy export for backward compatibility
 export const ServiceTokens = SERVICE_TOKENS;

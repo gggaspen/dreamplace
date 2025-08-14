@@ -59,7 +59,7 @@ export class PerformanceRenderStrategy extends BaseRenderStrategy {
   }
 
   private async renderOptimized(
-    data: RenderData, 
+    data: RenderData,
     context: RenderContext
   ): Promise<React.ReactElement> {
     const { content, props = {} } = data;
@@ -67,17 +67,17 @@ export class PerformanceRenderStrategy extends BaseRenderStrategy {
 
     // Apply performance optimizations based on content type
     const contentType = this.detectContentType(content);
-    
+
     switch (contentType) {
       case ContentType.IMAGE:
         return this.renderOptimizedImage(content, props, context, optimizations);
-      
+
       case ContentType.LIST:
         return this.renderOptimizedList(content, props, context, optimizations);
-      
+
       case ContentType.CAROUSEL:
         return this.renderOptimizedCarousel(content, props, context, optimizations);
-      
+
       default:
         return this.renderOptimizedGeneric(content, props, context, optimizations);
     }
@@ -115,7 +115,7 @@ export class PerformanceRenderStrategy extends BaseRenderStrategy {
     optimizations: string[]
   ): React.ReactElement {
     const items = Array.isArray(content.items) ? content.items : [];
-    
+
     // Limit items for performance
     const maxItems = this.isLowEndDevice(context) ? 20 : 50;
     const limitedItems = items.slice(0, maxItems);
@@ -156,16 +156,16 @@ export class PerformanceRenderStrategy extends BaseRenderStrategy {
     };
 
     const items = Array.isArray(content.items) ? content.items : [];
-    
+
     return React.createElement(
       'div',
       carouselProps,
       items.map((item: any, index: number) =>
         React.createElement(
           'div',
-          { 
+          {
             key: index,
-            style: { flexShrink: 0, minWidth: this.isMobile(context) ? '250px' : '300px' }
+            style: { flexShrink: 0, minWidth: this.isMobile(context) ? '250px' : '300px' },
           },
           String(item.title || item.name || item)
         )
@@ -180,9 +180,10 @@ export class PerformanceRenderStrategy extends BaseRenderStrategy {
     optimizations: string[]
   ): React.ReactElement {
     // Simple text rendering for unknown content types
-    const textContent = typeof content === 'string' 
-      ? content 
-      : content?.text || content?.title || JSON.stringify(content);
+    const textContent =
+      typeof content === 'string'
+        ? content
+        : content?.text || content?.title || JSON.stringify(content);
 
     return React.createElement(
       'div',
@@ -217,10 +218,7 @@ export class PerformanceRenderStrategy extends BaseRenderStrategy {
     return ContentType.TEXT;
   }
 
-  private getAppliedOptimizations(
-    data: RenderData, 
-    context: RenderContext
-  ): string[] {
+  private getAppliedOptimizations(data: RenderData, context: RenderContext): string[] {
     const optimizations: string[] = [];
 
     if (this.isLowEndDevice(context)) {

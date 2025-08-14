@@ -2,7 +2,7 @@
 
 /**
  * Home Presentation Component
- * 
+ *
  * Pure presentational component that handles only rendering.
  * Receives all data through props and has no business logic.
  */
@@ -10,12 +10,12 @@
 import React, { Suspense } from 'react';
 import Hero from '@/app/pages/hero/Hero';
 import { HomeData } from '@/components/containers/HomeContainer';
-import { 
-  LazyCarousel, 
-  LazyContact, 
-  LazyFooter, 
-  LazyPressCarousel, 
-  LazyResident 
+import {
+  LazyCarousel,
+  LazyContact,
+  LazyFooter,
+  LazyPressCarousel,
+  LazyResident,
 } from '@/components/lazy';
 import LoadingScreen from '@/components/loading-screen/LoadingScreen';
 

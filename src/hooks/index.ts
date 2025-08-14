@@ -1,6 +1,6 @@
 /**
  * Custom Hooks Index
- * 
+ *
  * Barrel export for all custom business logic hooks
  */
 

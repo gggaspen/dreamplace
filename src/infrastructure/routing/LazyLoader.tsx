@@ -6,8 +6,8 @@
 'use client';
 
 import React, { ComponentType, LazyExoticComponent, Suspense } from 'react';
-import { Box, Spinner, Text, VStack, Button, Alert, AlertIcon } from '@chakra-ui/react';
-import { LoadingScreen } from '@/components/loading-screen/LoadingScreen';
+import { Box, Spinner, Text, VStack, Button, Alert } from '@chakra-ui/react';
+import { LoadingScreen } from '../../components/loading-screen/LoadingScreen';
 
 export interface LazyLoaderProps {
   children: React.ReactNode;
@@ -24,16 +24,14 @@ export interface LazyComponentOptions {
 /**
  * Wrapper component for lazy-loaded routes with error boundaries
  */
-export function LazyLoader({ 
-  children, 
+export function LazyLoader({
+  children,
   fallback: FallbackComponent = DefaultFallback,
-  error: ErrorComponent = DefaultErrorBoundary
+  error: ErrorComponent = DefaultErrorBoundary,
 }: LazyLoaderProps) {
   return (
     <Suspense fallback={<FallbackComponent />}>
-      <ErrorBoundary ErrorComponent={ErrorComponent}>
-        {children}
-      </ErrorBoundary>
+      <ErrorBoundary ErrorComponent={ErrorComponent}>{children}</ErrorBoundary>
     </Suspense>
   );
 }
@@ -42,8 +40,8 @@ export function LazyLoader({
  * Error boundary for lazy-loaded components
  */
 class ErrorBoundary extends React.Component<
-  { 
-    children: React.ReactNode; 
+  {
+    children: React.ReactNode;
     ErrorComponent: React.ComponentType<{ error: Error; retry: () => void }>;
   },
   { hasError: boolean; error?: Error }
@@ -64,7 +62,7 @@ class ErrorBoundary extends React.Component<
   render() {
     if (this.state.hasError && this.state.error) {
       return (
-        <this.props.ErrorComponent 
+        <this.props.ErrorComponent
           error={this.state.error}
           retry={() => this.setState({ hasError: false, error: undefined })}
         />
@@ -80,16 +78,10 @@ class ErrorBoundary extends React.Component<
  */
 function DefaultFallback() {
   return (
-    <Box 
-      minH="400px" 
-      display="flex" 
-      alignItems="center" 
-      justifyContent="center"
-      bg="gray.50"
-    >
+    <Box minH='400px' display='flex' alignItems='center' justifyContent='center' bg='gray.50'>
       <VStack spacing={4}>
-        <Spinner size="xl" color="blue.500" thickness="4px" />
-        <Text color="gray.600">Loading...</Text>
+        <Spinner size='xl' color='blue.500' thickness='4px' />
+        <Text color='gray.600'>Loading...</Text>
       </VStack>
     </Box>
   );
@@ -100,17 +92,16 @@ function DefaultFallback() {
  */
 function DefaultErrorBoundary({ error, retry }: { error: Error; retry: () => void }) {
   return (
-    <Box p={8} textAlign="center">
-      <Alert status="error" flexDirection="column" alignItems="center" p={6}>
-        <AlertIcon boxSize="40px" mr={0} />
+    <Box p={8} textAlign='center'>
+      <Alert status='error' flexDirection='column' alignItems='center' p={6}>
         <VStack spacing={4} mt={4}>
-          <Text fontSize="lg" fontWeight="bold">
-            Failed to load component
+          <Text fontSize='lg' fontWeight='bold' color='red.500'>
+            ⚠️ Failed to load component
           </Text>
-          <Text color="gray.600" fontSize="sm">
+          <Text color='gray.600' fontSize='sm'>
             {error.message || 'An unexpected error occurred'}
           </Text>
-          <Button onClick={retry} colorScheme="blue" size="sm">
+          <Button onClick={retry} colorScheme='blue' size='sm'>
             Try Again
           </Button>
         </VStack>
@@ -129,10 +120,7 @@ export function createLazyComponent<P extends object>(
   const LazyComponent = React.lazy(importFn);
 
   const WrappedComponent = React.forwardRef<any, P>((props, ref) => (
-    <LazyLoader 
-      fallback={options.fallback}
-      error={options.error}
-    >
+    <LazyLoader fallback={options.fallback} error={options.error}>
       <LazyComponent {...props} ref={ref} />
     </LazyLoader>
   ));
@@ -159,32 +147,26 @@ export function preloadComponent<P>(
 /**
  * Component for progressive loading with skeleton
  */
-export function ProgressiveLoader({ 
-  children, 
-  skeleton 
-}: { 
-  children: React.ReactNode; 
+export function ProgressiveLoader({
+  children,
+  skeleton,
+}: {
+  children: React.ReactNode;
   skeleton?: React.ReactNode;
 }) {
-  return (
-    <Suspense fallback={skeleton || <DefaultFallback />}>
-      {children}
-    </Suspense>
-  );
+  return <Suspense fallback={skeleton || <DefaultFallback />}>{children}</Suspense>;
 }
 
 /**
  * Hook for preloading components on hover/focus
  */
-export function usePreloadOnHover<P>(
-  lazyComponent: LazyExoticComponent<ComponentType<P>>
-) {
+export function usePreloadOnHover<P>(lazyComponent: LazyExoticComponent<ComponentType<P>>) {
   const preload = React.useCallback(() => {
     preloadComponent(lazyComponent);
   }, [lazyComponent]);
 
   return {
     onMouseEnter: preload,
-    onFocus: preload
+    onFocus: preload,
   };
 }

@@ -1,6 +1,6 @@
 /**
  * Strategy Pattern Implementation for Different Rendering Modes
- * 
+ *
  * The Strategy pattern defines a family of algorithms, encapsulates each one,
  * and makes them interchangeable. This allows the algorithm to vary independently
  * from clients that use it.
@@ -70,17 +70,17 @@ export enum RenderMode {
   PERFORMANCE = 'performance',
   BALANCED = 'balanced',
   QUALITY = 'quality',
-  
+
   // Device-specific modes
   MOBILE = 'mobile',
   TABLET = 'tablet',
   DESKTOP = 'desktop',
-  
+
   // Accessibility modes
   ACCESSIBLE = 'accessible',
   HIGH_CONTRAST = 'high_contrast',
   REDUCED_MOTION = 'reduced_motion',
-  
+
   // Feature modes
   OFFLINE = 'offline',
   LOW_BANDWIDTH = 'low_bandwidth',

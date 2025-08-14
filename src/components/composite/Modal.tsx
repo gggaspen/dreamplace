@@ -1,6 +1,6 @@
 /**
  * Modal Composition Components
- * 
+ *
  * Composable modal components that provide flexible modal structures.
  * Each component can be used independently to create custom modal layouts.
  */
@@ -18,7 +18,7 @@ import {
   Button,
   Flex,
   Text,
-  BoxProps
+  BoxProps,
 } from '@chakra-ui/react';
 
 // Base modal wrapper
@@ -27,17 +27,11 @@ interface ModalProps extends Omit<ChakraModalProps, 'children'> {
   overlay?: boolean;
 }
 
-export const Modal: React.FC<ModalProps> = ({ 
-  children, 
-  overlay = true,
-  ...props 
-}) => {
+export const Modal: React.FC<ModalProps> = ({ children, overlay = true, ...props }) => {
   return (
     <ChakraModal {...props}>
       {overlay && <ModalOverlay />}
-      <ModalContent>
-        {children}
-      </ModalContent>
+      <ModalContent>{children}</ModalContent>
     </ChakraModal>
   );
 };
@@ -48,10 +42,10 @@ interface ModalHeaderCompProps extends BoxProps {
   showCloseButton?: boolean;
 }
 
-export const ModalHeaderComp: React.FC<ModalHeaderCompProps> = ({ 
-  children, 
+export const ModalHeaderComp: React.FC<ModalHeaderCompProps> = ({
+  children,
   showCloseButton = true,
-  ...props 
+  ...props
 }) => {
   return (
     <ModalHeader {...props}>
@@ -66,15 +60,8 @@ interface ModalBodyCompProps extends BoxProps {
   children: ReactNode;
 }
 
-export const ModalBodyComp: React.FC<ModalBodyCompProps> = ({ 
-  children, 
-  ...props 
-}) => {
-  return (
-    <ModalBody {...props}>
-      {children}
-    </ModalBody>
-  );
+export const ModalBodyComp: React.FC<ModalBodyCompProps> = ({ children, ...props }) => {
+  return <ModalBody {...props}>{children}</ModalBody>;
 };
 
 // Modal footer component
@@ -82,15 +69,8 @@ interface ModalFooterCompProps extends BoxProps {
   children: ReactNode;
 }
 
-export const ModalFooterComp: React.FC<ModalFooterCompProps> = ({ 
-  children, 
-  ...props 
-}) => {
-  return (
-    <ModalFooter {...props}>
-      {children}
-    </ModalFooter>
-  );
+export const ModalFooterComp: React.FC<ModalFooterCompProps> = ({ children, ...props }) => {
+  return <ModalFooter {...props}>{children}</ModalFooter>;
 };
 
 // Modal actions component (preset action buttons)
@@ -116,13 +96,9 @@ export const ModalActions: React.FC<ModalActionsProps> = ({
   disabled = false,
 }) => {
   return (
-    <Flex gap={3} justify="flex-end">
+    <Flex gap={3} justify='flex-end'>
       {onCancel && (
-        <Button
-          variant={cancelVariant}
-          onClick={onCancel}
-          disabled={isLoading || disabled}
-        >
+        <Button variant={cancelVariant} onClick={onCancel} disabled={isLoading || disabled}>
           {cancelText}
         </Button>
       )}
@@ -146,26 +122,18 @@ interface ModalTitleProps {
   level?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
-export const ModalTitle: React.FC<ModalTitleProps> = ({ 
-  children, 
-  level = 3 
-}) => {
+export const ModalTitle: React.FC<ModalTitleProps> = ({ children, level = 3 }) => {
   const sizeMap = {
     1: 'xl',
     2: 'lg',
     3: 'md',
     4: 'sm',
     5: 'sm',
-    6: 'xs'
+    6: 'xs',
   } as const;
 
   return (
-    <Text
-      as={`h${level}`}
-      fontSize={sizeMap[level]}
-      fontWeight="semibold"
-      lineHeight="tight"
-    >
+    <Text as={`h${level}`} fontSize={sizeMap[level]} fontWeight='semibold' lineHeight='tight'>
       {children}
     </Text>
   );

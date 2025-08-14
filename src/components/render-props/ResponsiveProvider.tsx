@@ -1,6 +1,6 @@
 /**
  * ResponsiveProvider Render Props Component
- * 
+ *
  * Provides responsive state and window dimensions to child components
  * through the render props pattern.
  */

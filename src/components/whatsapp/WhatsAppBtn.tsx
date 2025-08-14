@@ -1,6 +1,6 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Text } from "@chakra-ui/react";
+import Image from 'next/image';
+import Link from 'next/link';
+import { Text } from '@chakra-ui/react';
 
 export default function WhatsAppBtn({
   text,
@@ -14,21 +14,21 @@ export default function WhatsAppBtn({
   return (
     <Link
       href={`https://wa.me/${numero_telefono}?text=${mensaje_default}`}
-      target="_blank"
-      rel="noopener noreferrer"
+      target='_blank'
+      rel='noopener noreferrer'
       style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       {text ? (
         <Text fontWeight={600}>{text}</Text>
       ) : (
         <Image
-          src="/img/icon/whatsapp.png"
-          style={{ margin: "20px" }}
-          alt="whatsapp"
+          src='/img/icon/whatsapp.png'
+          style={{ margin: '20px' }}
+          alt='whatsapp'
           width={30}
           height={30}
           priority

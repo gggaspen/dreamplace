@@ -15,25 +15,44 @@ export interface SanitizationOptions {
 
 export class InputSanitizer {
   private static readonly DEFAULT_ALLOWED_TAGS = [
-    'p', 'br', 'strong', 'em', 'u', 'ol', 'ul', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-    'blockquote', 'code', 'pre', 'a', 'img'
+    'p',
+    'br',
+    'strong',
+    'em',
+    'u',
+    'ol',
+    'ul',
+    'li',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'blockquote',
+    'code',
+    'pre',
+    'a',
+    'img',
   ];
 
   private static readonly DEFAULT_ALLOWED_ATTRIBUTES = [
-    'href', 'src', 'alt', 'title', 'class', 'id', 'target', 'rel'
+    'href',
+    'src',
+    'alt',
+    'title',
+    'class',
+    'id',
+    'target',
+    'rel',
   ];
 
-  private static readonly DEFAULT_ALLOWED_SCHEMES = [
-    'http', 'https', 'mailto', 'tel'
-  ];
+  private static readonly DEFAULT_ALLOWED_SCHEMES = ['http', 'https', 'mailto', 'tel'];
 
   /**
    * Sanitize HTML content to prevent XSS attacks
    */
-  static sanitizeHtml(
-    input: string,
-    options: SanitizationOptions = {}
-  ): string {
+  static sanitizeHtml(input: string, options: SanitizationOptions = {}): string {
     if (!input || typeof input !== 'string') {
       return '';
     }
@@ -42,7 +61,7 @@ export class InputSanitizer {
       allowedTags = this.DEFAULT_ALLOWED_TAGS,
       allowedAttributes = this.DEFAULT_ALLOWED_ATTRIBUTES,
       allowedSchemes = this.DEFAULT_ALLOWED_SCHEMES,
-      maxLength
+      maxLength,
     } = options;
 
     // Truncate if max length specified
@@ -59,8 +78,29 @@ export class InputSanitizer {
       RETURN_DOM_IMPORT: false,
       SANITIZE_DOM: true,
       FORBID_CONTENTS: ['script', 'style'],
-      FORBID_TAGS: ['script', 'style', 'iframe', 'object', 'embed', 'form', 'input', 'textarea', 'select', 'button'],
-      FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover', 'onfocus', 'onblur', 'onkeypress', 'onkeydown', 'onkeyup']
+      FORBID_TAGS: [
+        'script',
+        'style',
+        'iframe',
+        'object',
+        'embed',
+        'form',
+        'input',
+        'textarea',
+        'select',
+        'button',
+      ],
+      FORBID_ATTR: [
+        'onerror',
+        'onload',
+        'onclick',
+        'onmouseover',
+        'onfocus',
+        'onblur',
+        'onkeypress',
+        'onkeydown',
+        'onkeyup',
+      ],
     };
 
     return DOMPurify.sanitize(sanitizedInput, config);
@@ -76,13 +116,13 @@ export class InputSanitizer {
 
     // Remove all HTML tags
     let sanitized = input.replace(/<[^>]*>/g, '');
-    
+
     // Decode HTML entities
     sanitized = this.decodeHtmlEntities(sanitized);
-    
+
     // Trim whitespace
     sanitized = sanitized.trim();
-    
+
     // Truncate if max length specified
     if (maxLength && sanitized.length > maxLength) {
       sanitized = sanitized.slice(0, maxLength).trim() + '...';
@@ -100,12 +140,21 @@ export class InputSanitizer {
     }
 
     const url = input.trim().toLowerCase();
-    
+
     // Block dangerous schemes
     const dangerousSchemes = [
-      'javascript:', 'data:', 'vbscript:', 'file:', 'about:',
-      'chrome:', 'chrome-extension:', 'ms-help:', 'ms-its:', 'mhtml:',
-      'livescript:', 'mocha:'
+      'javascript:',
+      'data:',
+      'vbscript:',
+      'file:',
+      'about:',
+      'chrome:',
+      'chrome-extension:',
+      'ms-help:',
+      'ms-its:',
+      'mhtml:',
+      'livescript:',
+      'mocha:',
     ];
 
     if (dangerousSchemes.some(scheme => url.startsWith(scheme))) {
@@ -117,7 +166,12 @@ export class InputSanitizer {
       return input.trim();
     }
 
-    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('mailto:') || url.startsWith('tel:')) {
+    if (
+      url.startsWith('http://') ||
+      url.startsWith('https://') ||
+      url.startsWith('mailto:') ||
+      url.startsWith('tel:')
+    ) {
       return input.trim();
     }
 
@@ -139,7 +193,7 @@ export class InputSanitizer {
 
     const email = input.trim().toLowerCase();
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    
+
     return emailRegex.test(email) ? email : '';
   }
 
@@ -153,10 +207,10 @@ export class InputSanitizer {
 
     // Remove all non-digit characters except + and -
     const phone = input.replace(/[^\d+\-\s()]/g, '');
-    
+
     // Basic phone number validation (minimum 7 digits)
     const digitCount = phone.replace(/[^\d]/g, '').length;
-    
+
     return digitCount >= 7 && digitCount <= 15 ? phone.trim() : '';
   }
 
@@ -170,13 +224,13 @@ export class InputSanitizer {
 
     // Remove directory traversal patterns
     let filename = input.replace(/\.\./g, '');
-    
+
     // Remove path separators
     filename = filename.replace(/[\/\\]/g, '');
-    
+
     // Remove dangerous characters
     filename = filename.replace(/[<>:"|?*]/g, '');
-    
+
     // Limit length
     if (filename.length > 255) {
       const ext = filename.split('.').pop();
@@ -197,7 +251,7 @@ export class InputSanitizer {
 
     try {
       const parsed = JSON.parse(input);
-      
+
       // Recursively sanitize string values in the object
       return this.deepSanitizeObject(parsed);
     } catch {
@@ -246,10 +300,10 @@ export class InputSanitizer {
       '&#x27;': "'",
       '&#x2F;': '/',
       '&#39;': "'",
-      '&#47;': '/'
+      '&#47;': '/',
     };
 
-    return input.replace(/&[#\w]+;/g, (entity) => entities[entity] || entity);
+    return input.replace(/&[#\w]+;/g, entity => entities[entity] || entity);
   }
 
   /**
@@ -270,7 +324,7 @@ export class InputSanitizer {
       /<form\b[^<]*(?:(?!<\/form>)<[^<]*)*<\/form>/gi,
       /expression\s*\(/gi,
       /url\s*\(\s*javascript:/gi,
-      /@import\s+['"]/gi
+      /@import\s+['"]/gi,
     ];
 
     return xssPatterns.some(pattern => pattern.test(input));

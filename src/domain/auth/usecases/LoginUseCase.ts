@@ -32,44 +32,43 @@ export class LoginUseCase {
       if (!this.validateInput(input)) {
         return {
           success: false,
-          error: 'Invalid email or password format'
+          error: 'Invalid email or password format',
         };
       }
 
       // Attempt login
       const credentials: LoginCredentials = {
         email: input.email.toLowerCase().trim(),
-        password: input.password
+        password: input.password,
       };
 
       const session = await this.authRepository.login(credentials);
 
-      this.logger.info('User login successful', { 
+      this.logger.info('User login successful', {
         userId: session.user.id,
-        email: session.user.email 
+        email: session.user.email,
       });
 
       return {
         success: true,
-        session
+        session,
       };
-
     } catch (error) {
-      this.logger.error('Login failed', { 
+      this.logger.error('Login failed', {
         email: input.email,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
 
       return {
         success: false,
-        error: this.getErrorMessage(error)
+        error: this.getErrorMessage(error),
       };
     }
   }
 
   private validateInput(input: LoginUseCaseInput): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
     return (
       typeof input.email === 'string' &&
       emailRegex.test(input.email) &&

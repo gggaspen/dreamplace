@@ -14,7 +14,7 @@ export class ContactInfoMapper {
       whatsappLink: contactInfo.getWhatsAppLink(),
       formattedWhatsApp: contactInfo.getFormattedWhatsApp(),
       createdAt: contactInfo.createdAt.toISOString(),
-      updatedAt: contactInfo.updatedAt.toISOString()
+      updatedAt: contactInfo.updatedAt.toISOString(),
     };
   }
 
@@ -26,7 +26,7 @@ export class ContactInfoMapper {
       whatsapp: dto.whatsapp,
       instagram: new Url(dto.instagram),
       createdAt: new Date(dto.createdAt),
-      updatedAt: new Date(dto.updatedAt)
+      updatedAt: new Date(dto.updatedAt),
     };
 
     return new ContactInfo(props);

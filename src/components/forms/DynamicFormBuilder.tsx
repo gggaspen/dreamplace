@@ -1,6 +1,6 @@
 /**
  * Dynamic Form Builder Component
- * 
+ *
  * A flexible form builder that generates forms from configuration objects.
  * Supports various field types, validation, conditional logic, and custom layouts.
  */
@@ -35,17 +35,17 @@ import {
 import { createDynamicFormSchema } from './schemas';
 
 // Field types
-export type FieldType = 
-  | 'text' 
-  | 'email' 
-  | 'password' 
-  | 'url' 
-  | 'tel' 
-  | 'number' 
-  | 'textarea' 
-  | 'select' 
-  | 'checkbox' 
-  | 'switch' 
+export type FieldType =
+  | 'text'
+  | 'email'
+  | 'password'
+  | 'url'
+  | 'tel'
+  | 'number'
+  | 'textarea'
+  | 'select'
+  | 'checkbox'
+  | 'switch'
   | 'radio'
   | 'divider'
   | 'heading'
@@ -54,7 +54,14 @@ export type FieldType =
 // Conditional logic
 export interface ConditionalLogic {
   field: string;
-  operator: 'equals' | 'not_equals' | 'contains' | 'greater_than' | 'less_than' | 'is_empty' | 'is_not_empty';
+  operator:
+    | 'equals'
+    | 'not_equals'
+    | 'contains'
+    | 'greater_than'
+    | 'less_than'
+    | 'is_empty'
+    | 'is_not_empty';
   value: any;
 }
 
@@ -68,7 +75,7 @@ export interface FieldConfig {
   helperText?: string;
   isRequired?: boolean;
   isDisabled?: boolean;
-  
+
   // Field-specific props
   options?: Array<{ value: string; label: string; disabled?: boolean }>;
   rows?: number;
@@ -79,12 +86,12 @@ export interface FieldConfig {
   direction?: 'row' | 'column';
   colorScheme?: string;
   size?: 'sm' | 'md' | 'lg';
-  
+
   // Layout props
   gridColumn?: string;
   gridRow?: string;
   width?: string | number;
-  
+
   // Validation
   validation?: {
     minLength?: number;
@@ -92,10 +99,10 @@ export interface FieldConfig {
     pattern?: string;
     custom?: (value: any) => string | null;
   };
-  
+
   // Conditional logic
   showIf?: ConditionalLogic[];
-  
+
   // Content for non-input fields
   content?: string;
   level?: 1 | 2 | 3 | 4 | 5 | 6;
@@ -156,7 +163,7 @@ export function DynamicFormBuilder({
         }
 
         let fieldType: 'string' | 'number' | 'boolean' | 'email' | 'phone' | 'url' = 'string';
-        
+
         switch (field.type) {
           case 'email':
             fieldType = 'email';
@@ -194,7 +201,7 @@ export function DynamicFormBuilder({
   // Check conditional logic
   const checkCondition = (condition: ConditionalLogic, formData: FieldValues): boolean => {
     const fieldValue = formData[condition.field];
-    
+
     switch (condition.operator) {
       case 'equals':
         return fieldValue === condition.value;
@@ -220,7 +227,7 @@ export function DynamicFormBuilder({
     if (!field.showIf || field.showIf.length === 0) {
       return true;
     }
-    
+
     return field.showIf.every(condition => checkCondition(condition, formData));
   };
 
@@ -245,32 +252,13 @@ export function DynamicFormBuilder({
       case 'password':
       case 'url':
       case 'tel':
-        return (
-          <InputField
-            key={field.id}
-            {...commonProps}
-            type={field.type}
-            size={field.size}
-          />
-        );
+        return <InputField key={field.id} {...commonProps} type={field.type} size={field.size} />;
 
       case 'textarea':
-        return (
-          <TextareaField
-            key={field.id}
-            {...commonProps}
-            rows={field.rows}
-          />
-        );
+        return <TextareaField key={field.id} {...commonProps} rows={field.rows} />;
 
       case 'select':
-        return (
-          <SelectField
-            key={field.id}
-            {...commonProps}
-            options={field.options || []}
-          />
-        );
+        return <SelectField key={field.id} {...commonProps} options={field.options || []} />;
 
       case 'number':
         return (
@@ -330,7 +318,7 @@ export function DynamicFormBuilder({
 
       case 'text-block':
         return (
-          <Text key={field.id} color="gray.600">
+          <Text key={field.id} color='gray.600'>
             {field.content}
           </Text>
         );
@@ -343,39 +331,40 @@ export function DynamicFormBuilder({
   // Render section
   const renderSection = (section: SectionConfig, formData: FieldValues) => {
     const visibleFields = section.fields.filter(field => shouldShowField(field, formData));
-    
+
     if (visibleFields.length === 0) {
       return null;
     }
 
-    const sectionContent = section.layout === 'grid' ? (
-      <Grid templateColumns={`repeat(${section.columns || 2}, 1fr)`} gap={6}>
-        {section.fields.map(field => (
-          <GridItem
-            key={field.id}
-            gridColumn={field.gridColumn}
-            gridRow={field.gridRow}
-            width={field.width}
-          >
-            {renderField(field, formData)}
-          </GridItem>
-        ))}
-      </Grid>
-    ) : (
-      <VStack spacing={4} align="stretch">
-        {section.fields.map(field => renderField(field, formData))}
-      </VStack>
-    );
+    const sectionContent =
+      section.layout === 'grid' ? (
+        <Grid templateColumns={`repeat(${section.columns || 2}, 1fr)`} gap={6}>
+          {section.fields.map(field => (
+            <GridItem
+              key={field.id}
+              gridColumn={field.gridColumn}
+              gridRow={field.gridRow}
+              width={field.width}
+            >
+              {renderField(field, formData)}
+            </GridItem>
+          ))}
+        </Grid>
+      ) : (
+        <VStack spacing={4} align='stretch'>
+          {section.fields.map(field => renderField(field, formData))}
+        </VStack>
+      );
 
     return (
       <Box key={section.id}>
         {section.title && (
-          <Heading size="md" mb={2}>
+          <Heading size='md' mb={2}>
             {section.title}
           </Heading>
         )}
         {section.description && (
-          <Text color="gray.600" mb={4}>
+          <Text color='gray.600' mb={4}>
             {section.description}
           </Text>
         )}
@@ -397,16 +386,12 @@ export function DynamicFormBuilder({
     >
       {({ watch }) => {
         const formData = watch();
-        
+
         return (
-          <VStack spacing={8} align="stretch">
-            {config.title && (
-              <Heading size="lg">{config.title}</Heading>
-            )}
-            {config.description && (
-              <Text color="gray.600">{config.description}</Text>
-            )}
-            
+          <VStack spacing={8} align='stretch'>
+            {config.title && <Heading size='lg'>{config.title}</Heading>}
+            {config.description && <Text color='gray.600'>{config.description}</Text>}
+
             {config.sections.map(section => renderSection(section, formData))}
           </VStack>
         );
@@ -416,19 +401,25 @@ export function DynamicFormBuilder({
 }
 
 // Helper function to create field configurations
-export const createField = (config: Partial<FieldConfig> & { id: string; type: FieldType }): FieldConfig => ({
+export const createField = (
+  config: Partial<FieldConfig> & { id: string; type: FieldType }
+): FieldConfig => ({
   ...config,
   name: config.name || config.id,
 });
 
 // Helper function to create section configurations
-export const createSection = (config: Partial<SectionConfig> & { id: string; fields: FieldConfig[] }): SectionConfig => ({
+export const createSection = (
+  config: Partial<SectionConfig> & { id: string; fields: FieldConfig[] }
+): SectionConfig => ({
   layout: 'stack',
   ...config,
 });
 
 // Helper function to create form configurations
-export const createFormConfig = (config: Partial<FormConfig> & { id: string; sections: SectionConfig[] }): FormConfig => ({
+export const createFormConfig = (
+  config: Partial<FormConfig> & { id: string; sections: SectionConfig[] }
+): FormConfig => ({
   submitButtonText: 'Submit',
   showResetButton: true,
   ...config,
@@ -436,37 +427,41 @@ export const createFormConfig = (config: Partial<FormConfig> & { id: string; sec
 
 // Predefined field templates
 export const fieldTemplates = {
-  name: (id: string): FieldConfig => createField({
-    id,
-    type: 'text',
-    label: 'Full Name',
-    placeholder: 'Enter your full name',
-    isRequired: true,
-    validation: { minLength: 2, maxLength: 50 },
-  }),
-  
-  email: (id: string): FieldConfig => createField({
-    id,
-    type: 'email',
-    label: 'Email Address',
-    placeholder: 'Enter your email address',
-    isRequired: true,
-  }),
-  
-  phone: (id: string): FieldConfig => createField({
-    id,
-    type: 'tel',
-    label: 'Phone Number',
-    placeholder: 'Enter your phone number',
-  }),
-  
-  message: (id: string): FieldConfig => createField({
-    id,
-    type: 'textarea',
-    label: 'Message',
-    placeholder: 'Enter your message',
-    isRequired: true,
-    rows: 4,
-    validation: { minLength: 10, maxLength: 1000 },
-  }),
+  name: (id: string): FieldConfig =>
+    createField({
+      id,
+      type: 'text',
+      label: 'Full Name',
+      placeholder: 'Enter your full name',
+      isRequired: true,
+      validation: { minLength: 2, maxLength: 50 },
+    }),
+
+  email: (id: string): FieldConfig =>
+    createField({
+      id,
+      type: 'email',
+      label: 'Email Address',
+      placeholder: 'Enter your email address',
+      isRequired: true,
+    }),
+
+  phone: (id: string): FieldConfig =>
+    createField({
+      id,
+      type: 'tel',
+      label: 'Phone Number',
+      placeholder: 'Enter your phone number',
+    }),
+
+  message: (id: string): FieldConfig =>
+    createField({
+      id,
+      type: 'textarea',
+      label: 'Message',
+      placeholder: 'Enter your message',
+      isRequired: true,
+      rows: 4,
+      validation: { minLength: 10, maxLength: 1000 },
+    }),
 };

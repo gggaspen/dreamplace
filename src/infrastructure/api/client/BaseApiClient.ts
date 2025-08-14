@@ -126,7 +126,7 @@ export abstract class BaseApiClient {
 
   constructor(config: ApiClientConfig) {
     this.logger = new Logger(this.constructor.name);
-    
+
     // Initialize circuit breaker
     if (config.circuitBreaker) {
       this.circuitBreaker = new CircuitBreaker(config.circuitBreaker);
@@ -176,7 +176,7 @@ export abstract class BaseApiClient {
 
         return config;
       },
-      (error) => {
+      error => {
         this.logger.error('Request interceptor error:', error);
         return Promise.reject(error);
       }
@@ -203,7 +203,7 @@ export abstract class BaseApiClient {
 
         return response;
       },
-      async (error) => {
+      async error => {
         const duration = Date.now() - (error.config?.metadata?.startTime || 0);
 
         // Circuit breaker failure
@@ -264,7 +264,7 @@ export abstract class BaseApiClient {
       // Network errors
       !error.response ||
       // Server errors (5xx)
-      (error.response.status >= 500) ||
+      error.response.status >= 500 ||
       // Timeout errors
       error.code === 'ECONNABORTED' ||
       // Rate limit errors (with retry-after)
@@ -278,7 +278,7 @@ export abstract class BaseApiClient {
   private async retryRequest(error: any): Promise<AxiosResponse> {
     const config = error.config;
     const currentRetries = config.__retryCount || 0;
-    
+
     config.__retryCount = currentRetries + 1;
 
     // Calculate delay with exponential backoff
@@ -289,10 +289,13 @@ export abstract class BaseApiClient {
     // Add jitter to prevent thundering herd
     const jitteredDelay = delay + Math.random() * 1000;
 
-    this.logger.warn(`Retrying request (attempt ${currentRetries + 1}/${this.retryConfig?.maxRetries}) after ${jitteredDelay}ms`, {
-      url: config.url,
-      method: config.method,
-    });
+    this.logger.warn(
+      `Retrying request (attempt ${currentRetries + 1}/${this.retryConfig?.maxRetries}) after ${jitteredDelay}ms`,
+      {
+        url: config.url,
+        method: config.method,
+      }
+    );
 
     // Wait before retry
     await new Promise(resolve => setTimeout(resolve, jitteredDelay));
@@ -348,10 +351,7 @@ export abstract class BaseApiClient {
   /**
    * Generic GET request
    */
-  protected async get<T>(
-    url: string,
-    config?: AxiosRequestConfig
-  ): Promise<T> {
+  protected async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
     const response = await this.client.get<T>(url, config);
     return response.data;
   }
@@ -359,11 +359,7 @@ export abstract class BaseApiClient {
   /**
    * Generic POST request
    */
-  protected async post<T>(
-    url: string,
-    data?: unknown,
-    config?: AxiosRequestConfig
-  ): Promise<T> {
+  protected async post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
     const response = await this.client.post<T>(url, data, config);
     return response.data;
   }
@@ -371,11 +367,7 @@ export abstract class BaseApiClient {
   /**
    * Generic PUT request
    */
-  protected async put<T>(
-    url: string,
-    data?: unknown,
-    config?: AxiosRequestConfig
-  ): Promise<T> {
+  protected async put<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
     const response = await this.client.put<T>(url, data, config);
     return response.data;
   }
@@ -383,11 +375,7 @@ export abstract class BaseApiClient {
   /**
    * Generic PATCH request
    */
-  protected async patch<T>(
-    url: string,
-    data?: unknown,
-    config?: AxiosRequestConfig
-  ): Promise<T> {
+  protected async patch<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
     const response = await this.client.patch<T>(url, data, config);
     return response.data;
   }
@@ -395,10 +383,7 @@ export abstract class BaseApiClient {
   /**
    * Generic DELETE request
    */
-  protected async delete<T>(
-    url: string,
-    config?: AxiosRequestConfig
-  ): Promise<T> {
+  protected async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
     const response = await this.client.delete<T>(url, config);
     return response.data;
   }

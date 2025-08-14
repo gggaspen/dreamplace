@@ -1,14 +1,36 @@
 // Configuration
-export { configService, type AppConfig, type ApiConfig, type LoggingConfig, type CacheConfig } from './config/AppConfig';
+export {
+  configService,
+  type AppConfig,
+  type ApiConfig,
+  type LoggingConfig,
+  type CacheConfig,
+} from './config/AppConfig';
 
 // Logging
-export { createLogger, getLogger, type ILogger, type LogLevel, type LogEntry } from './logging/Logger';
+export {
+  createLogger,
+  getLogger,
+  type ILogger,
+  type LogLevel,
+  type LogEntry,
+} from './logging/Logger';
 
 // Cache
-export { createCacheService, MemoryCacheService, type ICacheService, type CacheEntry } from './cache/CacheService';
+export {
+  createCacheService,
+  MemoryCacheService,
+  type ICacheService,
+  type CacheEntry,
+} from './cache/CacheService';
 
 // External Services
-export { StrapiApiClient, type StrapiConfig, type StrapiResponse, type StrapiCollectionResponse } from './external/StrapiApiClient';
+export {
+  StrapiApiClient,
+  type StrapiConfig,
+  type StrapiResponse,
+  type StrapiCollectionResponse,
+} from './external/StrapiApiClient';
 
 // Repositories
 export { StrapiEventRepository } from './repositories/StrapiEventRepository';
@@ -17,7 +39,16 @@ export { StrapiHeroSectionRepository } from './repositories/StrapiHeroSectionRep
 export { StrapiContactInfoRepository } from './repositories/StrapiContactInfoRepository';
 
 // Dependency Injection
-export { Container, DIContainer, createContainer, getContainer, setContainer, type ServiceIdentifier, type Factory, type AsyncFactory } from './di/Container';
+export {
+  Container,
+  DIContainer,
+  createContainer,
+  getContainer,
+  setContainer,
+  type ServiceIdentifier,
+  type Factory,
+  type AsyncFactory,
+} from './di/Container';
 export { SERVICE_TOKENS, type ServiceToken } from './di/ServiceTokens';
 export { setupContainer } from './di/ContainerSetup';
 

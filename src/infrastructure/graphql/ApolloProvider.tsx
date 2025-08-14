@@ -1,6 +1,6 @@
 /**
  * Apollo GraphQL Provider
- * 
+ *
  * Provider component that wraps the application with Apollo Client
  * and provides GraphQL functionality throughout the component tree.
  */
@@ -38,7 +38,7 @@ class GraphQLErrorBoundary extends React.Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div role="alert" style={{ padding: '20px', textAlign: 'center' }}>
+        <div role='alert' style={{ padding: '20px', textAlign: 'center' }}>
           <h2>Something went wrong with the data connection.</h2>
           <p>Please refresh the page or try again later.</p>
           <button
@@ -78,7 +78,7 @@ export function ApolloProvider({ children }: ApolloProviderProps) {
         });
       } else if (error.graphQLErrors?.length > 0) {
         // Handle GraphQL errors
-        error.graphQLErrors.forEach((gqlError) => {
+        error.graphQLErrors.forEach(gqlError => {
           toast({
             title: 'Data Error',
             description: gqlError.message,
@@ -102,9 +102,7 @@ export function ApolloProvider({ children }: ApolloProviderProps) {
 
   return (
     <BaseApolloProvider client={apolloClient}>
-      <GraphQLErrorBoundary onError={handleGraphQLError}>
-        {children}
-      </GraphQLErrorBoundary>
+      <GraphQLErrorBoundary onError={handleGraphQLError}>{children}</GraphQLErrorBoundary>
     </BaseApolloProvider>
   );
 }

@@ -1,6 +1,6 @@
 /**
  * Layout Composition Components
- * 
+ *
  * These components use composition over inheritance to create flexible
  * layout structures. Each component has a single responsibility and
  * can be composed together for complex layouts.
@@ -15,18 +15,9 @@ interface LayoutProps extends BoxProps {
   fullHeight?: boolean;
 }
 
-export const Layout: React.FC<LayoutProps> = ({ 
-  children, 
-  fullHeight = false,
-  ...props 
-}) => {
+export const Layout: React.FC<LayoutProps> = ({ children, fullHeight = false, ...props }) => {
   return (
-    <Box 
-      minH={fullHeight ? '100vh' : 'auto'}
-      display="flex"
-      flexDirection="column"
-      {...props}
-    >
+    <Box minH={fullHeight ? '100vh' : 'auto'} display='flex' flexDirection='column' {...props}>
       {children}
     </Box>
   );
@@ -39,19 +30,19 @@ interface LayoutHeaderProps extends FlexProps {
   zIndex?: number;
 }
 
-export const LayoutHeader: React.FC<LayoutHeaderProps> = ({ 
-  children, 
+export const LayoutHeader: React.FC<LayoutHeaderProps> = ({
+  children,
   sticky = false,
   zIndex = 10,
-  ...props 
+  ...props
 }) => {
   return (
     <Flex
-      as="header"
+      as='header'
       position={sticky ? 'sticky' : 'relative'}
       top={sticky ? 0 : 'auto'}
       zIndex={zIndex}
-      w="full"
+      w='full'
       flexShrink={0}
       {...props}
     >
@@ -66,18 +57,13 @@ interface LayoutMainProps extends BoxProps {
   fillHeight?: boolean;
 }
 
-export const LayoutMain: React.FC<LayoutMainProps> = ({ 
-  children, 
+export const LayoutMain: React.FC<LayoutMainProps> = ({
+  children,
   fillHeight = true,
-  ...props 
+  ...props
 }) => {
   return (
-    <Box
-      as="main"
-      flex={fillHeight ? 1 : 'initial'}
-      w="full"
-      {...props}
-    >
+    <Box as='main' flex={fillHeight ? 1 : 'initial'} w='full' {...props}>
       {children}
     </Box>
   );
@@ -90,19 +76,19 @@ interface LayoutFooterProps extends FlexProps {
   zIndex?: number;
 }
 
-export const LayoutFooter: React.FC<LayoutFooterProps> = ({ 
+export const LayoutFooter: React.FC<LayoutFooterProps> = ({
   children,
   sticky = false,
   zIndex = 5,
-  ...props 
+  ...props
 }) => {
   return (
     <Flex
-      as="footer"
+      as='footer'
       position={sticky ? 'sticky' : 'relative'}
       bottom={sticky ? 0 : 'auto'}
       zIndex={zIndex}
-      w="full"
+      w='full'
       flexShrink={0}
       {...props}
     >
@@ -119,16 +105,16 @@ interface LayoutSidebarProps extends BoxProps {
   collapsed?: boolean;
 }
 
-export const LayoutSidebar: React.FC<LayoutSidebarProps> = ({ 
+export const LayoutSidebar: React.FC<LayoutSidebarProps> = ({
   children,
   position = 'left',
   collapsible = false,
   collapsed = false,
-  ...props 
+  ...props
 }) => {
   return (
     <Box
-      as="aside"
+      as='aside'
       order={position === 'left' ? -1 : 1}
       w={collapsed ? '0' : 'auto'}
       overflow={collapsed ? 'hidden' : 'visible'}

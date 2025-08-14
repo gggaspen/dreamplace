@@ -1,9 +1,9 @@
-import { 
-  IObserver, 
-  IObservable, 
-  ObserverSubscription, 
+import {
+  IObserver,
+  IObservable,
+  ObserverSubscription,
   EventManagerConfig,
-  EventData 
+  EventData,
 } from './types';
 
 /**
@@ -95,7 +95,7 @@ export class EventManager<T = unknown> implements IObservable<T> {
 
     // Get observers for this event type and wildcard observers
     const observerIds = new Set<string>();
-    
+
     // Add observers subscribed to this specific event type
     const typeObservers = this.eventTypeMap.get(eventType);
     if (typeObservers) {
@@ -113,10 +113,11 @@ export class EventManager<T = unknown> implements IObservable<T> {
     // Notify all relevant observers
     const notificationPromises = Array.from(observerIds)
       .map(id => this.subscriptions.get(id))
-      .filter((subscription): subscription is ObserverSubscription => 
-        subscription !== undefined && 
-        subscription.isActive && 
-        subscription.observer.isActive?.() !== false
+      .filter(
+        (subscription): subscription is ObserverSubscription =>
+          subscription !== undefined &&
+          subscription.isActive &&
+          subscription.observer.isActive?.() !== false
       )
       .map(subscription => this.notifyObserver(subscription.observer, data, eventType));
 
@@ -153,8 +154,7 @@ export class EventManager<T = unknown> implements IObservable<T> {
   }
 
   getActiveSubscriptions(): ObserverSubscription[] {
-    return Array.from(this.subscriptions.values())
-      .filter(sub => sub.isActive);
+    return Array.from(this.subscriptions.values()).filter(sub => sub.isActive);
   }
 
   // Helper method to emit events (alias for notify)
@@ -167,11 +167,7 @@ export class EventManager<T = unknown> implements IObservable<T> {
     return (data: K) => this.notify(data as T, eventType);
   }
 
-  private async notifyObserver(
-    observer: IObserver<T>, 
-    data: T, 
-    eventType: string
-  ): Promise<void> {
+  private async notifyObserver(observer: IObserver<T>, data: T, eventType: string): Promise<void> {
     try {
       const result = observer.update(data, eventType, this);
       if (result instanceof Promise) {
@@ -182,11 +178,7 @@ export class EventManager<T = unknown> implements IObservable<T> {
     }
   }
 
-  private handleObserverError(
-    observer: IObserver<T>, 
-    error: Error, 
-    eventType: string
-  ): void {
+  private handleObserverError(observer: IObserver<T>, error: Error, eventType: string): void {
     try {
       observer.onError?.(error, eventType);
     } catch (onErrorError) {
@@ -198,7 +190,7 @@ export class EventManager<T = unknown> implements IObservable<T> {
 
   private handleError(error: Error, eventType: string, observerId?: string): void {
     const errorMessage = `Error in event notification${observerId ? ` for observer ${observerId}` : ''} (${eventType}): ${error.message}`;
-    
+
     switch (this.config.errorHandling) {
       case 'silent':
         // Do nothing
@@ -213,7 +205,7 @@ export class EventManager<T = unknown> implements IObservable<T> {
 
   private addToHistory(eventData: EventData<T>): void {
     this.eventHistory.push(eventData);
-    
+
     // Maintain history size
     if (this.eventHistory.length > this.maxHistorySize) {
       this.eventHistory.shift();

@@ -1,6 +1,6 @@
 /**
  * Contact Form Example
- * 
+ *
  * Example implementation of a contact form using the enhanced form system
  * with validation, persistence, and auto-save functionality.
  */
@@ -59,9 +59,9 @@ export function ContactFormExample({
       schema={contactFormSchema}
       defaultValues={defaultValues}
       onSubmit={handleSubmit}
-      submitButtonText="Send Message"
+      submitButtonText='Send Message'
       enablePersistence={enablePersistence}
-      persistenceKey="contact-form"
+      persistenceKey='contact-form'
       persistenceOptions={{
         excludeFields: ['terms'],
         expiryMinutes: 60,
@@ -75,45 +75,40 @@ export function ContactFormExample({
       }}
       showAutoSaveStatus={enableAutoSave}
     >
-      <VStack spacing={6} align="stretch">
+      <VStack spacing={6} align='stretch'>
+        <InputField name='name' label='Full Name' placeholder='Enter your full name' isRequired />
+
         <InputField
-          name="name"
-          label="Full Name"
-          placeholder="Enter your full name"
+          name='email'
+          label='Email Address'
+          type='email'
+          placeholder='Enter your email address'
           isRequired
         />
-        
+
         <InputField
-          name="email"
-          label="Email Address"
-          type="email"
-          placeholder="Enter your email address"
+          name='phone'
+          label='Phone Number'
+          type='tel'
+          placeholder='Enter your phone number (optional)'
+        />
+
+        <InputField
+          name='subject'
+          label='Subject'
+          placeholder='What is this message about?'
           isRequired
         />
-        
-        <InputField
-          name="phone"
-          label="Phone Number"
-          type="tel"
-          placeholder="Enter your phone number (optional)"
-        />
-        
-        <InputField
-          name="subject"
-          label="Subject"
-          placeholder="What is this message about?"
-          isRequired
-        />
-        
+
         <TextareaField
-          name="message"
-          label="Message"
-          placeholder="Tell us more about your inquiry..."
+          name='message'
+          label='Message'
+          placeholder='Tell us more about your inquiry...'
           rows={6}
           isRequired
         />
-        
-        <CheckboxField name="terms" isRequired>
+
+        <CheckboxField name='terms' isRequired>
           I agree to the terms and conditions and privacy policy
         </CheckboxField>
       </VStack>

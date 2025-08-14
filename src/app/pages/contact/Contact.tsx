@@ -1,7 +1,7 @@
-import { Box, Text, Flex, Button } from "@chakra-ui/react";
-import React from "react";
-import "./Contact.css";
-import WhatsAppBtn from "../../../components/whatsapp/WhatsAppBtn";
+import { Box, Text, Flex, Button } from '@chakra-ui/react';
+import React from 'react';
+import './Contact.css';
+import WhatsAppBtn from '../../../components/whatsapp/WhatsAppBtn';
 
 interface IContactData {
   titulo: string;
@@ -15,26 +15,18 @@ export default function Contact({ config }: { config: IContactData }) {
 
   return (
     <>
-      <Box 
-      h={"auto"}
-      bg={"#000"} py={"2em"} px={{ base: "2em", md: "14em" }}>
+      <Box h={'auto'} bg={'#000'} py={'2em'} px={{ base: '2em', md: '14em' }}>
         <Text
-          fontSize={{ base: "1.5em", md: "3em" }}
+          fontSize={{ base: '1.5em', md: '3em' }}
           fontWeight={600}
           // py={".5em"}
-          mb={".5em"}
-          color={"#eee"}
-          textAlign={"center"}
+          mb={'.5em'}
+          color={'#eee'}
+          textAlign={'center'}
         >
           {titulo}
         </Text>
-        <Flex
-          alignItems={"center"}
-          justifyContent={"center"}
-          gap={"2em"}
-          h={"50%"}
-          pb={"1.5em"}
-        >
+        <Flex alignItems={'center'} justifyContent={'center'} gap={'2em'} h={'50%'} pb={'1.5em'}>
           {/* <Text
             fontWeight={"bold"}
             fontSize={{ base: "1em", md: "2em" }}
@@ -51,11 +43,11 @@ export default function Contact({ config }: { config: IContactData }) {
             <Text color={"#eee"}>{description}</Text>
           </Flex> */}
           <Button
-            bgColor={"yellow"}
-            borderRadius={"0px"}
-            p={"1em"}
-            color={"#eee"}
-            className="btn-buy"
+            bgColor={'yellow'}
+            borderRadius={'0px'}
+            p={'1em'}
+            color={'#eee'}
+            className='btn-buy'
             // w={"60px"}
             // h={"60px"}
           >
@@ -76,7 +68,7 @@ export default function Contact({ config }: { config: IContactData }) {
         >
           {description}
         </Text> */}
-        <Box bgColor={"#eee"} h={"1px"} />
+        <Box bgColor={'#eee'} h={'1px'} />
       </Box>
     </>
   );

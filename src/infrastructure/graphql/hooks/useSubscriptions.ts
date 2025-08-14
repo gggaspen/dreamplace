@@ -1,6 +1,6 @@
 /**
  * Real-time Subscriptions Hooks
- * 
+ *
  * Custom hooks for managing GraphQL subscriptions with automatic
  * reconnection, error handling, and cache updates.
  */
@@ -49,22 +49,24 @@ export function useBaseSubscription<T>(
         reconnectAttempts.current = 0; // Reset on successful data
       }
     },
-    onError: (subscriptionError) => {
+    onError: subscriptionError => {
       console.error('Subscription error:', subscriptionError);
       onError?.(subscriptionError);
 
       // Attempt reconnection if enabled
-      if (
-        reconnectOnError &&
-        reconnectAttempts.current < maxReconnectAttempts
-      ) {
+      if (reconnectOnError && reconnectAttempts.current < maxReconnectAttempts) {
         reconnectAttempts.current += 1;
-        console.log(`Attempting to reconnect... (${reconnectAttempts.current}/${maxReconnectAttempts})`);
-        
-        setTimeout(() => {
-          // Refetch queries to sync state
-          client.refetchQueries({ include: 'active' });
-        }, Math.pow(2, reconnectAttempts.current) * 1000); // Exponential backoff
+        console.log(
+          `Attempting to reconnect... (${reconnectAttempts.current}/${maxReconnectAttempts})`
+        );
+
+        setTimeout(
+          () => {
+            // Refetch queries to sync state
+            client.refetchQueries({ include: 'active' });
+          },
+          Math.pow(2, reconnectAttempts.current) * 1000
+        ); // Exponential backoff
       }
     },
     onComplete,
@@ -88,7 +90,7 @@ export function useEventUpdatesSubscription(
   return useBaseSubscription(SUBSCRIPTIONS.EVENT_UPDATED, {
     ...options,
     variables: { eventId },
-    onData: (data) => {
+    onData: data => {
       // Update cache with new event data
       client.cache.modify({
         id: client.cache.identify({ __typename: 'Event', id: eventId }),
@@ -113,7 +115,7 @@ export function useTicketAvailabilitySubscription(
   return useBaseSubscription(SUBSCRIPTIONS.TICKET_AVAILABILITY_CHANGED, {
     ...options,
     variables: { eventId },
-    onData: (data) => {
+    onData: data => {
       // Update cache with new ticket availability
       client.cache.modify({
         id: client.cache.identify({ __typename: 'Event', id: eventId }),
@@ -146,7 +148,7 @@ export function useNewEventsSubscription(
   return useBaseSubscription(SUBSCRIPTIONS.NEW_EVENT_CREATED, {
     ...options,
     variables: { artistIds },
-    onData: (data) => {
+    onData: data => {
       // Add new event to relevant caches
       client.cache.modify({
         fields: {
@@ -186,7 +188,7 @@ export function useArtistUpdatesSubscription(
   return useBaseSubscription(SUBSCRIPTIONS.ARTIST_UPDATED, {
     ...options,
     variables: { artistId },
-    onData: (data) => {
+    onData: data => {
       // Update cache with new artist data
       client.cache.modify({
         id: client.cache.identify({ __typename: 'Artist', id: artistId }),
@@ -211,7 +213,7 @@ export function useUserNotificationsSubscription(
   return useBaseSubscription(SUBSCRIPTIONS.USER_NOTIFICATION, {
     ...options,
     variables: { userId },
-    onData: (data) => {
+    onData: data => {
       // Add notification to cache
       client.cache.modify({
         fields: {
@@ -241,13 +243,13 @@ export function useEventSubscriptions(
   // Event updates
   const eventSubscription = useEventUpdatesSubscription(eventId, {
     enabled,
-    onData: (data) => onEventUpdate?.(data.eventUpdated),
+    onData: data => onEventUpdate?.(data.eventUpdated),
   });
 
   // Ticket availability
   const ticketSubscription = useTicketAvailabilitySubscription(eventId, {
     enabled,
-    onData: (data) => onTicketUpdate?.(data.ticketAvailabilityChanged),
+    onData: data => onTicketUpdate?.(data.ticketAvailabilityChanged),
   });
 
   return {
@@ -273,13 +275,13 @@ export function useUserSubscriptions(
   // New events from followed artists
   const eventsSubscription = useNewEventsSubscription(followedArtistIds, {
     enabled,
-    onData: (data) => onNewEvent?.(data.newEventCreated),
+    onData: data => onNewEvent?.(data.newEventCreated),
   });
 
   // User notifications
   const notificationsSubscription = useUserNotificationsSubscription(userId, {
     enabled,
-    onData: (data) => onNotification?.(data.userNotification),
+    onData: data => onNotification?.(data.userNotification),
   });
 
   return {

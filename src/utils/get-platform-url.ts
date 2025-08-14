@@ -1,20 +1,20 @@
-import { EPlatform } from "@/enums/platform.enum";
+import { EPlatform } from '@/enums/platform.enum';
 
 export default function getPlatformUrl(platform: EPlatform): string {
   switch (platform) {
     case EPlatform.INSTAGRAM:
-      return "/img/icon/instagram.png";
+      return '/img/icon/instagram.png';
     case EPlatform.YOUTUBE:
-      return "/img/icon/youtube.png";
+      return '/img/icon/youtube.png';
     case EPlatform.BEATPORT:
-      return "/img/icon/beatport.png";
+      return '/img/icon/beatport.png';
     case EPlatform.SPOTIFY:
-      return "/img/icon/spotify.png";
+      return '/img/icon/spotify.png';
     case EPlatform.WEB:
-      return "/img/icon/_.png";
+      return '/img/icon/_.png';
     case EPlatform.SOUNDCLOUD:
-      return "/img/icon/soundcloud.png";
+      return '/img/icon/soundcloud.png';
     default:
-      return "/img/icon/_.png";
+      return '/img/icon/_.png';
   }
 }

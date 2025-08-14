@@ -1,6 +1,6 @@
 /**
  * GraphQL Schema Definitions
- * 
+ *
  * Type definitions and schemas for GraphQL operations.
  * These define the structure of data that can be queried and mutated.
  */
@@ -311,12 +311,7 @@ export const QUERIES = {
 
   // Search functionality
   SEARCH: gql`
-    query Search(
-      $query: String!
-      $first: Int
-      $after: String
-      $filters: SearchFiltersInput
-    ) {
+    query Search($query: String!, $first: Int, $after: String, $filters: SearchFiltersInput) {
       search(query: $query, first: $first, after: $after, filters: $filters) {
         events {
           edges {

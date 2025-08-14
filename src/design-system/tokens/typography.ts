@@ -1,6 +1,6 @@
 /**
  * Typography Design Tokens for DreamPlace
- * 
+ *
  * Comprehensive typography scale with font families, weights, sizes,
  * and line heights optimized for electronic music event platform.
  */
@@ -10,7 +10,7 @@ export const fontFamilyTokens = {
   sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
   mono: ['var(--font-geist-mono)', 'Consolas', 'monospace'],
   display: ['Poppins', 'system-ui', 'sans-serif'], // For headings and display text
-  body: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'] // For body text
+  body: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'], // For body text
 } as const;
 
 // Font weights
@@ -23,24 +23,24 @@ export const fontWeightTokens = {
   semibold: '600',
   bold: '700',
   extrabold: '800',
-  black: '900'
+  black: '900',
 } as const;
 
 // Font sizes with fluid typography approach
 export const fontSizeTokens = {
-  xs: '0.75rem',      // 12px
-  sm: '0.875rem',     // 14px
-  base: '1rem',       // 16px
-  lg: '1.125rem',     // 18px
-  xl: '1.25rem',      // 20px
-  '2xl': '1.5rem',    // 24px
-  '3xl': '1.875rem',  // 30px
-  '4xl': '2.25rem',   // 36px
-  '5xl': '3rem',      // 48px
-  '6xl': '3.75rem',   // 60px
-  '7xl': '4.5rem',    // 72px
-  '8xl': '6rem',      // 96px
-  '9xl': '8rem'       // 128px
+  xs: '0.75rem', // 12px
+  sm: '0.875rem', // 14px
+  base: '1rem', // 16px
+  lg: '1.125rem', // 18px
+  xl: '1.25rem', // 20px
+  '2xl': '1.5rem', // 24px
+  '3xl': '1.875rem', // 30px
+  '4xl': '2.25rem', // 36px
+  '5xl': '3rem', // 48px
+  '6xl': '3.75rem', // 60px
+  '7xl': '4.5rem', // 72px
+  '8xl': '6rem', // 96px
+  '9xl': '8rem', // 128px
 } as const;
 
 // Line heights
@@ -50,7 +50,7 @@ export const lineHeightTokens = {
   snug: '1.375',
   normal: '1.5',
   relaxed: '1.625',
-  loose: '2'
+  loose: '2',
 } as const;
 
 // Letter spacing
@@ -60,7 +60,7 @@ export const letterSpacingTokens = {
   normal: '0em',
   wide: '0.025em',
   wider: '0.05em',
-  widest: '0.1em'
+  widest: '0.1em',
 } as const;
 
 // Typography scale definitions for semantic usage
@@ -72,36 +72,36 @@ export const typographyScale = {
       lineHeight: lineHeightTokens.none,
       fontWeight: fontWeightTokens.bold,
       letterSpacing: letterSpacingTokens.tighter,
-      fontFamily: fontFamilyTokens.display
+      fontFamily: fontFamilyTokens.display,
     },
     xl: {
       fontSize: fontSizeTokens['7xl'],
       lineHeight: lineHeightTokens.none,
       fontWeight: fontWeightTokens.bold,
       letterSpacing: letterSpacingTokens.tighter,
-      fontFamily: fontFamilyTokens.display
+      fontFamily: fontFamilyTokens.display,
     },
     lg: {
       fontSize: fontSizeTokens['6xl'],
       lineHeight: lineHeightTokens.tight,
       fontWeight: fontWeightTokens.bold,
       letterSpacing: letterSpacingTokens.tight,
-      fontFamily: fontFamilyTokens.display
+      fontFamily: fontFamilyTokens.display,
     },
     md: {
       fontSize: fontSizeTokens['5xl'],
       lineHeight: lineHeightTokens.tight,
       fontWeight: fontWeightTokens.bold,
       letterSpacing: letterSpacingTokens.tight,
-      fontFamily: fontFamilyTokens.display
+      fontFamily: fontFamilyTokens.display,
     },
     sm: {
       fontSize: fontSizeTokens['4xl'],
       lineHeight: lineHeightTokens.snug,
       fontWeight: fontWeightTokens.bold,
       letterSpacing: letterSpacingTokens.normal,
-      fontFamily: fontFamilyTokens.display
-    }
+      fontFamily: fontFamilyTokens.display,
+    },
   },
 
   // Headings
@@ -111,36 +111,36 @@ export const typographyScale = {
       lineHeight: lineHeightTokens.tight,
       fontWeight: fontWeightTokens.bold,
       letterSpacing: letterSpacingTokens.tight,
-      fontFamily: fontFamilyTokens.sans
+      fontFamily: fontFamilyTokens.sans,
     },
     xl: {
       fontSize: fontSizeTokens['3xl'],
       lineHeight: lineHeightTokens.tight,
       fontWeight: fontWeightTokens.bold,
       letterSpacing: letterSpacingTokens.tight,
-      fontFamily: fontFamilyTokens.sans
+      fontFamily: fontFamilyTokens.sans,
     },
     lg: {
       fontSize: fontSizeTokens['2xl'],
       lineHeight: lineHeightTokens.snug,
       fontWeight: fontWeightTokens.semibold,
       letterSpacing: letterSpacingTokens.normal,
-      fontFamily: fontFamilyTokens.sans
+      fontFamily: fontFamilyTokens.sans,
     },
     md: {
       fontSize: fontSizeTokens.xl,
       lineHeight: lineHeightTokens.snug,
       fontWeight: fontWeightTokens.semibold,
       letterSpacing: letterSpacingTokens.normal,
-      fontFamily: fontFamilyTokens.sans
+      fontFamily: fontFamilyTokens.sans,
     },
     sm: {
       fontSize: fontSizeTokens.lg,
       lineHeight: lineHeightTokens.normal,
       fontWeight: fontWeightTokens.medium,
       letterSpacing: letterSpacingTokens.normal,
-      fontFamily: fontFamilyTokens.sans
-    }
+      fontFamily: fontFamilyTokens.sans,
+    },
   },
 
   // Body text
@@ -150,36 +150,36 @@ export const typographyScale = {
       lineHeight: lineHeightTokens.relaxed,
       fontWeight: fontWeightTokens.normal,
       letterSpacing: letterSpacingTokens.normal,
-      fontFamily: fontFamilyTokens.body
+      fontFamily: fontFamilyTokens.body,
     },
     lg: {
       fontSize: fontSizeTokens.lg,
       lineHeight: lineHeightTokens.relaxed,
       fontWeight: fontWeightTokens.normal,
       letterSpacing: letterSpacingTokens.normal,
-      fontFamily: fontFamilyTokens.body
+      fontFamily: fontFamilyTokens.body,
     },
     md: {
       fontSize: fontSizeTokens.base,
       lineHeight: lineHeightTokens.normal,
       fontWeight: fontWeightTokens.normal,
       letterSpacing: letterSpacingTokens.normal,
-      fontFamily: fontFamilyTokens.body
+      fontFamily: fontFamilyTokens.body,
     },
     sm: {
       fontSize: fontSizeTokens.sm,
       lineHeight: lineHeightTokens.normal,
       fontWeight: fontWeightTokens.normal,
       letterSpacing: letterSpacingTokens.normal,
-      fontFamily: fontFamilyTokens.body
+      fontFamily: fontFamilyTokens.body,
     },
     xs: {
       fontSize: fontSizeTokens.xs,
       lineHeight: lineHeightTokens.normal,
       fontWeight: fontWeightTokens.normal,
       letterSpacing: letterSpacingTokens.wide,
-      fontFamily: fontFamilyTokens.body
-    }
+      fontFamily: fontFamilyTokens.body,
+    },
   },
 
   // Labels and UI text
@@ -189,22 +189,22 @@ export const typographyScale = {
       lineHeight: lineHeightTokens.normal,
       fontWeight: fontWeightTokens.medium,
       letterSpacing: letterSpacingTokens.wide,
-      fontFamily: fontFamilyTokens.sans
+      fontFamily: fontFamilyTokens.sans,
     },
     md: {
       fontSize: fontSizeTokens.sm,
       lineHeight: lineHeightTokens.normal,
       fontWeight: fontWeightTokens.medium,
       letterSpacing: letterSpacingTokens.normal,
-      fontFamily: fontFamilyTokens.sans
+      fontFamily: fontFamilyTokens.sans,
     },
     sm: {
       fontSize: fontSizeTokens.xs,
       lineHeight: lineHeightTokens.normal,
       fontWeight: fontWeightTokens.medium,
       letterSpacing: letterSpacingTokens.wide,
-      fontFamily: fontFamilyTokens.sans
-    }
+      fontFamily: fontFamilyTokens.sans,
+    },
   },
 
   // Code and monospace
@@ -214,23 +214,23 @@ export const typographyScale = {
       lineHeight: lineHeightTokens.normal,
       fontWeight: fontWeightTokens.normal,
       letterSpacing: letterSpacingTokens.normal,
-      fontFamily: fontFamilyTokens.mono
+      fontFamily: fontFamilyTokens.mono,
     },
     md: {
       fontSize: fontSizeTokens.sm,
       lineHeight: lineHeightTokens.normal,
       fontWeight: fontWeightTokens.normal,
       letterSpacing: letterSpacingTokens.normal,
-      fontFamily: fontFamilyTokens.mono
+      fontFamily: fontFamilyTokens.mono,
     },
     sm: {
       fontSize: fontSizeTokens.xs,
       lineHeight: lineHeightTokens.normal,
       fontWeight: fontWeightTokens.normal,
       letterSpacing: letterSpacingTokens.normal,
-      fontFamily: fontFamilyTokens.mono
-    }
-  }
+      fontFamily: fontFamilyTokens.mono,
+    },
+  },
 } as const;
 
 // Responsive typography utilities
@@ -239,22 +239,22 @@ export const responsiveTypography = {
   hero: {
     mobile: typographyScale.display.md,
     tablet: typographyScale.display.lg,
-    desktop: typographyScale.display.xl
+    desktop: typographyScale.display.xl,
   },
-  
+
   // Section headings
   sectionHeading: {
     mobile: typographyScale.heading.lg,
     tablet: typographyScale.heading.xl,
-    desktop: typographyScale.heading['2xl']
+    desktop: typographyScale.heading['2xl'],
   },
-  
+
   // Card titles
   cardTitle: {
     mobile: typographyScale.heading.sm,
     tablet: typographyScale.heading.md,
-    desktop: typographyScale.heading.lg
-  }
+    desktop: typographyScale.heading.lg,
+  },
 } as const;
 
 // Export types

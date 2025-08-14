@@ -1,5 +1,5 @@
-import { ICover } from "@/interfaces/event.interface";
-import NavigatorConfig from "./navigator-config.interface";
+import { ICover } from '@/interfaces/event.interface';
+import NavigatorConfig from './navigator-config.interface';
 
 export default interface IHeroConfig {
   id: number;

@@ -1,6 +1,6 @@
 /**
  * Command Pattern Implementation for User Actions
- * 
+ *
  * The Command pattern encapsulates a request as an object, thereby allowing
  * you to parameterize clients with different requests, queue or log requests,
  * and support undoable operations.
@@ -31,19 +31,19 @@ export enum CommandType {
   OPEN_MODAL = 'OPEN_MODAL',
   CLOSE_MODAL = 'CLOSE_MODAL',
   TOGGLE_THEME = 'TOGGLE_THEME',
-  
+
   // Data Actions
   FETCH_DATA = 'FETCH_DATA',
   CREATE_ITEM = 'CREATE_ITEM',
   UPDATE_ITEM = 'UPDATE_ITEM',
   DELETE_ITEM = 'DELETE_ITEM',
-  
+
   // User Interactions
   PLAY_MEDIA = 'PLAY_MEDIA',
   PAUSE_MEDIA = 'PAUSE_MEDIA',
   LIKE_CONTENT = 'LIKE_CONTENT',
   SHARE_CONTENT = 'SHARE_CONTENT',
-  
+
   // Analytics
   TRACK_EVENT = 'TRACK_EVENT',
   LOG_ERROR = 'LOG_ERROR',

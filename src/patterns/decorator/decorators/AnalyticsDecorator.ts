@@ -7,13 +7,16 @@ import { DecoratorConfig, AnalyticsDecoratorConfig } from '../types';
  */
 export class AnalyticsDecorator extends BaseDecorator {
   constructor() {
-    super({
-      name: 'analytics',
-      description: 'Adds analytics tracking for views, clicks, and interactions',
-      version: '1.0.0',
-      dependencies: [],
-      requiresProps: [],
-    }, 20); // Lower order = applied earlier
+    super(
+      {
+        name: 'analytics',
+        description: 'Adds analytics tracking for views, clicks, and interactions',
+        version: '1.0.0',
+        dependencies: [],
+        requiresProps: [],
+      },
+      20
+    ); // Lower order = applied earlier
   }
 
   canDecorate(component: ComponentType, props?: any): boolean {
@@ -26,10 +29,10 @@ export class AnalyticsDecorator extends BaseDecorator {
     }
 
     const analyticsConfig = config as AnalyticsDecoratorConfig;
-    
+
     return this.createHOC(
       component,
-      (props) => this.enhanceWithAnalytics(props, analyticsConfig),
+      props => this.enhanceWithAnalytics(props, analyticsConfig),
       `Analytics(${component.displayName || component.name || 'Component'})`
     );
   }
@@ -57,8 +60,8 @@ export class AnalyticsDecorator extends BaseDecorator {
         if (!config?.options?.trackScroll || !elementRef.current) return;
 
         const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
+          entries => {
+            entries.forEach(entry => {
               if (entry.isIntersecting) {
                 this.trackScrollIntoView(restProps, config);
               }
@@ -68,7 +71,7 @@ export class AnalyticsDecorator extends BaseDecorator {
         );
 
         observer.observe(elementRef.current);
-        
+
         return () => observer.disconnect();
       }, [restProps]);
 
@@ -211,10 +214,9 @@ export class AnalyticsDecorator extends BaseDecorator {
   }
 
   private getComponentName(props: any): string {
-    return props?.analyticsName || 
-           props?.id || 
-           props?.className?.split(' ')[0] || 
-           'unknown_component';
+    return (
+      props?.analyticsName || props?.id || props?.className?.split(' ')[0] || 'unknown_component'
+    );
   }
 
   private extractAnalyticsProperties(props: any): Record<string, unknown> {

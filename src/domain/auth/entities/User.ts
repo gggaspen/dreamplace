@@ -62,7 +62,7 @@ export class User {
   canAccess(resource: string, action: string): boolean {
     // Basic RBAC implementation
     if (this.isAdmin()) return true;
-    
+
     // Add more sophisticated permission logic here
     switch (resource) {
       case 'events':

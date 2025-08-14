@@ -27,7 +27,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       try {
         const authRepo = await container.resolve<AuthRepository>(SERVICE_TOKENS.AUTH_REPOSITORY);
         const loginUC = await container.resolve<LoginUseCase>(SERVICE_TOKENS.LOGIN_USE_CASE);
-        
+
         setAuthRepository(authRepo);
         setLoginUseCase(loginUC);
       } catch (error) {
@@ -45,10 +45,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <BaseAuthProvider 
-      authRepository={authRepository}
-      loginUseCase={loginUseCase}
-    >
+    <BaseAuthProvider authRepository={authRepository} loginUseCase={loginUseCase}>
       {children}
     </BaseAuthProvider>
   );

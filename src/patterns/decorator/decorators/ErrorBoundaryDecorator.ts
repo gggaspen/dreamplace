@@ -1,11 +1,14 @@
-import React, { ComponentType, Component, ReactNode, ErrorInfo } from 'react';
+import React, { JSX, ComponentType, Component, ReactNode, ErrorInfo } from 'react';
 import { BaseDecorator } from '../BaseDecorator';
 import { DecoratorConfig, ErrorBoundaryDecoratorConfig } from '../types';
+import {Hero} from '@/app/pages/hero/Hero';
 
 /**
  * Error Boundary Decorator - wraps components with error boundary functionality
  */
 export class ErrorBoundaryDecorator extends BaseDecorator {
+  static displayName: string;
+
   constructor() {
     super({
       name: 'errorBoundary',
@@ -31,6 +34,7 @@ export class ErrorBoundaryDecorator extends BaseDecorator {
     class ErrorBoundaryWrapper extends Component<any, { hasError: boolean; error?: Error; errorInfo?: ErrorInfo }> {
       private resetTimeoutId?: NodeJS.Timeout;
       private previousProps?: any;
+      static displayName: string;
 
       constructor(props: any) {
         super(props);
@@ -311,7 +315,7 @@ export const DefaultErrorFallback: React.FC<{
           Reload Page
         </button>
       </div>
-
+  
       {isDevelopment && error && (
         <details style={{ marginTop: '20px', textAlign: 'left' }}>
           <summary style={{ cursor: 'pointer', fontWeight: 'bold' }}>

@@ -9,7 +9,8 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
     NEXT_PUBLIC_ENABLE_ANALYTICS: process.env.NEXT_PUBLIC_ENABLE_ANALYTICS,
-    NEXT_PUBLIC_ENABLE_PERFORMANCE_MONITORING: process.env.NEXT_PUBLIC_ENABLE_PERFORMANCE_MONITORING,
+    NEXT_PUBLIC_ENABLE_PERFORMANCE_MONITORING:
+      process.env.NEXT_PUBLIC_ENABLE_PERFORMANCE_MONITORING,
     NEXT_PUBLIC_ENABLE_ERROR_REPORTING: process.env.NEXT_PUBLIC_ENABLE_ERROR_REPORTING,
     NEXT_PUBLIC_WEB_VITALS_ENDPOINT: process.env.NEXT_PUBLIC_WEB_VITALS_ENDPOINT,
     NEXT_PUBLIC_CSP_NONCE: process.env.NEXT_PUBLIC_CSP_NONCE,
@@ -23,7 +24,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   experimental: {
-    optimizePackageImports: ["@chakra-ui/react"],
+    optimizePackageImports: ['@chakra-ui/react'],
   },
   webpack: (config, { dev, isServer }) => {
     // Bundle optimization for client-side only
@@ -100,14 +101,14 @@ const nextConfig = {
     // Tree shaking optimization
     config.resolve.alias = {
       ...config.resolve.alias,
-      'lodash': 'lodash-es',
+      lodash: 'lodash-es',
     };
 
     // Compression and minification for production
     if (!dev) {
       config.optimization.usedExports = true;
       config.optimization.sideEffects = false;
-      
+
       // Performance budgets
       config.performance = {
         maxAssetSize: 250000, // 250KB
@@ -122,28 +123,28 @@ const nextConfig = {
     disableStaticImages: true, // Deshabilita la optimización de imágenes
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "i.postimg.cc",
-        pathname: "/**",
+        protocol: 'https',
+        hostname: 'i.postimg.cc',
+        pathname: '/**',
       },
       {
-        protocol: "https",
-        hostname: "dreamplace.com.ar",
-        pathname: "/**",
+        protocol: 'https',
+        hostname: 'dreamplace.com.ar',
+        pathname: '/**',
       },
       {
-        protocol: "https",
-        hostname: "https://dreamplace-production.up.railway.app/",
-        pathname: "/**",
+        protocol: 'https',
+        hostname: 'https://dreamplace-production.up.railway.app/',
+        pathname: '/**',
       },
       {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-        pathname: "/**",
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
       },
     ],
   },
-  output: "standalone",
+  output: 'standalone',
   // reactStrictMode: false,
 };
 

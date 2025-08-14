@@ -19,11 +19,7 @@ export class MediaCommand extends BaseCommand<void> {
     volume: number;
   };
 
-  constructor(
-    payload: MediaPayload,
-    mediaPlayer: any,
-    context?: Record<string, unknown>
-  ) {
+  constructor(payload: MediaPayload, mediaPlayer: any, context?: Record<string, unknown>) {
     super(
       payload.action === 'play' ? CommandType.PLAY_MEDIA : CommandType.PAUSE_MEDIA,
       payload,
@@ -34,7 +30,7 @@ export class MediaCommand extends BaseCommand<void> {
 
   async execute(): Promise<void> {
     const payload = this.metadata.payload as MediaPayload;
-    
+
     // Save current state for undo
     this.previousState = {
       isPlaying: this.mediaPlayer.isPlaying,
@@ -74,7 +70,7 @@ export class MediaCommand extends BaseCommand<void> {
       } else {
         await this.mediaPlayer.pause();
       }
-      
+
       await this.mediaPlayer.setVolume(this.previousState.volume);
     }
   }

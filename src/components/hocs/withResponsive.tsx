@@ -1,6 +1,6 @@
 /**
  * withResponsive HOC
- * 
+ *
  * Higher-Order Component that injects responsive state into components.
  * Provides mobile/desktop detection and window dimensions.
  */
@@ -15,9 +15,7 @@ interface ResponsiveProps {
   windowDimensions: ReturnType<typeof useWindowDimensions>;
 }
 
-export function withResponsive<P extends object>(
-  Component: ComponentType<P & ResponsiveProps>
-) {
+export function withResponsive<P extends object>(Component: ComponentType<P & ResponsiveProps>) {
   const WithResponsiveComponent = (props: P) => {
     const responsive = useResponsive();
     const windowDimensions = useWindowDimensions();

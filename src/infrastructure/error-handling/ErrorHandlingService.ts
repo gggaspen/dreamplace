@@ -49,7 +49,10 @@ export type ErrorHandler = (report: ErrorReport) => void | Promise<void>;
 /**
  * Recovery strategy function type
  */
-export type RecoveryStrategy = (error: Error, context?: Record<string, unknown>) => boolean | Promise<boolean>;
+export type RecoveryStrategy = (
+  error: Error,
+  context?: Record<string, unknown>
+) => boolean | Promise<boolean>;
 
 /**
  * Centralized error handling service
@@ -83,7 +86,7 @@ export class ErrorHandlingService {
    */
   private setupDefaultHandlers(): void {
     // Console logging handler for all categories
-    const consoleHandler: ErrorHandler = (report) => {
+    const consoleHandler: ErrorHandler = report => {
       this.logger.error(`[${report.category.toUpperCase()}] ${report.error.message}`, {
         errorId: report.id,
         severity: report.severity,
@@ -98,7 +101,7 @@ export class ErrorHandlingService {
     });
 
     // Critical error handler
-    this.addHandler(ErrorCategory.API, (report) => {
+    this.addHandler(ErrorCategory.API, report => {
       if (report.severity === ErrorSeverity.CRITICAL) {
         // In a real app, this would send to monitoring service
         console.error('🚨 CRITICAL ERROR DETECTED', report);
@@ -112,7 +115,7 @@ export class ErrorHandlingService {
   private setupGlobalErrorHandlers(): void {
     if (typeof window !== 'undefined') {
       // Handle uncaught JavaScript errors
-      window.addEventListener('error', (event) => {
+      window.addEventListener('error', event => {
         this.handleError(event.error || new Error(event.message), {
           category: ErrorCategory.UNKNOWN,
           severity: ErrorSeverity.HIGH,
@@ -125,7 +128,7 @@ export class ErrorHandlingService {
       });
 
       // Handle unhandled promise rejections
-      window.addEventListener('unhandledrejection', (event) => {
+      window.addEventListener('unhandledrejection', event => {
         this.handleError(
           event.reason instanceof Error ? event.reason : new Error(String(event.reason)),
           {
@@ -175,19 +178,19 @@ export class ErrorHandlingService {
     if (name.includes('networkerror') || message.includes('network')) {
       return ErrorCategory.NETWORK;
     }
-    
+
     if (name.includes('validationerror') || message.includes('validation')) {
       return ErrorCategory.VALIDATION;
     }
-    
+
     if (name.includes('permissionerror') || message.includes('permission')) {
       return ErrorCategory.PERMISSION;
     }
-    
+
     if (message.includes('fetch') || message.includes('api') || message.includes('http')) {
       return ErrorCategory.API;
     }
-    
+
     if (message.includes('render') || message.includes('component')) {
       return ErrorCategory.UI;
     }
@@ -247,7 +250,7 @@ export class ErrorHandlingService {
   ): Promise<string> {
     const category = options.category || this.determineCategory(error);
     const severity = options.severity || this.determineSeverity(error, category);
-    
+
     const report: ErrorReport = {
       id: this.generateErrorId(),
       error,
@@ -272,7 +275,7 @@ export class ErrorHandlingService {
     // Execute error handlers
     const handlers = this.handlers.get(category) || [];
     await Promise.all(
-      handlers.map(async (handler) => {
+      handlers.map(async handler => {
         try {
           await handler(report);
         } catch (handlerError) {
@@ -296,7 +299,7 @@ export class ErrorHandlingService {
    */
   private async tryRecovery(report: ErrorReport): Promise<boolean> {
     const strategies = this.recoveryStrategies.get(report.category) || [];
-    
+
     for (const strategy of strategies) {
       try {
         const recovered = await strategy(report.error, report.context);
@@ -307,7 +310,7 @@ export class ErrorHandlingService {
         this.logger.error('Error in recovery strategy:', recoveryError);
       }
     }
-    
+
     return false;
   }
 
@@ -316,7 +319,7 @@ export class ErrorHandlingService {
    */
   private addToHistory(report: ErrorReport): void {
     this.errorHistory.unshift(report);
-    
+
     // Maintain history size limit
     if (this.errorHistory.length > this.maxHistorySize) {
       this.errorHistory = this.errorHistory.slice(0, this.maxHistorySize);
@@ -406,7 +409,7 @@ export class ErrorHandlingService {
    */
   public isRecoverable(error: Error): boolean {
     const message = error.message.toLowerCase();
-    
+
     // Non-recoverable errors
     if (
       message.includes('out of memory') ||
@@ -415,7 +418,7 @@ export class ErrorHandlingService {
     ) {
       return false;
     }
-    
+
     return true;
   }
 
@@ -430,10 +433,10 @@ export class ErrorHandlingService {
   ): Error {
     const error = new Error(message);
     error.name = `${category.toUpperCase()}Error`;
-    
+
     // Handle the error immediately
     this.handleError(error, { category, severity, context });
-    
+
     return error;
   }
 }

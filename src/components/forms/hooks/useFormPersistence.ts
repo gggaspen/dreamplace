@@ -1,6 +1,6 @@
 /**
  * Form Persistence Hook
- * 
+ *
  * Custom hook that provides form state persistence to localStorage
  * with automatic save/restore functionality and cleanup.
  */
@@ -51,33 +51,36 @@ export function useFormPersistence<T extends FieldValues>({
   const hasHydrated = useRef(false);
 
   // Save form data to storage
-  const saveToStorage = useCallback((data: T) => {
-    try {
-      // Filter out excluded fields
-      const filteredData = Object.keys(data).reduce((acc, field) => {
-        if (!excludeFields.includes(field)) {
-          acc[field] = data[field];
+  const saveToStorage = useCallback(
+    (data: T) => {
+      try {
+        // Filter out excluded fields
+        const filteredData = Object.keys(data).reduce((acc, field) => {
+          if (!excludeFields.includes(field)) {
+            acc[field] = data[field];
+          }
+          return acc;
+        }, {} as Partial<T>);
+
+        const storageData: StoredFormData<Partial<T>> = {
+          data: filteredData,
+          timestamp: Date.now(),
+          expiresAt: expiryMinutes ? Date.now() + expiryMinutes * 60 * 1000 : undefined,
+        };
+
+        let serializedData = JSON.stringify(storageData);
+
+        if (encryptData) {
+          serializedData = simpleEncrypt(serializedData);
         }
-        return acc;
-      }, {} as Partial<T>);
 
-      const storageData: StoredFormData<Partial<T>> = {
-        data: filteredData,
-        timestamp: Date.now(),
-        expiresAt: expiryMinutes ? Date.now() + (expiryMinutes * 60 * 1000) : undefined,
-      };
-
-      let serializedData = JSON.stringify(storageData);
-      
-      if (encryptData) {
-        serializedData = simpleEncrypt(serializedData);
+        storage.setItem(storageKey, serializedData);
+      } catch (error) {
+        console.warn('Failed to save form data to storage:', error);
       }
-
-      storage.setItem(storageKey, serializedData);
-    } catch (error) {
-      console.warn('Failed to save form data to storage:', error);
-    }
-  }, [storageKey, excludeFields, encryptData, expiryMinutes, storage]);
+    },
+    [storageKey, excludeFields, encryptData, expiryMinutes, storage]
+  );
 
   // Load form data from storage
   const loadFromStorage = useCallback((): Partial<T> | null => {
@@ -91,7 +94,7 @@ export function useFormPersistence<T extends FieldValues>({
       }
 
       const storageData: StoredFormData<Partial<T>> = JSON.parse(serializedData);
-      
+
       // Check if data has expired
       if (storageData.expiresAt && Date.now() > storageData.expiresAt) {
         storage.removeItem(storageKey);
@@ -123,27 +126,33 @@ export function useFormPersistence<T extends FieldValues>({
   ).current;
 
   // Restore form data on mount
-  const restoreForm = useCallback((reset: UseFormReset<T>) => {
-    if (hasHydrated.current) return;
-    
-    const savedData = loadFromStorage();
-    if (savedData && Object.keys(savedData).length > 0) {
-      reset(savedData as T);
-    }
-    
-    hasHydrated.current = true;
-  }, [loadFromStorage]);
+  const restoreForm = useCallback(
+    (reset: UseFormReset<T>) => {
+      if (hasHydrated.current) return;
+
+      const savedData = loadFromStorage();
+      if (savedData && Object.keys(savedData).length > 0) {
+        reset(savedData as T);
+      }
+
+      hasHydrated.current = true;
+    },
+    [loadFromStorage]
+  );
 
   // Watch form changes and save
-  const watchAndSave = useCallback((watch: UseFormWatch<T>) => {
-    const subscription = watch((data) => {
-      if (hasHydrated.current) {
-        debouncedSave(data as T);
-      }
-    });
+  const watchAndSave = useCallback(
+    (watch: UseFormWatch<T>) => {
+      const subscription = watch(data => {
+        if (hasHydrated.current) {
+          debouncedSave(data as T);
+        }
+      });
 
-    return subscription;
-  }, [debouncedSave]);
+      return subscription;
+    },
+    [debouncedSave]
+  );
 
   // Cleanup on unmount
   useEffect(() => {

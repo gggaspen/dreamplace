@@ -1,6 +1,6 @@
 /**
  * Observer Pattern Implementation for Event Management
- * 
+ *
  * The Observer pattern defines a one-to-many dependency between objects
  * so that when one object changes state, all its dependents are notified
  * and updated automatically.
@@ -51,20 +51,20 @@ export enum EventType {
   COMPONENT_UNMOUNTED = 'COMPONENT_UNMOUNTED',
   STATE_CHANGED = 'STATE_CHANGED',
   THEME_CHANGED = 'THEME_CHANGED',
-  
+
   // Data Events
   DATA_LOADED = 'DATA_LOADED',
   DATA_ERROR = 'DATA_ERROR',
   CACHE_UPDATED = 'CACHE_UPDATED',
   API_REQUEST = 'API_REQUEST',
   API_RESPONSE = 'API_RESPONSE',
-  
+
   // User Events
   USER_ACTION = 'USER_ACTION',
   NAVIGATION = 'NAVIGATION',
   MEDIA_PLAY = 'MEDIA_PLAY',
   MEDIA_PAUSE = 'MEDIA_PAUSE',
-  
+
   // System Events
   ERROR_OCCURRED = 'ERROR_OCCURRED',
   PERFORMANCE_METRIC = 'PERFORMANCE_METRIC',

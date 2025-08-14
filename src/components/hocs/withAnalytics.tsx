@@ -1,6 +1,6 @@
 /**
  * withAnalytics HOC
- * 
+ *
  * Higher-Order Component that adds analytics tracking to components.
  * Automatically tracks component renders, interactions, and errors.
  */

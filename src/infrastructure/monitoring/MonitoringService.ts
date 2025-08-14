@@ -55,7 +55,7 @@ export class MonitoringService {
   private logger: Logger;
   private config: MonitoringConfig;
   private performanceObserver: PerformanceObserver | null = null;
-  
+
   private constructor(config?: Partial<MonitoringConfig>) {
     this.logger = new Logger('MonitoringService');
     this.config = {
@@ -66,7 +66,7 @@ export class MonitoringService {
       sampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
       ...config,
     };
-    
+
     this.initializeMonitoring();
   }
 
@@ -98,7 +98,7 @@ export class MonitoringService {
     if (!this.config.enablePerformanceMonitoring) return;
 
     try {
-      this.performanceObserver = new PerformanceObserver((list) => {
+      this.performanceObserver = new PerformanceObserver(list => {
         for (const entry of list.getEntries()) {
           this.trackPerformanceMetric({
             name: entry.name,
@@ -114,7 +114,7 @@ export class MonitoringService {
       });
 
       this.performanceObserver.observe({
-        entryTypes: ['navigation', 'resource', 'measure', 'mark']
+        entryTypes: ['navigation', 'resource', 'measure', 'mark'],
       });
     } catch (error) {
       this.logger.warn('Performance monitoring not available:', error);
@@ -136,7 +136,7 @@ export class MonitoringService {
     });
 
     // Track clicks on important elements
-    document.addEventListener('click', (event) => {
+    document.addEventListener('click', event => {
       const target = event.target as HTMLElement;
       if (target.tagName === 'BUTTON' || target.closest('button')) {
         const button = target.tagName === 'BUTTON' ? target : target.closest('button');
@@ -154,7 +154,7 @@ export class MonitoringService {
     });
 
     // Track form submissions
-    document.addEventListener('submit', (event) => {
+    document.addEventListener('submit', event => {
       const form = event.target as HTMLFormElement;
       this.trackUserAction({
         action: 'form_submit',
@@ -176,7 +176,7 @@ export class MonitoringService {
     if (typeof window === 'undefined' || !this.config.enablePerformanceMonitoring) return;
 
     // Core Web Vitals
-    const observer = new PerformanceObserver((list) => {
+    const observer = new PerformanceObserver(list => {
       for (const entry of list.getEntries()) {
         if (entry.entryType === 'largest-contentful-paint') {
           this.trackPerformanceMetric({
@@ -186,7 +186,7 @@ export class MonitoringService {
             timestamp: new Date(),
           });
         }
-        
+
         if (entry.entryType === 'first-input') {
           const fidEntry = entry as PerformanceEventTiming;
           this.trackPerformanceMetric({
@@ -196,7 +196,7 @@ export class MonitoringService {
             timestamp: new Date(),
           });
         }
-        
+
         if (entry.entryType === 'layout-shift' && !(entry as any).hadRecentInput) {
           this.trackPerformanceMetric({
             name: 'CLS',
@@ -224,7 +224,7 @@ export class MonitoringService {
     }
 
     if (this.config.enableSentry) {
-      Sentry.withScope((scope) => {
+      Sentry.withScope(scope => {
         // Set error context
         scope.setTag('errorId', errorReport.id);
         scope.setTag('category', errorReport.category);
@@ -264,7 +264,10 @@ export class MonitoringService {
    */
   public trackPerformanceMetric(metric: PerformanceMetric): void {
     if (this.config.enableConsoleLogging) {
-      this.logger.info(`Performance metric: ${metric.name} = ${metric.value}${metric.unit}`, metric.context);
+      this.logger.info(
+        `Performance metric: ${metric.name} = ${metric.value}${metric.unit}`,
+        metric.context
+      );
     }
 
     if (this.config.enableSentry && Math.random() <= this.config.sampleRate) {

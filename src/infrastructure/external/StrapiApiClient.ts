@@ -55,31 +55,37 @@ export class StrapiApiClient {
 
   async post<T>(endpoint: string, data: unknown): Promise<T> {
     const url = this.buildUrl(endpoint);
-    return this.executeWithRetry(() => this.fetch<T>(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    }));
+    return this.executeWithRetry(() =>
+      this.fetch<T>(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+    );
   }
 
   async put<T>(endpoint: string, data: unknown): Promise<T> {
     const url = this.buildUrl(endpoint);
-    return this.executeWithRetry(() => this.fetch<T>(url, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    }));
+    return this.executeWithRetry(() =>
+      this.fetch<T>(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+    );
   }
 
   async delete<T>(endpoint: string): Promise<T> {
     const url = this.buildUrl(endpoint);
-    return this.executeWithRetry(() => this.fetch<T>(url, {
-      method: 'DELETE',
-    }));
+    return this.executeWithRetry(() =>
+      this.fetch<T>(url, {
+        method: 'DELETE',
+      })
+    );
   }
 
   private buildUrl(endpoint: string, params?: Record<string, string | string[] | number>): string {
@@ -123,22 +129,20 @@ export class StrapiApiClient {
           },
         }));
 
-        throw new Error(
-          `Strapi API error: ${errorData.error.status} ${errorData.error.message}`
-        );
+        throw new Error(`Strapi API error: ${errorData.error.status} ${errorData.error.message}`);
       }
 
       return await response.json();
     } catch (error) {
       clearTimeout(timeoutId);
-      
+
       if (error instanceof Error) {
         if (error.name === 'AbortError') {
           throw new Error(`Request timeout after ${this.timeout}ms`);
         }
         throw error;
       }
-      
+
       throw new Error('Unknown error occurred during API request');
     }
   }
@@ -151,7 +155,7 @@ export class StrapiApiClient {
         return await operation();
       } catch (error) {
         lastError = error instanceof Error ? error : new Error('Unknown error');
-        
+
         if (attempt === this.retries) {
           break;
         }

@@ -1,6 +1,6 @@
 /**
  * Factory Pattern Implementation for Component Creation
- * 
+ *
  * The Factory pattern provides an interface for creating objects without
  * specifying the exact class of object that will be created. This allows
  * for flexible component instantiation based on runtime conditions.
@@ -103,34 +103,34 @@ export enum ComponentType {
   GRID = 'grid',
   FLEX = 'flex',
   STACK = 'stack',
-  
+
   // UI components
   BUTTON = 'button',
   INPUT = 'input',
   CARD = 'card',
   MODAL = 'modal',
   TOOLTIP = 'tooltip',
-  
+
   // Data display
   LIST = 'list',
   TABLE = 'table',
   CHART = 'chart',
   IMAGE = 'image',
   VIDEO = 'video',
-  
+
   // Navigation
   MENU = 'menu',
   BREADCRUMB = 'breadcrumb',
   PAGINATION = 'pagination',
   TABS = 'tabs',
-  
+
   // Form components
   FORM = 'form',
   FIELD_GROUP = 'field_group',
   CHECKBOX = 'checkbox',
   RADIO = 'radio',
   SELECT = 'select',
-  
+
   // Specialized
   CAROUSEL = 'carousel',
   HERO = 'hero',

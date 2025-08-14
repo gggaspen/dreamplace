@@ -1,4 +1,9 @@
-import { HeroSection, HeroSectionProps, NavigationItemProps, ButtonItemProps } from '../../domain/entities/HeroSection';
+import {
+  HeroSection,
+  HeroSectionProps,
+  NavigationItemProps,
+  ButtonItemProps,
+} from '../../domain/entities/HeroSection';
 import { Url } from '../../domain/value-objects/Url';
 import { HeroSectionDto, NavigationItemDto, ButtonItemDto } from '../dto/AppDataDto';
 
@@ -14,7 +19,7 @@ export class HeroSectionMapper {
         text: item.text,
         link: item.link.value,
         isExternal: item.isExternal,
-        target: item.target
+        target: item.target,
       })),
       buttons: heroSection.buttons.map(button => ({
         id: button.id,
@@ -23,7 +28,7 @@ export class HeroSectionMapper {
         variant: button.variant,
         size: button.size,
         disabled: button.disabled,
-        isEnabled: button.isEnabled()
+        isEnabled: button.isEnabled(),
       })),
       coverMobile: heroSection.coverMobile,
       coverDesktop: heroSection.coverDesktop,
@@ -36,11 +41,11 @@ export class HeroSectionMapper {
         variant: button.variant,
         size: button.size,
         disabled: button.disabled,
-        isEnabled: button.isEnabled()
+        isEnabled: button.isEnabled(),
       })),
       hasCover: heroSection.hasCover(),
       createdAt: heroSection.createdAt.toISOString(),
-      updatedAt: heroSection.updatedAt.toISOString()
+      updatedAt: heroSection.updatedAt.toISOString(),
     };
   }
 
@@ -50,7 +55,7 @@ export class HeroSectionMapper {
       text: item.text,
       link: new Url(item.link),
       isExternal: item.isExternal,
-      target: item.target as any
+      target: item.target as any,
     }));
 
     const buttons: ButtonItemProps[] = dto.buttons.map(button => ({
@@ -59,7 +64,7 @@ export class HeroSectionMapper {
       link: new Url(button.link),
       variant: button.variant as any,
       size: button.size as any,
-      disabled: button.disabled
+      disabled: button.disabled,
     }));
 
     const props: HeroSectionProps = {
@@ -72,7 +77,7 @@ export class HeroSectionMapper {
       coverMobile: dto.coverMobile,
       coverDesktop: dto.coverDesktop,
       createdAt: new Date(dto.createdAt),
-      updatedAt: new Date(dto.updatedAt)
+      updatedAt: new Date(dto.updatedAt),
     };
 
     return new HeroSection(props);

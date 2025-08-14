@@ -1,15 +1,15 @@
-import { NextRequest, NextResponse } from "next/server";
-import { SecurityHeaders, createSecurityConfig } from "@/infrastructure/security/SecurityHeaders";
-import { rateLimiter } from "@/infrastructure/security/RateLimiter";
-import { createJWTManager } from "@/infrastructure/security/JWTManager";
+import { NextRequest, NextResponse } from 'next/server';
+import { SecurityHeaders, createSecurityConfig } from '@/infrastructure/security/SecurityHeaders';
+import { rateLimiter } from '@/infrastructure/security/RateLimiter';
+import { createJWTManager } from '@/infrastructure/security/JWTManager';
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  
+
   // Apply rate limiting
   const rateLimitResponse = await applyRateLimiting(req);
   if (rateLimitResponse) return rateLimitResponse;
-  
+
   // Apply authentication middleware to protected routes
   const authResponse = await applyAuthMiddleware(req);
   if (authResponse) return authResponse;
@@ -18,42 +18,45 @@ export async function middleware(req: NextRequest) {
 
   // Get client IP
   const clientIp = getClientIP(req);
-  
+
   // Set proxy headers
-  res.headers.set("X-Forwarded-For", clientIp);
-  res.headers.set("X-Real-IP", clientIp);
+  res.headers.set('X-Forwarded-For', clientIp);
+  res.headers.set('X-Real-IP', clientIp);
 
   // Apply comprehensive security headers
-  const securityConfig = createSecurityConfig(
-    process.env.NODE_ENV as any || 'production',
-    {
-      nonce: generateNonce(),
-      reportUri: process.env.CSP_REPORT_URI
-    }
-  );
-  
+  const securityConfig = createSecurityConfig((process.env.NODE_ENV as any) || 'production', {
+    nonce: generateNonce(),
+    reportUri: process.env.CSP_REPORT_URI,
+  });
+
   const securityHeaders = new SecurityHeaders(securityConfig);
   const headers = securityHeaders.getAllHeaders();
-  
+
   Object.entries(headers).forEach(([key, value]) => {
     res.headers.set(key, value);
   });
 
   // Configure CORS for API routes
   if (pathname.startsWith('/api/')) {
-    res.headers.set("Access-Control-Allow-Origin", process.env.CORS_ORIGIN || "https://dreamplace.com.ar");
-    res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
-    res.headers.set("Access-Control-Allow-Credentials", "true");
+    res.headers.set(
+      'Access-Control-Allow-Origin',
+      process.env.CORS_ORIGIN || 'https://dreamplace.com.ar'
+    );
+    res.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.headers.set(
+      'Access-Control-Allow-Headers',
+      'Content-Type, Authorization, X-Requested-With'
+    );
+    res.headers.set('Access-Control-Allow-Credentials', 'true');
   }
 
   // Cache control based on route type
   if (pathname.startsWith('/api/')) {
-    res.headers.set("Cache-Control", "no-cache, no-store, must-revalidate");
+    res.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
   } else if (pathname.startsWith('/_next/') || pathname.includes('.')) {
-    res.headers.set("Cache-Control", "public, max-age=31536000, immutable");
+    res.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
   } else {
-    res.headers.set("Cache-Control", "public, max-age=3600, must-revalidate");
+    res.headers.set('Cache-Control', 'public, max-age=3600, must-revalidate');
   }
 
   return res;
@@ -65,10 +68,10 @@ export async function middleware(req: NextRequest) {
 async function applyRateLimiting(req: NextRequest): Promise<NextResponse | null> {
   const { pathname } = req.nextUrl;
   const clientIp = getClientIP(req);
-  
+
   // Determine rate limit rule based on path
   let ruleId = 'api-general';
-  
+
   if (pathname.startsWith('/api/auth/login')) {
     ruleId = 'auth-login';
   } else if (pathname.startsWith('/api/auth/register')) {
@@ -90,7 +93,7 @@ async function applyRateLimiting(req: NextRequest): Promise<NextResponse | null>
       {
         error: 'Too Many Requests',
         message: 'Rate limit exceeded',
-        retryAfter: result.retryAfter
+        retryAfter: result.retryAfter,
       },
       { status: 429 }
     );
@@ -99,7 +102,7 @@ async function applyRateLimiting(req: NextRequest): Promise<NextResponse | null>
     response.headers.set('X-RateLimit-Limit', result.limit.toString());
     response.headers.set('X-RateLimit-Remaining', '0');
     response.headers.set('X-RateLimit-Reset', Math.ceil(result.resetTime / 1000).toString());
-    
+
     if (result.retryAfter) {
       response.headers.set('Retry-After', result.retryAfter.toString());
     }
@@ -115,7 +118,7 @@ async function applyRateLimiting(req: NextRequest): Promise<NextResponse | null>
  */
 async function applyAuthMiddleware(req: NextRequest): Promise<NextResponse | null> {
   const { pathname } = req.nextUrl;
-  
+
   // Define protected routes
   const protectedRoutes = ['/dashboard', '/admin', '/profile'];
   const adminRoutes = ['/admin'];
@@ -152,7 +155,7 @@ async function applyAuthMiddleware(req: NextRequest): Promise<NextResponse | nul
           loginUrl.searchParams.set('redirect', pathname);
           return NextResponse.redirect(loginUrl);
         }
-        
+
         // No valid tokens, redirect to login
         const loginUrl = new URL('/login', req.url);
         loginUrl.searchParams.set('redirect', pathname);
@@ -164,7 +167,6 @@ async function applyAuthMiddleware(req: NextRequest): Promise<NextResponse | nul
         // Not admin, redirect to dashboard
         return NextResponse.redirect(new URL('/dashboard', req.url));
       }
-
     } catch (error) {
       console.error('Authentication error:', error);
       const loginUrl = new URL('/login', req.url);
@@ -178,7 +180,7 @@ async function applyAuthMiddleware(req: NextRequest): Promise<NextResponse | nul
     try {
       const jwtManager = createJWTManager();
       const userClaims = await jwtManager.verifyAccessToken(accessToken);
-      
+
       if (userClaims) {
         // Already authenticated, redirect to dashboard
         return NextResponse.redirect(new URL('/dashboard', req.url));
@@ -196,11 +198,11 @@ async function applyAuthMiddleware(req: NextRequest): Promise<NextResponse | nul
  */
 function getClientIP(req: NextRequest): string {
   return (
-    req.headers.get("cf-connecting-ip") || // Cloudflare
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || // Load balancer
-    req.headers.get("x-real-ip") || // Direct proxy
+    req.headers.get('cf-connecting-ip') || // Cloudflare
+    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || // Load balancer
+    req.headers.get('x-real-ip') || // Direct proxy
     req.ip ||
-    "unknown"
+    'unknown'
   );
 }
 

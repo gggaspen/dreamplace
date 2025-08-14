@@ -35,9 +35,12 @@ export class RateLimiter {
 
   constructor() {
     // Clean up expired entries every 5 minutes
-    this.cleanupInterval = setInterval(() => {
-      this.cleanup();
-    }, 5 * 60 * 1000);
+    this.cleanupInterval = setInterval(
+      () => {
+        this.cleanup();
+      },
+      5 * 60 * 1000
+    );
 
     this.initializeDefaultRules();
   }
@@ -53,53 +56,53 @@ export class RateLimiter {
         windowMs: 15 * 60 * 1000, // 15 minutes
         maxRequests: 5, // 5 login attempts per 15 minutes
         blockDurationMs: 30 * 60 * 1000, // Block for 30 minutes after exceeded
-        skipSuccessfulRequests: true
+        skipSuccessfulRequests: true,
       },
       {
         id: 'auth-register',
         name: 'Authentication Register',
         windowMs: 60 * 60 * 1000, // 1 hour
         maxRequests: 3, // 3 registration attempts per hour
-        blockDurationMs: 60 * 60 * 1000 // Block for 1 hour after exceeded
+        blockDurationMs: 60 * 60 * 1000, // Block for 1 hour after exceeded
       },
       {
         id: 'password-reset',
         name: 'Password Reset',
         windowMs: 60 * 60 * 1000, // 1 hour
         maxRequests: 3, // 3 password reset attempts per hour
-        blockDurationMs: 60 * 60 * 1000 // Block for 1 hour after exceeded
+        blockDurationMs: 60 * 60 * 1000, // Block for 1 hour after exceeded
       },
       {
         id: 'api-general',
         name: 'General API',
         windowMs: 60 * 1000, // 1 minute
         maxRequests: 100, // 100 requests per minute
-        skipConditional: (identifier) => {
+        skipConditional: identifier => {
           // Skip rate limiting for admin users
           return identifier.startsWith('admin:');
-        }
+        },
       },
       {
         id: 'api-upload',
         name: 'File Upload API',
         windowMs: 60 * 1000, // 1 minute
         maxRequests: 10, // 10 uploads per minute
-        blockDurationMs: 5 * 60 * 1000 // Block for 5 minutes after exceeded
+        blockDurationMs: 5 * 60 * 1000, // Block for 5 minutes after exceeded
       },
       {
         id: 'contact-form',
         name: 'Contact Form',
         windowMs: 60 * 60 * 1000, // 1 hour
         maxRequests: 5, // 5 contact form submissions per hour
-        blockDurationMs: 60 * 60 * 1000 // Block for 1 hour after exceeded
+        blockDurationMs: 60 * 60 * 1000, // Block for 1 hour after exceeded
       },
       {
         id: 'search',
         name: 'Search API',
         windowMs: 60 * 1000, // 1 minute
         maxRequests: 30, // 30 searches per minute
-        skipSuccessfulRequests: true
-      }
+        skipSuccessfulRequests: true,
+      },
     ];
 
     defaultRules.forEach(rule => {
@@ -139,7 +142,7 @@ export class RateLimiter {
     if (!entry || entry.resetTime < now) {
       entry = {
         count: 0,
-        resetTime: now + rule.windowMs
+        resetTime: now + rule.windowMs,
       };
     }
 
@@ -150,7 +153,7 @@ export class RateLimiter {
         limit: rule.maxRequests,
         remaining: 0,
         resetTime: entry.resetTime,
-        retryAfter: Math.ceil((entry.blockedUntil - now) / 1000)
+        retryAfter: Math.ceil((entry.blockedUntil - now) / 1000),
       };
     }
 
@@ -165,15 +168,14 @@ export class RateLimiter {
         allowed: true,
         limit: rule.maxRequests,
         remaining: rule.maxRequests,
-        resetTime: entry.resetTime
+        resetTime: entry.resetTime,
       };
     }
 
     // Check if we should skip counting this request
-    const shouldSkip = (
+    const shouldSkip =
       (rule.skipSuccessfulRequests && success === true) ||
-      (rule.skipFailedRequests && success === false)
-    );
+      (rule.skipFailedRequests && success === false);
 
     if (!shouldSkip) {
       entry.count++;
@@ -193,7 +195,9 @@ export class RateLimiter {
         limit: rule.maxRequests,
         remaining: 0,
         resetTime: entry.resetTime,
-        retryAfter: rule.blockDurationMs ? Math.ceil(rule.blockDurationMs / 1000) : Math.ceil((entry.resetTime - now) / 1000)
+        retryAfter: rule.blockDurationMs
+          ? Math.ceil(rule.blockDurationMs / 1000)
+          : Math.ceil((entry.resetTime - now) / 1000),
       };
     }
 
@@ -203,7 +207,7 @@ export class RateLimiter {
       allowed: true,
       limit: rule.maxRequests,
       remaining: Math.max(0, rule.maxRequests - entry.count),
-      resetTime: entry.resetTime
+      resetTime: entry.resetTime,
     };
   }
 
@@ -220,7 +224,7 @@ export class RateLimiter {
    */
   resetAllLimits(identifier: string): void {
     const keysToDelete: string[] = [];
-    
+
     for (const key of this.store.keys()) {
       if (key.endsWith(`:${identifier}`)) {
         keysToDelete.push(key);
@@ -248,7 +252,7 @@ export class RateLimiter {
         allowed: true,
         limit: rule.maxRequests,
         remaining: rule.maxRequests,
-        resetTime: now + rule.windowMs
+        resetTime: now + rule.windowMs,
       };
     }
 
@@ -259,7 +263,7 @@ export class RateLimiter {
         limit: rule.maxRequests,
         remaining: 0,
         resetTime: entry.resetTime,
-        retryAfter: Math.ceil((entry.blockedUntil - now) / 1000)
+        retryAfter: Math.ceil((entry.blockedUntil - now) / 1000),
       };
     }
 
@@ -267,7 +271,7 @@ export class RateLimiter {
       allowed: entry.count < rule.maxRequests,
       limit: rule.maxRequests,
       remaining: Math.max(0, rule.maxRequests - entry.count),
-      resetTime: entry.resetTime
+      resetTime: entry.resetTime,
     };
   }
 
@@ -323,7 +327,7 @@ export class RateLimiter {
     return {
       totalEntries: this.store.size,
       totalRules: this.rules.size,
-      activeBlocks
+      activeBlocks,
     };
   }
 
@@ -361,12 +365,9 @@ export function createRateLimitMiddleware(
   return async (req: any, res: any, next: any) => {
     try {
       // Default identifier extraction
-      const identifier = getIdentifier ? getIdentifier(req) : (
-        req.ip || 
-        req.connection?.remoteAddress || 
-        req.socket?.remoteAddress ||
-        'unknown'
-      );
+      const identifier = getIdentifier
+        ? getIdentifier(req)
+        : req.ip || req.connection?.remoteAddress || req.socket?.remoteAddress || 'unknown';
 
       const result = rateLimiter.checkLimit(ruleId, identifier);
 
@@ -386,7 +387,7 @@ export function createRateLimitMiddleware(
           res.status(429).json({
             error: 'Too Many Requests',
             message: 'Rate limit exceeded',
-            retryAfter: result.retryAfter
+            retryAfter: result.retryAfter,
           });
         }
         return;
@@ -410,11 +411,11 @@ export function withRateLimit(
 ) {
   return async (req: any, res: any) => {
     try {
-      const identifier = getIdentifier ? getIdentifier(req) : (
-        req.headers['x-forwarded-for']?.split(',')[0] ||
-        req.connection?.remoteAddress ||
-        'unknown'
-      );
+      const identifier = getIdentifier
+        ? getIdentifier(req)
+        : req.headers['x-forwarded-for']?.split(',')[0] ||
+          req.connection?.remoteAddress ||
+          'unknown';
 
       const result = rateLimiter.checkLimit(ruleId, identifier);
 
@@ -431,7 +432,7 @@ export function withRateLimit(
         return res.status(429).json({
           error: 'Too Many Requests',
           message: 'Rate limit exceeded',
-          retryAfter: result.retryAfter
+          retryAfter: result.retryAfter,
         });
       }
 

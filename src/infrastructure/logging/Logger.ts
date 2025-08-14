@@ -18,7 +18,7 @@ export interface ILogger {
   child(meta: Record<string, unknown>): ILogger;
 }
 
-class Logger implements ILogger {
+export class Logger implements ILogger {
   private readonly config: LoggingConfig;
   private readonly contextMeta: Record<string, unknown>;
 
@@ -47,7 +47,12 @@ class Logger implements ILogger {
     return new Logger(this.config, { ...this.contextMeta, ...meta });
   }
 
-  private log(level: LogLevel, message: string, meta: Record<string, unknown> = {}, error?: Error): void {
+  private log(
+    level: LogLevel,
+    message: string,
+    meta: Record<string, unknown> = {},
+    error?: Error
+  ): void {
     if (!this.shouldLog(level)) {
       return;
     }
@@ -57,7 +62,7 @@ class Logger implements ILogger {
       level,
       message,
       meta: { ...this.contextMeta, ...meta },
-      error
+      error,
     };
 
     if (this.config.outputs.includes('console')) {
@@ -73,7 +78,7 @@ class Logger implements ILogger {
     const levels: LogLevel[] = ['debug', 'info', 'warn', 'error'];
     const currentLevelIndex = levels.indexOf(this.config.level);
     const messageLevelIndex = levels.indexOf(level);
-    
+
     return messageLevelIndex >= currentLevelIndex;
   }
 
@@ -87,13 +92,13 @@ class Logger implements ILogger {
     const timestamp = entry.timestamp;
     const level = entry.level.toUpperCase().padEnd(5);
     const message = entry.message;
-    
+
     let output = `[${timestamp}] ${level} ${message}`;
-    
+
     if (Object.keys(entry.meta || {}).length > 0) {
       output += ` ${JSON.stringify(entry.meta, null, 2)}`;
     }
-    
+
     if (entry.error) {
       output += `\\n${entry.error.stack}`;
     }
@@ -131,6 +136,6 @@ export const getLogger = (meta?: Record<string, unknown>): ILogger => {
   if (!loggerInstance) {
     throw new Error('Logger not initialized. Call createLogger first.');
   }
-  
+
   return meta ? loggerInstance.child(meta) : loggerInstance;
 };

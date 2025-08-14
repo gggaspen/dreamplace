@@ -22,7 +22,7 @@ export function useRoutePreloading(config: PreloadingConfig = {}) {
     preloadOnHover = true,
     preloadOnVisible = true,
     preloadDelay = 1000,
-    preloadCritical = true
+    preloadCritical = true,
   } = config;
 
   const { user } = useAuth();
@@ -44,7 +44,7 @@ export function useRoutePreloading(config: PreloadingConfig = {}) {
   // Preload routes based on current location
   useEffect(() => {
     const currentRoute = pathname;
-    
+
     // Preload related routes based on current page
     if (currentRoute.startsWith('/admin')) {
       RoutePreloader.preloadRouteGroup(ROUTE_GROUPS.ADMIN);
@@ -56,37 +56,46 @@ export function useRoutePreloading(config: PreloadingConfig = {}) {
   }, [pathname]);
 
   // Create preload handler for links
-  const createPreloadHandler = useCallback((routePath: string) => {
-    return {
-      onMouseEnter: preloadOnHover ? () => {
-        const timer = setTimeout(() => {
-          // Find the corresponding lazy route component
-          const routeComponent = findRouteComponent(routePath);
-          if (routeComponent) {
-            RoutePreloader.preloadRoute(routeComponent);
-          }
-        }, preloadDelay);
+  const createPreloadHandler = useCallback(
+    (routePath: string) => {
+      return {
+        onMouseEnter: preloadOnHover
+          ? () => {
+              const timer = setTimeout(() => {
+                // Find the corresponding lazy route component
+                const routeComponent = findRouteComponent(routePath);
+                if (routeComponent) {
+                  RoutePreloader.preloadRoute(routeComponent);
+                }
+              }, preloadDelay);
 
-        preloadTimersRef.current.set(routePath, timer);
-      } : undefined,
+              preloadTimersRef.current.set(routePath, timer);
+            }
+          : undefined,
 
-      onMouseLeave: preloadOnHover ? () => {
-        const timer = preloadTimersRef.current.get(routePath);
-        if (timer) {
-          clearTimeout(timer);
-          preloadTimersRef.current.delete(routePath);
-        }
-      } : undefined,
+        onMouseLeave: preloadOnHover
+          ? () => {
+              const timer = preloadTimersRef.current.get(routePath);
+              if (timer) {
+                clearTimeout(timer);
+                preloadTimersRef.current.delete(routePath);
+              }
+            }
+          : undefined,
 
-      onFocus: preloadOnHover ? () => {
-        // Find the corresponding lazy route component
-        const routeComponent = findRouteComponent(routePath);
-        if (routeComponent) {
-          RoutePreloader.preloadRoute(routeComponent);
-        }
-      } : undefined
-    };
-  }, [preloadOnHover, preloadDelay]);
+        onFocus: preloadOnHover
+          ? () => {
+              // Find the corresponding lazy route component
+              const routeComponent = findRouteComponent(routePath);
+              if (routeComponent) {
+                RoutePreloader.preloadRoute(routeComponent);
+              }
+            }
+          : undefined,
+      };
+    },
+    [preloadOnHover, preloadDelay]
+  );
 
   // Cleanup timers on unmount
   useEffect(() => {
@@ -100,7 +109,7 @@ export function useRoutePreloading(config: PreloadingConfig = {}) {
     createPreloadHandler,
     preloadRoute: RoutePreloader.preloadRoute,
     preloadRouteGroup: RoutePreloader.preloadRouteGroup,
-    getPreloadedRoutes: RoutePreloader.getPreloadedRoutes
+    getPreloadedRoutes: RoutePreloader.getPreloadedRoutes,
   };
 }
 
@@ -124,7 +133,7 @@ function findRouteComponent(routePath: string): React.LazyExoticComponent<any> |
     '/artists': LazyRoutes.Artists,
     '/analytics': LazyRoutes.Analytics,
     '/reports': LazyRoutes.Reports,
-    '/demo': LazyRoutes.Demo
+    '/demo': LazyRoutes.Demo,
   };
 
   return routeMap[routePath] || null;
@@ -133,10 +142,7 @@ function findRouteComponent(routePath: string): React.LazyExoticComponent<any> |
 /**
  * Hook for intersection observer-based preloading
  */
-export function useVisibilityPreloading(
-  routePath: string,
-  options: IntersectionObserverInit = {}
-) {
+export function useVisibilityPreloading(routePath: string, options: IntersectionObserverInit = {}) {
   const elementRef = useRef<HTMLElement>(null);
   const hasPreloaded = useRef(false);
 
@@ -145,8 +151,8 @@ export function useVisibilityPreloading(
     if (!element || hasPreloaded.current) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      entries => {
+        entries.forEach(entry => {
           if (entry.isIntersecting && !hasPreloaded.current) {
             const routeComponent = findRouteComponent(routePath);
             if (routeComponent) {
@@ -179,7 +185,7 @@ export function useSmartPreloading() {
   useEffect(() => {
     // Track navigation history
     navigationHistory.current.push(pathname);
-    
+
     // Keep only last 5 routes
     if (navigationHistory.current.length > 5) {
       navigationHistory.current = navigationHistory.current.slice(-5);
@@ -187,7 +193,7 @@ export function useSmartPreloading() {
 
     // Predict next routes based on patterns
     const predictedRoutes = predictNextRoutes(navigationHistory.current);
-    
+
     // Preload predicted routes
     predictedRoutes.forEach(route => {
       const routeComponent = findRouteComponent(route);
@@ -199,7 +205,7 @@ export function useSmartPreloading() {
 
   return {
     navigationHistory: navigationHistory.current,
-    predictedRoutes: predictNextRoutes(navigationHistory.current)
+    predictedRoutes: predictNextRoutes(navigationHistory.current),
   };
 }
 

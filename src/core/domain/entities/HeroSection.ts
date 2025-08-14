@@ -102,7 +102,7 @@ export class HeroSection extends BaseEntity {
 
   constructor(props: HeroSectionProps) {
     super(props.id, props.createdAt, props.updatedAt);
-    
+
     this._title = this.validateTitle(props.title);
     this._subtitle = props.subtitle;
     this._paragraph = props.paragraph;

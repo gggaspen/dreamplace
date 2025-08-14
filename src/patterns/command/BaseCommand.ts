@@ -4,15 +4,13 @@ import { ICommand, CommandMetadata, CommandType } from './types';
  * Base implementation of the Command interface
  * Provides common functionality for all commands
  */
-export abstract class BaseCommand<TResult = unknown, TError = Error> implements ICommand<TResult, TError> {
+export abstract class BaseCommand<TResult = unknown, TError = Error>
+  implements ICommand<TResult, TError>
+{
   protected metadata: CommandMetadata;
   protected previousState?: unknown;
-  
-  constructor(
-    type: CommandType,
-    payload?: unknown,
-    context?: Record<string, unknown>
-  ) {
+
+  constructor(type: CommandType, payload?: unknown, context?: Record<string, unknown>) {
     this.metadata = {
       id: this.generateId(),
       timestamp: new Date(),

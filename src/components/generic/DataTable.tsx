@@ -1,19 +1,12 @@
 /**
  * Generic DataTable Component with TypeScript Generics
- * 
+ *
  * Fully type-safe data table that can handle any data structure
  * while providing sorting, filtering, and pagination capabilities.
  */
 
 import React, { ReactNode, useState, useMemo } from 'react';
 import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
   Box,
   Button,
   Input,
@@ -21,6 +14,53 @@ import {
   Text,
   Select,
 } from '@chakra-ui/react';
+
+// Create a simple table implementation since Table components aren't available
+const Table = ({ children, ...props }: { children: React.ReactNode; variant?: string; size?: string }) => (
+  <table {...props} style={{ width: '100%', borderCollapse: 'collapse' }}>
+    {children}
+  </table>
+);
+
+const TableContainer = ({ children }: { children: React.ReactNode }) => (
+  <div style={{ overflowX: 'auto' }}>
+    {children}
+  </div>
+);
+
+const Thead = ({ children }: { children: React.ReactNode }) => <thead>{children}</thead>;
+const Tbody = ({ children }: { children: React.ReactNode }) => <tbody>{children}</tbody>;
+const Tr = ({ children, ...props }: { children: React.ReactNode; cursor?: string; _hover?: any; onClick?: () => void }) => (
+  <tr {...props} style={{ ...props._hover ? {} : {}, cursor: props.cursor }}>
+    {children}
+  </tr>
+);
+const Th = ({ children, ...props }: { children: React.ReactNode; width?: string | number; textAlign?: string; cursor?: string; onClick?: () => void; _hover?: any }) => (
+  <th 
+    {...props} 
+    style={{ 
+      padding: '8px', 
+      borderBottom: '1px solid #e2e8f0', 
+      textAlign: props.textAlign as any || 'left',
+      width: props.width,
+      cursor: props.cursor
+    }}
+  >
+    {children}
+  </th>
+);
+const Td = ({ children, ...props }: { children: React.ReactNode; colSpan?: number; textAlign?: string }) => (
+  <td 
+    {...props} 
+    style={{ 
+      padding: '8px', 
+      borderBottom: '1px solid #e2e8f0', 
+      textAlign: props.textAlign as any || 'left' 
+    }}
+  >
+    {children}
+  </td>
+);
 
 // Generic column definition
 export interface TableColumn<T> {
@@ -91,8 +131,8 @@ export function DataTable<T extends Record<string, any>>({
 
     // Search/filter
     if (searchTerm && searchable) {
-      result = result.filter((item) =>
-        Object.values(item).some((value) =>
+      result = result.filter(item =>
+        Object.values(item).some(value =>
           String(value).toLowerCase().includes(searchTerm.toLowerCase())
         )
       );
@@ -150,18 +190,18 @@ export function DataTable<T extends Record<string, any>>({
           <Input
             placeholder={searchPlaceholder}
             value={searchTerm}
-            onChange={(e) => {
+            onChange={e => {
               setSearchTerm(e.target.value);
               setCurrentPage(1); // Reset to first page on search
             }}
-            maxW="300px"
+            maxW='300px'
           />
         </Box>
       )}
 
       {/* Table */}
       <TableContainer>
-        <Table variant={striped ? 'striped' : 'simple'} size="sm">
+        <Table variant={striped ? 'striped' : 'simple'} size='sm'>
           <Thead>
             <Tr>
               {columns.map((column, index) => (
@@ -182,7 +222,7 @@ export function DataTable<T extends Record<string, any>>({
           <Tbody>
             {processedData.items.length === 0 ? (
               <Tr>
-                <Td colSpan={columns.length} textAlign="center">
+                <Td colSpan={columns.length} textAlign='center'>
                   {emptyComponent}
                 </Td>
               </Tr>
@@ -195,10 +235,7 @@ export function DataTable<T extends Record<string, any>>({
                   onClick={() => onRowClick?.(item, index)}
                 >
                   {columns.map((column, columnIndex) => (
-                    <Td
-                      key={String(column.key) + columnIndex}
-                      textAlign={column.align || 'left'}
-                    >
+                    <Td key={String(column.key) + columnIndex} textAlign={column.align || 'left'}>
                       {renderCell(item, column)}
                     </Td>
                   ))}
@@ -211,27 +248,27 @@ export function DataTable<T extends Record<string, any>>({
 
       {/* Pagination */}
       {processedData.totalPages > 1 && (
-        <Flex justify="space-between" align="center" mt={4}>
-          <Text fontSize="sm" color="gray.600">
+        <Flex justify='space-between' align='center' mt={4}>
+          <Text fontSize='sm' color='gray.600'>
             Showing {(currentPage - 1) * pageSize + 1} to{' '}
             {Math.min(currentPage * pageSize, processedData.totalItems)} of{' '}
             {processedData.totalItems} items
           </Text>
           <Flex gap={2}>
             <Button
-              size="sm"
-              variant="outline"
+              size='sm'
+              variant='outline'
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 1}
             >
               Previous
             </Button>
-            <Text fontSize="sm" px={2} py={1}>
+            <Text fontSize='sm' px={2} py={1}>
               Page {currentPage} of {processedData.totalPages}
             </Text>
             <Button
-              size="sm"
-              variant="outline"
+              size='sm'
+              variant='outline'
               onClick={() => setCurrentPage(currentPage + 1)}
               disabled={currentPage === processedData.totalPages}
             >

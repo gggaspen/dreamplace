@@ -7,7 +7,12 @@
 
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User } from '../../domain/auth/entities/User';
-import { AuthRepository, AuthSession, LoginCredentials, RegisterCredentials } from '../../domain/auth/repositories/AuthRepository';
+import {
+  AuthRepository,
+  AuthSession,
+  LoginCredentials,
+  RegisterCredentials,
+} from '../../domain/auth/repositories/AuthRepository';
 import { LoginUseCase } from '../../domain/auth/usecases/LoginUseCase';
 
 export interface AuthContextValue {
@@ -15,7 +20,7 @@ export interface AuthContextValue {
   isLoading: boolean;
   isAuthenticated: boolean;
   session: AuthSession | null;
-  
+
   // Actions
   login: (credentials: LoginCredentials) => Promise<{ success: boolean; error?: string }>;
   register: (credentials: RegisterCredentials) => Promise<{ success: boolean; error?: string }>;
@@ -39,17 +44,17 @@ export function AuthProvider({ children, authRepository, loginUseCase }: AuthPro
 
   useEffect(() => {
     // Subscribe to authentication state changes
-    const unsubscribe = authRepository.onAuthStateChanged((authUser) => {
+    const unsubscribe = authRepository.onAuthStateChanged(authUser => {
       setUser(authUser);
       setIsLoading(false);
-      
+
       if (authUser) {
         authRepository.getToken().then(token => {
           if (token) {
             setSession({
               user: authUser,
               token,
-              isAuthenticated: true
+              isAuthenticated: true,
             });
           }
         });
@@ -65,12 +70,12 @@ export function AuthProvider({ children, authRepository, loginUseCase }: AuthPro
     setIsLoading(true);
     try {
       const result = await loginUseCase.execute(credentials);
-      
+
       if (result.success && result.session) {
         setUser(result.session.user);
         setSession(result.session);
       }
-      
+
       return { success: result.success, error: result.error };
     } finally {
       setIsLoading(false);
@@ -85,9 +90,9 @@ export function AuthProvider({ children, authRepository, loginUseCase }: AuthPro
       setSession(session);
       return { success: true };
     } catch (error) {
-      return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Registration failed' 
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Registration failed',
       };
     } finally {
       setIsLoading(false);
@@ -122,14 +127,10 @@ export function AuthProvider({ children, authRepository, loginUseCase }: AuthPro
     register,
     logout,
     resetPassword,
-    updatePassword
+    updatePassword,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth(): AuthContextValue {

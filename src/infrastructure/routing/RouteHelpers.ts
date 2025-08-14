@@ -32,12 +32,12 @@ export class RouteHelpers {
     if (userRoles.includes('admin')) {
       return ROUTES.ADMIN.path;
     }
-    
+
     // Artist users go to artist dashboard
     if (userRoles.includes('artist')) {
       return ROUTES.ARTIST_DASHBOARD.path;
     }
-    
+
     // Regular users go to dashboard
     return ROUTES.DASHBOARD.path;
   }
@@ -52,7 +52,7 @@ export class RouteHelpers {
     items.push({
       label: 'Home',
       path: ROUTES.HOME.path,
-      icon: 'home'
+      icon: 'home',
     });
 
     // Add user-specific navigation items
@@ -60,13 +60,13 @@ export class RouteHelpers {
       items.push({
         label: 'Dashboard',
         path: ROUTES.DASHBOARD.path,
-        icon: 'dashboard'
+        icon: 'dashboard',
       });
 
       items.push({
         label: 'Profile',
         path: ROUTES.PROFILE.path,
-        icon: 'user'
+        icon: 'user',
       });
 
       // Artist-specific items
@@ -74,7 +74,7 @@ export class RouteHelpers {
         items.push({
           label: 'Artist Panel',
           path: ROUTES.ARTIST_DASHBOARD.path,
-          icon: 'music'
+          icon: 'music',
         });
       }
 
@@ -83,7 +83,7 @@ export class RouteHelpers {
         items.push({
           label: 'Admin Panel',
           path: ROUTES.ADMIN.path,
-          icon: 'admin'
+          icon: 'admin',
         });
       }
     } else {
@@ -91,7 +91,7 @@ export class RouteHelpers {
       items.push({
         label: 'Sign In',
         path: ROUTES.LOGIN.path,
-        icon: 'login'
+        icon: 'login',
       });
     }
 
@@ -109,14 +109,14 @@ export class RouteHelpers {
     breadcrumbs.push({
       label: 'Home',
       path: '/',
-      isActive: path === '/'
+      isActive: path === '/',
     });
 
     let currentPath = '';
     segments.forEach((segment, index) => {
       currentPath += `/${segment}`;
       const isActive = index === segments.length - 1;
-      
+
       // Try to find route definition for better labels
       const route = RoutePermissions.getRouteByPath(currentPath);
       const label = route?.title || this.formatSegmentLabel(segment);
@@ -124,7 +124,7 @@ export class RouteHelpers {
       breadcrumbs.push({
         label,
         path: currentPath,
-        isActive
+        isActive,
       });
     });
 
@@ -147,12 +147,12 @@ export class RouteHelpers {
   static matchesRoute(currentPath: string, routePath: string): boolean {
     // Exact match
     if (currentPath === routePath) return true;
-    
+
     // Check if current path starts with route path (for nested routes)
     if (routePath !== '/' && currentPath.startsWith(routePath)) {
       return true;
     }
-    
+
     return false;
   }
 
@@ -161,11 +161,11 @@ export class RouteHelpers {
    */
   static getRouteMetadata(path: string): RouteMetadata {
     const route = RoutePermissions.getRouteByPath(path);
-    
+
     return {
       title: route?.title || 'DreamPlace',
       description: route?.description || 'Electronic music events and artists platform',
-      path
+      path,
     };
   }
 }

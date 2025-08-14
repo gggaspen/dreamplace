@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
-import { 
-  IComponentFactoryRegistry, 
-  IComponentFactory, 
-  ComponentConfig, 
-  CreationContext 
+import {
+  IComponentFactoryRegistry,
+  IComponentFactory,
+  ComponentConfig,
+  CreationContext,
 } from './types';
 
 /**
@@ -21,14 +21,16 @@ export class ComponentFactoryRegistry implements IComponentFactoryRegistry {
 
   register(factory: IComponentFactory): void {
     this.factories.set(factory.name, factory);
-    
+
     // Map supported types to this factory
     const metadata = factory.getMetadata();
     metadata.supportedTypes.forEach(type => {
       this.typeToFactoryMap.set(type, factory.name);
     });
 
-    this.log(`Factory '${factory.name}' registered with types: ${metadata.supportedTypes.join(', ')}`);
+    this.log(
+      `Factory '${factory.name}' registered with types: ${metadata.supportedTypes.join(', ')}`
+    );
   }
 
   unregister(factoryName: string): boolean {
@@ -69,7 +71,7 @@ export class ComponentFactoryRegistry implements IComponentFactoryRegistry {
 
   async create(config: ComponentConfig, context?: CreationContext): Promise<ReactElement> {
     const startTime = performance.now();
-    
+
     try {
       // Find appropriate factory
       const factory = this.getFactory(config.type);
@@ -79,24 +81,28 @@ export class ComponentFactoryRegistry implements IComponentFactoryRegistry {
 
       // Validate factory can create this specific config
       if (!factory.canCreate(config)) {
-        throw new Error(`Factory '${factory.name}' cannot create component with config: ${JSON.stringify(config)}`);
+        throw new Error(
+          `Factory '${factory.name}' cannot create component with config: ${JSON.stringify(config)}`
+        );
       }
 
       // Create component
       const element = await Promise.resolve(factory.create(config, context));
-      
+
       // Record successful creation
       const creationTime = performance.now() - startTime;
       this.recordCreation(config.type, factory.name, true, creationTime);
-      
-      this.log(`Created component '${config.type}' using factory '${factory.name}' in ${creationTime.toFixed(2)}ms`);
-      
+
+      this.log(
+        `Created component '${config.type}' using factory '${factory.name}' in ${creationTime.toFixed(2)}ms`
+      );
+
       return element;
     } catch (error) {
       // Record failed creation
       const creationTime = performance.now() - startTime;
       this.recordCreation(config.type, 'unknown', false, creationTime);
-      
+
       this.log(`Failed to create component '${config.type}': ${error}`);
       throw error;
     }
@@ -104,10 +110,10 @@ export class ComponentFactoryRegistry implements IComponentFactoryRegistry {
 
   // Batch creation for multiple components
   async createBatch(
-    configs: ComponentConfig[], 
+    configs: ComponentConfig[],
     context?: CreationContext
   ): Promise<ReactElement[]> {
-    const creationPromises = configs.map(config => 
+    const creationPromises = configs.map(config =>
       this.create(config, context).catch(error => {
         console.error(`Failed to create component ${config.type}:`, error);
         return null;
@@ -170,20 +176,26 @@ export class ComponentFactoryRegistry implements IComponentFactoryRegistry {
     const successRate = totalCreations > 0 ? successfulCreations / totalCreations : 0;
 
     // Count creations by type
-    const creationsByType = this.creationHistory.reduce((acc, history) => {
-      if (history.success) {
-        acc[history.type] = (acc[history.type] || 0) + 1;
-      }
-      return acc;
-    }, {} as Record<string, number>);
+    const creationsByType = this.creationHistory.reduce(
+      (acc, history) => {
+        if (history.success) {
+          acc[history.type] = (acc[history.type] || 0) + 1;
+        }
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     // Count failures by type
-    const failuresByType = this.creationHistory.reduce((acc, history) => {
-      if (!history.success) {
-        acc[history.type] = (acc[history.type] || 0) + 1;
-      }
-      return acc;
-    }, {} as Record<string, number>);
+    const failuresByType = this.creationHistory.reduce(
+      (acc, history) => {
+        if (!history.success) {
+          acc[history.type] = (acc[history.type] || 0) + 1;
+        }
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     return {
       factoryCount: this.factories.size,

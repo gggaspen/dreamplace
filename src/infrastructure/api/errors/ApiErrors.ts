@@ -7,19 +7,14 @@ export abstract class ApiError extends Error {
   public readonly endpoint?: string;
   public readonly method?: string;
 
-  constructor(
-    message: string,
-    status?: number,
-    endpoint?: string,
-    method?: string
-  ) {
+  constructor(message: string, status?: number, endpoint?: string, method?: string) {
     super(message);
     this.name = this.constructor.name;
     this.status = status;
     this.timestamp = new Date();
     this.endpoint = endpoint;
     this.method = method;
-    
+
     // Ensure proper prototype chain
     Object.setPrototypeOf(this, new.target.prototype);
   }
@@ -29,11 +24,7 @@ export abstract class ApiError extends Error {
  * Network-related errors (connection issues, timeouts)
  */
 export class NetworkError extends ApiError {
-  constructor(
-    message: string = 'Network error occurred',
-    endpoint?: string,
-    method?: string
-  ) {
+  constructor(message: string = 'Network error occurred', endpoint?: string, method?: string) {
     super(message, undefined, endpoint, method);
   }
 }
@@ -60,11 +51,7 @@ export class ClientError extends ApiError {
  * HTTP 401 Unauthorized
  */
 export class UnauthorizedError extends ClientError {
-  constructor(
-    message: string = 'Unauthorized access',
-    endpoint?: string,
-    method?: string
-  ) {
+  constructor(message: string = 'Unauthorized access', endpoint?: string, method?: string) {
     super(message, 401, endpoint, method);
   }
 }
@@ -73,11 +60,7 @@ export class UnauthorizedError extends ClientError {
  * HTTP 403 Forbidden
  */
 export class ForbiddenError extends ClientError {
-  constructor(
-    message: string = 'Access forbidden',
-    endpoint?: string,
-    method?: string
-  ) {
+  constructor(message: string = 'Access forbidden', endpoint?: string, method?: string) {
     super(message, 403, endpoint, method);
   }
 }
@@ -86,11 +69,7 @@ export class ForbiddenError extends ClientError {
  * HTTP 404 Not Found
  */
 export class NotFoundError extends ClientError {
-  constructor(
-    message: string = 'Resource not found',
-    endpoint?: string,
-    method?: string
-  ) {
+  constructor(message: string = 'Resource not found', endpoint?: string, method?: string) {
     super(message, 404, endpoint, method);
   }
 }
@@ -149,11 +128,7 @@ export class RateLimitError extends ClientError {
 export class TimeoutError extends NetworkError {
   public readonly timeoutMs: number;
 
-  constructor(
-    timeoutMs: number,
-    endpoint?: string,
-    method?: string
-  ) {
+  constructor(timeoutMs: number, endpoint?: string, method?: string) {
     super(`Request timed out after ${timeoutMs}ms`, endpoint, method);
     this.timeoutMs = timeoutMs;
   }
@@ -179,11 +154,7 @@ export class CircuitBreakerError extends ApiError {
 /**
  * Utility function to create appropriate error instances from axios errors
  */
-export const createApiError = (
-  error: any,
-  endpoint?: string,
-  method?: string
-): ApiError => {
+export const createApiError = (error: any, endpoint?: string, method?: string): ApiError => {
   // Network errors (no response)
   if (!error.response) {
     if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
@@ -209,7 +180,12 @@ export const createApiError = (
         return new ValidationError(message, endpoint, method, data?.errors);
       case 429:
         const retryAfter = error.response.headers?.['retry-after'];
-        return new RateLimitError(message, retryAfter ? parseInt(retryAfter) : undefined, endpoint, method);
+        return new RateLimitError(
+          message,
+          retryAfter ? parseInt(retryAfter) : undefined,
+          endpoint,
+          method
+        );
       default:
         return new ClientError(message, status, endpoint, method, data);
     }

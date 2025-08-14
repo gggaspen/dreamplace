@@ -1,6 +1,6 @@
 /**
  * Button Atom Component
- * 
+ *
  * A foundational button component with consistent styling,
  * accessibility features, and brand-aligned design.
  */
@@ -14,22 +14,22 @@ export interface ButtonProps extends Omit<ChakraButtonProps, 'size' | 'variant'>
    * Button size
    */
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  
+
   /**
    * Button variant
    */
   variant?: 'solid' | 'outline' | 'ghost' | 'link' | 'brand' | 'secondary';
-  
+
   /**
    * Whether the button is in a loading state
    */
   loading?: boolean;
-  
+
   /**
    * Icon to display on the left side of the button
    */
   leftIcon?: React.ReactElement;
-  
+
   /**
    * Icon to display on the right side of the button
    */
@@ -43,47 +43,47 @@ const buttonStyles = {
     transition: 'all 150ms ease',
     _focus: {
       boxShadow: componentShadows.button.focus,
-      outline: 'none'
+      outline: 'none',
     },
     _disabled: {
       opacity: 0.6,
-      cursor: 'not-allowed'
-    }
+      cursor: 'not-allowed',
+    },
   },
-  
+
   sizes: {
     xs: {
       height: '6',
       minW: '6',
       fontSize: 'xs',
-      px: '2'
+      px: '2',
     },
     sm: {
       height: '8',
       minW: '8',
       fontSize: 'sm',
-      px: '3'
+      px: '3',
     },
     md: {
       height: '10',
       minW: '10',
       fontSize: 'md',
-      px: '4'
+      px: '4',
     },
     lg: {
       height: '12',
       minW: '12',
       fontSize: 'lg',
-      px: '6'
+      px: '6',
     },
     xl: {
       height: '14',
       minW: '14',
       fontSize: 'xl',
-      px: '8'
-    }
+      px: '8',
+    },
   },
-  
+
   variants: {
     brand: {
       bg: 'brand.500',
@@ -92,13 +92,13 @@ const buttonStyles = {
       _hover: {
         bg: 'brand.600',
         boxShadow: componentShadows.button.hover,
-        transform: 'translateY(-1px)'
+        transform: 'translateY(-1px)',
       },
       _active: {
         bg: 'brand.700',
         boxShadow: componentShadows.button.pressed,
-        transform: 'translateY(0)'
-      }
+        transform: 'translateY(0)',
+      },
     },
     secondary: {
       bg: 'secondary.500',
@@ -107,40 +107,41 @@ const buttonStyles = {
       _hover: {
         bg: 'secondary.600',
         boxShadow: componentShadows.button.hover,
-        transform: 'translateY(-1px)'
+        transform: 'translateY(-1px)',
       },
       _active: {
         bg: 'secondary.700',
         boxShadow: componentShadows.button.pressed,
-        transform: 'translateY(0)'
-      }
-    }
-  }
+        transform: 'translateY(0)',
+      },
+    },
+  },
 };
 
-export const Button = React.memo(forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, variant = 'solid', size = 'md', loading, leftIcon, rightIcon, ...props }, ref) => {
-    // Apply custom styles based on variant
-    const customStyles = variant === 'brand' || variant === 'secondary' 
-      ? buttonStyles.variants[variant] 
-      : {};
+export const Button = React.memo(
+  forwardRef<HTMLButtonElement, ButtonProps>(
+    ({ children, variant = 'solid', size = 'md', loading, leftIcon, rightIcon, ...props }, ref) => {
+      // Apply custom styles based on variant
+      const customStyles =
+        variant === 'brand' || variant === 'secondary' ? buttonStyles.variants[variant] : {};
 
-    return (
-      <ChakraButton
-        ref={ref}
-        size={size}
-        variant={variant === 'brand' || variant === 'secondary' ? 'solid' : variant}
-        isLoading={loading}
-        leftIcon={leftIcon}
-        rightIcon={rightIcon}
-        {...buttonStyles.baseStyle}
-        {...customStyles}
-        {...props}
-      >
-        {children}
-      </ChakraButton>
-    );
-  }
-));
+      return (
+        <ChakraButton
+          ref={ref}
+          size={size}
+          variant={variant === 'brand' || variant === 'secondary' ? 'solid' : variant}
+          isLoading={loading}
+          leftIcon={leftIcon}
+          rightIcon={rightIcon}
+          {...buttonStyles.baseStyle}
+          {...customStyles}
+          {...props}
+        >
+          {children}
+        </ChakraButton>
+      );
+    }
+  )
+);
 
 Button.displayName = 'Button';

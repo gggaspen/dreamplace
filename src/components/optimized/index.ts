@@ -1,6 +1,6 @@
 /**
  * Optimized Components Index
- * 
+ *
  * Barrel export for performance-optimized components
  */
 

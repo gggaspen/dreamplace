@@ -23,14 +23,14 @@ export class PerformanceObserver extends BaseObserver<PerformanceEvent> {
     super('performance_observer');
     this.performanceService = performanceService;
     this.maxHistorySize = maxHistorySize;
-    
+
     // Set default performance thresholds
     this.setDefaultThresholds();
   }
 
   async update(
-    data: PerformanceEvent, 
-    eventType: string, 
+    data: PerformanceEvent,
+    eventType: string,
     source: IObservable<PerformanceEvent>
   ): Promise<void> {
     if (!this.isActive()) return;
@@ -42,7 +42,7 @@ export class PerformanceObserver extends BaseObserver<PerformanceEvent> {
 
     // Add to history
     this.performanceHistory.push(timestampedEvent);
-    
+
     // Maintain history size
     if (this.performanceHistory.length > this.maxHistorySize) {
       this.performanceHistory.shift();
@@ -67,28 +67,26 @@ export class PerformanceObserver extends BaseObserver<PerformanceEvent> {
   private setDefaultThresholds(): void {
     // Core Web Vitals and other important metrics
     this.thresholds.set('LCP', 2500); // Largest Contentful Paint (ms)
-    this.thresholds.set('FID', 100);  // First Input Delay (ms)
-    this.thresholds.set('CLS', 0.1);  // Cumulative Layout Shift (score)
+    this.thresholds.set('FID', 100); // First Input Delay (ms)
+    this.thresholds.set('CLS', 0.1); // Cumulative Layout Shift (score)
     this.thresholds.set('FCP', 1800); // First Contentful Paint (ms)
     this.thresholds.set('TTFB', 600); // Time to First Byte (ms)
-    
+
     // Application-specific metrics
     this.thresholds.set('componentRender', 16); // Component render time (ms)
-    this.thresholds.set('apiResponse', 1000);   // API response time (ms)
-    this.thresholds.set('bundleSize', 250000);  // Bundle size (bytes)
+    this.thresholds.set('apiResponse', 1000); // API response time (ms)
+    this.thresholds.set('bundleSize', 250000); // Bundle size (bytes)
     this.thresholds.set('memoryUsage', 50000000); // Memory usage (bytes)
   }
 
-  private logPerformanceMetric(
-    event: PerformanceEvent & { timestamp: Date }
-  ): void {
+  private logPerformanceMetric(event: PerformanceEvent & { timestamp: Date }): void {
     const { metric, value, unit, component, operation, timestamp } = event;
     const threshold = this.thresholds.get(metric);
     const isAboveThreshold = threshold && value > threshold;
-    
+
     const emoji = isAboveThreshold ? '🐌' : '⚡';
     const status = isAboveThreshold ? 'SLOW' : 'GOOD';
-    
+
     console.log(
       `${emoji} [${status}] ${metric}: ${value}${unit}`,
       component ? `(${component})` : '',
@@ -99,14 +97,14 @@ export class PerformanceObserver extends BaseObserver<PerformanceEvent> {
 
   private checkThresholds(event: PerformanceEvent & { timestamp: Date }): void {
     const threshold = this.thresholds.get(event.metric);
-    
+
     if (threshold && event.value > threshold) {
       console.warn(
         `⚠️ Performance threshold exceeded for ${event.metric}:`,
         `${event.value}${event.unit} > ${threshold}${event.unit}`,
         event.component ? `in component: ${event.component}` : ''
       );
-      
+
       // Create performance alert
       this.createPerformanceAlert(event, threshold);
     }
@@ -132,7 +130,7 @@ export class PerformanceObserver extends BaseObserver<PerformanceEvent> {
     // - Alerts to monitoring systems
     // - Performance degradation notifications
     // - Automatic performance optimizations
-    
+
     this.log('Performance alert created', alert);
   }
 
@@ -143,9 +141,7 @@ export class PerformanceObserver extends BaseObserver<PerformanceEvent> {
     return 'low';
   }
 
-  private async reportMetric(
-    event: PerformanceEvent & { timestamp: Date }
-  ): Promise<void> {
+  private async reportMetric(event: PerformanceEvent & { timestamp: Date }): Promise<void> {
     try {
       if (this.performanceService?.recordMetric) {
         await this.performanceService.recordMetric(event);
@@ -172,60 +168,75 @@ export class PerformanceObserver extends BaseObserver<PerformanceEvent> {
     recentTrends: Record<string, 'improving' | 'stable' | 'degrading'>;
   } {
     const totalMetrics = this.performanceHistory.length;
-    
+
     // Group metrics by type
-    const metricGroups = this.performanceHistory.reduce((acc, event) => {
-      if (!acc[event.metric]) {
-        acc[event.metric] = [];
-      }
-      acc[event.metric].push(event.value);
-      return acc;
-    }, {} as Record<string, number[]>);
+    const metricGroups = this.performanceHistory.reduce(
+      (acc, event) => {
+        if (!acc[event.metric]) {
+          acc[event.metric] = [];
+        }
+        acc[event.metric].push(event.value);
+        return acc;
+      },
+      {} as Record<string, number[]>
+    );
 
     // Calculate averages
-    const averages = Object.entries(metricGroups).reduce((acc, [metric, values]) => {
-      acc[metric] = values.reduce((sum, val) => sum + val, 0) / values.length;
-      return acc;
-    }, {} as Record<string, number>);
+    const averages = Object.entries(metricGroups).reduce(
+      (acc, [metric, values]) => {
+        acc[metric] = values.reduce((sum, val) => sum + val, 0) / values.length;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     // Calculate 95th percentiles
-    const p95Values = Object.entries(metricGroups).reduce((acc, [metric, values]) => {
-      const sorted = [...values].sort((a, b) => a - b);
-      const p95Index = Math.floor(sorted.length * 0.95);
-      acc[metric] = sorted[p95Index] || 0;
-      return acc;
-    }, {} as Record<string, number>);
+    const p95Values = Object.entries(metricGroups).reduce(
+      (acc, [metric, values]) => {
+        const sorted = [...values].sort((a, b) => a - b);
+        const p95Index = Math.floor(sorted.length * 0.95);
+        acc[metric] = sorted[p95Index] || 0;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     // Count threshold violations
-    const thresholdViolations = this.performanceHistory.reduce((acc, event) => {
-      const threshold = this.thresholds.get(event.metric);
-      if (threshold && event.value > threshold) {
-        acc[event.metric] = (acc[event.metric] || 0) + 1;
-      }
-      return acc;
-    }, {} as Record<string, number>);
+    const thresholdViolations = this.performanceHistory.reduce(
+      (acc, event) => {
+        const threshold = this.thresholds.get(event.metric);
+        if (threshold && event.value > threshold) {
+          acc[event.metric] = (acc[event.metric] || 0) + 1;
+        }
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     // Calculate recent trends (last 10 vs previous 10 measurements for each metric)
-    const recentTrends = Object.entries(metricGroups).reduce((acc, [metric, values]) => {
-      if (values.length < 20) {
-        acc[metric] = 'stable';
+    const recentTrends = Object.entries(metricGroups).reduce(
+      (acc, [metric, values]) => {
+        if (values.length < 20) {
+          acc[metric] = 'stable';
+          return acc;
+        }
+
+        const recent = values.slice(-10);
+        const previous = values.slice(-20, -10);
+
+        const recentAvg = recent.reduce((sum, val) => sum + val, 0) / recent.length;
+        const previousAvg = previous.reduce((sum, val) => sum + val, 0) / previous.length;
+
+        const changeRatio = recentAvg / previousAvg;
+
+        if (changeRatio < 0.9) acc[metric] = 'improving';
+        else if (changeRatio > 1.1) acc[metric] = 'degrading';
+        else acc[metric] = 'stable';
+
         return acc;
-      }
-      
-      const recent = values.slice(-10);
-      const previous = values.slice(-20, -10);
-      
-      const recentAvg = recent.reduce((sum, val) => sum + val, 0) / recent.length;
-      const previousAvg = previous.reduce((sum, val) => sum + val, 0) / previous.length;
-      
-      const changeRatio = recentAvg / previousAvg;
-      
-      if (changeRatio < 0.9) acc[metric] = 'improving';
-      else if (changeRatio > 1.1) acc[metric] = 'degrading';
-      else acc[metric] = 'stable';
-      
-      return acc;
-    }, {} as Record<string, 'improving' | 'stable' | 'degrading'>);
+      },
+      {} as Record<string, 'improving' | 'stable' | 'degrading'>
+    );
 
     return {
       totalMetrics,

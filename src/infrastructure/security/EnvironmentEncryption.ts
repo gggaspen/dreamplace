@@ -35,7 +35,7 @@ export class EnvironmentEncryption {
       ivLength: 16,
       saltLength: 32,
       tagLength: 16,
-      ...config
+      ...config,
     };
   }
 
@@ -46,32 +46,34 @@ export class EnvironmentEncryption {
     try {
       const salt = randomBytes(this.config.saltLength);
       const iv = randomBytes(this.config.ivLength);
-      
+
       // Derive key from master key and salt
-      const key = await scryptAsync(this.masterKey, salt, this.config.keyLength) as Buffer;
-      
+      const key = (await scryptAsync(this.masterKey, salt, this.config.keyLength)) as Buffer;
+
       // Create cipher
       const cipher = createCipheriv(this.config.algorithm, key, iv);
-      
+
       // Encrypt
       let encrypted = cipher.update(plaintext, 'utf8', 'hex');
       encrypted += cipher.final('hex');
-      
+
       // Get authentication tag
       const tag = cipher.getAuthTag();
-      
+
       // Combine all components
       const result: EncryptedValue = {
         encrypted,
         iv: iv.toString('hex'),
         salt: salt.toString('hex'),
-        tag: tag.toString('hex')
+        tag: tag.toString('hex'),
       };
-      
+
       // Return base64 encoded JSON
       return Buffer.from(JSON.stringify(result)).toString('base64');
     } catch (error) {
-      throw new Error(`Encryption failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Encryption failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -81,27 +83,31 @@ export class EnvironmentEncryption {
   async decrypt(encryptedData: string): Promise<string> {
     try {
       // Decode base64 and parse JSON
-      const data: EncryptedValue = JSON.parse(Buffer.from(encryptedData, 'base64').toString('utf8'));
-      
+      const data: EncryptedValue = JSON.parse(
+        Buffer.from(encryptedData, 'base64').toString('utf8')
+      );
+
       // Convert hex strings back to buffers
       const salt = Buffer.from(data.salt, 'hex');
       const iv = Buffer.from(data.iv, 'hex');
       const tag = Buffer.from(data.tag, 'hex');
-      
+
       // Derive key from master key and salt
-      const key = await scryptAsync(this.masterKey, salt, this.config.keyLength) as Buffer;
-      
+      const key = (await scryptAsync(this.masterKey, salt, this.config.keyLength)) as Buffer;
+
       // Create decipher
       const decipher = createDecipheriv(this.config.algorithm, key, iv);
       decipher.setAuthTag(tag);
-      
+
       // Decrypt
       let decrypted = decipher.update(data.encrypted, 'hex', 'utf8');
       decrypted += decipher.final('utf8');
-      
+
       return decrypted;
     } catch (error) {
-      throw new Error(`Decryption failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Decryption failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -110,7 +116,7 @@ export class EnvironmentEncryption {
    */
   async encryptEnvironment(env: Record<string, string>): Promise<Record<string, string>> {
     const encrypted: Record<string, string> = {};
-    
+
     for (const [key, value] of Object.entries(env)) {
       if (this.shouldEncrypt(key)) {
         encrypted[key] = await this.encrypt(value);
@@ -118,7 +124,7 @@ export class EnvironmentEncryption {
         encrypted[key] = value;
       }
     }
-    
+
     return encrypted;
   }
 
@@ -127,7 +133,7 @@ export class EnvironmentEncryption {
    */
   async decryptEnvironment(env: Record<string, string>): Promise<Record<string, string>> {
     const decrypted: Record<string, string> = {};
-    
+
     for (const [key, value] of Object.entries(env)) {
       if (this.shouldEncrypt(key) && this.isEncrypted(value)) {
         try {
@@ -140,7 +146,7 @@ export class EnvironmentEncryption {
         decrypted[key] = value;
       }
     }
-    
+
     return decrypted;
   }
 
@@ -180,7 +186,7 @@ export class EnvironmentEncryption {
       'GITHUB_',
       'OAUTH_',
       'WEBHOOK_',
-      'ENCRYPTION_'
+      'ENCRYPTION_',
     ];
 
     const upperKey = key.toUpperCase();
@@ -226,7 +232,7 @@ export class EnvironmentEncryption {
 
     return {
       valid: errors.length === 0,
-      errors
+      errors,
     };
   }
 }
@@ -263,7 +269,7 @@ export class SecureEnvironmentManager {
         this.cache.set(key, decrypted);
         return decrypted;
       }
-      
+
       // Return plain value
       this.cache.set(key, value);
       return value;
@@ -304,15 +310,17 @@ export class SecureEnvironmentManager {
       const fs = await import('fs/promises');
       const content = await fs.readFile(filePath, 'utf8');
       const env = JSON.parse(content);
-      
+
       const decryptedEnv = await this.encryption.decryptEnvironment(env);
-      
+
       for (const [key, value] of Object.entries(decryptedEnv)) {
         process.env[key] = value;
         this.cache.set(key, value);
       }
     } catch (error) {
-      throw new Error(`Failed to load environment from file: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to load environment from file: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -322,7 +330,7 @@ export class SecureEnvironmentManager {
   async saveToFile(filePath: string, keys: string[]): Promise<void> {
     try {
       const env: Record<string, string> = {};
-      
+
       for (const key of keys) {
         const value = await this.get(key);
         if (value !== undefined) {
@@ -331,11 +339,13 @@ export class SecureEnvironmentManager {
       }
 
       const encryptedEnv = await this.encryption.encryptEnvironment(env);
-      
+
       const fs = await import('fs/promises');
       await fs.writeFile(filePath, JSON.stringify(encryptedEnv, null, 2), 'utf8');
     } catch (error) {
-      throw new Error(`Failed to save environment to file: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to save environment to file: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 }
@@ -345,9 +355,11 @@ export class SecureEnvironmentManager {
  */
 export function createSecureEnvironmentManager(): SecureEnvironmentManager {
   const masterKey = process.env.ENCRYPTION_MASTER_KEY || EnvironmentEncryption.generateMasterKey();
-  
+
   if (!process.env.ENCRYPTION_MASTER_KEY) {
-    console.warn('ENCRYPTION_MASTER_KEY not set, using generated key. This should be set in production.');
+    console.warn(
+      'ENCRYPTION_MASTER_KEY not set, using generated key. This should be set in production.'
+    );
   }
 
   return new SecureEnvironmentManager(masterKey);
@@ -376,7 +388,7 @@ export const envUtils = {
     const manager = createSecureEnvironmentManager();
     const [accessSecret, refreshSecret] = await Promise.all([
       manager.get('JWT_ACCESS_SECRET'),
-      manager.get('JWT_REFRESH_SECRET')
+      manager.get('JWT_REFRESH_SECRET'),
     ]);
 
     if (!accessSecret || !refreshSecret) {
@@ -396,11 +408,11 @@ export const envUtils = {
       'STRIPE_PUBLISHABLE_KEY',
       'GOOGLE_API_KEY',
       'FACEBOOK_APP_SECRET',
-      'TWITTER_API_SECRET'
+      'TWITTER_API_SECRET',
     ];
 
     const apiKeys: Record<string, string> = {};
-    
+
     for (const key of keys) {
       const value = await manager.get(key);
       if (value) {
@@ -409,5 +421,5 @@ export const envUtils = {
     }
 
     return apiKeys;
-  }
+  },
 };

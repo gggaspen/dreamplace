@@ -18,10 +18,10 @@ export class CommandInvoker implements ICommandInvoker {
   async execute<T>(command: ICommand<T>): Promise<CommandResult<T>> {
     try {
       const result = await command.execute();
-      
+
       // Add to history and manage size
       this.addToHistory(command);
-      
+
       return {
         success: true,
         data: result,
@@ -65,13 +65,14 @@ export class CommandInvoker implements ICommandInvoker {
   }
 
   canUndo(): boolean {
-    return this.currentIndex >= 0 && 
-           this.history[this.currentIndex]?.canUndo?.() === true;
+    return this.currentIndex >= 0 && this.history[this.currentIndex]?.canUndo?.() === true;
   }
 
   canRedo(): boolean {
-    return this.currentIndex < this.history.length - 1 &&
-           this.history[this.currentIndex + 1]?.canRedo?.() === true;
+    return (
+      this.currentIndex < this.history.length - 1 &&
+      this.history[this.currentIndex + 1]?.canRedo?.() === true
+    );
   }
 
   getHistory(): CommandMetadata[] {
@@ -94,11 +95,11 @@ export class CommandInvoker implements ICommandInvoker {
   private addToHistory(command: ICommand): void {
     // Remove any commands after current index (when redoing after undo)
     this.history = this.history.slice(0, this.currentIndex + 1);
-    
+
     // Add new command
     this.history.push(command);
     this.currentIndex++;
-    
+
     // Maintain max history size
     if (this.history.length > this.maxHistorySize) {
       this.history.shift();

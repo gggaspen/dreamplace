@@ -41,35 +41,149 @@ export class RBACManager {
     // Define default permissions
     const permissions: Permission[] = [
       // User management
-      { id: 'user.read', name: 'Read Users', description: 'View user information', resource: 'user', action: 'read' },
-      { id: 'user.create', name: 'Create Users', description: 'Create new users', resource: 'user', action: 'create' },
-      { id: 'user.update', name: 'Update Users', description: 'Update user information', resource: 'user', action: 'update' },
-      { id: 'user.delete', name: 'Delete Users', description: 'Delete users', resource: 'user', action: 'delete' },
-      
+      {
+        id: 'user.read',
+        name: 'Read Users',
+        description: 'View user information',
+        resource: 'user',
+        action: 'read',
+      },
+      {
+        id: 'user.create',
+        name: 'Create Users',
+        description: 'Create new users',
+        resource: 'user',
+        action: 'create',
+      },
+      {
+        id: 'user.update',
+        name: 'Update Users',
+        description: 'Update user information',
+        resource: 'user',
+        action: 'update',
+      },
+      {
+        id: 'user.delete',
+        name: 'Delete Users',
+        description: 'Delete users',
+        resource: 'user',
+        action: 'delete',
+      },
+
       // Content management
-      { id: 'content.read', name: 'Read Content', description: 'View content', resource: 'content', action: 'read' },
-      { id: 'content.create', name: 'Create Content', description: 'Create new content', resource: 'content', action: 'create' },
-      { id: 'content.update', name: 'Update Content', description: 'Update content', resource: 'content', action: 'update' },
-      { id: 'content.delete', name: 'Delete Content', description: 'Delete content', resource: 'content', action: 'delete' },
-      { id: 'content.publish', name: 'Publish Content', description: 'Publish content', resource: 'content', action: 'publish' },
-      
+      {
+        id: 'content.read',
+        name: 'Read Content',
+        description: 'View content',
+        resource: 'content',
+        action: 'read',
+      },
+      {
+        id: 'content.create',
+        name: 'Create Content',
+        description: 'Create new content',
+        resource: 'content',
+        action: 'create',
+      },
+      {
+        id: 'content.update',
+        name: 'Update Content',
+        description: 'Update content',
+        resource: 'content',
+        action: 'update',
+      },
+      {
+        id: 'content.delete',
+        name: 'Delete Content',
+        description: 'Delete content',
+        resource: 'content',
+        action: 'delete',
+      },
+      {
+        id: 'content.publish',
+        name: 'Publish Content',
+        description: 'Publish content',
+        resource: 'content',
+        action: 'publish',
+      },
+
       // Event management
-      { id: 'event.read', name: 'Read Events', description: 'View events', resource: 'event', action: 'read' },
-      { id: 'event.create', name: 'Create Events', description: 'Create new events', resource: 'event', action: 'create' },
-      { id: 'event.update', name: 'Update Events', description: 'Update events', resource: 'event', action: 'update' },
-      { id: 'event.delete', name: 'Delete Events', description: 'Delete events', resource: 'event', action: 'delete' },
-      
+      {
+        id: 'event.read',
+        name: 'Read Events',
+        description: 'View events',
+        resource: 'event',
+        action: 'read',
+      },
+      {
+        id: 'event.create',
+        name: 'Create Events',
+        description: 'Create new events',
+        resource: 'event',
+        action: 'create',
+      },
+      {
+        id: 'event.update',
+        name: 'Update Events',
+        description: 'Update events',
+        resource: 'event',
+        action: 'update',
+      },
+      {
+        id: 'event.delete',
+        name: 'Delete Events',
+        description: 'Delete events',
+        resource: 'event',
+        action: 'delete',
+      },
+
       // Analytics
-      { id: 'analytics.read', name: 'Read Analytics', description: 'View analytics data', resource: 'analytics', action: 'read' },
-      
+      {
+        id: 'analytics.read',
+        name: 'Read Analytics',
+        description: 'View analytics data',
+        resource: 'analytics',
+        action: 'read',
+      },
+
       // System administration
-      { id: 'system.settings', name: 'System Settings', description: 'Manage system settings', resource: 'system', action: 'settings' },
-      { id: 'system.logs', name: 'System Logs', description: 'View system logs', resource: 'system', action: 'logs' },
-      { id: 'system.maintenance', name: 'System Maintenance', description: 'Perform system maintenance', resource: 'system', action: 'maintenance' },
-      
+      {
+        id: 'system.settings',
+        name: 'System Settings',
+        description: 'Manage system settings',
+        resource: 'system',
+        action: 'settings',
+      },
+      {
+        id: 'system.logs',
+        name: 'System Logs',
+        description: 'View system logs',
+        resource: 'system',
+        action: 'logs',
+      },
+      {
+        id: 'system.maintenance',
+        name: 'System Maintenance',
+        description: 'Perform system maintenance',
+        resource: 'system',
+        action: 'maintenance',
+      },
+
       // Profile management
-      { id: 'profile.read', name: 'Read Profile', description: 'View own profile', resource: 'profile', action: 'read' },
-      { id: 'profile.update', name: 'Update Profile', description: 'Update own profile', resource: 'profile', action: 'update' }
+      {
+        id: 'profile.read',
+        name: 'Read Profile',
+        description: 'View own profile',
+        resource: 'profile',
+        action: 'read',
+      },
+      {
+        id: 'profile.update',
+        name: 'Update Profile',
+        description: 'Update own profile',
+        resource: 'profile',
+        action: 'update',
+      },
     ];
 
     // Register permissions
@@ -87,8 +201,8 @@ export class RBACManager {
           this.permissions.get('content.read')!,
           this.permissions.get('event.read')!,
           this.permissions.get('profile.read')!,
-          this.permissions.get('profile.update')!
-        ]
+          this.permissions.get('profile.update')!,
+        ],
       },
       {
         id: 'moderator',
@@ -101,8 +215,8 @@ export class RBACManager {
           this.permissions.get('content.publish')!,
           this.permissions.get('event.create')!,
           this.permissions.get('event.update')!,
-          this.permissions.get('user.read')!
-        ]
+          this.permissions.get('user.read')!,
+        ],
       },
       {
         id: 'admin',
@@ -118,9 +232,9 @@ export class RBACManager {
           this.permissions.get('analytics.read')!,
           this.permissions.get('system.settings')!,
           this.permissions.get('system.logs')!,
-          this.permissions.get('system.maintenance')!
-        ]
-      }
+          this.permissions.get('system.maintenance')!,
+        ],
+      },
     ];
 
     // Register roles
@@ -212,8 +326,8 @@ export class RBACManager {
    */
   hasResourcePermission(user: User, resource: string, action: string): boolean {
     const userPermissions = this.getUserPermissions(user);
-    return userPermissions.some(permission => 
-      permission.resource === resource && permission.action === action
+    return userPermissions.some(
+      permission => permission.resource === resource && permission.action === action
     );
   }
 
@@ -250,9 +364,9 @@ export class RBACManager {
    */
   getRoleLevel(roleId: string): number {
     const roleLevels: Record<string, number> = {
-      'user': 1,
-      'moderator': 2,
-      'admin': 3
+      user: 1,
+      moderator: 2,
+      admin: 3,
     };
 
     return roleLevels[roleId] || 0;
@@ -309,13 +423,13 @@ export class RBACManager {
   createPermissionCheck(user: User) {
     return {
       hasPermission: (permissionId: string) => this.hasPermission(user, permissionId),
-      hasResourcePermission: (resource: string, action: string) => 
+      hasResourcePermission: (resource: string, action: string) =>
         this.hasResourcePermission(user, resource, action),
       hasAnyPermission: (permissionIds: string[]) => this.hasAnyPermission(user, permissionIds),
       hasAllPermissions: (permissionIds: string[]) => this.hasAllPermissions(user, permissionIds),
       hasRole: (roleId: string) => this.hasRole(user, roleId),
       hasAnyRole: (roleIds: string[]) => this.hasAnyRole(user, roleIds),
-      meetsMinimumRoleLevel: (level: number) => this.meetsMinimumRoleLevel(user, level)
+      meetsMinimumRoleLevel: (level: number) => this.meetsMinimumRoleLevel(user, level),
     };
   }
 }
@@ -341,7 +455,7 @@ export function withPermission<P extends object>(
     // This would be implemented with actual user context
     // For now, this is a placeholder structure
     const user = null; // Get from context
-    
+
     if (!user || !rbacManager.hasPermission(user, requiredPermission)) {
       if (fallbackComponent) {
         return React.createElement(fallbackComponent);
@@ -365,7 +479,7 @@ export function usePermissions(user: User | null) {
       hasAllPermissions: () => false,
       hasRole: () => false,
       hasAnyRole: () => false,
-      meetsMinimumRoleLevel: () => false
+      meetsMinimumRoleLevel: () => false,
     };
   }
 

@@ -10,7 +10,9 @@ export class GetActiveEventUseCase {
       const activeEvent = await this.eventRepository.findActiveEvent();
       return activeEvent ? EventMapper.toDto(activeEvent) : null;
     } catch (error) {
-      throw new Error(`Failed to get active event: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to get active event: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 }

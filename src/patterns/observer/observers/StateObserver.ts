@@ -19,7 +19,7 @@ export class StateObserver extends BaseObserver<StateChangeEvent> {
   private shouldPersist: boolean = false;
 
   constructor(
-    persistenceService?: any, 
+    persistenceService?: any,
     maxHistorySize: number = 50,
     shouldPersist: boolean = false
   ) {
@@ -30,8 +30,8 @@ export class StateObserver extends BaseObserver<StateChangeEvent> {
   }
 
   async update(
-    data: StateChangeEvent, 
-    eventType: string, 
+    data: StateChangeEvent,
+    eventType: string,
     source: IObservable<StateChangeEvent>
   ): Promise<void> {
     if (!this.isActive()) return;
@@ -43,7 +43,7 @@ export class StateObserver extends BaseObserver<StateChangeEvent> {
 
     // Add to history
     this.stateHistory.push(timestampedEvent);
-    
+
     // Maintain history size
     if (this.stateHistory.length > this.maxHistorySize) {
       this.stateHistory.shift();
@@ -69,7 +69,7 @@ export class StateObserver extends BaseObserver<StateChangeEvent> {
 
   private logStateChange(event: StateChangeEvent & { timestamp: Date }): void {
     const { path, oldValue, newValue, component, action, timestamp } = event;
-    
+
     console.group(`🔄 State Change: ${path}`);
     console.log('Timestamp:', timestamp.toISOString());
     console.log('Component:', component || 'Unknown');
@@ -86,10 +86,13 @@ export class StateObserver extends BaseObserver<StateChangeEvent> {
       } else if (typeof window !== 'undefined') {
         // Fallback to localStorage
         const key = `dreamplace_state_${event.path}`;
-        localStorage.setItem(key, JSON.stringify({
-          value: event.newValue,
-          timestamp: event.timestamp,
-        }));
+        localStorage.setItem(
+          key,
+          JSON.stringify({
+            value: event.newValue,
+            timestamp: event.timestamp,
+          })
+        );
       }
     } catch (error) {
       this.log('Failed to persist state change', { event, error });
@@ -99,8 +102,7 @@ export class StateObserver extends BaseObserver<StateChangeEvent> {
   private analyzeStateChange(event: StateChangeEvent & { timestamp: Date }): void {
     // Check for rapid state changes (potential performance issue)
     const recentChanges = this.stateHistory.filter(
-      e => e.path === event.path && 
-           (Date.now() - e.timestamp.getTime()) < 1000 // Last 1 second
+      e => e.path === event.path && Date.now() - e.timestamp.getTime() < 1000 // Last 1 second
     );
 
     if (recentChanges.length > 10) {
@@ -112,7 +114,8 @@ export class StateObserver extends BaseObserver<StateChangeEvent> {
 
     // Check for large state objects (potential memory issue)
     const newValueSize = this.getObjectSize(event.newValue);
-    if (newValueSize > 1000000) { // > 1MB
+    if (newValueSize > 1000000) {
+      // > 1MB
       console.warn(
         `⚠️ Large state object detected for path: ${event.path}`,
         `Size: ${(newValueSize / 1000000).toFixed(2)}MB`
@@ -168,25 +171,29 @@ export class StateObserver extends BaseObserver<StateChangeEvent> {
   } {
     const totalChanges = this.stateHistory.length;
     const uniquePaths = new Set(this.stateHistory.map(e => e.path)).size;
-    
+
     // Find most changed path
-    const pathCounts = this.stateHistory.reduce((acc, event) => {
-      acc[event.path] = (acc[event.path] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-    
+    const pathCounts = this.stateHistory.reduce(
+      (acc, event) => {
+        acc[event.path] = (acc[event.path] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
+
     const mostChangedPath = Object.keys(pathCounts).reduce(
-      (max, path) => pathCounts[path] > (pathCounts[max] || 0) ? path : max,
+      (max, path) => (pathCounts[path] > (pathCounts[max] || 0) ? path : max),
       null as string | null
     );
 
     // Calculate average changes per minute
     const oldestTimestamp = this.stateHistory[0]?.timestamp;
     const newestTimestamp = this.stateHistory[this.stateHistory.length - 1]?.timestamp;
-    const timeSpanMinutes = oldestTimestamp && newestTimestamp
-      ? (newestTimestamp.getTime() - oldestTimestamp.getTime()) / (1000 * 60)
-      : 0;
-    
+    const timeSpanMinutes =
+      oldestTimestamp && newestTimestamp
+        ? (newestTimestamp.getTime() - oldestTimestamp.getTime()) / (1000 * 60)
+        : 0;
+
     const avgChangesPerMinute = timeSpanMinutes > 0 ? totalChanges / timeSpanMinutes : 0;
 
     return {

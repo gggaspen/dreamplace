@@ -7,7 +7,10 @@ class MockCommand extends BaseCommand<string> {
   private executed = false;
   private undone = false;
 
-  constructor(private value: string, private shouldFail = false) {
+  constructor(
+    private value: string,
+    private shouldFail = false
+  ) {
     super(CommandType.FETCH_DATA, { value });
   }
 
@@ -121,7 +124,7 @@ describe('CommandInvoker', () => {
   describe('history management', () => {
     it('should maintain history size limit', async () => {
       const smallInvoker = new CommandInvoker(2);
-      
+
       await smallInvoker.execute(new MockCommand('test1'));
       await smallInvoker.execute(new MockCommand('test2'));
       await smallInvoker.execute(new MockCommand('test3'));
@@ -137,9 +140,9 @@ describe('CommandInvoker', () => {
       await invoker.execute(new MockCommand('test2'));
 
       expect(invoker.getHistory()).toHaveLength(2);
-      
+
       invoker.clearHistory();
-      
+
       expect(invoker.getHistory()).toHaveLength(0);
       expect(invoker.canUndo()).toBe(false);
       expect(invoker.canRedo()).toBe(false);
@@ -149,14 +152,14 @@ describe('CommandInvoker', () => {
       await invoker.execute(new MockCommand('test1'));
       await invoker.execute(new MockCommand('test2'));
       await invoker.execute(new MockCommand('test3'));
-      
+
       // Undo twice
       await invoker.undo();
       await invoker.undo();
-      
+
       // Execute new command
       await invoker.execute(new MockCommand('test4'));
-      
+
       const history = invoker.getHistory();
       expect(history).toHaveLength(2);
       expect(history[0].payload).toEqual({ value: 'test1' });

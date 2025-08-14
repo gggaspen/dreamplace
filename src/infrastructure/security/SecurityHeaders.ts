@@ -23,7 +23,7 @@ export class SecurityHeaders {
    */
   generateCSP(): string {
     const nonce = this.config.nonce ? `'nonce-${this.config.nonce}'` : '';
-    
+
     const cspDirectives = {
       'default-src': ["'self'"],
       'script-src': [
@@ -35,13 +35,13 @@ export class SecurityHeaders {
         'https://connect.facebook.net',
         'https://js.stripe.com',
         'https://www.gstatic.com',
-        'https://apis.google.com'
+        'https://apis.google.com',
       ].filter(Boolean),
       'style-src': [
         "'self'",
         "'unsafe-inline'", // Required for Chakra UI and styled-components
         'https://fonts.googleapis.com',
-        'https://use.typekit.net'
+        'https://use.typekit.net',
       ],
       'img-src': [
         "'self'",
@@ -53,14 +53,9 @@ export class SecurityHeaders {
         'https://dreamplace.com.ar',
         'https://images.unsplash.com',
         'https://www.google-analytics.com',
-        'https://www.facebook.com'
+        'https://www.facebook.com',
       ],
-      'font-src': [
-        "'self'",
-        'data:',
-        'https://fonts.gstatic.com',
-        'https://use.typekit.net'
-      ],
+      'font-src': ["'self'", 'data:', 'https://fonts.gstatic.com', 'https://use.typekit.net'],
       'connect-src': [
         "'self'",
         'https://api.stripe.com',
@@ -69,36 +64,30 @@ export class SecurityHeaders {
         'https://*.firebase.com',
         'https://www.google-analytics.com',
         'https://vitals.vercel-insights.com',
-        ...(this.config.reportUri ? [this.config.reportUri] : [])
+        ...(this.config.reportUri ? [this.config.reportUri] : []),
       ],
       'frame-src': [
         "'self'",
         'https://js.stripe.com',
         'https://hooks.stripe.com',
         'https://www.youtube.com',
-        'https://open.spotify.com'
+        'https://open.spotify.com',
       ],
-      'worker-src': [
-        "'self'",
-        'blob:'
-      ],
-      'child-src': [
-        "'self'",
-        'blob:'
-      ],
+      'worker-src': ["'self'", 'blob:'],
+      'child-src': ["'self'", 'blob:'],
       'object-src': ["'none'"],
       'base-uri': ["'self'"],
       'form-action': ["'self'"],
       'frame-ancestors': ["'none'"],
-      'upgrade-insecure-requests': this.config.env === 'production' ? [] : null
+      'upgrade-insecure-requests': this.config.env === 'production' ? [] : null,
     };
 
     // Build CSP string
     const cspParts: string[] = [];
-    
+
     Object.entries(cspDirectives).forEach(([directive, sources]) => {
       if (sources === null) return;
-      
+
       if (Array.isArray(sources) && sources.length > 0) {
         cspParts.push(`${directive} ${sources.join(' ')}`);
       } else if (sources.length === 0) {
@@ -122,19 +111,19 @@ export class SecurityHeaders {
     const headers: Record<string, string> = {
       // Content Security Policy
       'Content-Security-Policy': this.generateCSP(),
-      
+
       // XSS Protection
       'X-XSS-Protection': '1; mode=block',
-      
+
       // Content Type Options
       'X-Content-Type-Options': 'nosniff',
-      
+
       // Frame Options
       'X-Frame-Options': 'DENY',
-      
+
       // Referrer Policy
       'Referrer-Policy': 'strict-origin-when-cross-origin',
-      
+
       // Permissions Policy
       'Permissions-Policy': [
         'camera=()',
@@ -146,17 +135,17 @@ export class SecurityHeaders {
         'magnetometer=()',
         'accelerometer=()',
         'gyroscope=()',
-        'ambient-light-sensor=()'
+        'ambient-light-sensor=()',
       ].join(', '),
-      
+
       // Cross-Origin Embedder Policy
       'Cross-Origin-Embedder-Policy': 'credentialless',
-      
+
       // Cross-Origin Opener Policy
       'Cross-Origin-Opener-Policy': 'same-origin',
-      
+
       // Cross-Origin Resource Policy
-      'Cross-Origin-Resource-Policy': 'cross-origin'
+      'Cross-Origin-Resource-Policy': 'cross-origin',
     };
 
     // Add HSTS header for production
@@ -169,7 +158,7 @@ export class SecurityHeaders {
       headers['Report-To'] = JSON.stringify({
         group: 'csp-endpoint',
         max_age: 10886400,
-        endpoints: [{ url: this.config.reportUri }]
+        endpoints: [{ url: this.config.reportUri }],
       });
     }
 
@@ -197,9 +186,20 @@ export class SecurityHeaders {
    */
   static validateCSPDirective(directive: string, sources: string[]): boolean {
     const validDirectives = [
-      'default-src', 'script-src', 'style-src', 'img-src', 'font-src',
-      'connect-src', 'frame-src', 'worker-src', 'child-src', 'object-src',
-      'base-uri', 'form-action', 'frame-ancestors', 'upgrade-insecure-requests'
+      'default-src',
+      'script-src',
+      'style-src',
+      'img-src',
+      'font-src',
+      'connect-src',
+      'frame-src',
+      'worker-src',
+      'child-src',
+      'object-src',
+      'base-uri',
+      'form-action',
+      'frame-ancestors',
+      'upgrade-insecure-requests',
     ];
 
     if (!validDirectives.includes(directive)) {
@@ -208,19 +208,23 @@ export class SecurityHeaders {
 
     // Validate sources
     const validSourceKeywords = [
-      "'self'", "'unsafe-inline'", "'unsafe-eval'", "'none'", "'strict-dynamic'"
+      "'self'",
+      "'unsafe-inline'",
+      "'unsafe-eval'",
+      "'none'",
+      "'strict-dynamic'",
     ];
 
     return sources.every(source => {
       // Allow valid keywords
       if (validSourceKeywords.includes(source)) return true;
-      
+
       // Allow nonce sources
       if (source.startsWith("'nonce-")) return true;
-      
+
       // Allow hash sources
       if (source.match(/^'(sha256|sha384|sha512)-[A-Za-z0-9+/=]+'$/)) return true;
-      
+
       // Allow URLs (basic validation)
       try {
         new URL(source);
@@ -245,7 +249,7 @@ export function createSecurityConfig(
     enableCSP: true,
     enableHSTS: env === 'production',
     reportUri: env === 'production' ? '/api/csp-report' : undefined,
-    nonce: SecurityHeaders.generateNonce()
+    nonce: SecurityHeaders.generateNonce(),
   };
 
   return { ...defaults, ...overrides };

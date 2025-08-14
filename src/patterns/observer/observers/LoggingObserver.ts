@@ -24,28 +24,24 @@ export class LoggingObserver extends BaseObserver<LogEvent> {
     super('logging_observer');
     this.logService = logService;
     this.maxBufferSize = maxBufferSize;
-    
+
     // Auto-flush logs every 10 seconds
     this.flushInterval = setInterval(() => this.flushLogs(), 10000);
   }
 
-  async update(
-    data: LogEvent, 
-    eventType: string, 
-    source: IObservable<LogEvent>
-  ): Promise<void> {
+  async update(data: LogEvent, eventType: string, source: IObservable<LogEvent>): Promise<void> {
     if (!this.isActive()) return;
 
     const enrichedLog = this.enrichLogEvent(data, eventType);
-    
+
     // Add to buffer
     this.logBuffer.push(enrichedLog);
-    
+
     // Flush if buffer is full or high priority log
     if (this.logBuffer.length >= this.maxBufferSize || data.level === 'error') {
       await this.flushLogs();
     }
-    
+
     // Also log to console in development
     if (process.env.NODE_ENV === 'development') {
       this.logToConsole(enrichedLog);
@@ -63,7 +59,7 @@ export class LoggingObserver extends BaseObserver<LogEvent> {
         eventType,
       },
     };
-    
+
     // Log the error immediately without going through the buffer
     this.logToConsole(errorLog);
     if (this.logService) {
@@ -88,7 +84,7 @@ export class LoggingObserver extends BaseObserver<LogEvent> {
     const { level, message, data } = logEvent;
     const timestamp = new Date().toISOString();
     const prefix = `[${timestamp}] [${level.toUpperCase()}]`;
-    
+
     switch (level) {
       case 'debug':
         console.debug(prefix, message, data);
@@ -133,7 +129,7 @@ export class LoggingObserver extends BaseObserver<LogEvent> {
           }
         }
       }
-      
+
       this.log(`Flushed ${logsToFlush.length} log entries`);
     } catch (error) {
       console.error('Failed to flush logs to external service:', error);
@@ -150,7 +146,7 @@ export class LoggingObserver extends BaseObserver<LogEvent> {
       clearInterval(this.flushInterval);
       this.flushInterval = null;
     }
-    
+
     // Flush remaining logs
     this.flushLogs().catch(console.error);
     this.deactivate();

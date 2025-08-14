@@ -2,7 +2,11 @@ import { IContactInfoRepository } from '../../core/domain/repositories/IContactI
 import { ContactInfo, ContactInfoProps } from '../../core/domain/entities/ContactInfo';
 import { Email } from '../../core/domain/value-objects/Email';
 import { Url } from '../../core/domain/value-objects/Url';
-import { StrapiApiClient, StrapiCollectionResponse, StrapiResponse } from '../external/StrapiApiClient';
+import {
+  StrapiApiClient,
+  StrapiCollectionResponse,
+  StrapiResponse,
+} from '../external/StrapiApiClient';
 
 interface StrapiContactInfoData {
   id: number;
@@ -22,12 +26,15 @@ export class StrapiContactInfoRepository implements IContactInfoRepository {
 
   async findCurrent(): Promise<ContactInfo | null> {
     try {
-      const response = await this.apiClient.get<StrapiCollectionResponse<StrapiContactInfoData>>('contact-sections', {
-        'fields[0]': 'text',
-        'fields[1]': 'email',
-        'fields[2]': 'whatsapp',
-        'fields[3]': 'instagram'
-      });
+      const response = await this.apiClient.get<StrapiCollectionResponse<StrapiContactInfoData>>(
+        'contact-sections',
+        {
+          'fields[0]': 'text',
+          'fields[1]': 'email',
+          'fields[2]': 'whatsapp',
+          'fields[3]': 'instagram',
+        }
+      );
 
       if (response.data.length === 0) {
         return null;
@@ -35,35 +42,49 @@ export class StrapiContactInfoRepository implements IContactInfoRepository {
 
       return this.mapToDomainEntity(response.data[0]);
     } catch (error) {
-      throw new Error(`Failed to fetch current contact info: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch current contact info: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
   async findById(id: number): Promise<ContactInfo | null> {
     try {
-      const response = await this.apiClient.get<StrapiResponse<StrapiContactInfoData>>(`contact-sections/${id}`);
+      const response = await this.apiClient.get<StrapiResponse<StrapiContactInfoData>>(
+        `contact-sections/${id}`
+      );
       return this.mapToDomainEntity(response.data);
     } catch (error) {
       if (error instanceof Error && error.message.includes('404')) {
         return null;
       }
-      throw new Error(`Failed to fetch contact info ${id}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch contact info ${id}: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
   async save(contactInfo: ContactInfo): Promise<ContactInfo> {
     try {
       const data = this.mapToStrapiData(contactInfo);
-      
+
       if (contactInfo.isNew()) {
-        const response = await this.apiClient.post<StrapiResponse<StrapiContactInfoData>>('contact-sections', { data });
+        const response = await this.apiClient.post<StrapiResponse<StrapiContactInfoData>>(
+          'contact-sections',
+          { data }
+        );
         return this.mapToDomainEntity(response.data);
       } else {
-        const response = await this.apiClient.put<StrapiResponse<StrapiContactInfoData>>(`contact-sections/${contactInfo.id}`, { data });
+        const response = await this.apiClient.put<StrapiResponse<StrapiContactInfoData>>(
+          `contact-sections/${contactInfo.id}`,
+          { data }
+        );
         return this.mapToDomainEntity(response.data);
       }
     } catch (error) {
-      throw new Error(`Failed to save contact info: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to save contact info: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -84,7 +105,7 @@ export class StrapiContactInfoRepository implements IContactInfoRepository {
       whatsapp: strapiData.attributes.whatsapp,
       instagram: new Url(strapiData.attributes.instagram),
       createdAt: new Date(strapiData.attributes.createdAt),
-      updatedAt: new Date(strapiData.attributes.updatedAt)
+      updatedAt: new Date(strapiData.attributes.updatedAt),
     };
 
     return new ContactInfo(props);
@@ -95,7 +116,7 @@ export class StrapiContactInfoRepository implements IContactInfoRepository {
       text: contactInfo.text,
       email: contactInfo.email.value,
       whatsapp: contactInfo.whatsapp,
-      instagram: contactInfo.instagram.value
+      instagram: contactInfo.instagram.value,
     };
   }
 }

@@ -2,7 +2,7 @@
 
 /**
  * Home Container Component
- * 
+ *
  * Handles all business logic, data fetching, and state management for the home page.
  * This container follows the container/presentational pattern where containers
  * handle logic and presentational components handle rendering.
@@ -33,33 +33,30 @@ export const HomeContainer: React.FC = () => {
   const globalError = useGlobalError();
 
   // Business logic: Loading state determination (memoized for performance)
-  const shouldShowLoading = React.useMemo(() => 
-    isLoading || isAppLoading || !data, 
+  const shouldShowLoading = React.useMemo(
+    () => isLoading || isAppLoading || !data,
     [isLoading, isAppLoading, data]
   );
-  
+
   // Business logic: Error state determination (memoized for performance)
-  const shouldShowError = React.useMemo(() => 
-    isError || globalError, 
-    [isError, globalError]
-  );
-  
-  const errorMessage = React.useMemo(() => 
-    globalError || error?.message || 'An unexpected error occurred. Please try again later.',
+  const shouldShowError = React.useMemo(() => isError || globalError, [isError, globalError]);
+
+  const errorMessage = React.useMemo(
+    () => globalError || error?.message || 'An unexpected error occurred. Please try again later.',
     [globalError, error?.message]
   );
 
   // Business logic: Data transformation (memoized for performance)
   const transformedData: HomeData | null = React.useMemo(() => {
     if (!data) return null;
-    
+
     return {
       heroSections: data.heroSections,
       activeEvent: data.activeEvent,
       artists: data.artists,
       contactInfo: data.contactInfo,
       carousel: data.carousel,
-      spotifySection: data.spotifySection
+      spotifySection: data.spotifySection,
     };
   }, [data]);
 
@@ -73,7 +70,7 @@ export const HomeContainer: React.FC = () => {
   }
 
   if (!transformedData) {
-    return <ErrorDisplay message="No data available" />;
+    return <ErrorDisplay message='No data available' />;
   }
 
   // Delegate rendering to presentational component

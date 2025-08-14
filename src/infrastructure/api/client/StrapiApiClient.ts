@@ -1,5 +1,5 @@
 import { BaseApiClient, ApiClientConfig } from './BaseApiClient';
-import { AppConfig } from '../../config/AppConfig';
+import { configService } from '../../config/AppConfig';
 
 /**
  * Strapi-specific API response structure
@@ -50,7 +50,7 @@ export class StrapiApiClient extends BaseApiClient {
 
   private constructor() {
     const config: ApiClientConfig = {
-      baseURL: AppConfig.API_URL,
+      baseURL: configService.getApi().strapiBaseUrl,
       timeout: 30000,
       headers: {
         'Content-Type': 'application/json',
@@ -59,11 +59,9 @@ export class StrapiApiClient extends BaseApiClient {
         maxRetries: 3,
         baseDelay: 1000,
         maxDelay: 10000,
-        retryCondition: (error) => {
+        retryCondition: error => {
           // Retry on network errors, 5xx errors, and timeout
-          return !error.response || 
-                 error.response.status >= 500 || 
-                 error.code === 'ECONNABORTED';
+          return !error.response || error.response.status >= 500 || error.code === 'ECONNABORTED';
         },
       },
       circuitBreaker: {
@@ -162,7 +160,7 @@ export class StrapiApiClient extends BaseApiClient {
   ): void {
     Object.entries(populate).forEach(([key, value]) => {
       const paramKey = `${prefix}[${key}]`;
-      
+
       if (typeof value === 'string' || typeof value === 'boolean') {
         searchParams.append(paramKey, value.toString());
       } else if (typeof value === 'object' && value !== null) {
@@ -181,7 +179,7 @@ export class StrapiApiClient extends BaseApiClient {
   ): void {
     Object.entries(filters).forEach(([key, value]) => {
       const paramKey = `${prefix}[${key}]`;
-      
+
       if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
         searchParams.append(paramKey, value.toString());
       } else if (typeof value === 'object' && value !== null) {
@@ -200,7 +198,7 @@ export class StrapiApiClient extends BaseApiClient {
   ): Promise<StrapiEntity<T>> {
     const queryString = params ? this.buildQueryString(params) : '';
     const url = `/api/${contentType}/${id}${queryString ? `?${queryString}` : ''}`;
-    
+
     const response = await this.get<StrapiResponse<StrapiEntity<T>>>(url);
     return response.data;
   }
@@ -217,7 +215,7 @@ export class StrapiApiClient extends BaseApiClient {
   }> {
     const queryString = params ? this.buildQueryString(params) : '';
     const url = `/api/${contentType}${queryString ? `?${queryString}` : ''}`;
-    
+
     const response = await this.get<StrapiResponse<StrapiEntity<T>[]>>(url);
     return {
       data: response.data,
@@ -234,7 +232,7 @@ export class StrapiApiClient extends BaseApiClient {
   ): Promise<StrapiEntity<T>> {
     const queryString = params ? this.buildQueryString(params) : '';
     const url = `/api/${contentType}${queryString ? `?${queryString}` : ''}`;
-    
+
     const response = await this.get<StrapiResponse<StrapiEntity<T>>>(url);
     return response.data;
   }
@@ -242,13 +240,10 @@ export class StrapiApiClient extends BaseApiClient {
   /**
    * Create entry in collection type
    */
-  public async createEntry<T>(
-    contentType: string,
-    data: Partial<T>
-  ): Promise<StrapiEntity<T>> {
+  public async createEntry<T>(contentType: string, data: Partial<T>): Promise<StrapiEntity<T>> {
     const url = `/api/${contentType}`;
     const payload = { data };
-    
+
     const response = await this.post<StrapiResponse<StrapiEntity<T>>>(url, payload);
     return response.data;
   }
@@ -263,7 +258,7 @@ export class StrapiApiClient extends BaseApiClient {
   ): Promise<StrapiEntity<T>> {
     const url = `/api/${contentType}/${id}`;
     const payload = { data };
-    
+
     const response = await this.put<StrapiResponse<StrapiEntity<T>>>(url, payload);
     return response.data;
   }
@@ -271,12 +266,9 @@ export class StrapiApiClient extends BaseApiClient {
   /**
    * Delete entry from collection type
    */
-  public async deleteEntry<T>(
-    contentType: string,
-    id: string | number
-  ): Promise<StrapiEntity<T>> {
+  public async deleteEntry<T>(contentType: string, id: string | number): Promise<StrapiEntity<T>> {
     const url = `/api/${contentType}/${id}`;
-    
+
     const response = await this.delete<StrapiResponse<StrapiEntity<T>>>(url);
     return response.data;
   }
@@ -284,14 +276,17 @@ export class StrapiApiClient extends BaseApiClient {
   /**
    * Upload file to Strapi media library
    */
-  public async uploadFile(file: File, options?: {
-    refId?: string;
-    ref?: string;
-    field?: string;
-  }): Promise<any> {
+  public async uploadFile(
+    file: File,
+    options?: {
+      refId?: string;
+      ref?: string;
+      field?: string;
+    }
+  ): Promise<any> {
     const formData = new FormData();
     formData.append('files', file);
-    
+
     if (options) {
       Object.entries(options).forEach(([key, value]) => {
         if (value) formData.append(key, value.toString());

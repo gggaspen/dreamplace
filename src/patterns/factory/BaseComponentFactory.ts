@@ -1,10 +1,10 @@
 import { ReactElement } from 'react';
-import { 
-  IComponentFactory, 
-  ComponentConfig, 
-  CreationContext, 
+import {
+  IComponentFactory,
+  ComponentConfig,
+  CreationContext,
   FactoryMetadata,
-  ComponentMetadata 
+  ComponentMetadata,
 } from './types';
 
 /**
@@ -22,7 +22,10 @@ export abstract class BaseComponentFactory implements IComponentFactory {
   }
 
   abstract canCreate(config: ComponentConfig): boolean;
-  abstract create(config: ComponentConfig, context?: CreationContext): Promise<ReactElement> | ReactElement;
+  abstract create(
+    config: ComponentConfig,
+    context?: CreationContext
+  ): Promise<ReactElement> | ReactElement;
 
   getMetadata(): FactoryMetadata {
     return { ...this.metadata };
@@ -64,10 +67,7 @@ export abstract class BaseComponentFactory implements IComponentFactory {
     return enrichedConfig;
   }
 
-  protected mergeAccessibilityConfig(
-    configA11y?: any,
-    contextA11y?: any
-  ): any {
+  protected mergeAccessibilityConfig(configA11y?: any, contextA11y?: any): any {
     return {
       level: 'basic',
       ...configA11y,
@@ -85,7 +85,7 @@ export abstract class BaseComponentFactory implements IComponentFactory {
 
     // Apply theme-specific styling
     const themedProps = { ...props };
-    
+
     switch (theme) {
       case 'dark':
         themedProps.className = `${props.className || ''} theme-dark`.trim();
@@ -104,7 +104,7 @@ export abstract class BaseComponentFactory implements IComponentFactory {
   }
 
   protected applyAccessibility(
-    props: Record<string, unknown>, 
+    props: Record<string, unknown>,
     a11yConfig?: any
   ): Record<string, unknown> {
     if (!a11yConfig) return props;
@@ -114,7 +114,7 @@ export abstract class BaseComponentFactory implements IComponentFactory {
     // Enhanced accessibility features
     if (a11yConfig.level === 'enhanced' || a11yConfig.level === 'full') {
       accessibleProps.role = accessibleProps.role || this.getDefaultRole(props);
-      
+
       if (a11yConfig.keyboardNav) {
         accessibleProps.tabIndex = accessibleProps.tabIndex ?? 0;
       }
@@ -143,10 +143,7 @@ export abstract class BaseComponentFactory implements IComponentFactory {
     return 'generic';
   }
 
-  protected applyPerformanceOptimizations(
-    element: ReactElement,
-    perfConfig?: any
-  ): ReactElement {
+  protected applyPerformanceOptimizations(element: ReactElement, perfConfig?: any): ReactElement {
     if (!perfConfig) return element;
 
     let optimizedElement = element;
@@ -166,10 +163,7 @@ export abstract class BaseComponentFactory implements IComponentFactory {
     return optimizedElement;
   }
 
-  protected handleResponsive(
-    config: ComponentConfig,
-    context?: CreationContext
-  ): ComponentConfig {
+  protected handleResponsive(config: ComponentConfig, context?: CreationContext): ComponentConfig {
     if (!config.metadata?.responsive || !context?.device) {
       return config;
     }

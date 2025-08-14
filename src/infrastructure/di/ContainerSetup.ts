@@ -105,7 +105,7 @@ export const setupContainer = (container: DIContainer): void => {
     const artistRepository = await container.resolve(SERVICE_TOKENS.ARTIST_REPOSITORY);
     const heroSectionRepository = await container.resolve(SERVICE_TOKENS.HERO_SECTION_REPOSITORY);
     const contactInfoRepository = await container.resolve(SERVICE_TOKENS.CONTACT_INFO_REPOSITORY);
-    
+
     return new GetAppDataUseCase(
       eventRepository,
       artistRepository,

@@ -26,7 +26,7 @@ export class LayoutComponentFactory extends BaseComponentFactory {
 
   create(config: ComponentConfig, context?: CreationContext): ReactElement {
     this.validateConfig(config);
-    
+
     const enrichedConfig = this.enrichConfig(config, context);
     const responsiveConfig = this.handleResponsive(enrichedConfig, context);
 
@@ -46,14 +46,14 @@ export class LayoutComponentFactory extends BaseComponentFactory {
 
   private createContainer(config: ComponentConfig, context?: CreationContext): ReactElement {
     const { props = {}, metadata } = config;
-    
+
     let containerProps = {
       ...props,
     };
 
     // Apply theme
     containerProps = this.applyTheme(containerProps, metadata?.theme);
-    
+
     // Apply accessibility
     containerProps = this.applyAccessibility(containerProps, metadata?.accessibility);
 
@@ -94,14 +94,14 @@ export class LayoutComponentFactory extends BaseComponentFactory {
 
   private createGrid(config: ComponentConfig, context?: CreationContext): ReactElement {
     const { props = {}, metadata } = config;
-    
+
     let gridProps = {
       ...props,
     };
 
     // Apply theme
     gridProps = this.applyTheme(gridProps, metadata?.theme);
-    
+
     // Apply accessibility
     gridProps = this.applyAccessibility(gridProps, metadata?.accessibility);
 
@@ -157,14 +157,14 @@ export class LayoutComponentFactory extends BaseComponentFactory {
 
   private createFlex(config: ComponentConfig, context?: CreationContext): ReactElement {
     const { props = {}, metadata } = config;
-    
+
     let flexProps = {
       ...props,
     };
 
     // Apply theme
     flexProps = this.applyTheme(flexProps, metadata?.theme);
-    
+
     // Apply accessibility
     flexProps = this.applyAccessibility(flexProps, metadata?.accessibility);
 
@@ -217,14 +217,14 @@ export class LayoutComponentFactory extends BaseComponentFactory {
 
   private createStack(config: ComponentConfig, context?: CreationContext): ReactElement {
     const { props = {}, metadata } = config;
-    
+
     let stackProps = {
       ...props,
     };
 
     // Apply theme
     stackProps = this.applyTheme(stackProps, metadata?.theme);
-    
+
     // Apply accessibility
     stackProps = this.applyAccessibility(stackProps, metadata?.accessibility);
 
@@ -264,7 +264,11 @@ export class LayoutComponentFactory extends BaseComponentFactory {
     return this.applyPerformanceOptimizations(element, metadata?.performance);
   }
 
-  private renderChildren(children: any, config: ComponentConfig, withDivider?: boolean): React.ReactNode {
+  private renderChildren(
+    children: any,
+    config: ComponentConfig,
+    withDivider?: boolean
+  ): React.ReactNode {
     if (!children) return null;
 
     if (typeof children === 'string') {
@@ -275,28 +279,28 @@ export class LayoutComponentFactory extends BaseComponentFactory {
       if (withDivider && children.length > 1) {
         // Add dividers between children
         const childrenWithDividers: React.ReactNode[] = [];
-        
+
         children.forEach((child, index) => {
           childrenWithDividers.push(
             typeof child === 'object' && child.type
               ? React.createElement('div', { key: `child-${index}` }, child)
               : child
           );
-          
+
           if (index < children.length - 1) {
             childrenWithDividers.push(
-              React.createElement('div', { 
+              React.createElement('div', {
                 key: `divider-${index}`,
-                className: 'stack-divider-line'
+                className: 'stack-divider-line',
               })
             );
           }
         });
-        
+
         return childrenWithDividers;
       }
-      
-      return children.map((child, index) => 
+
+      return children.map((child, index) =>
         typeof child === 'object' && child.type
           ? React.createElement('div', { key: index }, child)
           : child
@@ -315,7 +319,7 @@ export class LayoutComponentFactory extends BaseComponentFactory {
       around: 'justify-around',
       evenly: 'justify-evenly',
     };
-    
+
     return justifyMap[justify] || 'justify-start';
   }
 
@@ -327,7 +331,7 @@ export class LayoutComponentFactory extends BaseComponentFactory {
       baseline: 'items-baseline',
       stretch: 'items-stretch',
     };
-    
+
     return alignMap[align] || 'items-start';
   }
 }

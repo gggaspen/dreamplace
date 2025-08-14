@@ -1,6 +1,6 @@
 /**
  * withLoadingState HOC
- * 
+ *
  * Higher-Order Component that adds loading state management to components.
  * Automatically shows loading UI while data is being fetched.
  */
@@ -19,11 +19,11 @@ export function withLoadingState<P extends object>(
   defaultLoadingComponent: ComponentType<any> = LoadingScreen
 ) {
   const WithLoadingStateComponent = (props: P & LoadingStateProps) => {
-    const { 
-      isLoading, 
+    const {
+      isLoading,
       loadingComponent: LoadingComponent = defaultLoadingComponent,
       loadingProps,
-      ...componentProps 
+      ...componentProps
     } = props;
 
     if (isLoading) {

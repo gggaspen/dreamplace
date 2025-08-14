@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
-import { 
-  EventManager, 
-  IObserver, 
+import {
+  EventManager,
+  IObserver,
   EventType,
   AnalyticsObserver,
   LoggingObserver,
@@ -12,7 +12,7 @@ import {
   LogEvent,
   StateChangeEvent,
   ErrorEvent,
-  PerformanceEvent
+  PerformanceEvent,
 } from '@/patterns/observer';
 
 /**
@@ -67,24 +67,18 @@ export function useEventManager() {
     // State Observer (development only)
     if (process.env.NODE_ENV === 'development') {
       const stateObserver = new StateObserver();
-      eventManagerRef.current.subscribe(stateObserver, [
-        EventType.STATE_CHANGED,
-      ]);
+      eventManagerRef.current.subscribe(stateObserver, [EventType.STATE_CHANGED]);
       observersRef.current.set('state', stateObserver);
     }
 
     // Error Observer
     const errorObserver = new ErrorObserver();
-    eventManagerRef.current.subscribe(errorObserver, [
-      EventType.ERROR_OCCURRED,
-    ]);
+    eventManagerRef.current.subscribe(errorObserver, [EventType.ERROR_OCCURRED]);
     observersRef.current.set('error', errorObserver);
 
     // Performance Observer
     const performanceObserver = new PerformanceObserver();
-    eventManagerRef.current.subscribe(performanceObserver, [
-      EventType.PERFORMANCE_METRIC,
-    ]);
+    eventManagerRef.current.subscribe(performanceObserver, [EventType.PERFORMANCE_METRIC]);
     observersRef.current.set('performance', performanceObserver);
   }, []);
 
@@ -99,10 +93,7 @@ export function useEventManager() {
   }, []);
 
   // Subscribe to events
-  const subscribe = useCallback((
-    observer: IObserver,
-    eventTypes?: string[]
-  ): string => {
+  const subscribe = useCallback((observer: IObserver, eventTypes?: string[]): string => {
     if (!eventManagerRef.current) {
       throw new Error('EventManager not initialized');
     }
@@ -120,41 +111,65 @@ export function useEventManager() {
   }, []);
 
   // Convenience methods for common events
-  const trackAnalytics = useCallback(async (event: AnalyticsEvent): Promise<void> => {
-    await emit(EventType.ANALYTICS_EVENT, event);
-  }, [emit]);
+  const trackAnalytics = useCallback(
+    async (event: AnalyticsEvent): Promise<void> => {
+      await emit(EventType.ANALYTICS_EVENT, event);
+    },
+    [emit]
+  );
 
-  const logMessage = useCallback(async (log: LogEvent): Promise<void> => {
-    await emit(EventType.LOG_MESSAGE, log);
-  }, [emit]);
+  const logMessage = useCallback(
+    async (log: LogEvent): Promise<void> => {
+      await emit(EventType.LOG_MESSAGE, log);
+    },
+    [emit]
+  );
 
-  const trackStateChange = useCallback(async (change: StateChangeEvent): Promise<void> => {
-    await emit(EventType.STATE_CHANGED, change);
-  }, [emit]);
+  const trackStateChange = useCallback(
+    async (change: StateChangeEvent): Promise<void> => {
+      await emit(EventType.STATE_CHANGED, change);
+    },
+    [emit]
+  );
 
-  const reportError = useCallback(async (error: ErrorEvent): Promise<void> => {
-    await emit(EventType.ERROR_OCCURRED, error);
-  }, [emit]);
+  const reportError = useCallback(
+    async (error: ErrorEvent): Promise<void> => {
+      await emit(EventType.ERROR_OCCURRED, error);
+    },
+    [emit]
+  );
 
-  const trackPerformance = useCallback(async (metric: PerformanceEvent): Promise<void> => {
-    await emit(EventType.PERFORMANCE_METRIC, metric);
-  }, [emit]);
+  const trackPerformance = useCallback(
+    async (metric: PerformanceEvent): Promise<void> => {
+      await emit(EventType.PERFORMANCE_METRIC, metric);
+    },
+    [emit]
+  );
 
-  const trackUserAction = useCallback(async (action: AnalyticsEvent): Promise<void> => {
-    await emit(EventType.USER_ACTION, action);
-  }, [emit]);
+  const trackUserAction = useCallback(
+    async (action: AnalyticsEvent): Promise<void> => {
+      await emit(EventType.USER_ACTION, action);
+    },
+    [emit]
+  );
 
-  const trackNavigation = useCallback(async (navigation: { to: string; from?: string }): Promise<void> => {
-    await emit(EventType.NAVIGATION, navigation);
-  }, [emit]);
+  const trackNavigation = useCallback(
+    async (navigation: { to: string; from?: string }): Promise<void> => {
+      await emit(EventType.NAVIGATION, navigation);
+    },
+    [emit]
+  );
 
-  const trackMediaEvent = useCallback(async (
-    event: 'play' | 'pause',
-    mediaData: { id: string; title?: string; position?: number }
-  ): Promise<void> => {
-    const eventType = event === 'play' ? EventType.MEDIA_PLAY : EventType.MEDIA_PAUSE;
-    await emit(eventType, mediaData);
-  }, [emit]);
+  const trackMediaEvent = useCallback(
+    async (
+      event: 'play' | 'pause',
+      mediaData: { id: string; title?: string; position?: number }
+    ): Promise<void> => {
+      const eventType = event === 'play' ? EventType.MEDIA_PLAY : EventType.MEDIA_PAUSE;
+      await emit(eventType, mediaData);
+    },
+    [emit]
+  );
 
   // Get observer instance
   const getObserver = useCallback((type: string): IObserver | undefined => {
@@ -196,7 +211,7 @@ export function useEventManager() {
     emit,
     subscribe,
     unsubscribe,
-    
+
     // Convenience methods
     trackAnalytics,
     logMessage,
@@ -206,11 +221,11 @@ export function useEventManager() {
     trackUserAction,
     trackNavigation,
     trackMediaEvent,
-    
+
     // Management
     getObserver,
     getStats,
-    
+
     // Service registration
     registerAnalyticsService,
     registerErrorService,

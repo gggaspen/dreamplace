@@ -1,22 +1,19 @@
 /**
  * Generic Form Components with TypeScript Generics
- * 
+ *
  * Type-safe form components that provide full TypeScript support
  * for form data, validation, and submission handling.
  */
 
 import React, { ReactNode } from 'react';
+import { Field } from '@/components/ui/field';
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Checkbox } from '@/components/ui/checkbox';
+import { SelectRoot, SelectTrigger, SelectContent, SelectItem, SelectValueText } from '@/components/ui/select';
 import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Input,
   Textarea,
-  Select,
-  Switch,
-  Checkbox,
-  Button,
   VStack,
   HStack,
 } from '@chakra-ui/react';
@@ -33,7 +30,16 @@ export interface FormData {
 export interface FieldConfig<T extends FormData> {
   name: keyof T;
   label?: string;
-  type: 'text' | 'email' | 'password' | 'number' | 'textarea' | 'select' | 'checkbox' | 'switch' | 'date';
+  type:
+    | 'text'
+    | 'email'
+    | 'password'
+    | 'number'
+    | 'textarea'
+    | 'select'
+    | 'checkbox'
+    | 'switch'
+    | 'date';
   placeholder?: string;
   helperText?: string;
   required?: boolean;
@@ -99,7 +105,7 @@ export function Form<T extends FormData>({
   // Handle field value changes
   const handleChange = (name: keyof T, value: T[keyof T]) => {
     setValues(prev => ({ ...prev, [name]: value }));
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
@@ -109,7 +115,7 @@ export function Form<T extends FormData>({
   // Handle field blur
   const handleBlur = (name: keyof T) => {
     setTouched(prev => new Set(prev).add(name));
-    
+
     // Validate field on blur
     const field = fields.find(f => f.name === name);
     if (field?.validate) {
@@ -185,48 +191,54 @@ export function Form<T extends FormData>({
         field,
         value,
         error: error || null,
-        onChange: (newValue) => handleChange(field.name, newValue),
+        onChange: newValue => handleChange(field.name, newValue),
         onBlur: () => handleBlur(field.name),
       });
     }
 
     return (
-      <FormControl
+      <Field
         key={String(field.name)}
-        isInvalid={!!error}
-        isRequired={field.required}
-        isDisabled={field.disabled || disabled}
+        label={field.label}
+        invalid={!!error}
+        errorText={error}
+        helperText={!error ? field.helperText : undefined}
+        required={field.required}
+        disabled={field.disabled || disabled}
       >
-        {field.label && <FormLabel>{field.label}</FormLabel>}
-        
         {field.type === 'textarea' && (
           <Textarea
             value={String(value || '')}
             placeholder={field.placeholder}
-            onChange={(e) => handleChange(field.name, e.target.value as T[keyof T])}
+            onChange={e => handleChange(field.name, e.target.value as T[keyof T])}
             onBlur={() => handleBlur(field.name)}
           />
         )}
 
         {field.type === 'select' && field.options && (
-          <Select
-            value={String(value || '')}
-            placeholder={field.placeholder}
-            onChange={(e) => handleChange(field.name, e.target.value as T[keyof T])}
-            onBlur={() => handleBlur(field.name)}
+          <SelectRoot
+            value={[String(value || '')]}
+            onValueChange={details => handleChange(field.name, details.value[0] as T[keyof T])}
+            onOpenChange={() => handleBlur(field.name)}
+            items={field.options.map(option => ({ label: option.label, value: String(option.value) }))}
           >
-            {field.options.map(option => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </Select>
+            <SelectTrigger>
+              <SelectValueText placeholder={field.placeholder} />
+            </SelectTrigger>
+            <SelectContent>
+              {field.options.map(option => (
+                <SelectItem key={option.value} item={{ label: option.label, value: String(option.value) }}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </SelectRoot>
         )}
 
         {field.type === 'checkbox' && (
           <Checkbox
-            isChecked={Boolean(value)}
-            onChange={(e) => handleChange(field.name, e.target.checked as T[keyof T])}
+            checked={Boolean(value)}
+            onCheckedChange={checked => handleChange(field.name, checked as T[keyof T])}
             onBlur={() => handleBlur(field.name)}
           >
             {field.label}
@@ -235,8 +247,8 @@ export function Form<T extends FormData>({
 
         {field.type === 'switch' && (
           <Switch
-            isChecked={Boolean(value)}
-            onChange={(e) => handleChange(field.name, e.target.checked as T[keyof T])}
+            checked={Boolean(value)}
+            onCheckedChange={checked => handleChange(field.name, checked as T[keyof T])}
             onBlur={() => handleBlur(field.name)}
           />
         )}
@@ -246,19 +258,14 @@ export function Form<T extends FormData>({
             type={field.type}
             value={String(value || '')}
             placeholder={field.placeholder}
-            onChange={(e) => {
+            onChange={e => {
               const newValue = field.type === 'number' ? Number(e.target.value) : e.target.value;
               handleChange(field.name, newValue as T[keyof T]);
             }}
             onBlur={() => handleBlur(field.name)}
           />
         )}
-
-        {error && <FormErrorMessage>{error}</FormErrorMessage>}
-        {field.helperText && !error && (
-          <FormHelperText>{field.helperText}</FormHelperText>
-        )}
-      </FormControl>
+      </Field>
     );
   };
 
@@ -281,15 +288,15 @@ export function Form<T extends FormData>({
 
   // Default form layout
   return (
-    <VStack spacing={4} align="stretch">
+    <VStack spacing={4} align='stretch'>
       {fields.map(renderField)}
-      
-      <HStack spacing={4} justify="flex-end">
-        <Button variant="outline" onClick={reset} disabled={disabled || isSubmitting}>
+
+      <HStack spacing={4} justify='flex-end'>
+        <Button variant='outline' onClick={reset} disabled={disabled || isSubmitting}>
           Reset
         </Button>
         <Button
-          colorScheme="blue"
+          colorScheme='blue'
           onClick={handleSubmit}
           isLoading={isSubmitting}
           disabled={disabled || !isValid}
@@ -304,4 +311,5 @@ export function Form<T extends FormData>({
 // Helper function to create type-safe field configurations
 export const createField = <T extends FormData>(field: FieldConfig<T>): FieldConfig<T> => field;
 
-export const createFields = <T extends FormData>(fields: FieldConfig<T>[]): FieldConfig<T>[] => fields;
+export const createFields = <T extends FormData>(fields: FieldConfig<T>[]): FieldConfig<T>[] =>
+  fields;

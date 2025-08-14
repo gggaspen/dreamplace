@@ -1,11 +1,11 @@
 import { BaseAPIFacade } from '../BaseAPIFacade';
-import { 
-  IContentFacade, 
-  APIResponse, 
+import {
+  IContentFacade,
+  APIResponse,
   RequestConfig,
   EventFilters,
   Pagination,
-  SearchFilters 
+  SearchFilters,
 } from '../types';
 
 /**
@@ -47,7 +47,7 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
     };
 
     const response = await fetch(url, requestConfig);
-    
+
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
@@ -69,7 +69,7 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
     return this.get<any[]>('/api/hero-sections', {
       cache: { ttl: 600000, strategy: 'memory' }, // 10 minutes cache
       transform: {
-        response: (data) => this.transformHeroSections(data),
+        response: data => this.transformHeroSections(data),
       },
     });
   }
@@ -78,11 +78,11 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
   async getEvents(filters: EventFilters = {}): Promise<APIResponse<any[]>> {
     const queryParams = this.buildEventQuery(filters);
     const endpoint = `/api/events${queryParams ? `?${queryParams}` : ''}`;
-    
+
     return this.get<any[]>(endpoint, {
       cache: { ttl: 180000, strategy: 'memory' }, // 3 minutes cache
       transform: {
-        response: (data) => this.transformEvents(data),
+        response: data => this.transformEvents(data),
       },
     });
   }
@@ -99,11 +99,11 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
   async getArtists(pagination: Pagination = { page: 1, limit: 20 }): Promise<APIResponse<any[]>> {
     const queryParams = this.buildPaginationQuery(pagination);
     const endpoint = `/api/artists?${queryParams}`;
-    
+
     return this.get<any[]>(endpoint, {
       cache: { ttl: 300000, strategy: 'memory' }, // 5 minutes cache
       transform: {
-        response: (data) => this.transformArtists(data),
+        response: data => this.transformArtists(data),
       },
     });
   }
@@ -117,11 +117,11 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
   // Carousels
   async getCarousels(type?: string): Promise<APIResponse<any[]>> {
     const endpoint = type ? `/api/carousels?type=${type}` : '/api/carousels';
-    
+
     return this.get<any[]>(endpoint, {
       cache: { ttl: 300000, strategy: 'memory' },
       transform: {
-        response: (data) => this.transformCarousels(data),
+        response: data => this.transformCarousels(data),
       },
     });
   }
@@ -130,11 +130,11 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
   async createContent(type: string, data: unknown): Promise<APIResponse<any>> {
     return this.post<any>(`/api/${type}`, data, {
       validation: {
-        request: (data) => this.validateContentData(type, data),
+        request: data => this.validateContentData(type, data),
       },
       transform: {
-        request: (data) => this.transformContentForCreation(type, data),
-        response: (data) => this.transformContentResponse(data),
+        request: data => this.transformContentForCreation(type, data),
+        response: data => this.transformContentResponse(data),
       },
     });
   }
@@ -142,11 +142,11 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
   async updateContent(type: string, id: string, data: unknown): Promise<APIResponse<any>> {
     return this.put<any>(`/api/${type}/${id}`, data, {
       validation: {
-        request: (data) => this.validateContentData(type, data),
+        request: data => this.validateContentData(type, data),
       },
       transform: {
-        request: (data) => this.transformContentForUpdate(type, data),
-        response: (data) => this.transformContentResponse(data),
+        request: data => this.transformContentForUpdate(type, data),
+        response: data => this.transformContentResponse(data),
       },
     });
   }
@@ -159,11 +159,11 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
   async searchContent(query: string, filters: SearchFilters = {}): Promise<APIResponse<any[]>> {
     const queryParams = this.buildSearchQuery(query, filters);
     const endpoint = `/api/search?${queryParams}`;
-    
+
     return this.get<any[]>(endpoint, {
       cache: { ttl: 60000, strategy: 'memory' }, // 1 minute cache for search
       transform: {
-        response: (data) => this.transformSearchResults(data),
+        response: data => this.transformSearchResults(data),
       },
     });
   }
@@ -175,12 +175,14 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
   }
 
   // Batch operations for efficient data loading
-  async getAllPageData(): Promise<APIResponse<{
-    heroSections: any[];
-    events: any[];
-    artists: any[];
-    carousels: any[];
-  }>> {
+  async getAllPageData(): Promise<
+    APIResponse<{
+      heroSections: any[];
+      events: any[];
+      artists: any[];
+      carousels: any[];
+    }>
+  > {
     const requests = [
       { method: 'GET' as const, endpoint: '/api/hero-sections' },
       { method: 'GET' as const, endpoint: '/api/events?active=true' },
@@ -189,7 +191,7 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
     ];
 
     const response = await this.batch(requests);
-    
+
     if (response.data && response.data.length === 4) {
       return {
         data: {
@@ -215,19 +217,19 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
   // Helper methods for query building
   private buildEventQuery(filters: EventFilters): string {
     const params = new URLSearchParams();
-    
+
     if (filters.active !== undefined) {
       params.append('active', String(filters.active));
     }
-    
+
     if (filters.category) {
       params.append('category', filters.category);
     }
-    
+
     if (filters.location) {
       params.append('location', filters.location);
     }
-    
+
     if (filters.dateRange) {
       params.append('startDate', filters.dateRange.start.toISOString());
       params.append('endDate', filters.dateRange.end.toISOString());
@@ -238,14 +240,14 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
 
   private buildPaginationQuery(pagination: Pagination): string {
     const params = new URLSearchParams();
-    
+
     params.append('page', String(pagination.page));
     params.append('limit', String(pagination.limit));
-    
+
     if (pagination.sortBy) {
       params.append('sortBy', pagination.sortBy);
     }
-    
+
     if (pagination.sortOrder) {
       params.append('sortOrder', pagination.sortOrder);
     }
@@ -255,21 +257,21 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
 
   private buildSearchQuery(query: string, filters: SearchFilters): string {
     const params = new URLSearchParams();
-    
+
     params.append('q', query);
-    
+
     if (filters.type) {
       params.append('type', filters.type);
     }
-    
+
     if (filters.tags && filters.tags.length > 0) {
       params.append('tags', filters.tags.join(','));
     }
-    
+
     if (filters.author) {
       params.append('author', filters.author);
     }
-    
+
     if (filters.dateRange) {
       params.append('startDate', filters.dateRange.start.toISOString());
       params.append('endDate', filters.dateRange.end.toISOString());
@@ -281,13 +283,15 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
   // Data transformation methods
   private transformHeroSections(data: any): any {
     if (!Array.isArray(data?.data)) return data;
-    
+
     return data.data.map((section: any) => ({
       id: section.id,
       title: section.attributes?.title || '',
       subtitle: section.attributes?.subtitle || '',
-      backgroundImage: section.attributes?.cover_mobile?.data?.attributes?.url || 
-                      section.attributes?.cover_desktop?.data?.attributes?.url || '',
+      backgroundImage:
+        section.attributes?.cover_mobile?.data?.attributes?.url ||
+        section.attributes?.cover_desktop?.data?.attributes?.url ||
+        '',
       cta: section.attributes?.cta || null,
       metadata: {
         updatedAt: section.attributes?.updatedAt,
@@ -298,7 +302,7 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
 
   private transformEvents(data: any): any {
     if (!Array.isArray(data?.data)) return data;
-    
+
     return data.data.map((event: any) => ({
       id: event.id,
       title: event.attributes?.title || '',
@@ -318,17 +322,18 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
 
   private transformArtists(data: any): any {
     if (!Array.isArray(data?.data)) return data;
-    
+
     return data.data.map((artist: any) => ({
       id: artist.id,
       name: artist.attributes?.name || '',
       bio: artist.attributes?.bio || '',
       featured: artist.attributes?.featured || false,
       genre: artist.attributes?.genre || '',
-      photos: artist.attributes?.photos?.data?.map((photo: any) => ({
-        url: photo.attributes?.url || '',
-        alt: photo.attributes?.alternativeText || artist.attributes?.name,
-      })) || [],
+      photos:
+        artist.attributes?.photos?.data?.map((photo: any) => ({
+          url: photo.attributes?.url || '',
+          alt: photo.attributes?.alternativeText || artist.attributes?.name,
+        })) || [],
       socialLinks: artist.attributes?.social_links || [],
       metadata: {
         updatedAt: artist.attributes?.updatedAt,
@@ -339,7 +344,7 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
 
   private transformCarousels(data: any): any {
     if (!Array.isArray(data?.data)) return data;
-    
+
     return data.data.map((carousel: any) => ({
       id: carousel.id,
       title: carousel.attributes?.title || '',
@@ -357,7 +362,7 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
   private transformSearchResults(data: any): any {
     // Transform search results to normalize different content types
     if (!Array.isArray(data?.results)) return data;
-    
+
     return data.results.map((result: any) => ({
       id: result.id,
       type: result.type,
@@ -407,15 +412,15 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
   // Validation methods
   private validateContentData(type: string, data: any): boolean {
     if (!data || typeof data !== 'object') return false;
-    
+
     // Basic validation - in a real app, this would be more comprehensive
     switch (type) {
       case 'events':
         return !!(data.title && data.date);
       case 'artists':
-        return !!(data.name);
+        return !!data.name;
       case 'hero-sections':
-        return !!(data.title);
+        return !!data.title;
       default:
         return true;
     }
@@ -423,11 +428,11 @@ export class ContentFacade extends BaseAPIFacade implements IContentFacade {
 
   private getAuthHeaders(): Record<string, string> {
     const headers: Record<string, string> = {};
-    
+
     if (this.config.authentication.token) {
       headers.Authorization = `Bearer ${this.config.authentication.token}`;
     }
-    
+
     return headers;
   }
 

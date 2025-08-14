@@ -22,7 +22,7 @@ export class EventMapper {
       isPast: event.isPast(),
       isToday: event.isToday(),
       createdAt: event.createdAt.toISOString(),
-      updatedAt: event.updatedAt.toISOString()
+      updatedAt: event.updatedAt.toISOString(),
     };
   }
 
@@ -42,7 +42,7 @@ export class EventMapper {
       tags: dto.tags,
       featured: dto.isFeatured,
       createdAt: new Date(dto.createdAt),
-      updatedAt: new Date(dto.updatedAt)
+      updatedAt: new Date(dto.updatedAt),
     };
 
     return new Event(props);
@@ -64,7 +64,7 @@ export class EventMapper {
       tags: dto.tags,
       featured: dto.featured,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
   }
 
@@ -84,7 +84,7 @@ export class EventMapper {
       tags: dto.tags ?? event.tags,
       featured: dto.featured ?? event.isFeatured,
       createdAt: event.createdAt,
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
   }
 }

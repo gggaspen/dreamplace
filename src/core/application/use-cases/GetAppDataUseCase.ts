@@ -19,18 +19,12 @@ export class GetAppDataUseCase {
   async execute(): Promise<AppDataDto> {
     try {
       // Fetch all data in parallel for better performance
-      const [
-        heroSection,
-        events,
-        activeEvent,
-        artists,
-        contactInfo
-      ] = await Promise.all([
+      const [heroSection, events, activeEvent, artists, contactInfo] = await Promise.all([
         this.heroSectionRepository.findCurrent(),
         this.eventRepository.findAll(),
         this.eventRepository.findActiveEvent(),
         this.artistRepository.findAll(),
-        this.contactInfoRepository.findCurrent()
+        this.contactInfoRepository.findCurrent(),
       ]);
 
       if (!heroSection) {
@@ -55,7 +49,7 @@ export class GetAppDataUseCase {
           bannerText: '',
           photos: [],
           createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+          updatedAt: new Date().toISOString(),
         },
         spotifySection: {
           id: 1, // This will be replaced when SpotifySection entity is created
@@ -65,7 +59,7 @@ export class GetAppDataUseCase {
           bannerText: '',
           bannerUrl: '',
           createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+          updatedAt: new Date().toISOString(),
         },
         contactInfo: ContactInfoMapper.toDto(contactInfo),
         artistSection: {
@@ -73,21 +67,23 @@ export class GetAppDataUseCase {
           title: 'Artists',
           artists: artists.map(artist => ArtistMapper.toDto(artist)),
           createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+          updatedAt: new Date().toISOString(),
         },
         footerSection: {
           id: 1, // This will be replaced when FooterSection entity is created
           description: '',
           copyright: '',
           createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+          updatedAt: new Date().toISOString(),
         },
         counter: {
-          counter: 0 // This will be replaced when Counter service is integrated
-        }
+          counter: 0, // This will be replaced when Counter service is integrated
+        },
       };
     } catch (error) {
-      throw new Error(`Failed to get app data: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to get app data: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 }

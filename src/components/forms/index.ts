@@ -1,13 +1,19 @@
 /**
  * Forms Module Exports
- * 
+ *
  * Centralized exports for all form-related components, hooks, and utilities.
  */
 
 // Core form components
 export { BaseForm, useFormContext } from './BaseForm';
 export { EnhancedForm } from './EnhancedForm';
-export { DynamicFormBuilder, createField, createSection, createFormConfig, fieldTemplates } from './DynamicFormBuilder';
+export {
+  DynamicFormBuilder,
+  createField,
+  createSection,
+  createFormConfig,
+  fieldTemplates,
+} from './DynamicFormBuilder';
 
 // Form field components
 export {

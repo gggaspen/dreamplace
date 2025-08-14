@@ -167,13 +167,13 @@ export class AppStorage {
   static clearAppData(): boolean {
     const keys = Object.values(this.KEYS);
     let success = true;
-    
+
     keys.forEach(key => {
       if (!LocalStorage.removeItem(key)) {
         success = false;
       }
     });
-    
+
     return success;
   }
 }

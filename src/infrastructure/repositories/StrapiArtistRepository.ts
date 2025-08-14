@@ -1,7 +1,11 @@
 import { IArtistRepository, ArtistFilters } from '../../core/domain/repositories/IArtistRepository';
 import { Artist, ArtistProps, ArtistLinkProps } from '../../core/domain/entities/Artist';
 import { Url } from '../../core/domain/value-objects/Url';
-import { StrapiApiClient, StrapiCollectionResponse, StrapiResponse } from '../external/StrapiApiClient';
+import {
+  StrapiApiClient,
+  StrapiCollectionResponse,
+  StrapiResponse,
+} from '../external/StrapiApiClient';
 
 interface StrapiArtistLinkData {
   id: number;
@@ -42,7 +46,7 @@ export class StrapiArtistRepository implements IArtistRepository {
     try {
       const params: Record<string, string | string[] | number> = {
         'populate[photos]': '*',
-        'populate[links]': '*'
+        'populate[links]': '*',
       };
 
       // Apply filters if provided
@@ -69,10 +73,15 @@ export class StrapiArtistRepository implements IArtistRepository {
         }
       }
 
-      const response = await this.apiClient.get<StrapiCollectionResponse<StrapiArtistData>>('artists', params);
+      const response = await this.apiClient.get<StrapiCollectionResponse<StrapiArtistData>>(
+        'artists',
+        params
+      );
       return response.data.map(item => this.mapToDomainEntity(item));
     } catch (error) {
-      throw new Error(`Failed to fetch artists: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch artists: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -80,32 +89,39 @@ export class StrapiArtistRepository implements IArtistRepository {
     try {
       const response = await this.apiClient.get<StrapiResponse<StrapiArtistData>>(`artists/${id}`, {
         'populate[photos]': '*',
-        'populate[links]': '*'
+        'populate[links]': '*',
       });
       return this.mapToDomainEntity(response.data);
     } catch (error) {
       if (error instanceof Error && error.message.includes('404')) {
         return null;
       }
-      throw new Error(`Failed to fetch artist ${id}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch artist ${id}: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
   async findByName(name: string): Promise<Artist | null> {
     try {
-      const response = await this.apiClient.get<StrapiCollectionResponse<StrapiArtistData>>('artists', {
-        'filters[name][$eq]': name,
-        'populate[photos]': '*',
-        'populate[links]': '*'
-      });
-      
+      const response = await this.apiClient.get<StrapiCollectionResponse<StrapiArtistData>>(
+        'artists',
+        {
+          'filters[name][$eq]': name,
+          'populate[photos]': '*',
+          'populate[links]': '*',
+        }
+      );
+
       if (response.data.length === 0) {
         return null;
       }
-      
+
       return this.mapToDomainEntity(response.data[0]);
     } catch (error) {
-      throw new Error(`Failed to fetch artist by name ${name}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch artist by name ${name}: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -113,7 +129,9 @@ export class StrapiArtistRepository implements IArtistRepository {
     try {
       return await this.findAll({ genre });
     } catch (error) {
-      throw new Error(`Failed to fetch artists by genre ${genre}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch artists by genre ${genre}: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -121,23 +139,32 @@ export class StrapiArtistRepository implements IArtistRepository {
     try {
       return await this.findAll({ platform });
     } catch (error) {
-      throw new Error(`Failed to fetch artists with platform ${platform}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch artists with platform ${platform}: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
   async save(artist: Artist): Promise<Artist> {
     try {
       const data = this.mapToStrapiData(artist);
-      
+
       if (artist.isNew()) {
-        const response = await this.apiClient.post<StrapiResponse<StrapiArtistData>>('artists', { data });
+        const response = await this.apiClient.post<StrapiResponse<StrapiArtistData>>('artists', {
+          data,
+        });
         return this.mapToDomainEntity(response.data);
       } else {
-        const response = await this.apiClient.put<StrapiResponse<StrapiArtistData>>(`artists/${artist.id}`, { data });
+        const response = await this.apiClient.put<StrapiResponse<StrapiArtistData>>(
+          `artists/${artist.id}`,
+          { data }
+        );
         return this.mapToDomainEntity(response.data);
       }
     } catch (error) {
-      throw new Error(`Failed to save artist: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to save artist: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -145,7 +172,9 @@ export class StrapiArtistRepository implements IArtistRepository {
     try {
       await this.apiClient.delete(`artists/${id}`);
     } catch (error) {
-      throw new Error(`Failed to delete artist ${id}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to delete artist ${id}: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -159,11 +188,12 @@ export class StrapiArtistRepository implements IArtistRepository {
   }
 
   private mapToDomainEntity(strapiData: StrapiArtistData): Artist {
-    const links: ArtistLinkProps[] = strapiData.attributes.links?.map(link => ({
-      platform: link.platform as any,
-      url: new Url(link.url),
-      displayName: link.displayName
-    })) || [];
+    const links: ArtistLinkProps[] =
+      strapiData.attributes.links?.map(link => ({
+        platform: link.platform as any,
+        url: new Url(link.url),
+        displayName: link.displayName,
+      })) || [];
 
     const props: ArtistProps = {
       id: strapiData.id,
@@ -174,7 +204,7 @@ export class StrapiArtistRepository implements IArtistRepository {
       genre: strapiData.attributes.genre,
       website: strapiData.attributes.website ? new Url(strapiData.attributes.website) : undefined,
       createdAt: new Date(strapiData.attributes.createdAt),
-      updatedAt: new Date(strapiData.attributes.updatedAt)
+      updatedAt: new Date(strapiData.attributes.updatedAt),
     };
 
     return new Artist(props);
@@ -189,8 +219,8 @@ export class StrapiArtistRepository implements IArtistRepository {
       links: artist.links.map(link => ({
         platform: link.platform,
         url: link.url.value,
-        displayName: link.displayName
-      }))
+        displayName: link.displayName,
+      })),
     };
   }
 }

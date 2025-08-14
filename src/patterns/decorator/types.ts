@@ -1,6 +1,6 @@
 /**
  * Decorator Pattern Implementation for Component Enhancement
- * 
+ *
  * The Decorator pattern allows behavior to be added to objects dynamically
  * without altering their structure. This is particularly useful for enhancing
  * React components with additional functionality like analytics, caching,
@@ -57,33 +57,33 @@ export enum DecoratorType {
   MEMOIZATION = 'memoization',
   LAZY_LOADING = 'lazy_loading',
   VIRTUAL_SCROLLING = 'virtual_scrolling',
-  
+
   // Analytics decorators
   CLICK_TRACKING = 'click_tracking',
   VIEW_TRACKING = 'view_tracking',
   PERFORMANCE_TRACKING = 'performance_tracking',
-  
+
   // Error handling decorators
   ERROR_BOUNDARY = 'error_boundary',
   RETRY_LOGIC = 'retry_logic',
   FALLBACK_UI = 'fallback_ui',
-  
+
   // Authentication decorators
   AUTH_REQUIRED = 'auth_required',
   ROLE_BASED = 'role_based',
   PERMISSION_CHECK = 'permission_check',
-  
+
   // UI enhancement decorators
   LOADING_STATE = 'loading_state',
   SKELETON_LOADER = 'skeleton_loader',
   RESPONSIVE_WRAPPER = 'responsive_wrapper',
   THEME_PROVIDER = 'theme_provider',
-  
+
   // Accessibility decorators
   FOCUS_TRAP = 'focus_trap',
   ARIA_ANNOUNCER = 'aria_announcer',
   KEYBOARD_NAV = 'keyboard_nav',
-  
+
   // Data decorators
   CACHE_WRAPPER = 'cache_wrapper',
   DATA_FETCHER = 'data_fetcher',

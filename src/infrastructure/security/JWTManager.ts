@@ -43,18 +43,20 @@ export class JWTManager {
   /**
    * Generate access and refresh token pair
    */
-  async generateTokenPair(claims: Omit<UserClaims, 'iat' | 'exp' | 'iss' | 'aud'>): Promise<TokenPair> {
+  async generateTokenPair(
+    claims: Omit<UserClaims, 'iat' | 'exp' | 'iss' | 'aud'>
+  ): Promise<TokenPair> {
     const now = Math.floor(Date.now() / 1000);
-    
+
     // Generate session ID if not provided
     const sessionId = claims.sessionId || this.generateSessionId();
-    
+
     const baseClaims = {
       ...claims,
       sessionId,
       iat: now,
       iss: this.config.issuer,
-      aud: this.config.audience
+      aud: this.config.audience,
     };
 
     // Generate access token (short-lived)
@@ -70,7 +72,7 @@ export class JWTManager {
       type: 'refresh',
       iat: now,
       iss: this.config.issuer,
-      aud: this.config.audience
+      aud: this.config.audience,
     };
 
     const refreshToken = await new SignJWT(refreshClaims)
@@ -88,7 +90,7 @@ export class JWTManager {
     try {
       const { payload } = await jwtVerify(token, this.accessTokenKey, {
         issuer: this.config.issuer,
-        audience: this.config.audience
+        audience: this.config.audience,
       });
 
       return payload as UserClaims;
@@ -105,7 +107,7 @@ export class JWTManager {
     try {
       const { payload } = await jwtVerify(token, this.refreshTokenKey, {
         issuer: this.config.issuer,
-        audience: this.config.audience
+        audience: this.config.audience,
       });
 
       if (payload.type !== 'refresh') {
@@ -114,7 +116,7 @@ export class JWTManager {
 
       return {
         userId: payload.userId as string,
-        sessionId: payload.sessionId as string
+        sessionId: payload.sessionId as string,
       };
     } catch (error) {
       console.error('Refresh token verification failed:', error);
@@ -125,16 +127,19 @@ export class JWTManager {
   /**
    * Refresh access token using refresh token
    */
-  async refreshAccessToken(refreshToken: string, userClaims: Omit<UserClaims, 'iat' | 'exp' | 'iss' | 'aud'>): Promise<string | null> {
+  async refreshAccessToken(
+    refreshToken: string,
+    userClaims: Omit<UserClaims, 'iat' | 'exp' | 'iss' | 'aud'>
+  ): Promise<string | null> {
     const refreshPayload = await this.verifyRefreshToken(refreshToken);
-    
+
     if (!refreshPayload || refreshPayload.userId !== userClaims.userId) {
       return null;
     }
 
     const tokenPair = await this.generateTokenPair({
       ...userClaims,
-      sessionId: refreshPayload.sessionId
+      sessionId: refreshPayload.sessionId,
     });
 
     return tokenPair.accessToken;
@@ -156,7 +161,7 @@ export class JWTManager {
   setTokenCookies(tokenPair: TokenPair, response?: Response): void {
     const secure = process.env.NODE_ENV === 'production';
     const sameSite = 'strict';
-    
+
     const accessTokenExpiry = this.parseExpiryTime(this.config.accessTokenExpiry);
     const refreshTokenExpiry = this.parseExpiryTime(this.config.refreshTokenExpiry);
 
@@ -167,13 +172,13 @@ export class JWTManager {
     } else {
       // Server-side cookie setting
       const cookieStore = cookies();
-      
+
       cookieStore.set('access-token', tokenPair.accessToken, {
         maxAge: accessTokenExpiry,
         path: '/',
         secure,
         sameSite,
-        httpOnly: true
+        httpOnly: true,
       });
 
       cookieStore.set('refresh-token', tokenPair.refreshToken, {
@@ -181,7 +186,7 @@ export class JWTManager {
         path: '/',
         secure,
         sameSite,
-        httpOnly: true
+        httpOnly: true,
       });
     }
   }
@@ -208,22 +213,25 @@ export class JWTManager {
   getTokensFromCookies(): { accessToken: string | null; refreshToken: string | null } {
     if (typeof document !== 'undefined') {
       // Client-side cookie reading
-      const cookies = document.cookie.split(';').reduce((acc, cookie) => {
-        const [key, value] = cookie.trim().split('=');
-        acc[key] = value;
-        return acc;
-      }, {} as Record<string, string>);
+      const cookies = document.cookie.split(';').reduce(
+        (acc, cookie) => {
+          const [key, value] = cookie.trim().split('=');
+          acc[key] = value;
+          return acc;
+        },
+        {} as Record<string, string>
+      );
 
       return {
         accessToken: cookies['access-token'] || null,
-        refreshToken: cookies['refresh-token'] || null
+        refreshToken: cookies['refresh-token'] || null,
       };
     } else {
       // Server-side cookie reading
       const cookieStore = cookies();
       return {
         accessToken: cookieStore.get('access-token')?.value || null,
-        refreshToken: cookieStore.get('refresh-token')?.value || null
+        refreshToken: cookieStore.get('refresh-token')?.value || null,
       };
     }
   }
@@ -280,7 +288,7 @@ export class JWTManager {
       s: 1,
       m: 60,
       h: 3600,
-      d: 86400
+      d: 86400,
     };
 
     const match = expiry.match(/^(\d+)([smhd])$/);
@@ -310,7 +318,7 @@ export class JWTManager {
     const roleHierarchy = {
       user: 0,
       moderator: 1,
-      admin: 2
+      admin: 2,
     };
 
     const userLevel = roleHierarchy[userClaims.role as keyof typeof roleHierarchy] ?? -1;
@@ -330,7 +338,7 @@ export function createJWTManager(): JWTManager {
     accessTokenExpiry: process.env.JWT_ACCESS_EXPIRY || '15m',
     refreshTokenExpiry: process.env.JWT_REFRESH_EXPIRY || '7d',
     issuer: process.env.JWT_ISSUER || 'dreamplace.com.ar',
-    audience: process.env.JWT_AUDIENCE || 'dreamplace-users'
+    audience: process.env.JWT_AUDIENCE || 'dreamplace-users',
   };
 
   return new JWTManager(config);

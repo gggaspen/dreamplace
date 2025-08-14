@@ -1,9 +1,5 @@
 import { ComponentType } from 'react';
-import { 
-  IDecoratorRegistry, 
-  ComponentDecorator, 
-  DecoratorConfig 
-} from './types';
+import { IDecoratorRegistry, ComponentDecorator, DecoratorConfig } from './types';
 
 /**
  * Decorator Registry - manages and applies component decorators
@@ -58,7 +54,7 @@ export class DecoratorRegistry implements IDecoratorRegistry {
 
     // Get decorators to apply
     const decoratorsToApply = this.getDecoratorsToApply(decoratorNames);
-    
+
     // Validate decorators can be applied
     this.validateDecorators(component, decoratorsToApply);
 
@@ -69,20 +65,22 @@ export class DecoratorRegistry implements IDecoratorRegistry {
     for (const decorator of decoratorsToApply) {
       try {
         const decoratorConfig = config?.[decorator.name];
-        
+
         if (decorator.canDecorate(decoratedComponent)) {
           decoratedComponent = decorator.decorate(decoratedComponent, decoratorConfig);
           appliedDecorators.push(decorator.name);
-          
+
           this.recordApplication(decorator.name, component.name || 'Anonymous', true);
-          this.log(`Applied decorator '${decorator.name}' to component '${component.name || 'Anonymous'}'`);
+          this.log(
+            `Applied decorator '${decorator.name}' to component '${component.name || 'Anonymous'}'`
+          );
         } else {
           this.log(`Skipped decorator '${decorator.name}' - cannot decorate component`);
         }
       } catch (error) {
         this.recordApplication(decorator.name, component.name || 'Anonymous', false);
         this.log(`Failed to apply decorator '${decorator.name}':`, error);
-        
+
         // Continue with other decorators unless it's a critical failure
         if (this.isCriticalError(error)) {
           throw error;
@@ -103,7 +101,7 @@ export class DecoratorRegistry implements IDecoratorRegistry {
     config?: DecoratorConfig
   ): ComponentType<P> {
     return this.decorateComponent(component, [decoratorName], {
-      [decoratorName]: config || { enabled: true }
+      [decoratorName]: config || { enabled: true },
     });
   }
 
@@ -119,7 +117,11 @@ export class DecoratorRegistry implements IDecoratorRegistry {
 
   // Batch decoration of multiple components
   decorateComponents<P>(
-    components: Array<{ component: ComponentType<P>; decorators?: string[]; config?: Record<string, DecoratorConfig> }>,
+    components: Array<{
+      component: ComponentType<P>;
+      decorators?: string[];
+      config?: Record<string, DecoratorConfig>;
+    }>,
     globalConfig?: Record<string, DecoratorConfig>
   ): Array<ComponentType<P>> {
     return components.map(({ component, decorators, config }) => {
@@ -164,12 +166,12 @@ export class DecoratorRegistry implements IDecoratorRegistry {
     for (const decorator of decorators) {
       const metadata = decorator.getMetadata();
       if (metadata.conflictsWith) {
-        const foundConflicts = metadata.conflictsWith.filter(conflict => 
+        const foundConflicts = metadata.conflictsWith.filter(conflict =>
           decoratorNames.includes(conflict)
         );
-        conflicts.push(...foundConflicts.map(conflict => 
-          `${decorator.name} conflicts with ${conflict}`
-        ));
+        conflicts.push(
+          ...foundConflicts.map(conflict => `${decorator.name} conflicts with ${conflict}`)
+        );
       }
     }
 
@@ -183,12 +185,8 @@ export class DecoratorRegistry implements IDecoratorRegistry {
     for (const decorator of decorators) {
       const metadata = decorator.getMetadata();
       if (metadata.dependencies) {
-        const missingDeps = metadata.dependencies.filter(dep => 
-          !decoratorNames.includes(dep)
-        );
-        missing.push(...missingDeps.map(dep => 
-          `${decorator.name} requires ${dep}`
-        ));
+        const missingDeps = metadata.dependencies.filter(dep => !decoratorNames.includes(dep));
+        missing.push(...missingDeps.map(dep => `${decorator.name} requires ${dep}`));
       }
     }
 
@@ -198,32 +196,21 @@ export class DecoratorRegistry implements IDecoratorRegistry {
   private isCriticalError(error: unknown): boolean {
     if (error instanceof Error) {
       // Define critical error patterns
-      const criticalPatterns = [
-        /circular dependency/i,
-        /maximum call stack/i,
-        /out of memory/i,
-      ];
-      
+      const criticalPatterns = [/circular dependency/i, /maximum call stack/i, /out of memory/i];
+
       return criticalPatterns.some(pattern => pattern.test(error.message));
     }
-    
+
     return false;
   }
 
-  private addDecoratorMetadata<P>(
-    component: ComponentType<P>,
-    appliedDecorators: string[]
-  ): void {
+  private addDecoratorMetadata<P>(component: ComponentType<P>, appliedDecorators: string[]): void {
     // Add metadata to help with debugging and tooling
     (component as any).__decorators = appliedDecorators;
     (component as any).__decoratorRegistry = this;
   }
 
-  private recordApplication(
-    decoratorName: string,
-    componentName: string,
-    success: boolean
-  ): void {
+  private recordApplication(decoratorName: string, componentName: string, success: boolean): void {
     this.applicationHistory.push({
       decoratorName,
       componentName,
@@ -258,12 +245,15 @@ export class DecoratorRegistry implements IDecoratorRegistry {
     const successfulApplications = this.applicationHistory.filter(h => h.success).length;
     const successRate = totalApplications > 0 ? successfulApplications / totalApplications : 0;
 
-    const applicationsByDecorator = this.applicationHistory.reduce((acc, history) => {
-      if (history.success) {
-        acc[history.decoratorName] = (acc[history.decoratorName] || 0) + 1;
-      }
-      return acc;
-    }, {} as Record<string, number>);
+    const applicationsByDecorator = this.applicationHistory.reduce(
+      (acc, history) => {
+        if (history.success) {
+          acc[history.decoratorName] = (acc[history.decoratorName] || 0) + 1;
+        }
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     const recentFailures = this.applicationHistory
       .filter(h => !h.success)

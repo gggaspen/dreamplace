@@ -15,7 +15,7 @@ export const artistKeys = {
 // Get all artists
 export const useArtists = () => {
   const artistRepository = Container.get<IArtistRepository>(SERVICE_TOKENS.ARTIST_REPOSITORY);
-  
+
   return useQuery({
     queryKey: artistKeys.lists(),
     queryFn: () => artistRepository.getAllArtists(),
@@ -27,7 +27,7 @@ export const useArtists = () => {
 // Get artist by ID
 export const useArtist = (id: string) => {
   const artistRepository = Container.get<IArtistRepository>(SERVICE_TOKENS.ARTIST_REPOSITORY);
-  
+
   return useQuery({
     queryKey: artistKeys.detail(id),
     queryFn: () => artistRepository.getArtistById(id),
@@ -41,7 +41,7 @@ export const useArtist = (id: string) => {
 export const usePrefetchArtists = () => {
   const queryClient = useQueryClient();
   const artistRepository = Container.get<IArtistRepository>(SERVICE_TOKENS.ARTIST_REPOSITORY);
-  
+
   return () => {
     queryClient.prefetchQuery({
       queryKey: artistKeys.lists(),
@@ -54,7 +54,7 @@ export const usePrefetchArtists = () => {
 // Invalidate artists cache
 export const useInvalidateArtists = () => {
   const queryClient = useQueryClient();
-  
+
   return () => {
     queryClient.invalidateQueries({ queryKey: artistKeys.all });
   };

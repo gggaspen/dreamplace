@@ -1,6 +1,6 @@
 /**
  * useCarousel Hook
- * 
+ *
  * Custom hook that encapsulates carousel business logic.
  * Handles autoplay configuration, image management, and responsive behavior.
  */
@@ -24,11 +24,7 @@ export const useCarousel = <T extends CarouselItem>(
   items: T[],
   options: UseCarouselOptions = {}
 ) => {
-  const {
-    autoplayDelay = 2000,
-    pauseOnHover = true,
-    disableOnMobile = true,
-  } = options;
+  const { autoplayDelay = 2000, pauseOnHover = true, disableOnMobile = true } = options;
 
   const [carouselItems, setCarouselItems] = useState<T[]>([]);
   const { isDesktop } = useResponsive();
@@ -51,12 +47,12 @@ export const useCarousel = <T extends CarouselItem>(
     items: carouselItems,
     isDesktop,
     windowHeight: windowHeightPx,
-    
+
     // Configuration
     autoplayConfig: getAutoplayConfig(),
     hasMultipleItems: carouselItems.length > 1,
     itemCount: carouselItems.length,
-    
+
     // Actions
     updateItems: setCarouselItems,
   };

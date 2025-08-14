@@ -1,14 +1,14 @@
-import { 
-  IAPIFacade, 
-  APIResponse, 
-  RequestConfig, 
-  BatchRequest, 
-  FacadeConfig, 
-  CacheStats, 
-  HealthStatus, 
+import {
+  IAPIFacade,
+  APIResponse,
+  RequestConfig,
+  BatchRequest,
+  FacadeConfig,
+  CacheStats,
+  HealthStatus,
   FacadeMetrics,
   APIError,
-  ResponseMetadata 
+  ResponseMetadata,
 } from './types';
 
 /**
@@ -93,7 +93,11 @@ export abstract class BaseAPIFacade implements IAPIFacade {
     return this.makeRequest<T>('PUT', endpoint, data, config);
   }
 
-  async patch<T>(endpoint: string, data?: unknown, config?: RequestConfig): Promise<APIResponse<T>> {
+  async patch<T>(
+    endpoint: string,
+    data?: unknown,
+    config?: RequestConfig
+  ): Promise<APIResponse<T>> {
     return this.makeRequest<T>('PATCH', endpoint, data, config);
   }
 
@@ -106,7 +110,7 @@ export abstract class BaseAPIFacade implements IAPIFacade {
     const requestId = this.generateRequestId();
 
     try {
-      const promises = requests.map(request => 
+      const promises = requests.map(request =>
         this.makeRequest(request.method, request.endpoint, request.data, request.config)
       );
 
@@ -132,15 +136,18 @@ export abstract class BaseAPIFacade implements IAPIFacade {
       });
 
       const duration = performance.now() - startTime;
-      
+
       return {
         data: successfulResults,
-        error: errors.length > 0 ? {
-          code: 'BATCH_PARTIAL_FAILURE',
-          message: `${errors.length} out of ${requests.length} requests failed`,
-          details: { errors },
-          timestamp: new Date(),
-        } : undefined,
+        error:
+          errors.length > 0
+            ? {
+                code: 'BATCH_PARTIAL_FAILURE',
+                message: `${errors.length} out of ${requests.length} requests failed`,
+                details: { errors },
+                timestamp: new Date(),
+              }
+            : undefined,
         metadata: {
           requestId,
           timestamp: new Date(),
@@ -149,7 +156,7 @@ export abstract class BaseAPIFacade implements IAPIFacade {
       };
     } catch (error) {
       const duration = performance.now() - startTime;
-      
+
       return {
         error: this.createAPIError('BATCH_REQUEST_ERROR', error),
         metadata: {
@@ -231,7 +238,7 @@ export abstract class BaseAPIFacade implements IAPIFacade {
       // Update metrics
       const duration = performance.now() - startTime;
       this.updateSuccessMetrics(duration);
-      
+
       this.log('info', `${method} ${endpoint} - Success (${duration.toFixed(2)}ms)`, {
         requestId,
         duration,
@@ -246,14 +253,13 @@ export abstract class BaseAPIFacade implements IAPIFacade {
           duration,
         },
       };
-
     } catch (error) {
       const duration = performance.now() - startTime;
       const apiError = this.createAPIError('REQUEST_FAILED', error);
-      
+
       // Update error metrics
       this.updateErrorMetrics(apiError, endpoint);
-      
+
       this.log('error', `${method} ${endpoint} - Failed (${duration.toFixed(2)}ms)`, {
         requestId,
         duration,
@@ -334,7 +340,7 @@ export abstract class BaseAPIFacade implements IAPIFacade {
   private updateSuccessMetrics(duration: number): void {
     this.metrics.requests.total++;
     this.metrics.requests.successful++;
-    
+
     // Update average time
     const total = this.metrics.requests.total;
     const current = this.metrics.requests.averageTime;
@@ -344,7 +350,7 @@ export abstract class BaseAPIFacade implements IAPIFacade {
   private updateErrorMetrics(error: APIError, endpoint: string): void {
     this.metrics.requests.total++;
     this.metrics.requests.failed++;
-    
+
     // Update error counts
     this.metrics.errors.byCode[error.code] = (this.metrics.errors.byCode[error.code] || 0) + 1;
     this.metrics.errors.byEndpoint[endpoint] = (this.metrics.errors.byEndpoint[endpoint] || 0) + 1;
@@ -352,7 +358,7 @@ export abstract class BaseAPIFacade implements IAPIFacade {
 
   private createAPIError(code: string, error: unknown): APIError {
     const message = error instanceof Error ? error.message : String(error);
-    
+
     return {
       code,
       message,
@@ -391,7 +397,7 @@ export abstract class BaseAPIFacade implements IAPIFacade {
 
   getCacheStats(): CacheStats {
     const total = this.metrics.cache.hits + this.metrics.cache.misses;
-    
+
     return {
       hits: this.metrics.cache.hits,
       misses: this.metrics.cache.misses,
@@ -403,12 +409,12 @@ export abstract class BaseAPIFacade implements IAPIFacade {
   // Health and monitoring
   async getHealthStatus(): Promise<HealthStatus> {
     const startTime = performance.now();
-    
+
     try {
       // Perform a simple health check request
       await this.get('/health', { timeout: 5000 });
       const responseTime = performance.now() - startTime;
-      
+
       return {
         status: 'healthy',
         uptime: Date.now() - (this.metrics as any).startTime || 0,
@@ -421,7 +427,7 @@ export abstract class BaseAPIFacade implements IAPIFacade {
       };
     } catch (error) {
       const responseTime = performance.now() - startTime;
-      
+
       return {
         status: 'unhealthy',
         uptime: Date.now() - (this.metrics as any).startTime || 0,
@@ -439,17 +445,17 @@ export abstract class BaseAPIFacade implements IAPIFacade {
     // Update cache hit rate
     const total = this.metrics.cache.hits + this.metrics.cache.misses;
     this.metrics.cache.hitRate = total > 0 ? this.metrics.cache.hits / total : 0;
-    
+
     return { ...this.metrics };
   }
 
   protected log(level: string, message: string, data?: unknown): void {
     if (!this.config.logging.enabled) return;
-    
+
     const logLevels = ['debug', 'info', 'warn', 'error'];
     const currentLevelIndex = logLevels.indexOf(this.config.logging.level);
     const messageLevelIndex = logLevels.indexOf(level);
-    
+
     if (messageLevelIndex >= currentLevelIndex) {
       console.log(`[${this.name}Facade] [${level.toUpperCase()}] ${message}`, data || '');
     }

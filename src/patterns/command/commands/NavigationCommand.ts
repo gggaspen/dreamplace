@@ -14,18 +14,14 @@ export class NavigationCommand extends BaseCommand<void> {
   private router: any; // Router instance (Next.js router)
   private fromPath?: string;
 
-  constructor(
-    payload: NavigationPayload,
-    router: any,
-    context?: Record<string, unknown>
-  ) {
+  constructor(payload: NavigationPayload, router: any, context?: Record<string, unknown>) {
     super(CommandType.NAVIGATE, payload, context);
     this.router = router;
   }
 
   async execute(): Promise<void> {
     const payload = this.metadata.payload as NavigationPayload;
-    
+
     // Save current path for undo
     this.fromPath = this.router.asPath;
     this.saveState({ fromPath: this.fromPath });

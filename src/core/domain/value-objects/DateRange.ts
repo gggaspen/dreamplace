@@ -31,7 +31,9 @@ export class DateRange {
   }
 
   public equals(other: DateRange): boolean {
-    return this._startDate.getTime() === other._startDate.getTime() &&
-           this._endDate.getTime() === other._endDate.getTime();
+    return (
+      this._startDate.getTime() === other._startDate.getTime() &&
+      this._endDate.getTime() === other._endDate.getTime()
+    );
   }
 }

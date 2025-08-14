@@ -38,20 +38,20 @@ export class CommandFactory {
     switch (type) {
       case CommandType.NAVIGATE:
         return this.createNavigationCommand(payload as NavigationPayload, context);
-      
+
       case CommandType.TOGGLE_THEME:
         return this.createThemeCommand(payload as ThemePayload, context);
-      
+
       case CommandType.PLAY_MEDIA:
       case CommandType.PAUSE_MEDIA:
         return this.createMediaCommand(payload as MediaPayload, context);
-      
+
       case CommandType.CREATE_ITEM:
       case CommandType.UPDATE_ITEM:
       case CommandType.DELETE_ITEM:
       case CommandType.FETCH_DATA:
         return this.createDataCommand(payload as DataPayload, context);
-      
+
       default:
         throw new Error(`Unsupported command type: ${type}`);
     }

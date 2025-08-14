@@ -4,7 +4,14 @@ export { BaseEntity } from './entities/BaseEntity';
 // Entities
 export { Event, type EventProps } from './entities/Event';
 export { Artist, ArtistLink, type ArtistProps, type ArtistLinkProps } from './entities/Artist';
-export { HeroSection, NavigationItem, ButtonItem, type HeroSectionProps, type NavigationItemProps, type ButtonItemProps } from './entities/HeroSection';
+export {
+  HeroSection,
+  NavigationItem,
+  ButtonItem,
+  type HeroSectionProps,
+  type NavigationItemProps,
+  type ButtonItemProps,
+} from './entities/HeroSection';
 export { ContactInfo, type ContactInfoProps } from './entities/ContactInfo';
 
 // Value Objects

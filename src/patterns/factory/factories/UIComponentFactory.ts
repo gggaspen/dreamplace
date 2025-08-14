@@ -27,7 +27,7 @@ export class UIComponentFactory extends BaseComponentFactory {
 
   create(config: ComponentConfig, context?: CreationContext): ReactElement {
     this.validateConfig(config);
-    
+
     const enrichedConfig = this.enrichConfig(config, context);
     const responsiveConfig = this.handleResponsive(enrichedConfig, context);
 
@@ -49,7 +49,7 @@ export class UIComponentFactory extends BaseComponentFactory {
 
   private createButton(config: ComponentConfig, context?: CreationContext): ReactElement {
     const { props = {}, metadata } = config;
-    
+
     let buttonProps = {
       type: 'button',
       ...props,
@@ -57,7 +57,7 @@ export class UIComponentFactory extends BaseComponentFactory {
 
     // Apply theme
     buttonProps = this.applyTheme(buttonProps, metadata?.theme);
-    
+
     // Apply accessibility
     buttonProps = this.applyAccessibility(buttonProps, metadata?.accessibility);
 
@@ -78,22 +78,40 @@ export class UIComponentFactory extends BaseComponentFactory {
     // Icon support
     const children = [];
     if (props.icon && props.iconPosition !== 'right') {
-      children.push(React.createElement('span', { 
-        key: 'icon-left',
-        className: 'btn-icon btn-icon-left' 
-      }, props.icon));
+      children.push(
+        React.createElement(
+          'span',
+          {
+            key: 'icon-left',
+            className: 'btn-icon btn-icon-left',
+          },
+          props.icon
+        )
+      );
     }
 
-    children.push(React.createElement('span', { 
-      key: 'text',
-      className: 'btn-text' 
-    }, config.children || props.children || 'Button'));
+    children.push(
+      React.createElement(
+        'span',
+        {
+          key: 'text',
+          className: 'btn-text',
+        },
+        config.children || props.children || 'Button'
+      )
+    );
 
     if (props.icon && props.iconPosition === 'right') {
-      children.push(React.createElement('span', { 
-        key: 'icon-right',
-        className: 'btn-icon btn-icon-right' 
-      }, props.icon));
+      children.push(
+        React.createElement(
+          'span',
+          {
+            key: 'icon-right',
+            className: 'btn-icon btn-icon-right',
+          },
+          props.icon
+        )
+      );
     }
 
     const element = React.createElement('button', buttonProps, ...children);
@@ -102,7 +120,7 @@ export class UIComponentFactory extends BaseComponentFactory {
 
   private createInput(config: ComponentConfig, context?: CreationContext): ReactElement {
     const { props = {}, metadata } = config;
-    
+
     let inputProps = {
       type: 'text',
       ...props,
@@ -110,7 +128,7 @@ export class UIComponentFactory extends BaseComponentFactory {
 
     // Apply theme
     inputProps = this.applyTheme(inputProps, metadata?.theme);
-    
+
     // Apply accessibility
     inputProps = this.applyAccessibility(inputProps, metadata?.accessibility);
 
@@ -136,11 +154,17 @@ export class UIComponentFactory extends BaseComponentFactory {
 
     // Label
     if (props.label) {
-      elements.push(React.createElement('label', {
-        key: 'label',
-        htmlFor: inputProps.id,
-        className: 'input-label'
-      }, props.label));
+      elements.push(
+        React.createElement(
+          'label',
+          {
+            key: 'label',
+            htmlFor: inputProps.id,
+            className: 'input-label',
+          },
+          props.label
+        )
+      );
     }
 
     // Input element
@@ -148,38 +172,54 @@ export class UIComponentFactory extends BaseComponentFactory {
 
     // Error message
     if (props.error) {
-      elements.push(React.createElement('div', {
-        key: 'error',
-        className: 'input-error-message',
-        role: 'alert'
-      }, props.error));
+      elements.push(
+        React.createElement(
+          'div',
+          {
+            key: 'error',
+            className: 'input-error-message',
+            role: 'alert',
+          },
+          props.error
+        )
+      );
     }
 
     // Help text
     if (props.help) {
-      elements.push(React.createElement('div', {
-        key: 'help',
-        className: 'input-help-text'
-      }, props.help));
+      elements.push(
+        React.createElement(
+          'div',
+          {
+            key: 'help',
+            className: 'input-help-text',
+          },
+          props.help
+        )
+      );
     }
 
-    const wrapper = React.createElement('div', {
-      className: 'input-wrapper'
-    }, ...elements);
+    const wrapper = React.createElement(
+      'div',
+      {
+        className: 'input-wrapper',
+      },
+      ...elements
+    );
 
     return this.applyPerformanceOptimizations(wrapper, metadata?.performance);
   }
 
   private createCard(config: ComponentConfig, context?: CreationContext): ReactElement {
     const { props = {}, metadata } = config;
-    
+
     let cardProps = {
       ...props,
     };
 
     // Apply theme
     cardProps = this.applyTheme(cardProps, metadata?.theme);
-    
+
     // Apply accessibility
     cardProps = this.applyAccessibility(cardProps, metadata?.accessibility);
 
@@ -203,51 +243,83 @@ export class UIComponentFactory extends BaseComponentFactory {
     // Header
     if (props.header || props.title) {
       const headerContent = [];
-      
+
       if (props.title) {
-        headerContent.push(React.createElement('h3', {
-          key: 'title',
-          className: 'card-title'
-        }, props.title));
+        headerContent.push(
+          React.createElement(
+            'h3',
+            {
+              key: 'title',
+              className: 'card-title',
+            },
+            props.title
+          )
+        );
       }
 
       if (props.subtitle) {
-        headerContent.push(React.createElement('p', {
-          key: 'subtitle',
-          className: 'card-subtitle'
-        }, props.subtitle));
+        headerContent.push(
+          React.createElement(
+            'p',
+            {
+              key: 'subtitle',
+              className: 'card-subtitle',
+            },
+            props.subtitle
+          )
+        );
       }
 
-      children.push(React.createElement('div', {
-        key: 'header',
-        className: 'card-header'
-      }, props.header || headerContent));
+      children.push(
+        React.createElement(
+          'div',
+          {
+            key: 'header',
+            className: 'card-header',
+          },
+          props.header || headerContent
+        )
+      );
     }
 
     // Image
     if (props.image) {
-      children.push(React.createElement('img', {
-        key: 'image',
-        src: props.image,
-        alt: props.imageAlt || '',
-        className: 'card-image'
-      }));
+      children.push(
+        React.createElement('img', {
+          key: 'image',
+          src: props.image,
+          alt: props.imageAlt || '',
+          className: 'card-image',
+        })
+      );
     }
 
     // Body
     if (config.children || props.content) {
-      children.push(React.createElement('div', {
-        key: 'body',
-        className: 'card-body'
-      }, config.children || props.content));
+      children.push(
+        React.createElement(
+          'div',
+          {
+            key: 'body',
+            className: 'card-body',
+          },
+          config.children || props.content
+        )
+      );
     }
 
     // Footer
     if (props.footer || props.actions) {
-      children.push(React.createElement('div', {
-        key: 'footer',
-        className: 'card-footer'
-      }, props.footer || props.actions));
+      children.push(
+        React.createElement(
+          'div',
+          {
+            key: 'footer',
+            className: 'card-footer',
+          },
+          props.footer || props.actions
+        )
+      );
     }
 
     const element = React.createElement('div', cardProps, ...children);
@@ -256,7 +328,7 @@ export class UIComponentFactory extends BaseComponentFactory {
 
   private createModal(config: ComponentConfig, context?: CreationContext): ReactElement {
     const { props = {}, metadata } = config;
-    
+
     // Modal backdrop
     const backdropProps = {
       className: 'modal-backdrop',
@@ -273,7 +345,7 @@ export class UIComponentFactory extends BaseComponentFactory {
 
     // Apply theme
     modalProps = this.applyTheme(modalProps, metadata?.theme);
-    
+
     // Apply accessibility
     modalProps = this.applyAccessibility(modalProps, metadata?.accessibility);
 
@@ -290,55 +362,85 @@ export class UIComponentFactory extends BaseComponentFactory {
     // Header
     if (props.title || props.closable !== false) {
       const headerContent = [];
-      
+
       if (props.title) {
-        headerContent.push(React.createElement('h2', {
-          key: 'title',
-          id: props.titleId,
-          className: 'modal-title'
-        }, props.title));
+        headerContent.push(
+          React.createElement(
+            'h2',
+            {
+              key: 'title',
+              id: props.titleId,
+              className: 'modal-title',
+            },
+            props.title
+          )
+        );
       }
 
       if (props.closable !== false) {
-        headerContent.push(React.createElement('button', {
-          key: 'close',
-          type: 'button',
-          className: 'modal-close',
-          onClick: props.onClose,
-          'aria-label': 'Close modal'
-        }, '×'));
+        headerContent.push(
+          React.createElement(
+            'button',
+            {
+              key: 'close',
+              type: 'button',
+              className: 'modal-close',
+              onClick: props.onClose,
+              'aria-label': 'Close modal',
+            },
+            '×'
+          )
+        );
       }
 
-      children.push(React.createElement('div', {
-        key: 'header',
-        className: 'modal-header'
-      }, ...headerContent));
+      children.push(
+        React.createElement(
+          'div',
+          {
+            key: 'header',
+            className: 'modal-header',
+          },
+          ...headerContent
+        )
+      );
     }
 
     // Body
-    children.push(React.createElement('div', {
-      key: 'body',
-      className: 'modal-body'
-    }, config.children || props.content));
+    children.push(
+      React.createElement(
+        'div',
+        {
+          key: 'body',
+          className: 'modal-body',
+        },
+        config.children || props.content
+      )
+    );
 
     // Footer
     if (props.footer || props.actions) {
-      children.push(React.createElement('div', {
-        key: 'footer',
-        className: 'modal-footer'
-      }, props.footer || props.actions));
+      children.push(
+        React.createElement(
+          'div',
+          {
+            key: 'footer',
+            className: 'modal-footer',
+          },
+          props.footer || props.actions
+        )
+      );
     }
 
     const modalContent = React.createElement('div', modalProps, ...children);
-    
+
     const backdrop = React.createElement('div', backdropProps, modalContent);
-    
+
     return this.applyPerformanceOptimizations(backdrop, metadata?.performance);
   }
 
   private createTooltip(config: ComponentConfig, context?: CreationContext): ReactElement {
     const { props = {}, metadata } = config;
-    
+
     let tooltipProps = {
       role: 'tooltip',
       ...props,
@@ -346,7 +448,7 @@ export class UIComponentFactory extends BaseComponentFactory {
 
     // Apply theme
     tooltipProps = this.applyTheme(tooltipProps, metadata?.theme);
-    
+
     // Apply accessibility
     tooltipProps = this.applyAccessibility(tooltipProps, metadata?.accessibility);
 

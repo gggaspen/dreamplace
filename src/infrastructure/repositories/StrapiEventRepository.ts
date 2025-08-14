@@ -46,21 +46,31 @@ export class StrapiEventRepository implements IEventRepository {
 
   async findAll(filters?: EventFilters): Promise<Event[]> {
     const params: StrapiQueryParams = {
-      fields: ['name', 'location', 'description', 'date', 'active', 'ticket_link', 'price', 'capacity', 'featured'],
+      fields: [
+        'name',
+        'location',
+        'description',
+        'date',
+        'active',
+        'ticket_link',
+        'price',
+        'capacity',
+        'featured',
+      ],
       populate: {
         cover_mobile: {
-          fields: ['url', 'formats']
+          fields: ['url', 'formats'],
         },
         cover_desktop: {
-          fields: ['url', 'formats']
-        }
-      }
+          fields: ['url', 'formats'],
+        },
+      },
     };
 
     // Apply filters if provided
     if (filters) {
       params.filters = {};
-      
+
       if (filters.active !== undefined) {
         params.filters.active = { $eq: filters.active };
       }
@@ -73,7 +83,7 @@ export class StrapiEventRepository implements IEventRepository {
       if (filters.dateRange) {
         params.filters.date = {
           $gte: filters.dateRange.start.toISOString(),
-          $lte: filters.dateRange.end.toISOString()
+          $lte: filters.dateRange.end.toISOString(),
         };
       }
     }
@@ -87,12 +97,12 @@ export class StrapiEventRepository implements IEventRepository {
       const params: StrapiQueryParams = {
         populate: {
           cover_mobile: {
-            fields: ['url', 'formats']
+            fields: ['url', 'formats'],
           },
           cover_desktop: {
-            fields: ['url', 'formats']
-          }
-        }
+            fields: ['url', 'formats'],
+          },
+        },
       };
 
       const response = await this.apiClient.getEntry<StrapiEventAttributes>('events', id, params);
@@ -125,12 +135,16 @@ export class StrapiEventRepository implements IEventRepository {
 
   async save(event: Event): Promise<Event> {
     const data = this.mapToStrapiData(event);
-    
+
     if (event.isNew()) {
       const response = await this.apiClient.createEntry<StrapiEventAttributes>('events', data);
       return this.mapToDomainEntity(response);
     } else {
-      const response = await this.apiClient.updateEntry<StrapiEventAttributes>('events', event.id!, data);
+      const response = await this.apiClient.updateEntry<StrapiEventAttributes>(
+        'events',
+        event.id!,
+        data
+      );
       return this.mapToDomainEntity(response);
     }
   }
@@ -157,14 +171,15 @@ export class StrapiEventRepository implements IEventRepository {
       location: strapiData.attributes.location,
       active: strapiData.attributes.active,
       ticketLink: new Url(strapiData.attributes.ticket_link),
-      coverMobile: strapiData.attributes.cover_mobile?.data?.map(cover => cover.attributes.url) || [],
+      coverMobile:
+        strapiData.attributes.cover_mobile?.data?.map(cover => cover.attributes.url) || [],
       coverDesktop: strapiData.attributes.cover_desktop?.data?.attributes?.url,
       price: strapiData.attributes.price,
       capacity: strapiData.attributes.capacity,
       tags: strapiData.attributes.tags || [],
       featured: strapiData.attributes.featured || false,
       createdAt: new Date(strapiData.attributes.createdAt),
-      updatedAt: new Date(strapiData.attributes.updatedAt)
+      updatedAt: new Date(strapiData.attributes.updatedAt),
     };
 
     return new Event(props);
@@ -180,7 +195,7 @@ export class StrapiEventRepository implements IEventRepository {
       ticket_link: event.ticketLink.value,
       price: event.price,
       capacity: event.capacity,
-      featured: event.isFeatured
+      featured: event.isFeatured,
     };
   }
 
@@ -188,12 +203,14 @@ export class StrapiEventRepository implements IEventRepository {
     if (!richText) return '';
     if (typeof richText === 'string') return richText;
     if (Array.isArray(richText)) {
-      return richText.map(block => {
-        if (block.children) {
-          return block.children.map((child: any) => child.text || '').join('');
-        }
-        return '';
-      }).join('\\n');
+      return richText
+        .map(block => {
+          if (block.children) {
+            return block.children.map((child: any) => child.text || '').join('');
+          }
+          return '';
+        })
+        .join('\\n');
     }
     return '';
   }

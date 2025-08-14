@@ -37,7 +37,7 @@ export class URLStateManager {
 
     try {
       const deserializedValue = config.deserialize(rawValue);
-      
+
       if (config.validate && !config.validate(deserializedValue)) {
         return config.defaultValue;
       }
@@ -106,7 +106,10 @@ export class URLStateManager {
   /**
    * Update multiple parameters at once
    */
-  updateParams(updates: Array<{ config: URLStateConfig<any>, value: any }>, options: { replace?: boolean } = {}): void {
+  updateParams(
+    updates: Array<{ config: URLStateConfig<any>; value: any }>,
+    options: { replace?: boolean } = {}
+  ): void {
     if (typeof window === 'undefined') return;
 
     const url = new URL(window.location.href);
@@ -164,60 +167,60 @@ export const URLStateConfigs = {
   string: (paramName: string, defaultValue: string = ''): URLStateConfig<string> => ({
     paramName,
     defaultValue,
-    serialize: (value) => value,
-    deserialize: (value) => value,
-    validate: (value) => typeof value === 'string'
+    serialize: value => value,
+    deserialize: value => value,
+    validate: value => typeof value === 'string',
   }),
 
   // Number parameter
   number: (paramName: string, defaultValue: number = 0): URLStateConfig<number> => ({
     paramName,
     defaultValue,
-    serialize: (value) => value.toString(),
-    deserialize: (value) => Number(value),
-    validate: (value) => typeof value === 'number' && !isNaN(value)
+    serialize: value => value.toString(),
+    deserialize: value => Number(value),
+    validate: value => typeof value === 'number' && !isNaN(value),
   }),
 
   // Boolean parameter
   boolean: (paramName: string, defaultValue: boolean = false): URLStateConfig<boolean> => ({
     paramName,
     defaultValue,
-    serialize: (value) => value ? 'true' : 'false',
-    deserialize: (value) => value === 'true',
-    validate: (value) => typeof value === 'boolean'
+    serialize: value => (value ? 'true' : 'false'),
+    deserialize: value => value === 'true',
+    validate: value => typeof value === 'boolean',
   }),
 
   // Array parameter
   array: <T>(
-    paramName: string, 
+    paramName: string,
     defaultValue: T[] = [],
-    itemSerializer: (item: T) => string = (item) => String(item),
-    itemDeserializer: (value: string) => T = (value) => value as T
+    itemSerializer: (item: T) => string = item => String(item),
+    itemDeserializer: (value: string) => T = value => value as T
   ): URLStateConfig<T[]> => ({
     paramName,
     defaultValue,
-    serialize: (value) => value.map(itemSerializer).join(','),
-    deserialize: (value) => value ? value.split(',').map(itemDeserializer) : [],
-    validate: (value) => Array.isArray(value)
+    serialize: value => value.map(itemSerializer).join(','),
+    deserialize: value => (value ? value.split(',').map(itemDeserializer) : []),
+    validate: value => Array.isArray(value),
   }),
 
   // JSON parameter (for complex objects)
   json: <T>(paramName: string, defaultValue: T): URLStateConfig<T> => ({
     paramName,
     defaultValue,
-    serialize: (value) => btoa(JSON.stringify(value)),
-    deserialize: (value) => JSON.parse(atob(value)),
-    validate: (value) => value !== null && value !== undefined
+    serialize: value => btoa(JSON.stringify(value)),
+    deserialize: value => JSON.parse(atob(value)),
+    validate: value => value !== null && value !== undefined,
   }),
 
   // Date parameter
   date: (paramName: string, defaultValue: Date = new Date()): URLStateConfig<Date> => ({
     paramName,
     defaultValue,
-    serialize: (value) => value.toISOString(),
-    deserialize: (value) => new Date(value),
-    validate: (value) => value instanceof Date && !isNaN(value.getTime())
-  })
+    serialize: value => value.toISOString(),
+    deserialize: value => new Date(value),
+    validate: value => value instanceof Date && !isNaN(value.getTime()),
+  }),
 };
 
 // Singleton instance

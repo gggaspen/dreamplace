@@ -1,6 +1,6 @@
 /**
  * DreamPlace Custom Chakra UI Theme
- * 
+ *
  * Custom theme configuration that integrates our design tokens
  * with Chakra UI's theming system for consistent brand experience.
  */
@@ -28,30 +28,30 @@ export const dreamPlaceTheme = createSystem(defaultConfig, {
         700: colorTokens.brand[700],
         800: colorTokens.brand[800],
         900: colorTokens.brand[900],
-        950: colorTokens.brand[950]
+        950: colorTokens.brand[950],
       },
-      
-      // Secondary colors  
+
+      // Secondary colors
       secondary: colorTokens.secondary,
-      
+
       // Neutral grays
       gray: colorTokens.neutral,
-      
+
       // Semantic colors
       green: colorTokens.semantic.success,
       yellow: colorTokens.semantic.warning,
       red: colorTokens.semantic.error,
       blue: colorTokens.semantic.info,
-      
+
       // Music genre colors
-      music: colorTokens.music
+      music: colorTokens.music,
     },
 
     // Typography
     fonts: {
       heading: fontFamilyTokens.display.join(', '),
       body: fontFamilyTokens.body.join(', '),
-      mono: fontFamilyTokens.mono.join(', ')
+      mono: fontFamilyTokens.mono.join(', '),
     },
 
     fontSizes: {
@@ -67,7 +67,7 @@ export const dreamPlaceTheme = createSystem(defaultConfig, {
       '6xl': '3.75rem',
       '7xl': '4.5rem',
       '8xl': '6rem',
-      '9xl': '8rem'
+      '9xl': '8rem',
     },
 
     fontWeights: {
@@ -79,7 +79,7 @@ export const dreamPlaceTheme = createSystem(defaultConfig, {
       semibold: 600,
       bold: 700,
       extrabold: 800,
-      black: 900
+      black: 900,
     },
 
     lineHeights: {
@@ -89,7 +89,7 @@ export const dreamPlaceTheme = createSystem(defaultConfig, {
       short: 1.375,
       base: 1.5,
       tall: 1.625,
-      taller: 2
+      taller: 2,
     },
 
     letterSpacings: {
@@ -98,7 +98,7 @@ export const dreamPlaceTheme = createSystem(defaultConfig, {
       normal: '0',
       wide: '0.025em',
       wider: '0.05em',
-      widest: '0.1em'
+      widest: '0.1em',
     },
 
     // Spacing
@@ -128,8 +128,8 @@ export const dreamPlaceTheme = createSystem(defaultConfig, {
         sm: '640px',
         md: '768px',
         lg: '1024px',
-        xl: '1280px'
-      }
+        xl: '1280px',
+      },
     },
 
     // Breakpoints
@@ -139,7 +139,7 @@ export const dreamPlaceTheme = createSystem(defaultConfig, {
       md: '48em', // 768px
       lg: '62em', // 992px
       xl: '80em', // 1280px
-      '2xl': '96em' // 1536px
+      '2xl': '96em', // 1536px
     },
 
     // Shadows
@@ -149,7 +149,7 @@ export const dreamPlaceTheme = createSystem(defaultConfig, {
       card: componentShadows.card.resting,
       cardHover: componentShadows.card.hover,
       button: componentShadows.button.resting,
-      buttonHover: componentShadows.button.hover
+      buttonHover: componentShadows.button.hover,
     },
 
     // Border radius
@@ -162,7 +162,7 @@ export const dreamPlaceTheme = createSystem(defaultConfig, {
       xl: '0.75rem',
       '2xl': '1rem',
       '3xl': '1.5rem',
-      full: '9999px'
+      full: '9999px',
     },
 
     // Z-index scale
@@ -179,8 +179,8 @@ export const dreamPlaceTheme = createSystem(defaultConfig, {
       popover: 1500,
       skipLink: 1600,
       toast: 1700,
-      tooltip: 1800
-    }
+      tooltip: 1800,
+    },
   },
 
   // Semantic tokens for light/dark mode
@@ -189,43 +189,43 @@ export const dreamPlaceTheme = createSystem(defaultConfig, {
       // Background colors
       'bg.canvas': {
         base: lightThemeColors.background.primary,
-        _dark: darkThemeColors.background.primary
+        _dark: darkThemeColors.background.primary,
       },
       'bg.default': {
         base: lightThemeColors.surface.primary,
-        _dark: darkThemeColors.surface.primary
+        _dark: darkThemeColors.surface.primary,
       },
       'bg.subtle': {
         base: lightThemeColors.background.secondary,
-        _dark: darkThemeColors.background.secondary
+        _dark: darkThemeColors.background.secondary,
       },
       'bg.muted': {
         base: lightThemeColors.background.tertiary,
-        _dark: darkThemeColors.background.tertiary
+        _dark: darkThemeColors.background.tertiary,
       },
 
       // Text colors
       'fg.default': {
         base: lightThemeColors.text.primary,
-        _dark: darkThemeColors.text.primary
+        _dark: darkThemeColors.text.primary,
       },
       'fg.muted': {
         base: lightThemeColors.text.secondary,
-        _dark: darkThemeColors.text.secondary
+        _dark: darkThemeColors.text.secondary,
       },
       'fg.subtle': {
         base: lightThemeColors.text.tertiary,
-        _dark: darkThemeColors.text.tertiary
+        _dark: darkThemeColors.text.tertiary,
       },
 
       // Border colors
       'border.default': {
         base: lightThemeColors.border.primary,
-        _dark: darkThemeColors.border.primary
+        _dark: darkThemeColors.border.primary,
       },
       'border.muted': {
         base: lightThemeColors.border.secondary,
-        _dark: darkThemeColors.border.secondary
+        _dark: darkThemeColors.border.secondary,
       },
 
       // Brand colors (consistent across themes)
@@ -233,21 +233,21 @@ export const dreamPlaceTheme = createSystem(defaultConfig, {
       'brand.emphasis': colorTokens.brand[600],
       'brand.subtle': {
         base: colorTokens.brand[100],
-        _dark: colorTokens.brand[900]
-      }
+        _dark: colorTokens.brand[900],
+      },
     },
 
     shadows: {
       'shadow.default': {
         base: shadowTokens.sm,
-        _dark: '0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4)'
+        _dark: '0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4)',
       },
       'shadow.medium': {
         base: shadowTokens.md,
-        _dark: '0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4)'
-      }
-    }
-  }
+        _dark: '0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4)',
+      },
+    },
+  },
 });
 
 // Export type for theme
@@ -257,5 +257,5 @@ export type DreamPlaceTheme = typeof dreamPlaceTheme;
 export const themeConfig = {
   initialColorMode: 'system',
   useSystemColorMode: true,
-  cssVarPrefix: 'dreamplace'
+  cssVarPrefix: 'dreamplace',
 } as const;

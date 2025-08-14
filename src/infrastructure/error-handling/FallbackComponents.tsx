@@ -73,7 +73,7 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
 
   if (variant === 'minimal') {
     return (
-      <Alert status="error" rounded="md">
+      <Alert status='error' rounded='md'>
         <AlertIcon />
         <Box>
           <AlertTitle>{title}</AlertTitle>
@@ -86,41 +86,43 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
   if (variant === 'detailed') {
     return (
       <Box
-        maxW="lg"
-        mx="auto"
+        maxW='lg'
+        mx='auto'
         my={8}
         p={8}
-        bg="red.50"
-        border="1px solid"
-        borderColor="red.200"
-        rounded="lg"
-        textAlign="center"
+        bg='red.50'
+        border='1px solid'
+        borderColor='red.200'
+        rounded='lg'
+        textAlign='center'
       >
         <VStack spacing={6}>
-          <WarningIcon boxSize={16} color="red.500" />
+          <WarningIcon boxSize={16} color='red.500' />
           <VStack spacing={3}>
-            <Heading size="lg" color="red.700">
+            <Heading size='lg' color='red.700'>
               {title}
             </Heading>
-            <Text color="red.600" fontSize="md">
+            <Text color='red.600' fontSize='md'>
               {description}
             </Text>
           </VStack>
-          
+
           {showDetails && error && process.env.NODE_ENV === 'development' && (
             <Box
-              bg="white"
+              bg='white'
               p={4}
-              rounded="md"
-              border="1px solid"
-              borderColor="red.200"
-              fontSize="sm"
-              textAlign="left"
-              maxW="full"
-              overflow="auto"
+              rounded='md'
+              border='1px solid'
+              borderColor='red.200'
+              fontSize='sm'
+              textAlign='left'
+              maxW='full'
+              overflow='auto'
             >
-              <Text fontWeight="bold" mb={2}>Error Details:</Text>
-              <Text fontFamily="mono" whiteSpace="pre-wrap" color="red.700">
+              <Text fontWeight='bold' mb={2}>
+                Error Details:
+              </Text>
+              <Text fontFamily='mono' whiteSpace='pre-wrap' color='red.700'>
                 {error.message}
               </Text>
             </Box>
@@ -128,18 +130,10 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
 
           {showRetry && (
             <HStack spacing={3}>
-              <Button
-                leftIcon={<RefreshIcon />}
-                colorScheme="red"
-                onClick={handleRetry}
-              >
+              <Button leftIcon={<RefreshIcon />} colorScheme='red' onClick={handleRetry}>
                 Try Again
               </Button>
-              <Button
-                variant="outline"
-                colorScheme="red"
-                onClick={() => window.location.reload()}
-              >
+              <Button variant='outline' colorScheme='red' onClick={() => window.location.reload()}>
                 Refresh Page
               </Button>
             </HStack>
@@ -151,31 +145,17 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
 
   // Standard variant
   return (
-    <Box
-      p={6}
-      bg="red.50"
-      border="1px solid"
-      borderColor="red.200"
-      rounded="md"
-      textAlign="center"
-    >
+    <Box p={6} bg='red.50' border='1px solid' borderColor='red.200' rounded='md' textAlign='center'>
       <VStack spacing={4}>
-        <WarningIcon color="red.500" boxSize={8} />
+        <WarningIcon color='red.500' boxSize={8} />
         <VStack spacing={2}>
-          <Heading size="md" color="red.700">
+          <Heading size='md' color='red.700'>
             {title}
           </Heading>
-          <Text color="red.600">
-            {description}
-          </Text>
+          <Text color='red.600'>{description}</Text>
         </VStack>
         {showRetry && (
-          <Button
-            size="sm"
-            colorScheme="red"
-            leftIcon={<RefreshIcon />}
-            onClick={handleRetry}
-          >
+          <Button size='sm' colorScheme='red' leftIcon={<RefreshIcon />} onClick={handleRetry}>
             Try Again
           </Button>
         )}
@@ -198,17 +178,17 @@ export const NetworkErrorFallback: React.FC<NetworkErrorFallbackProps> = ({
     <ErrorFallback
       error={error}
       resetError={resetError}
-      title="Connection Problem"
-      description="Unable to connect to the server. Please check your internet connection and try again."
+      title='Connection Problem'
+      description='Unable to connect to the server. Please check your internet connection and try again.'
       onRetry={onRetry}
       showRetry={!isRetrying}
       {...props}
-      variant="standard"
+      variant='standard'
     >
       {isRetrying && (
         <HStack spacing={2} mt={4}>
-          <Spinner size="sm" />
-          <Text fontSize="sm" color="gray.600">
+          <Spinner size='sm' />
+          <Text fontSize='sm' color='gray.600'>
             Retrying connection...
           </Text>
         </HStack>
@@ -227,16 +207,16 @@ export const LoadingFallback: React.FC<LoadingFallbackProps> = ({
   size = 'md',
 }) => {
   const spinnerSize = size === 'sm' ? 'sm' : size === 'lg' ? 'xl' : 'lg';
-  
+
   if (variant === 'skeleton') {
     return (
       <Box p={6}>
-        <VStack spacing={4} align="stretch">
-          <Skeleton height="40px" />
-          <SkeletonText mt="4" noOfLines={4} spacing="4" skeletonHeight="2" />
+        <VStack spacing={4} align='stretch'>
+          <Skeleton height='40px' />
+          <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
           <HStack spacing={4}>
-            <Skeleton height="20px" flex={1} />
-            <Skeleton height="20px" flex={1} />
+            <Skeleton height='20px' flex={1} />
+            <Skeleton height='20px' flex={1} />
           </HStack>
         </VStack>
       </Box>
@@ -245,24 +225,12 @@ export const LoadingFallback: React.FC<LoadingFallbackProps> = ({
 
   if (variant === 'pulse') {
     return (
-      <Box
-        p={8}
-        textAlign="center"
-        bg="gray.50"
-        rounded="md"
-        animation="pulse 2s infinite"
-      >
+      <Box p={8} textAlign='center' bg='gray.50' rounded='md' animation='pulse 2s infinite'>
         <VStack spacing={4}>
-          <Box
-            w={16}
-            h={16}
-            bg="gray.300"
-            rounded="full"
-            animation="pulse 1.5s infinite"
-          />
+          <Box w={16} h={16} bg='gray.300' rounded='full' animation='pulse 1.5s infinite' />
           <VStack spacing={2}>
-            <Box h={4} w={32} bg="gray.300" rounded="md" />
-            {description && <Box h={3} w={48} bg="gray.200" rounded="md" />}
+            <Box h={4} w={32} bg='gray.300' rounded='md' />
+            {description && <Box h={3} w={48} bg='gray.200' rounded='md' />}
           </VStack>
         </VStack>
       </Box>
@@ -271,15 +239,15 @@ export const LoadingFallback: React.FC<LoadingFallbackProps> = ({
 
   // Spinner variant
   return (
-    <Box p={8} textAlign="center">
+    <Box p={8} textAlign='center'>
       <VStack spacing={4}>
-        <Spinner size={spinnerSize} color="blue.500" />
+        <Spinner size={spinnerSize} color='blue.500' />
         <VStack spacing={2}>
-          <Text fontSize={size === 'sm' ? 'sm' : 'md'} fontWeight="medium">
+          <Text fontSize={size === 'sm' ? 'sm' : 'md'} fontWeight='medium'>
             {title}
           </Text>
           {description && (
-            <Text fontSize="sm" color="gray.600">
+            <Text fontSize='sm' color='gray.600'>
               {description}
             </Text>
           )}
@@ -299,23 +267,21 @@ export const NotFoundFallback: React.FC<{
   onAction?: () => void;
 }> = ({
   title = 'No Data Found',
-  description = 'We couldn\'t find any data to display.',
+  description = "We couldn't find any data to display.",
   actionText = 'Try Again',
   onAction,
 }) => (
-  <Box p={8} textAlign="center">
+  <Box p={8} textAlign='center'>
     <VStack spacing={4}>
-      <Box fontSize="6xl">🔍</Box>
+      <Box fontSize='6xl'>🔍</Box>
       <VStack spacing={2}>
-        <Heading size="md" color="gray.700">
+        <Heading size='md' color='gray.700'>
           {title}
         </Heading>
-        <Text color="gray.600">
-          {description}
-        </Text>
+        <Text color='gray.600'>{description}</Text>
       </VStack>
       {onAction && (
-        <Button variant="outline" onClick={onAction}>
+        <Button variant='outline' onClick={onAction}>
           {actionText}
         </Button>
       )}
@@ -332,47 +298,36 @@ export const PermissionDeniedFallback: React.FC<{
   contactEmail?: string;
 }> = ({
   title = 'Access Denied',
-  description = 'You don\'t have permission to view this content.',
+  description = "You don't have permission to view this content.",
   contactEmail = 'support@dreamplace.com.ar',
 }) => (
   <Box
-    maxW="md"
-    mx="auto"
+    maxW='md'
+    mx='auto'
     my={8}
     p={8}
-    bg="orange.50"
-    border="1px solid"
-    borderColor="orange.200"
-    rounded="lg"
-    textAlign="center"
+    bg='orange.50'
+    border='1px solid'
+    borderColor='orange.200'
+    rounded='lg'
+    textAlign='center'
   >
     <VStack spacing={6}>
-      <Box fontSize="6xl">🔒</Box>
+      <Box fontSize='6xl'>🔒</Box>
       <VStack spacing={3}>
-        <Heading size="lg" color="orange.700">
+        <Heading size='lg' color='orange.700'>
           {title}
         </Heading>
-        <Text color="orange.600">
-          {description}
-        </Text>
+        <Text color='orange.600'>{description}</Text>
       </VStack>
-      
+
       <VStack spacing={3}>
-        <Button
-          variant="outline"
-          colorScheme="orange"
-          onClick={() => window.history.back()}
-        >
+        <Button variant='outline' colorScheme='orange' onClick={() => window.history.back()}>
           Go Back
         </Button>
         {contactEmail && (
           <Link href={`mailto:${contactEmail}`}>
-            <Button
-              size="sm"
-              variant="ghost"
-              leftIcon={<EmailIcon />}
-              colorScheme="orange"
-            >
+            <Button size='sm' variant='ghost' leftIcon={<EmailIcon />} colorScheme='orange'>
               Contact Support
             </Button>
           </Link>
@@ -392,37 +347,30 @@ export const MaintenanceFallback: React.FC<{
   contactInfo?: string;
 }> = ({
   title = 'Under Maintenance',
-  description = 'We\'re currently performing maintenance to improve your experience.',
+  description = "We're currently performing maintenance to improve your experience.",
   estimatedTime,
   contactInfo = 'support@dreamplace.com.ar',
 }) => (
-  <Box
-    minH="100vh"
-    display="flex"
-    alignItems="center"
-    justifyContent="center"
-    bg="blue.50"
-    p={8}
-  >
-    <VStack spacing={8} textAlign="center" maxW="md">
-      <Box fontSize="8xl">🔧</Box>
+  <Box minH='100vh' display='flex' alignItems='center' justifyContent='center' bg='blue.50' p={8}>
+    <VStack spacing={8} textAlign='center' maxW='md'>
+      <Box fontSize='8xl'>🔧</Box>
       <VStack spacing={4}>
-        <Heading size="xl" color="blue.700">
+        <Heading size='xl' color='blue.700'>
           {title}
         </Heading>
-        <Text color="blue.600" fontSize="lg">
+        <Text color='blue.600' fontSize='lg'>
           {description}
         </Text>
         {estimatedTime && (
-          <Text color="blue.500" fontSize="sm">
+          <Text color='blue.500' fontSize='sm'>
             Estimated time: {estimatedTime}
           </Text>
         )}
       </VStack>
-      
+
       <VStack spacing={3}>
         <Button
-          colorScheme="blue"
+          colorScheme='blue'
           onClick={() => window.location.reload()}
           leftIcon={<RefreshIcon />}
         >
@@ -430,12 +378,7 @@ export const MaintenanceFallback: React.FC<{
         </Button>
         {contactInfo && (
           <Link href={`mailto:${contactInfo}`}>
-            <Button
-              size="sm"
-              variant="ghost"
-              leftIcon={<EmailIcon />}
-              colorScheme="blue"
-            >
+            <Button size='sm' variant='ghost' leftIcon={<EmailIcon />} colorScheme='blue'>
               Contact Support
             </Button>
           </Link>
@@ -456,18 +399,18 @@ export const ImageFallback: React.FC<{
   <Box
     width={width}
     height={height}
-    bg="gray.100"
-    display="flex"
-    alignItems="center"
-    justifyContent="center"
-    color="gray.500"
-    fontSize="sm"
-    rounded="md"
-    border="1px dashed"
-    borderColor="gray.300"
+    bg='gray.100'
+    display='flex'
+    alignItems='center'
+    justifyContent='center'
+    color='gray.500'
+    fontSize='sm'
+    rounded='md'
+    border='1px dashed'
+    borderColor='gray.300'
   >
     <VStack spacing={2}>
-      <Box fontSize="2xl">🖼️</Box>
+      <Box fontSize='2xl'>🖼️</Box>
       <Text>{alt}</Text>
     </VStack>
   </Box>
@@ -485,7 +428,7 @@ export const RetryFallback: React.FC<{
   onRetry,
   maxRetries = 3,
   title = 'Loading failed',
-  description = 'We\'re having trouble loading this content.',
+  description = "We're having trouble loading this content.",
 }) => {
   const [isRetrying, setIsRetrying] = React.useState(false);
   const [retryCount, setRetryCount] = React.useState(0);
@@ -506,7 +449,7 @@ export const RetryFallback: React.FC<{
   if (retryCount >= maxRetries) {
     return (
       <ErrorFallback
-        title="Unable to Load"
+        title='Unable to Load'
         description="We've tried multiple times but couldn't load this content. Please refresh the page or try again later."
         showRetry={false}
       />
@@ -514,28 +457,28 @@ export const RetryFallback: React.FC<{
   }
 
   return (
-    <Box p={6} textAlign="center" bg="orange.50" rounded="md">
+    <Box p={6} textAlign='center' bg='orange.50' rounded='md'>
       <VStack spacing={4}>
-        <WarningIcon color="orange.500" boxSize={8} />
+        <WarningIcon color='orange.500' boxSize={8} />
         <VStack spacing={2}>
-          <Heading size="sm" color="orange.700">
+          <Heading size='sm' color='orange.700'>
             {title}
           </Heading>
-          <Text color="orange.600" fontSize="sm">
+          <Text color='orange.600' fontSize='sm'>
             {description}
           </Text>
           {retryCount > 0 && (
-            <Text fontSize="xs" color="orange.500">
+            <Text fontSize='xs' color='orange.500'>
               Attempt {retryCount + 1} of {maxRetries}
             </Text>
           )}
         </VStack>
         <Button
-          size="sm"
-          colorScheme="orange"
+          size='sm'
+          colorScheme='orange'
           onClick={handleRetry}
           isLoading={isRetrying}
-          loadingText="Retrying..."
+          loadingText='Retrying...'
           disabled={isRetrying}
         >
           Retry

@@ -8,7 +8,12 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import { useAuth } from '@/infrastructure/auth/AuthContext';
-import { RouteHelpers, BreadcrumbItem, NavigationItem, RouteMetadata } from '@/infrastructure/routing/RouteHelpers';
+import {
+  RouteHelpers,
+  BreadcrumbItem,
+  NavigationItem,
+  RouteMetadata,
+} from '@/infrastructure/routing/RouteHelpers';
 import { RoutePermissions } from '@/infrastructure/routing/RouteConfig';
 
 export interface NavigationState {
@@ -48,7 +53,7 @@ export function useNavigation(): NavigationState {
           console.warn(`User does not have permission to access ${path}`);
         }
       },
-      goBack: () => router.back()
+      goBack: () => router.back(),
     };
   }, [pathname, router, userRoles]);
 
@@ -60,7 +65,7 @@ export function useNavigation(): NavigationState {
  */
 export function useBreadcrumbs(customBreadcrumbs?: BreadcrumbItem[]) {
   const { breadcrumbs: defaultBreadcrumbs } = useNavigation();
-  
+
   return useMemo(() => {
     return customBreadcrumbs || defaultBreadcrumbs;
   }, [customBreadcrumbs, defaultBreadcrumbs]);
@@ -73,12 +78,15 @@ export function useRoutePermissions() {
   const { user } = useAuth();
   const userRoles = user?.profile.roles || [];
 
-  return useMemo(() => ({
-    canAccessRoute: (path: string) => RouteHelpers.canUserAccessRoute(path, userRoles),
-    requiresAuth: (path: string) => RouteHelpers.requiresAuth(path),
-    getDefaultRoute: () => RouteHelpers.getDefaultRouteForUser(userRoles),
-    userRoles
-  }), [userRoles]);
+  return useMemo(
+    () => ({
+      canAccessRoute: (path: string) => RouteHelpers.canUserAccessRoute(path, userRoles),
+      requiresAuth: (path: string) => RouteHelpers.requiresAuth(path),
+      getDefaultRoute: () => RouteHelpers.getDefaultRouteForUser(userRoles),
+      userRoles,
+    }),
+    [userRoles]
+  );
 }
 
 /**
@@ -86,9 +94,12 @@ export function useRoutePermissions() {
  */
 export function usePageMetadata(customMetadata?: Partial<RouteMetadata>) {
   const { routeMetadata } = useNavigation();
-  
-  return useMemo(() => ({
-    ...routeMetadata,
-    ...customMetadata
-  }), [routeMetadata, customMetadata]);
+
+  return useMemo(
+    () => ({
+      ...routeMetadata,
+      ...customMetadata,
+    }),
+    [routeMetadata, customMetadata]
+  );
 }

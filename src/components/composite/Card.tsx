@@ -1,6 +1,6 @@
 /**
  * Card Composition Components
- * 
+ *
  * Composable card components that can be combined to create
  * different card layouts. Each component has a specific purpose
  * and can be used independently or together.
@@ -16,25 +16,29 @@ interface CardProps extends BoxProps {
   interactive?: boolean;
 }
 
-export const Card: React.FC<CardProps> = ({ 
-  children, 
+export const Card: React.FC<CardProps> = ({
+  children,
   elevated = true,
   interactive = false,
-  ...props 
+  ...props
 }) => {
   return (
     <Box
-      bg="white"
-      borderRadius="lg"
-      overflow="hidden"
+      bg='white'
+      borderRadius='lg'
+      overflow='hidden'
       boxShadow={elevated ? 'lg' : 'none'}
       border={!elevated ? '1px solid' : 'none'}
       borderColor={!elevated ? 'gray.200' : 'transparent'}
       transition={interactive ? 'all 0.2s ease' : undefined}
-      _hover={interactive ? {
-        transform: 'translateY(-2px)',
-        boxShadow: 'xl'
-      } : undefined}
+      _hover={
+        interactive
+          ? {
+              transform: 'translateY(-2px)',
+              boxShadow: 'xl',
+            }
+          : undefined
+      }
       cursor={interactive ? 'pointer' : 'default'}
       {...props}
     >
@@ -49,17 +53,13 @@ interface CardHeaderProps extends FlexProps {
   divided?: boolean;
 }
 
-export const CardHeader: React.FC<CardHeaderProps> = ({ 
-  children, 
-  divided = true,
-  ...props 
-}) => {
+export const CardHeader: React.FC<CardHeaderProps> = ({ children, divided = true, ...props }) => {
   return (
     <Flex
       p={4}
-      align="center"
+      align='center'
       borderBottom={divided ? '1px solid' : 'none'}
-      borderBottomColor="gray.200"
+      borderBottomColor='gray.200'
       {...props}
     >
       {children}
@@ -72,15 +72,9 @@ interface CardBodyProps extends BoxProps {
   children: ReactNode;
 }
 
-export const CardBody: React.FC<CardBodyProps> = ({ 
-  children, 
-  ...props 
-}) => {
+export const CardBody: React.FC<CardBodyProps> = ({ children, ...props }) => {
   return (
-    <Box
-      p={4}
-      {...props}
-    >
+    <Box p={4} {...props}>
       {children}
     </Box>
   );
@@ -92,17 +86,13 @@ interface CardFooterProps extends FlexProps {
   divided?: boolean;
 }
 
-export const CardFooter: React.FC<CardFooterProps> = ({ 
-  children, 
-  divided = true,
-  ...props 
-}) => {
+export const CardFooter: React.FC<CardFooterProps> = ({ children, divided = true, ...props }) => {
   return (
     <Flex
       p={4}
-      align="center"
+      align='center'
       borderTop={divided ? '1px solid' : 'none'}
-      borderTopColor="gray.200"
+      borderTopColor='gray.200'
       {...props}
     >
       {children}
@@ -116,26 +106,22 @@ interface CardTitleProps extends TextProps {
   level?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
-export const CardTitle: React.FC<CardTitleProps> = ({ 
-  children, 
-  level = 3,
-  ...props 
-}) => {
+export const CardTitle: React.FC<CardTitleProps> = ({ children, level = 3, ...props }) => {
   const sizeMap = {
     1: 'xl',
     2: 'lg',
     3: 'md',
     4: 'sm',
     5: 'sm',
-    6: 'xs'
+    6: 'xs',
   } as const;
 
   return (
     <Text
       as={`h${level}`}
       fontSize={sizeMap[level]}
-      fontWeight="semibold"
-      lineHeight="tight"
+      fontWeight='semibold'
+      lineHeight='tight'
       {...props}
     >
       {children}
@@ -148,17 +134,9 @@ interface CardDescriptionProps extends TextProps {
   children: ReactNode;
 }
 
-export const CardDescription: React.FC<CardDescriptionProps> = ({ 
-  children, 
-  ...props 
-}) => {
+export const CardDescription: React.FC<CardDescriptionProps> = ({ children, ...props }) => {
   return (
-    <Text
-      fontSize="sm"
-      color="gray.600"
-      mt={1}
-      {...props}
-    >
+    <Text fontSize='sm' color='gray.600' mt={1} {...props}>
       {children}
     </Text>
   );

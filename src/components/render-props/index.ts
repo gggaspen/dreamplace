@@ -1,6 +1,6 @@
 /**
  * Render Props Components Index
- * 
+ *
  * Barrel export for all render props components
  */
 

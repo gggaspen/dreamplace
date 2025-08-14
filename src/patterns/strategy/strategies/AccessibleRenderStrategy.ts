@@ -67,19 +67,19 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
     switch (contentType) {
       case ContentType.IMAGE:
         return this.renderAccessibleImage(content, props, context);
-      
+
       case ContentType.LIST:
         return this.renderAccessibleList(content, props, context);
-      
+
       case ContentType.CAROUSEL:
         return this.renderAccessibleCarousel(content, props, context);
-      
+
       case ContentType.FORM:
         return this.renderAccessibleForm(content, props, context);
-      
+
       case ContentType.CARD:
         return this.renderAccessibleCard(content, props, context);
-      
+
       default:
         return this.renderAccessibleGeneric(content, props, context);
     }
@@ -110,19 +110,17 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
       };
     }
 
-    const elements = [
-      React.createElement('img', { ...imageProps, key: 'image' })
-    ];
+    const elements = [React.createElement('img', { ...imageProps, key: 'image' })];
 
     // Add description element if needed
     if (content.longDescription) {
       elements.push(
         React.createElement(
           'div',
-          { 
+          {
             id: 'img-description',
             className: 'sr-only',
-            key: 'description'
+            key: 'description',
           },
           content.longDescription
         )
@@ -139,7 +137,7 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
   ): React.ReactElement {
     const items = Array.isArray(content.items) ? content.items : [];
     const listType = content.ordered ? 'ol' : 'ul';
-    
+
     const listProps = {
       ...props,
       role: 'list',
@@ -152,10 +150,10 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
 
     const listItems = items.map((item: any, index: number) => {
       const itemContent = item.title || item.name || item.text || String(item);
-      
+
       return React.createElement(
         'li',
-        { 
+        {
           key: index,
           role: 'listitem',
           tabIndex: item.interactive ? 0 : undefined,
@@ -173,19 +171,17 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
       elements.push(
         React.createElement(
           'div',
-          { 
+          {
             id: 'list-description',
             className: 'sr-only',
-            key: 'description'
+            key: 'description',
           },
           content.description
         )
       );
     }
 
-    elements.push(
-      React.createElement(listType, { ...listProps, key: 'list' }, ...listItems)
-    );
+    elements.push(React.createElement(listType, { ...listProps, key: 'list' }, ...listItems));
 
     return React.createElement(React.Fragment, {}, ...elements);
   }
@@ -196,7 +192,7 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
     context: RenderContext
   ): React.ReactElement {
     const items = Array.isArray(content.items) ? content.items : [];
-    
+
     const carouselProps = {
       ...props,
       role: 'region',
@@ -208,7 +204,7 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
     const carouselContainer = React.createElement(
       'div',
       carouselProps,
-      
+
       // Carousel content
       React.createElement(
         'div',
@@ -229,7 +225,7 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
           )
         )
       ),
-      
+
       // Navigation instructions for screen readers
       React.createElement(
         'div',
@@ -247,7 +243,7 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
     context: RenderContext
   ): React.ReactElement {
     const fields = Array.isArray(content.fields) ? content.fields : [];
-    
+
     const formProps = {
       ...props,
       role: 'form',
@@ -266,9 +262,9 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
       formElements.push(
         React.createElement(
           'div',
-          { 
+          {
             id: 'form-description',
-            key: 'description'
+            key: 'description',
           },
           content.description
         )
@@ -281,7 +277,7 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
         const fieldId = `field-${index}`;
         const errorId = `${fieldId}-error`;
         const helpId = `${fieldId}-help`;
-        
+
         const inputProps: any = {
           id: fieldId,
           name: field.name || fieldId,
@@ -309,7 +305,7 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
             { htmlFor: fieldId, key: `${fieldId}-label` },
             field.label || field.name
           ),
-          
+
           // Input
           React.createElement('input', { ...inputProps, key: fieldId }),
         ];
@@ -317,11 +313,7 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
         // Help text
         if (field.help) {
           fieldElements.push(
-            React.createElement(
-              'div',
-              { id: helpId, key: `${fieldId}-help` },
-              field.help
-            )
+            React.createElement('div', { id: helpId, key: `${fieldId}-help` }, field.help)
           );
         }
 
@@ -330,11 +322,11 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
           fieldElements.push(
             React.createElement(
               'div',
-              { 
+              {
                 id: errorId,
                 role: 'alert',
                 'aria-live': 'assertive',
-                key: `${fieldId}-error`
+                key: `${fieldId}-error`,
               },
               field.error
             )
@@ -372,9 +364,7 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
 
     // Title
     if (content.title) {
-      cardElements.push(
-        React.createElement('h3', { key: 'title' }, content.title)
-      );
+      cardElements.push(React.createElement('h3', { key: 'title' }, content.title));
     }
 
     // Description
@@ -390,9 +380,7 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
 
     // Content
     if (content.content) {
-      cardElements.push(
-        React.createElement('div', { key: 'content' }, content.content)
-      );
+      cardElements.push(React.createElement('div', { key: 'content' }, content.content));
     }
 
     return React.createElement('div', cardProps, ...cardElements);
@@ -403,9 +391,10 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
     props: Record<string, unknown>,
     context: RenderContext
   ): React.ReactElement {
-    const textContent = typeof content === 'string'
-      ? content
-      : content?.text || content?.title || JSON.stringify(content);
+    const textContent =
+      typeof content === 'string'
+        ? content
+        : content?.text || content?.title || JSON.stringify(content);
 
     const elementProps = {
       ...props,
@@ -456,10 +445,7 @@ export class AccessibleRenderStrategy extends BaseRenderStrategy {
     return ContentType.TEXT;
   }
 
-  private getAppliedAccessibilityFeatures(
-    data: RenderData,
-    context: RenderContext
-  ): string[] {
+  private getAppliedAccessibilityFeatures(data: RenderData, context: RenderContext): string[] {
     const features: string[] = [
       'semantic_html',
       'aria_labels',
