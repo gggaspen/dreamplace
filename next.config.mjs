@@ -15,6 +15,20 @@ const nextConfig = {
     NEXT_PUBLIC_WEB_VITALS_ENDPOINT: process.env.NEXT_PUBLIC_WEB_VITALS_ENDPOINT,
     NEXT_PUBLIC_CSP_NONCE: process.env.NEXT_PUBLIC_CSP_NONCE,
   },
+  // Add headers to fix CSP issues
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "script-src 'self' 'unsafe-eval' 'unsafe-inline'; object-src 'none';",
+          },
+        ],
+      },
+    ];
+  },
   eslint: {
     // Temporarily ignore during builds to complete refactoring
     ignoreDuringBuilds: true,

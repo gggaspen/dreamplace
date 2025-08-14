@@ -12,6 +12,8 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import LoadingScreen from '@/components/loading-screen/LoadingScreen';
+import { DIErrorFallback } from '@/components/fallback/DIErrorFallback';
+import '@/app/css/motions.css';
 
 // Dynamic import for better code splitting
 const HomeContainer = dynamic(
@@ -23,15 +25,40 @@ const HomeContainer = dynamic(
   }
 );
 
-export default function Home() {
-  // Import CSS normally, but load HomeContainer dynamically
-  React.useEffect(() => {
-    import('@/app/css/motions.css');
-  }, []);
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean; error?: Error }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <DIErrorFallback error={this.state.error} resetErrorBoundary={() => {
+        this.setState({ hasError: false, error: undefined });
+      }} />;
+    }
+
+    return this.props.children;
+  }
+}
+
+export default function Home() {
   return (
-    <Suspense fallback={<LoadingScreen />}>
-      <HomeContainer />
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<LoadingScreen />}>
+        <HomeContainer />
+      </Suspense>
+    </ErrorBoundary>
   );
 }

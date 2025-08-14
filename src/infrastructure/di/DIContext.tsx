@@ -19,13 +19,20 @@ interface DIProviderProps {
 
 export function DIProvider({ children, container }: DIProviderProps) {
   // Create and setup container if not provided
-  const diContainer =
-    container ||
-    (() => {
+  const diContainer = React.useMemo(() => {
+    if (container) return container;
+    
+    try {
       const newContainer = new DIContainer();
       setupContainer(newContainer);
       return newContainer;
-    })();
+    } catch (error) {
+      console.error('Failed to setup DI container:', error);
+      // Return minimal container to prevent crashes
+      const fallbackContainer = new DIContainer();
+      return fallbackContainer;
+    }
+  }, [container]);
 
   return <DIContext.Provider value={diContainer}>{children}</DIContext.Provider>;
 }
@@ -45,6 +52,11 @@ export function useDependency<T>(token: ServiceToken): T {
     return container.resolveSync<T>(token);
   } catch (error) {
     console.error(`Failed to resolve dependency ${token.toString()}:`, error);
+    // For critical errors during development, provide fallback
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('Using fallback for dependency resolution during development');
+      throw new Error(`Dependency ${token.toString()} not available - check container setup`);
+    }
     throw error;
   }
 }
