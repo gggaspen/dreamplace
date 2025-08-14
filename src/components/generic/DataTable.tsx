@@ -6,7 +6,7 @@
  */
 
 import React, { ReactNode, useState, useMemo } from 'react';
-import { Box, Button, Input, Flex, Text, Select } from '@chakra-ui/react';
+import { Box, Button, Input, Flex, Text } from '@chakra-ui/react';
 
 // Create a simple table implementation since Table components aren't available
 const Table = ({
@@ -34,7 +34,7 @@ const Tr = ({
 }: {
   children: React.ReactNode;
   cursor?: string;
-  _hover?: any;
+  _hover?: React.CSSProperties;
   onClick?: () => void;
 }) => (
   <tr {...props} style={{ ...(props._hover ? {} : {}), cursor: props.cursor }}>
@@ -50,14 +50,14 @@ const Th = ({
   textAlign?: string;
   cursor?: string;
   onClick?: () => void;
-  _hover?: any;
+  _hover?: React.CSSProperties;
 }) => (
   <th
     {...props}
     style={{
       padding: '8px',
       borderBottom: '1px solid #e2e8f0',
-      textAlign: (props.textAlign as any) || 'left',
+      textAlign: (props.textAlign as 'left' | 'center' | 'right') || 'left',
       width: props.width,
       cursor: props.cursor,
     }}
@@ -78,7 +78,7 @@ const Td = ({
     style={{
       padding: '8px',
       borderBottom: '1px solid #e2e8f0',
-      textAlign: (props.textAlign as any) || 'left',
+      textAlign: (props.textAlign as 'left' | 'center' | 'right') || 'left',
     }}
   >
     {children}
@@ -103,7 +103,7 @@ interface SortConfig<T> {
 }
 
 // Generic data table props
-interface DataTableProps<T extends Record<string, any>> {
+interface DataTableProps<T extends Record<string, unknown>> {
   data: T[];
   columns: TableColumn<T>[];
   keyExtractor?: (item: T) => string | number;
@@ -118,10 +118,10 @@ interface DataTableProps<T extends Record<string, any>> {
   hoverable?: boolean;
 }
 
-export function DataTable<T extends Record<string, any>>({
+export function DataTable<T extends Record<string, unknown>>({
   data,
   columns,
-  keyExtractor = (item, index) => item.id || index,
+  keyExtractor = (item: T, index: number) => (item as Record<string, unknown>).id as string || String(index),
   pageSize = 10,
   searchable = true,
   searchPlaceholder = 'Search...',

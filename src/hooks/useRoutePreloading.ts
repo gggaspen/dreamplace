@@ -24,7 +24,7 @@ export interface PreloadingConfig {
 export function useRoutePreloading(config: PreloadingConfig = {}) {
   const {
     preloadOnHover = true,
-    preloadOnVisible = true,
+    preloadOnVisible: _preloadOnVisible = true,
     preloadDelay = 1000,
     preloadCritical = true,
   } = config;

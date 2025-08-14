@@ -6,7 +6,7 @@
 'use client';
 
 import React, { createContext, useContext, ReactNode } from 'react';
-import { Container, DIContainer } from './Container';
+import { DIContainer } from './Container';
 import { ServiceToken } from './ServiceTokens';
 import { setupContainer } from './ContainerSetup';
 

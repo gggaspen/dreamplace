@@ -8,7 +8,6 @@
 import React from 'react';
 import { FieldValues, Path } from 'react-hook-form';
 import { Field } from '@/components/ui/field';
-import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Checkbox } from '@/components/ui/checkbox';
 import { NumberInput } from '@/components/ui/number-input';
@@ -183,7 +182,7 @@ export function NumberField<T extends FieldValues>({
     >
       <NumberInput.Root
         value={String(value || '')}
-        onValueChange={({ valueAsNumber }) => setValue(name, valueAsNumber as any)}
+        onValueChange={({ valueAsNumber }: { valueAsNumber: number }) => setValue(name, valueAsNumber)}
         min={min}
         max={max}
         step={step}
@@ -207,7 +206,6 @@ export function CheckboxField<T extends FieldValues>({
   helperText,
   isDisabled,
   children,
-  colorScheme = 'blue',
 }: CheckboxFieldProps<T>) {
   const { register, errors } = useFormContext<T>();
   const error = errors[name];
@@ -235,7 +233,6 @@ export function SwitchField<T extends FieldValues>({
   label,
   helperText,
   isDisabled,
-  colorScheme = 'blue',
   size = 'md',
 }: SwitchFieldProps<T>) {
   const { register, errors } = useFormContext<T>();
@@ -269,7 +266,6 @@ export function RadioGroupField<T extends FieldValues>({
   isDisabled,
   options,
   direction = 'column',
-  colorScheme = 'blue',
 }: RadioGroupFieldProps<T>) {
   const { register, errors, setValue, watch } = useFormContext<T>();
   const error = errors[name];
@@ -284,7 +280,7 @@ export function RadioGroupField<T extends FieldValues>({
       required={isRequired}
       disabled={isDisabled}
     >
-      <Radio.Root value={value} onValueChange={val => setValue(name, val as any)}>
+      <Radio.Root value={value} onValueChange={(val: string) => setValue(name, val)}>
         <Stack direction={direction}>
           {options.map(option => (
             <Radio.Item

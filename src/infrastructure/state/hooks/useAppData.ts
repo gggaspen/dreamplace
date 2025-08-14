@@ -95,7 +95,7 @@ export const useInvalidateAppData = () => {
 export const useOptimisticAppDataUpdate = () => {
   const queryClient = useQueryClient();
 
-  return (updater: (oldData: any) => any) => {
+  return (updater: (oldData: AppData) => AppData) => {
     queryClient.setQueryData(appDataKeys.complete(), updater);
   };
 };

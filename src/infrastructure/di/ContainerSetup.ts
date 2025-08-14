@@ -1,4 +1,4 @@
-import { Container, DIContainer } from './Container';
+import { DIContainer } from './Container';
 import { SERVICE_TOKENS } from './ServiceTokens';
 
 // Configuration
