@@ -286,7 +286,7 @@ IMPORTANT INSTRUCTIONS:
 8. **STARTING POINT**: 
    Begin with Phase 4: Component Architecture Modernization
 
-CURRENT REQUEST: Please start by reading the REFACTORING_TASKLIST.md file and then begin Phase 5, Task 5.1: Security Implementation
+CURRENT REQUEST: Please start by reading the REFACTORING_TASKLIST.md file and then begin Phase 5, Task 5.3: Accessibility & Internationalization.
 
 ## **Tips for Effective Execution**
 
