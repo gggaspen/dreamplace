@@ -1,6 +1,6 @@
 /**
  * Theme Management Hook
- * 
+ *
  * Enhanced theme management with persistence, system preference detection,
  * and smooth transitions between light and dark modes.
  */
@@ -38,7 +38,7 @@ export const useTheme = (): ThemeState & ThemeActions => {
   // Listen for system theme changes
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
+
     const handleChange = (e: MediaQueryListEvent) => {
       setSystemPreference(e.matches ? 'dark' : 'light');
     };
@@ -99,9 +99,12 @@ export const useTheme = (): ThemeState & ThemeActions => {
     saveThemePreference('system');
   }, [saveThemePreference]);
 
-  const setMode = useCallback((mode: 'light' | 'dark' | 'system') => {
-    saveThemePreference(mode);
-  }, [saveThemePreference]);
+  const setMode = useCallback(
+    (mode: 'light' | 'dark' | 'system') => {
+      saveThemePreference(mode);
+    },
+    [saveThemePreference]
+  );
 
   const toggleMode = useCallback(() => {
     if (preferredMode === 'system') {
@@ -121,13 +124,13 @@ export const useTheme = (): ThemeState & ThemeActions => {
     resolvedMode,
     isSystemMode: preferredMode === 'system',
     colors,
-    
+
     // Actions
     setLightMode,
     setDarkMode,
     setSystemMode,
     setMode,
-    toggleMode
+    toggleMode,
   };
 };
 
@@ -139,14 +142,14 @@ export const useThemeValue = <T>(lightValue: T, darkValue: T): T => {
 // Hook for theme-aware CSS variables
 export const useThemeCSSVars = () => {
   const { resolvedMode, colors } = useTheme();
-  
+
   return {
     '--bg-primary': colors.background.primary,
     '--bg-secondary': colors.background.secondary,
     '--text-primary': colors.text.primary,
     '--text-secondary': colors.text.secondary,
     '--border-primary': colors.border.primary,
-    '--theme-mode': resolvedMode
+    '--theme-mode': resolvedMode,
   };
 };
 

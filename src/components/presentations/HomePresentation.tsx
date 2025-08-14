@@ -22,7 +22,7 @@ import LoadingScreen from '@/components/loading-screen/LoadingScreen';
 // Lazy load Hero component for better code splitting
 const LazyHero = dynamic(() => import('@/app/pages/hero/Hero'), {
   ssr: true,
-  loading: () => <LoadingScreen />
+  loading: () => <LoadingScreen />,
 });
 
 interface HomePresentationProps {

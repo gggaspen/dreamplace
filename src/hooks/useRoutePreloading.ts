@@ -8,7 +8,11 @@
 import { useEffect, useCallback, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/infrastructure/auth/AuthContext';
-import { RoutePreloader, ROUTE_GROUPS, ROUTE_IMPORT_MAP } from '@/infrastructure/routing/LazyRoutes';
+import {
+  RoutePreloader,
+  ROUTE_GROUPS,
+  ROUTE_IMPORT_MAP,
+} from '@/infrastructure/routing/LazyRoutes';
 
 export interface PreloadingConfig {
   preloadOnHover?: boolean;

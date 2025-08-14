@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Container } from '../../di/Container';
+import { useDependency } from '../../di/DIContext';
 import { SERVICE_TOKENS } from '../../di/ServiceTokens';
 import { GetAppDataUseCase } from '../../../core/application/use-cases/GetAppDataUseCase';
 import { useAppStore } from '../AppStore';
@@ -14,7 +14,7 @@ export const appDataKeys = {
 
 // Hook for getting all app data (hero, events, artists, contact)
 export const useAppData = () => {
-  const getAppDataUseCase = Container.get<GetAppDataUseCase>(SERVICE_TOKENS.GET_APP_DATA_USE_CASE);
+  const getAppDataUseCase = useDependency<GetAppDataUseCase>(SERVICE_TOKENS.GET_APP_DATA_USE_CASE);
   const setLoading = useAppStore(state => state.setLoading);
   const setGlobalError = useAppStore(state => state.setGlobalError);
 
@@ -69,7 +69,7 @@ export const useContactInfo = () => {
 // Prefetch app data
 export const usePrefetchAppData = () => {
   const queryClient = useQueryClient();
-  const getAppDataUseCase = Container.get<GetAppDataUseCase>(SERVICE_TOKENS.GET_APP_DATA_USE_CASE);
+  const getAppDataUseCase = useDependency<GetAppDataUseCase>(SERVICE_TOKENS.GET_APP_DATA_USE_CASE);
 
   return () => {
     queryClient.prefetchQuery({

@@ -24,10 +24,13 @@ export async function middleware(req: NextRequest) {
   res.headers.set('X-Real-IP', clientIp);
 
   // Apply comprehensive security headers
-  const securityConfig = createSecurityConfig((process.env.NODE_ENV as 'development' | 'production' | 'test') || 'production', {
-    nonce: generateNonce(),
-    reportUri: process.env.CSP_REPORT_URI,
-  });
+  const securityConfig = createSecurityConfig(
+    (process.env.NODE_ENV as 'development' | 'production' | 'test') || 'production',
+    {
+      nonce: generateNonce(),
+      reportUri: process.env.CSP_REPORT_URI,
+    }
+  );
 
   const securityHeaders = new SecurityHeaders(securityConfig);
   const headers = securityHeaders.getAllHeaders();

@@ -14,10 +14,14 @@ import dynamic from 'next/dynamic';
 import LoadingScreen from '@/components/loading-screen/LoadingScreen';
 
 // Dynamic import for better code splitting
-const HomeContainer = dynamic(() => import('@/components/containers/HomeContainer').then(mod => ({ default: mod.HomeContainer })), {
-  ssr: true,
-  loading: () => <LoadingScreen />
-});
+const HomeContainer = dynamic(
+  () =>
+    import('@/components/containers/HomeContainer').then(mod => ({ default: mod.HomeContainer })),
+  {
+    ssr: true,
+    loading: () => <LoadingScreen />,
+  }
+);
 
 export default function Home() {
   // Import CSS normally, but load HomeContainer dynamically

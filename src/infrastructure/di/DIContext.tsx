@@ -22,7 +22,7 @@ export function DIProvider({ children, container }: DIProviderProps) {
   const diContainer =
     container ||
     (() => {
-      const newContainer = new Container();
+      const newContainer = new DIContainer();
       setupContainer(newContainer);
       return newContainer;
     })();
@@ -40,17 +40,9 @@ export function useDI(): DIContainer {
 
 export function useDependency<T>(token: ServiceToken): T {
   const container = useDI();
-  // For React components, we need to handle async resolution differently
-  // This is a simplified sync version - in real implementation you might need
-  // to use React.Suspense or loading states for async dependencies
   try {
-    const dependency = container.resolve<T>(token);
-    if (dependency instanceof Promise) {
-      throw new Error(
-        `Async dependency ${token.toString()} cannot be used directly in React component. Use a loading state or Suspense.`
-      );
-    }
-    return dependency;
+    // Use synchronous resolution for React components
+    return container.resolveSync<T>(token);
   } catch (error) {
     console.error(`Failed to resolve dependency ${token.toString()}:`, error);
     throw error;

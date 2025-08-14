@@ -25,10 +25,10 @@ const nextConfig = {
   },
   experimental: {
     optimizePackageImports: [
-      '@chakra-ui/react', 
+      '@chakra-ui/react',
       'react-icons',
       'framer-motion',
-      '@tanstack/react-query'
+      '@tanstack/react-query',
     ],
   },
   webpack: (config, { dev, isServer }) => {
@@ -56,7 +56,7 @@ const nextConfig = {
             reuseExistingChunk: true,
             enforce: true,
           },
-          // Authentication components and contexts  
+          // Authentication components and contexts
           authShared: {
             test: /[\\/]src[\\/](infrastructure[\\/]auth|components[\\/].*auth)[\\/]/,
             name: 'auth-shared',
@@ -143,7 +143,7 @@ const nextConfig = {
         maxAssetSize: 250000, // 250KB per asset (tighter control)
         maxEntrypointSize: 400000, // 400KB per entrypoint (much more aggressive)
         hints: 'warning',
-        assetFilter: function(assetFilename) {
+        assetFilter: function (assetFilename) {
           // Only warn for JS files, ignore CSS and other assets
           return assetFilename.endsWith('.js');
         },

@@ -11,13 +11,16 @@ export class ErrorBoundaryDecorator extends BaseDecorator {
   static displayName: string;
 
   constructor() {
-    super({
-      name: 'errorBoundary',
-      description: 'Wraps components with error boundary to catch and handle errors gracefully',
-      version: '1.0.0',
-      dependencies: [],
-      requiresProps: [],
-    }, 10); // High priority - applied early to catch errors from other decorators
+    super(
+      {
+        name: 'errorBoundary',
+        description: 'Wraps components with error boundary to catch and handle errors gracefully',
+        version: '1.0.0',
+        dependencies: [],
+        requiresProps: [],
+      },
+      10
+    ); // High priority - applied early to catch errors from other decorators
   }
 
   canDecorate(component: ComponentType, props?: any): boolean {
@@ -30,9 +33,12 @@ export class ErrorBoundaryDecorator extends BaseDecorator {
     }
 
     const errorConfig = config as ErrorBoundaryDecoratorConfig;
-    
+
     // Create error boundary class component
-    class ErrorBoundaryWrapper extends Component<any, { hasError: boolean; error?: Error; errorInfo?: ErrorInfo }> {
+    class ErrorBoundaryWrapper extends Component<
+      any,
+      { hasError: boolean; error?: Error; errorInfo?: ErrorInfo }
+    > {
       private resetTimeoutId?: NodeJS.Timeout;
       private previousProps?: any;
       static displayName: string;
@@ -49,7 +55,7 @@ export class ErrorBoundaryDecorator extends BaseDecorator {
 
       componentDidCatch(error: Error, errorInfo: ErrorInfo) {
         this.setState({ errorInfo });
-        
+
         // Log error
         console.error(`[ErrorBoundary] Error caught in component:`, {
           error,
@@ -72,14 +78,12 @@ export class ErrorBoundaryDecorator extends BaseDecorator {
 
       componentDidUpdate(prevProps: any) {
         const { resetOnPropsChange, resetKeys } = errorConfig?.options || {};
-        
+
         if (this.state.hasError && resetOnPropsChange) {
           if (resetKeys && resetKeys.length > 0) {
             // Check if any of the specified keys changed
-            const hasKeyChanged = resetKeys.some(key => 
-              prevProps[key] !== this.props[key]
-            );
-            
+            const hasKeyChanged = resetKeys.some(key => prevProps[key] !== this.props[key]);
+
             if (hasKeyChanged) {
               this.resetErrorState();
             }
@@ -122,7 +126,7 @@ export class ErrorBoundaryDecorator extends BaseDecorator {
 
       private renderErrorFallback(): ReactNode {
         const { fallbackComponent: FallbackComponent } = errorConfig?.options || {};
-        
+
         if (FallbackComponent) {
           return React.createElement(FallbackComponent, {
             error: this.state.error,
@@ -137,7 +141,7 @@ export class ErrorBoundaryDecorator extends BaseDecorator {
 
       private renderDefaultErrorFallback(): ReactNode {
         const isDevelopment = process.env.NODE_ENV === 'development';
-        
+
         return React.createElement(
           'div',
           {
@@ -151,47 +155,69 @@ export class ErrorBoundaryDecorator extends BaseDecorator {
               margin: '10px',
             },
           },
-          React.createElement('h3', { 
-            style: { margin: '0 0 10px 0', fontSize: '18px' } 
-          }, '⚠️ Something went wrong'),
-          
-          React.createElement('p', { 
-            style: { margin: '0 0 15px 0', fontSize: '14px' } 
-          }, 'This component encountered an error and couldn\'t render properly.'),
-          
-          React.createElement('button', {
-            onClick: this.retry,
-            style: {
-              padding: '8px 16px',
-              backgroundColor: '#0984e3',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontSize: '14px',
-              marginRight: '10px',
+          React.createElement(
+            'h3',
+            {
+              style: { margin: '0 0 10px 0', fontSize: '18px' },
             },
-          }, 'Try Again'),
-          
-          isDevelopment && this.state.error && React.createElement(
-            'details',
-            { style: { marginTop: '15px', fontSize: '12px' } },
-            React.createElement('summary', { 
-              style: { cursor: 'pointer', fontWeight: 'bold' } 
-            }, 'Error Details (Development Only)'),
-            React.createElement('pre', {
+            '⚠️ Something went wrong'
+          ),
+
+          React.createElement(
+            'p',
+            {
+              style: { margin: '0 0 15px 0', fontSize: '14px' },
+            },
+            "This component encountered an error and couldn't render properly."
+          ),
+
+          React.createElement(
+            'button',
+            {
+              onClick: this.retry,
               style: {
-                marginTop: '10px',
-                padding: '10px',
-                backgroundColor: '#f8f9fa',
-                border: '1px solid #dee2e6',
+                padding: '8px 16px',
+                backgroundColor: '#0984e3',
+                color: 'white',
+                border: 'none',
                 borderRadius: '4px',
-                overflow: 'auto',
-                maxHeight: '200px',
-                fontSize: '11px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                marginRight: '10px',
               },
-            }, this.state.error.stack)
-          )
+            },
+            'Try Again'
+          ),
+
+          isDevelopment &&
+            this.state.error &&
+            React.createElement(
+              'details',
+              { style: { marginTop: '15px', fontSize: '12px' } },
+              React.createElement(
+                'summary',
+                {
+                  style: { cursor: 'pointer', fontWeight: 'bold' },
+                },
+                'Error Details (Development Only)'
+              ),
+              React.createElement(
+                'pre',
+                {
+                  style: {
+                    marginTop: '10px',
+                    padding: '10px',
+                    backgroundColor: '#f8f9fa',
+                    border: '1px solid #dee2e6',
+                    borderRadius: '4px',
+                    overflow: 'auto',
+                    maxHeight: '200px',
+                    fontSize: '11px',
+                  },
+                },
+                this.state.error.stack
+              )
+            )
         );
       }
 
@@ -270,21 +296,24 @@ export const DefaultErrorFallback: React.FC<{
   const isDevelopment = process.env.NODE_ENV === 'development';
 
   return (
-    <div style={{
-      padding: '20px',
-      border: '1px solid #ff6b6b',
-      borderRadius: '8px',
-      backgroundColor: '#fff5f5',
-      color: '#d63031',
-      fontFamily: 'system-ui, sans-serif',
-      margin: '10px',
-      textAlign: 'center',
-    }}>
+    <div
+      style={{
+        padding: '20px',
+        border: '1px solid #ff6b6b',
+        borderRadius: '8px',
+        backgroundColor: '#fff5f5',
+        color: '#d63031',
+        fontFamily: 'system-ui, sans-serif',
+        margin: '10px',
+        textAlign: 'center',
+      }}
+    >
       <h3 style={{ margin: '0 0 10px 0' }}>⚠️ Component Error</h3>
       <p style={{ margin: '0 0 15px 0' }}>
-        This component encountered an error. Please try refreshing the page or contact support if the problem persists.
+        This component encountered an error. Please try refreshing the page or contact support if
+        the problem persists.
       </p>
-      
+
       <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
         {retry && (
           <button
@@ -301,7 +330,7 @@ export const DefaultErrorFallback: React.FC<{
             Try Again
           </button>
         )}
-        
+
         <button
           onClick={() => window.location.reload()}
           style={{
@@ -316,22 +345,24 @@ export const DefaultErrorFallback: React.FC<{
           Reload Page
         </button>
       </div>
-  
+
       {isDevelopment && error && (
         <details style={{ marginTop: '20px', textAlign: 'left' }}>
           <summary style={{ cursor: 'pointer', fontWeight: 'bold' }}>
             Technical Details (Development Only)
           </summary>
-          <pre style={{
-            marginTop: '10px',
-            padding: '10px',
-            backgroundColor: '#f8f9fa',
-            border: '1px solid #dee2e6',
-            borderRadius: '4px',
-            overflow: 'auto',
-            maxHeight: '300px',
-            fontSize: '12px',
-          }}>
+          <pre
+            style={{
+              marginTop: '10px',
+              padding: '10px',
+              backgroundColor: '#f8f9fa',
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              overflow: 'auto',
+              maxHeight: '300px',
+              fontSize: '12px',
+            }}
+          >
             {error.stack}
           </pre>
         </details>

@@ -6,56 +6,79 @@
  */
 
 import React, { ReactNode, useState, useMemo } from 'react';
-import {
-  Box,
-  Button,
-  Input,
-  Flex,
-  Text,
-  Select,
-} from '@chakra-ui/react';
+import { Box, Button, Input, Flex, Text, Select } from '@chakra-ui/react';
 
 // Create a simple table implementation since Table components aren't available
-const Table = ({ children, ...props }: { children: React.ReactNode; variant?: string; size?: string }) => (
+const Table = ({
+  children,
+  ...props
+}: {
+  children: React.ReactNode;
+  variant?: string;
+  size?: string;
+}) => (
   <table {...props} style={{ width: '100%', borderCollapse: 'collapse' }}>
     {children}
   </table>
 );
 
 const TableContainer = ({ children }: { children: React.ReactNode }) => (
-  <div style={{ overflowX: 'auto' }}>
-    {children}
-  </div>
+  <div style={{ overflowX: 'auto' }}>{children}</div>
 );
 
 const Thead = ({ children }: { children: React.ReactNode }) => <thead>{children}</thead>;
 const Tbody = ({ children }: { children: React.ReactNode }) => <tbody>{children}</tbody>;
-const Tr = ({ children, ...props }: { children: React.ReactNode; cursor?: string; _hover?: any; onClick?: () => void }) => (
-  <tr {...props} style={{ ...props._hover ? {} : {}, cursor: props.cursor }}>
+const Tr = ({
+  children,
+  ...props
+}: {
+  children: React.ReactNode;
+  cursor?: string;
+  _hover?: any;
+  onClick?: () => void;
+}) => (
+  <tr {...props} style={{ ...(props._hover ? {} : {}), cursor: props.cursor }}>
     {children}
   </tr>
 );
-const Th = ({ children, ...props }: { children: React.ReactNode; width?: string | number; textAlign?: string; cursor?: string; onClick?: () => void; _hover?: any }) => (
-  <th 
-    {...props} 
-    style={{ 
-      padding: '8px', 
-      borderBottom: '1px solid #e2e8f0', 
-      textAlign: props.textAlign as any || 'left',
+const Th = ({
+  children,
+  ...props
+}: {
+  children: React.ReactNode;
+  width?: string | number;
+  textAlign?: string;
+  cursor?: string;
+  onClick?: () => void;
+  _hover?: any;
+}) => (
+  <th
+    {...props}
+    style={{
+      padding: '8px',
+      borderBottom: '1px solid #e2e8f0',
+      textAlign: (props.textAlign as any) || 'left',
       width: props.width,
-      cursor: props.cursor
+      cursor: props.cursor,
     }}
   >
     {children}
   </th>
 );
-const Td = ({ children, ...props }: { children: React.ReactNode; colSpan?: number; textAlign?: string }) => (
-  <td 
-    {...props} 
-    style={{ 
-      padding: '8px', 
-      borderBottom: '1px solid #e2e8f0', 
-      textAlign: props.textAlign as any || 'left' 
+const Td = ({
+  children,
+  ...props
+}: {
+  children: React.ReactNode;
+  colSpan?: number;
+  textAlign?: string;
+}) => (
+  <td
+    {...props}
+    style={{
+      padding: '8px',
+      borderBottom: '1px solid #e2e8f0',
+      textAlign: (props.textAlign as any) || 'left',
     }}
   >
     {children}

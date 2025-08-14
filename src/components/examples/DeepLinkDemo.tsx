@@ -6,15 +6,7 @@
 'use client';
 
 import React from 'react';
-import {
-  Box,
-  VStack,
-  HStack,
-  Heading,
-  Text,
-  Badge,
-  Code,
-} from '@chakra-ui/react';
+import { Box, VStack, HStack, Heading, Text, Badge, Code } from '@chakra-ui/react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Alert } from '@/components/ui/alert';
@@ -84,7 +76,7 @@ export function DeepLinkDemo() {
           </Text>
         </Box>
 
-        <Alert status='info' title="Current URL">
+        <Alert status='info' title='Current URL'>
           <Text fontSize='sm'>
             <Code fontSize='xs'>{currentURL}</Code>
           </Text>
@@ -97,7 +89,7 @@ export function DeepLinkDemo() {
           </CardHeader>
           <CardBody>
             <VStack spacing={4} align='stretch'>
-              <Field label="Search Query (debounced 500ms)">
+              <Field label='Search Query (debounced 500ms)'>
                 <Input
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
@@ -105,7 +97,7 @@ export function DeepLinkDemo() {
                 />
               </Field>
 
-              <Field label="Category">
+              <Field label='Category'>
                 <Select
                   value={selectedCategory}
                   onChange={e => setSelectedCategory(e.target.value)}
@@ -117,7 +109,7 @@ export function DeepLinkDemo() {
                 </Select>
               </Field>
 
-              <Field label="Minimum Price">
+              <Field label='Minimum Price'>
                 <Input
                   type='number'
                   value={minPrice}
@@ -126,7 +118,7 @@ export function DeepLinkDemo() {
                 />
               </Field>
 
-              <Field label="Date">
+              <Field label='Date'>
                 <Input
                   type='date'
                   value={selectedDate.toISOString().split('T')[0]}
@@ -135,15 +127,12 @@ export function DeepLinkDemo() {
               </Field>
 
               <HStack alignItems='center'>
-                <Switch
-                  checked={showOnlyAvailable}
-                  onCheckedChange={setShowOnlyAvailable}
-                >
+                <Switch checked={showOnlyAvailable} onCheckedChange={setShowOnlyAvailable}>
                   Show only available items
                 </Switch>
               </HStack>
 
-              <Field label="Tags">
+              <Field label='Tags'>
                 <HStack spacing={2} mb={2}>
                   {selectedTags.map(tag => (
                     <Badge
@@ -183,7 +172,7 @@ export function DeepLinkDemo() {
           <CardBody>
             <VStack spacing={4} align='stretch'>
               <HStack spacing={4}>
-                <Field label="Page">
+                <Field label='Page'>
                   <Input
                     type='number'
                     value={pagination.page}
@@ -192,7 +181,7 @@ export function DeepLinkDemo() {
                   />
                 </Field>
 
-                <Field label="Items per page">
+                <Field label='Items per page'>
                   <Select
                     value={pagination.limit}
                     onChange={e => setPagination({ limit: Number(e.target.value) })}
@@ -204,7 +193,7 @@ export function DeepLinkDemo() {
                   </Select>
                 </Field>
 
-                <Field label="Sort by">
+                <Field label='Sort by'>
                   <Select
                     value={pagination.sortBy}
                     onChange={e => setPagination({ sortBy: e.target.value })}
@@ -216,7 +205,7 @@ export function DeepLinkDemo() {
                   </Select>
                 </Field>
 
-                <Field label="Order">
+                <Field label='Order'>
                   <Select
                     value={pagination.sortOrder}
                     onChange={e => setPagination({ sortOrder: e.target.value as 'asc' | 'desc' })}
@@ -257,7 +246,7 @@ export function DeepLinkDemo() {
           <CardBody>
             <VStack spacing={4} align='stretch'>
               <HStack spacing={4}>
-                <Field label="Venue">
+                <Field label='Venue'>
                   <Input
                     value={eventFilters.venue}
                     onChange={e => setEventFilters({ venue: e.target.value })}
@@ -265,7 +254,7 @@ export function DeepLinkDemo() {
                   />
                 </Field>
 
-                <Field label="Genre">
+                <Field label='Genre'>
                   <Select
                     value={eventFilters.genre}
                     onChange={e => setEventFilters({ genre: e.target.value })}
@@ -278,7 +267,7 @@ export function DeepLinkDemo() {
                   </Select>
                 </Field>
 
-                <Field label="Date Range">
+                <Field label='Date Range'>
                   <Select
                     value={eventFilters.dateRange}
                     onChange={e => setEventFilters({ dateRange: e.target.value })}

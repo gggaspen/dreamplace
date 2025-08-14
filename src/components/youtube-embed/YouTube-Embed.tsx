@@ -26,7 +26,7 @@ const YouTubeEmbed = () => {
         }
 
         if (id) {
-          setEmbedSrc(`https://www.youtube.com/embed/${id}?autoplay=1&mute=0&loop=1&controls=0`);
+          setEmbedSrc(`https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1`);
         }
         setTitle(youtube_title || 'Dreamplace Video');
       } catch (error) {

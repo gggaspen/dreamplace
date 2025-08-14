@@ -23,19 +23,22 @@ export const throttle = <T extends (...args: any[]) => any>(
 ): ((...args: Parameters<T>) => void) => {
   let timeoutId: NodeJS.Timeout | null;
   let lastExecTime = 0;
-  
+
   return (...args: Parameters<T>) => {
     const currentTime = Date.now();
-    
+
     if (currentTime - lastExecTime > delay) {
       func(...args);
       lastExecTime = currentTime;
     } else if (!timeoutId) {
-      timeoutId = setTimeout(() => {
-        func(...args);
-        lastExecTime = Date.now();
-        timeoutId = null;
-      }, delay - (currentTime - lastExecTime));
+      timeoutId = setTimeout(
+        () => {
+          func(...args);
+          lastExecTime = Date.now();
+          timeoutId = null;
+        },
+        delay - (currentTime - lastExecTime)
+      );
     }
   };
 };

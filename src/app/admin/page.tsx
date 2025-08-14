@@ -17,7 +17,7 @@ import LoadingScreen from '@/components/loading-screen/LoadingScreen';
 // Dynamic import for admin content to reduce initial bundle size
 const AdminContent = dynamicImport(() => import('./AdminContent'), {
   ssr: false,
-  loading: () => <LoadingScreen />
+  loading: () => <LoadingScreen />,
 });
 
 export default function AdminPage() {

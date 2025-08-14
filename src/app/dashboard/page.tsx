@@ -17,7 +17,7 @@ import LoadingScreen from '@/components/loading-screen/LoadingScreen';
 // Dynamic import for dashboard content to reduce initial bundle size
 const DashboardContent = dynamicImport(() => import('./DashboardContent'), {
   ssr: false,
-  loading: () => <LoadingScreen />
+  loading: () => <LoadingScreen />,
 });
 
 export default function DashboardPage() {

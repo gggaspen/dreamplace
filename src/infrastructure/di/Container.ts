@@ -127,10 +127,13 @@ export const getContainer = (): DIContainer => {
 // Create a mock container for SSR that doesn't throw errors
 const createMockContainer = (): DIContainer => {
   const mockContainer = new DIContainer();
-  
+
   // Override methods to be SSR-safe
   const originalRegisterSingleton = mockContainer.registerSingleton.bind(mockContainer);
-  mockContainer.registerSingleton = function<T>(identifier: ServiceIdentifier, factory: Factory<T> | AsyncFactory<T>): void {
+  mockContainer.registerSingleton = function <T>(
+    identifier: ServiceIdentifier,
+    factory: Factory<T> | AsyncFactory<T>
+  ): void {
     try {
       originalRegisterSingleton(identifier, factory);
     } catch (error) {
@@ -138,7 +141,7 @@ const createMockContainer = (): DIContainer => {
       console.warn(`Failed to register service ${String(identifier)} during SSR:`, error);
     }
   };
-  
+
   return mockContainer;
 };
 

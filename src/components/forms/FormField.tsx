@@ -219,9 +219,7 @@ export function CheckboxField<T extends FieldValues>({
       helperText={!error ? helperText : undefined}
       disabled={isDisabled}
     >
-      <Checkbox {...register(name)}>
-        {children}
-      </Checkbox>
+      <Checkbox {...register(name)}>{children}</Checkbox>
     </Field>
   );
 }
@@ -286,10 +284,7 @@ export function RadioGroupField<T extends FieldValues>({
       required={isRequired}
       disabled={isDisabled}
     >
-      <Radio.Root
-        value={value}
-        onValueChange={val => setValue(name, val as any)}
-      >
+      <Radio.Root value={value} onValueChange={val => setValue(name, val as any)}>
         <Stack direction={direction}>
           {options.map(option => (
             <Radio.Item

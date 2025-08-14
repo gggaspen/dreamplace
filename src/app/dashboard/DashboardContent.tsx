@@ -9,16 +9,7 @@ import React from 'react';
 import { useAuth } from '@/infrastructure/auth/AuthContext';
 import { Card } from '@/components/composite/Card';
 import { Button } from '@/components/ui/button';
-import {
-  Container,
-  Heading,
-  VStack,
-  HStack,
-  Text,
-  Avatar,
-  Flex,
-  Spacer,
-} from '@chakra-ui/react';
+import { Container, Heading, VStack, HStack, Text, Avatar, Flex, Spacer } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 
 export default function DashboardContent() {
@@ -96,15 +87,9 @@ export default function DashboardContent() {
             <VStack align='start' spacing={4}>
               <Heading size='sm'>Quick Actions</Heading>
               <HStack spacing={4}>
-                <Button size='sm'>
-                  Update Profile
-                </Button>
-                <Button size='sm'>
-                  View Events
-                </Button>
-                <Button size='sm'>
-                  Manage Preferences
-                </Button>
+                <Button size='sm'>Update Profile</Button>
+                <Button size='sm'>View Events</Button>
+                <Button size='sm'>Manage Preferences</Button>
                 {user?.hasRole('admin') && (
                   <Button size='sm' onClick={() => router.push('/admin')}>
                     Admin Panel

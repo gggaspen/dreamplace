@@ -37,7 +37,7 @@ class MockRenderStrategy extends BaseRenderStrategy {
     const renderTime = this.endPerformanceTracking(startTime);
 
     return this.createRenderResult(
-      this.renderResult || ({ type: 'div', props: { children: 'Mock render' } }),
+      this.renderResult || { type: 'div', props: { children: 'Mock render' } },
       renderTime
     );
   }

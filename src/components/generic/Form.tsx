@@ -10,13 +10,14 @@ import { Field } from '@/components/ui/field';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Checkbox } from '@/components/ui/checkbox';
-import { SelectRoot, SelectTrigger, SelectContent, SelectItem, SelectValueText } from '@/components/ui/select';
 import {
-  Input,
-  Textarea,
-  VStack,
-  HStack,
-} from '@chakra-ui/react';
+  SelectRoot,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValueText,
+} from '@/components/ui/select';
+import { Input, Textarea, VStack, HStack } from '@chakra-ui/react';
 
 // Generic field value types
 export type FieldValue = string | number | boolean | Date | null | undefined;
@@ -220,14 +221,20 @@ export function Form<T extends FormData>({
             value={[String(value || '')]}
             onValueChange={details => handleChange(field.name, details.value[0] as T[keyof T])}
             onOpenChange={() => handleBlur(field.name)}
-            items={field.options.map(option => ({ label: option.label, value: String(option.value) }))}
+            items={field.options.map(option => ({
+              label: option.label,
+              value: String(option.value),
+            }))}
           >
             <SelectTrigger>
               <SelectValueText placeholder={field.placeholder} />
             </SelectTrigger>
             <SelectContent>
               {field.options.map(option => (
-                <SelectItem key={option.value} item={{ label: option.label, value: String(option.value) }}>
+                <SelectItem
+                  key={option.value}
+                  item={{ label: option.label, value: String(option.value) }}
+                >
                   {option.label}
                 </SelectItem>
               ))}

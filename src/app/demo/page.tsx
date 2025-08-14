@@ -14,19 +14,28 @@ import dynamicImport from 'next/dynamic';
 import LoadingScreen from '@/components/loading-screen/LoadingScreen';
 
 // Dynamic imports for better code splitting
-const DeepLinkDemo = dynamicImport(() => import('@/components/examples/DeepLinkDemo').then(mod => ({ default: mod.DeepLinkDemo })), {
-  ssr: false,
-  loading: () => <LoadingScreen />
-});
+const DeepLinkDemo = dynamicImport(
+  () => import('@/components/examples/DeepLinkDemo').then(mod => ({ default: mod.DeepLinkDemo })),
+  {
+    ssr: false,
+    loading: () => <LoadingScreen />,
+  }
+);
 
-const PageHeader = dynamicImport(() => import('@/components/navigation/PageHeader').then(mod => ({ default: mod.PageHeader })), {
-  ssr: true,
-  loading: () => <LoadingScreen />
-});
+const PageHeader = dynamicImport(
+  () => import('@/components/navigation/PageHeader').then(mod => ({ default: mod.PageHeader })),
+  {
+    ssr: true,
+    loading: () => <LoadingScreen />,
+  }
+);
 
-const ChakraBox = dynamicImport(() => import('@chakra-ui/react').then(mod => ({ default: mod.Box })), {
-  ssr: true
-});
+const ChakraBox = dynamicImport(
+  () => import('@chakra-ui/react').then(mod => ({ default: mod.Box })),
+  {
+    ssr: true,
+  }
+);
 
 export default function DemoPage() {
   return (

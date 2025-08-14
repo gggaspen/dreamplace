@@ -105,7 +105,6 @@ export class RoutePreloader {
 
 // React component for route preloading
 export function RoutePreloadManager({ userRoles = [] }: { userRoles?: string[] }) {
-
   useEffect(() => {
     // Preload critical routes on mount
     RoutePreloader.preloadCriticalRoutes();

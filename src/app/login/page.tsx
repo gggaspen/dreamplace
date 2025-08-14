@@ -16,7 +16,7 @@ import LoadingScreen from '@/components/loading-screen/LoadingScreen';
 // Dynamic import for login form to reduce initial bundle size
 const LoginForm = dynamicImport(() => import('./LoginForm'), {
   ssr: false,
-  loading: () => <LoadingScreen />
+  loading: () => <LoadingScreen />,
 });
 
 export default function LoginPage() {

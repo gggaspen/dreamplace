@@ -57,54 +57,56 @@ export const setupContainer = (container: DIContainer): void => {
     return firebaseAuth;
   });
 
-  // Repositories
-  container.registerSingleton(SERVICE_TOKENS.EVENT_REPOSITORY, async () => {
-    const apiClient = await container.resolve<StrapiApiClient>(SERVICE_TOKENS.STRAPI_API_CLIENT);
+  // Repositories - Register as sync factories since StrapiApiClient is sync
+  container.registerSingleton(SERVICE_TOKENS.EVENT_REPOSITORY, () => {
+    const apiClient = container.resolveSync<StrapiApiClient>(SERVICE_TOKENS.STRAPI_API_CLIENT);
     return new StrapiEventRepository(apiClient);
   });
 
-  container.registerSingleton(SERVICE_TOKENS.ARTIST_REPOSITORY, async () => {
-    const apiClient = await container.resolve<StrapiApiClient>(SERVICE_TOKENS.STRAPI_API_CLIENT);
+  container.registerSingleton(SERVICE_TOKENS.ARTIST_REPOSITORY, () => {
+    const apiClient = container.resolveSync<StrapiApiClient>(SERVICE_TOKENS.STRAPI_API_CLIENT);
     return new StrapiArtistRepository(apiClient);
   });
 
-  container.registerSingleton(SERVICE_TOKENS.HERO_SECTION_REPOSITORY, async () => {
-    const apiClient = await container.resolve<StrapiApiClient>(SERVICE_TOKENS.STRAPI_API_CLIENT);
+  container.registerSingleton(SERVICE_TOKENS.HERO_SECTION_REPOSITORY, () => {
+    const apiClient = container.resolveSync<StrapiApiClient>(SERVICE_TOKENS.STRAPI_API_CLIENT);
     return new StrapiHeroSectionRepository(apiClient);
   });
 
-  container.registerSingleton(SERVICE_TOKENS.CONTACT_INFO_REPOSITORY, async () => {
-    const apiClient = await container.resolve<StrapiApiClient>(SERVICE_TOKENS.STRAPI_API_CLIENT);
+  container.registerSingleton(SERVICE_TOKENS.CONTACT_INFO_REPOSITORY, () => {
+    const apiClient = container.resolveSync<StrapiApiClient>(SERVICE_TOKENS.STRAPI_API_CLIENT);
     return new StrapiContactInfoRepository(apiClient);
   });
 
-  container.registerSingleton(SERVICE_TOKENS.AUTH_REPOSITORY, async () => {
-    const auth = await container.resolve(SERVICE_TOKENS.FIREBASE_AUTH);
+  container.registerSingleton(SERVICE_TOKENS.AUTH_REPOSITORY, () => {
+    const auth = container.resolveSync(SERVICE_TOKENS.FIREBASE_AUTH);
     const logger = new ConsoleLogger('Auth');
     return new FirebaseAuthRepository(auth, logger);
   });
 
-  // Use Cases
-  container.registerTransient(SERVICE_TOKENS.GET_ALL_EVENTS_USE_CASE, async () => {
-    const eventRepository = await container.resolve(SERVICE_TOKENS.EVENT_REPOSITORY);
+  // Use Cases - Use sync resolution for React compatibility
+  container.registerTransient(SERVICE_TOKENS.GET_ALL_EVENTS_USE_CASE, () => {
+    const eventRepository = container.resolveSync(SERVICE_TOKENS.EVENT_REPOSITORY);
     return new GetAllEventsUseCase(eventRepository);
   });
 
-  container.registerTransient(SERVICE_TOKENS.GET_ACTIVE_EVENT_USE_CASE, async () => {
-    const eventRepository = await container.resolve(SERVICE_TOKENS.EVENT_REPOSITORY);
+  container.registerTransient(SERVICE_TOKENS.GET_ACTIVE_EVENT_USE_CASE, () => {
+    const eventRepository = container.resolveSync(SERVICE_TOKENS.EVENT_REPOSITORY);
     return new GetActiveEventUseCase(eventRepository);
   });
 
-  container.registerTransient(SERVICE_TOKENS.GET_ALL_ARTISTS_USE_CASE, async () => {
-    const artistRepository = await container.resolve(SERVICE_TOKENS.ARTIST_REPOSITORY);
+  container.registerTransient(SERVICE_TOKENS.GET_ALL_ARTISTS_USE_CASE, () => {
+    const artistRepository = container.resolveSync(SERVICE_TOKENS.ARTIST_REPOSITORY);
     return new GetAllArtistsUseCase(artistRepository);
   });
 
-  container.registerTransient(SERVICE_TOKENS.GET_APP_DATA_USE_CASE, async () => {
-    const eventRepository = await container.resolve(SERVICE_TOKENS.EVENT_REPOSITORY);
-    const artistRepository = await container.resolve(SERVICE_TOKENS.ARTIST_REPOSITORY);
-    const heroSectionRepository = await container.resolve(SERVICE_TOKENS.HERO_SECTION_REPOSITORY);
-    const contactInfoRepository = await container.resolve(SERVICE_TOKENS.CONTACT_INFO_REPOSITORY);
+  container.registerTransient(SERVICE_TOKENS.GET_APP_DATA_USE_CASE, () => {
+    // For React hooks, we need synchronous resolution
+    // Repositories are registered as singletons, so they should be available synchronously once initialized
+    const eventRepository = container.resolveSync(SERVICE_TOKENS.EVENT_REPOSITORY);
+    const artistRepository = container.resolveSync(SERVICE_TOKENS.ARTIST_REPOSITORY);
+    const heroSectionRepository = container.resolveSync(SERVICE_TOKENS.HERO_SECTION_REPOSITORY);
+    const contactInfoRepository = container.resolveSync(SERVICE_TOKENS.CONTACT_INFO_REPOSITORY);
 
     return new GetAppDataUseCase(
       eventRepository,
@@ -114,8 +116,8 @@ export const setupContainer = (container: DIContainer): void => {
     );
   });
 
-  container.registerTransient(SERVICE_TOKENS.LOGIN_USE_CASE, async () => {
-    const authRepository = await container.resolve(SERVICE_TOKENS.AUTH_REPOSITORY);
+  container.registerTransient(SERVICE_TOKENS.LOGIN_USE_CASE, () => {
+    const authRepository = container.resolveSync(SERVICE_TOKENS.AUTH_REPOSITORY);
     const logger = new ConsoleLogger('LoginUseCase');
     return new LoginUseCase(authRepository, logger);
   });
