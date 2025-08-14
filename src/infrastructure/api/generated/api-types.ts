@@ -4,255 +4,255 @@
  */
 
 export interface paths {
-  '/api/events': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get all events */
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description List of events */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            'application/json': components['schemas']['EventListResponse'];
-          };
+    "/api/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-      };
-    };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/events/{id}': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get event by ID */
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path: {
-          id: string;
+        /** Get all events */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description List of events */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["EventListResponse"];
+                    };
+                };
+            };
         };
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description Event details */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            'application/json': components['schemas']['EventResponse'];
-          };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/events/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-      };
-    };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/artists': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get all artists */
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description List of artists */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            'application/json': components['schemas']['ArtistListResponse'];
-          };
+        /** Get event by ID */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Event details */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["EventResponse"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/hero-sections': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get hero sections */
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description Hero section data */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            'application/json': components['schemas']['HeroSectionResponse'];
-          };
+    "/api/artists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-      };
+        /** Get all artists */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description List of artists */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ArtistListResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
+    "/api/hero-sections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get hero sections */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Hero section data */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HeroSectionResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    StrapiEntity: {
-      id: number;
-      attributes: Record<string, never>;
-    };
-    StrapiResponse: {
-      data: Record<string, never>;
-      meta?: {
-        pagination?: {
-          page?: number;
-          pageSize?: number;
-          pageCount?: number;
-          total?: number;
+    schemas: {
+        StrapiEntity: {
+            id: number;
+            attributes: Record<string, never>;
         };
-      };
+        StrapiResponse: {
+            data: Record<string, never>;
+            meta?: {
+                pagination?: {
+                    page?: number;
+                    pageSize?: number;
+                    pageCount?: number;
+                    total?: number;
+                };
+            };
+        };
+        Event: {
+            id: string;
+            name: string;
+            description?: string;
+            /** Format: date-time */
+            startDate: string;
+            /** Format: date-time */
+            endDate: string;
+            location?: string;
+            isActive?: boolean;
+            imageUrl?: string;
+            ticketUrl?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        Artist: {
+            id: string;
+            name: string;
+            bio?: string;
+            genre?: string;
+            imageUrl?: string;
+            socialLinks?: {
+                spotify?: string;
+                instagram?: string;
+                soundcloud?: string;
+                website?: string;
+            };
+            isResident?: boolean;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        HeroSection: {
+            id: string;
+            title: string;
+            subtitle?: string;
+            backgroundImageUrl?: string;
+            ctaText?: string;
+            ctaUrl?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        ContactInfo: {
+            id: string;
+            /** Format: email */
+            email: string;
+            phone?: string;
+            address?: string;
+            socialLinks?: {
+                instagram?: string;
+                facebook?: string;
+                twitter?: string;
+            };
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        EventResponse: components["schemas"]["StrapiResponse"] & {
+            data?: components["schemas"]["Event"];
+        };
+        EventListResponse: components["schemas"]["StrapiResponse"] & {
+            data?: components["schemas"]["Event"][];
+        };
+        ArtistResponse: components["schemas"]["StrapiResponse"] & {
+            data?: components["schemas"]["Artist"];
+        };
+        ArtistListResponse: components["schemas"]["StrapiResponse"] & {
+            data?: components["schemas"]["Artist"][];
+        };
+        HeroSectionResponse: components["schemas"]["StrapiResponse"] & {
+            data?: components["schemas"]["HeroSection"];
+        };
     };
-    Event: {
-      id: string;
-      name: string;
-      description?: string;
-      /** Format: date-time */
-      startDate: string;
-      /** Format: date-time */
-      endDate: string;
-      location?: string;
-      isActive?: boolean;
-      imageUrl?: string;
-      ticketUrl?: string;
-      /** Format: date-time */
-      createdAt?: string;
-      /** Format: date-time */
-      updatedAt?: string;
-    };
-    Artist: {
-      id: string;
-      name: string;
-      bio?: string;
-      genre?: string;
-      imageUrl?: string;
-      socialLinks?: {
-        spotify?: string;
-        instagram?: string;
-        soundcloud?: string;
-        website?: string;
-      };
-      isResident?: boolean;
-      /** Format: date-time */
-      createdAt?: string;
-      /** Format: date-time */
-      updatedAt?: string;
-    };
-    HeroSection: {
-      id: string;
-      title: string;
-      subtitle?: string;
-      backgroundImageUrl?: string;
-      ctaText?: string;
-      ctaUrl?: string;
-      /** Format: date-time */
-      createdAt?: string;
-      /** Format: date-time */
-      updatedAt?: string;
-    };
-    ContactInfo: {
-      id: string;
-      /** Format: email */
-      email: string;
-      phone?: string;
-      address?: string;
-      socialLinks?: {
-        instagram?: string;
-        facebook?: string;
-        twitter?: string;
-      };
-      /** Format: date-time */
-      createdAt?: string;
-      /** Format: date-time */
-      updatedAt?: string;
-    };
-    EventResponse: components['schemas']['StrapiResponse'] & {
-      data?: components['schemas']['Event'];
-    };
-    EventListResponse: components['schemas']['StrapiResponse'] & {
-      data?: components['schemas']['Event'][];
-    };
-    ArtistResponse: components['schemas']['StrapiResponse'] & {
-      data?: components['schemas']['Artist'];
-    };
-    ArtistListResponse: components['schemas']['StrapiResponse'] & {
-      data?: components['schemas']['Artist'][];
-    };
-    HeroSectionResponse: components['schemas']['StrapiResponse'] & {
-      data?: components['schemas']['HeroSection'];
-    };
-  };
-  responses: never;
-  parameters: never;
-  requestBodies: never;
-  headers: never;
-  pathItems: never;
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
 export type $defs = Record<string, never>;
 export type operations = Record<string, never>;

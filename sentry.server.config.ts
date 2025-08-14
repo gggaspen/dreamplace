@@ -13,7 +13,7 @@ Sentry.init({
   integrations: [new Sentry.Http({ tracing: true })],
 
   // Error filtering
-  beforeSend(event, hint) {
+  beforeSend(event) {
     // Filter out development errors
     if (process.env.NODE_ENV === 'development') {
       return null;

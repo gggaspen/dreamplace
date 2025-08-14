@@ -2,9 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font display optimization */
+@font-face {
+  font-family: 'system-ui';
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #000;
+  
+  /* Font variables for consistent usage */
+  --font-geist-sans: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --font-geist-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-poppins: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -28,7 +28,7 @@ const THEME_STORAGE_KEY = 'dreamplace-theme';
 
 // Custom hook for enhanced theme management
 export const useTheme = (): ThemeState & ThemeActions => {
-  const { colorMode, setColorMode, toggleColorMode } = useColorMode();
+  const { colorMode, setColorMode } = useColorMode();
   const [preferredMode, setPreferredMode] = useState<'light' | 'dark' | 'system'>('system');
   const [systemPreference, setSystemPreference] = useState<'light' | 'dark'>('light');
 
@@ -150,12 +150,5 @@ export const useThemeCSSVars = () => {
   };
 };
 
-// Higher-order component for theme-aware components
-export const withTheme = <P extends object>(
-  Component: React.ComponentType<P & { theme: ThemeState }>
-) => {
-  return function ThemedComponent(props: P) {
-    const theme = useTheme();
-    return <Component {...props} theme={theme} />;
-  };
-};
+// Higher-order component for theme-aware components moved to separate file
+// See: useThemeComponents.tsx

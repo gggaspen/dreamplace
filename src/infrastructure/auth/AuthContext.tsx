@@ -136,6 +136,20 @@ export function AuthProvider({ children, authRepository, loginUseCase }: AuthPro
 export function useAuth(): AuthContextValue {
   const context = useContext(AuthContext);
   if (!context) {
+    // During SSR/build time, provide a safe default instead of throwing
+    if (typeof window === 'undefined') {
+      return {
+        user: null,
+        isLoading: true,
+        isAuthenticated: false,
+        session: null,
+        login: async () => ({ success: false, error: 'Auth not available during SSR' }),
+        register: async () => ({ success: false, error: 'Auth not available during SSR' }),
+        logout: async () => {},
+        resetPassword: async () => {},
+        updatePassword: async () => {},
+      };
+    }
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;

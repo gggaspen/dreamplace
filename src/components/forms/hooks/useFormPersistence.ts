@@ -7,7 +7,7 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 import { FieldValues, UseFormWatch, UseFormReset } from 'react-hook-form';
-import { debounce } from 'lodash';
+import { debounce } from '@/utils/debounce';
 
 // Persistence options
 interface PersistenceOptions {

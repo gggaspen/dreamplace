@@ -1,6 +1,5 @@
 import { EventManager } from '@/patterns/observer/EventManager';
 import { BaseObserver } from '@/patterns/observer/BaseObserver';
-import { IObservable } from '@/patterns/observer/types';
 
 // Mock observer for testing
 class MockObserver extends BaseObserver<string> {
@@ -9,7 +8,7 @@ class MockObserver extends BaseObserver<string> {
   public lastData = '';
   public shouldThrowError = false;
 
-  update(data: string, eventType: string, source: IObservable<string>): void {
+  update(data: string, eventType: string): void {
     if (this.shouldThrowError) {
       throw new Error('Mock observer error');
     }

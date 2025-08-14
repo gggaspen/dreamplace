@@ -3,8 +3,11 @@
  * Generate TypeScript types from OpenAPI/Strapi schema
  */
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const fs = require('fs');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const path = require('path');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { execSync } = require('child_process');
 
 // Configuration
@@ -357,7 +360,7 @@ function generateClient() {
 
     console.log('✅ API client generated successfully');
     return true;
-  } catch (error) {
+  } catch {
     console.warn('⚠️  Could not generate full API client, creating basic client...');
 
     // Create a basic typed client wrapper
@@ -410,7 +413,7 @@ async function main() {
 
 // Add fetch polyfill for Node.js < 18
 if (typeof fetch === 'undefined') {
-  global.fetch = require('cross-fetch');
+  global.fetch = require('cross-fetch'); // eslint-disable-line @typescript-eslint/no-require-imports
 }
 
 // Run the script

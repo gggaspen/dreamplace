@@ -24,19 +24,54 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   experimental: {
-    optimizePackageImports: ['@chakra-ui/react'],
+    optimizePackageImports: [
+      '@chakra-ui/react', 
+      'react-icons',
+      'framer-motion',
+      '@tanstack/react-query'
+    ],
   },
   webpack: (config, { dev, isServer }) => {
     // Bundle optimization for client-side only
     if (!isServer) {
       config.optimization.splitChunks = {
         chunks: 'all',
-        maxInitialRequests: 25,
-        maxAsyncRequests: 25,
+        maxInitialRequests: 6, // Reduced to prevent entrypoint bloat
+        maxAsyncRequests: 8,
+        minSize: 20000, // Smaller minimum chunk size (20KB) for better granularity
+        maxSize: 200000, // Smaller maximum chunk size (200KB) for better loading
         cacheGroups: {
           default: {
             minChunks: 2,
             priority: -20,
+            reuseExistingChunk: true,
+          },
+          // Shared application components
+          shared: {
+            test: /[\\/]src[\\/]components[\\/](ui|composite|loading-screen)[\\/]/,
+            name: 'shared-components',
+            priority: 25,
+            chunks: 'all',
+            minChunks: 2, // Only create if used by 2+ pages
+            reuseExistingChunk: true,
+            enforce: true,
+          },
+          // Authentication components and contexts  
+          authShared: {
+            test: /[\\/]src[\\/](infrastructure[\\/]auth|components[\\/].*auth)[\\/]/,
+            name: 'auth-shared',
+            priority: 22,
+            chunks: 'async', // Auth components can be async
+            minChunks: 2,
+            reuseExistingChunk: true,
+          },
+          // Routing infrastructure
+          routingShared: {
+            test: /[\\/]src[\\/]infrastructure[\\/]routing[\\/]/,
+            name: 'routing-shared',
+            priority: 22,
+            chunks: 'all',
+            minChunks: 2,
             reuseExistingChunk: true,
           },
           vendor: {
@@ -45,6 +80,7 @@ const nextConfig = {
             priority: -10,
             chunks: 'all',
             reuseExistingChunk: true,
+            enforce: true,
           },
           // Framework chunks
           framework: {
@@ -60,14 +96,22 @@ const nextConfig = {
             test: /[\\/]node_modules[\\/]@chakra-ui[\\/]/,
             name: 'chakra-ui',
             priority: 15,
-            chunks: 'all',
+            chunks: 'async', // Load async to avoid blocking
             reuseExistingChunk: true,
           },
           framer: {
             test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
             name: 'framer-motion',
             priority: 15,
-            chunks: 'all',
+            chunks: 'async', // Load async for animations
+            reuseExistingChunk: true,
+          },
+          // Icons library chunks
+          icons: {
+            test: /[\\/]node_modules[\\/]react-icons[\\/]/,
+            name: 'react-icons',
+            priority: 12,
+            chunks: 'async', // Load async for icons
             reuseExistingChunk: true,
           },
           // Authentication libraries
@@ -75,45 +119,34 @@ const nextConfig = {
             test: /[\\/]node_modules[\\/](firebase|@firebase)[\\/]/,
             name: 'auth',
             priority: 12,
-            chunks: 'all',
-            reuseExistingChunk: true,
-          },
-          // State management
-          state: {
-            test: /[\\/]node_modules[\\/](@tanstack|zustand)[\\/]/,
-            name: 'state',
-            priority: 12,
-            chunks: 'all',
-            reuseExistingChunk: true,
-          },
-          // Utility libraries
-          utils: {
-            test: /[\\/]node_modules[\\/](lodash|date-fns|ramda)[\\/]/,
-            name: 'utils',
-            priority: 8,
-            chunks: 'all',
+            chunks: 'async', // Load async for auth
             reuseExistingChunk: true,
           },
         },
       };
     }
 
-    // Tree shaking optimization
+    // Tree shaking optimization - improved package handling
     config.resolve.alias = {
       ...config.resolve.alias,
-      lodash: 'lodash-es',
+      // Lodash removed - using native implementations
     };
 
-    // Compression and minification for production
+    // Enhanced tree shaking configuration for production
     if (!dev) {
+      // Enable aggressive dead code elimination
       config.optimization.usedExports = true;
-      config.optimization.sideEffects = false;
+      config.optimization.sideEffects = false; // Enable aggressive tree shaking
 
-      // Performance budgets
+      // Performance budgets - optimized for entrypoint size reduction
       config.performance = {
-        maxAssetSize: 250000, // 250KB
-        maxEntrypointSize: 500000, // 500KB
+        maxAssetSize: 250000, // 250KB per asset (tighter control)
+        maxEntrypointSize: 400000, // 400KB per entrypoint (much more aggressive)
         hints: 'warning',
+        assetFilter: function(assetFilename) {
+          // Only warn for JS files, ignore CSS and other assets
+          return assetFilename.endsWith('.js');
+        },
       };
     }
 

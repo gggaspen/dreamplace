@@ -7,7 +7,7 @@
 
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { FieldValues, UseFormWatch } from 'react-hook-form';
-import { debounce } from 'lodash';
+import { debounce } from '@/utils/debounce';
 
 // Auto-save status
 export type AutoSaveStatus = 'idle' | 'saving' | 'saved' | 'error';

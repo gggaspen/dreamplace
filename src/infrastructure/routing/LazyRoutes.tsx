@@ -1,186 +1,89 @@
+'use client';
 /**
  * Lazy Routes Configuration
- * Centralized configuration for code-split routes
+ * Centralized configuration for code-split routes using Next.js dynamic imports
  */
 
-import React from 'react';
-import { createLazyComponent } from './LazyLoader';
+import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
 import { LoadingScreen } from '../../components/loading-screen/LoadingScreen';
 
 // Custom loading components for different sections
 const DashboardFallback = () => <LoadingScreen message='Loading dashboard...' />;
-
 const AdminFallback = () => <LoadingScreen message='Loading admin panel...' />;
+const AuthFallback = () => <LoadingScreen message='Loading authentication...' />;
+const DemoFallback = () => <LoadingScreen message='Loading demo...' />;
 
-const ArtistFallback = () => <LoadingScreen message='Loading artist dashboard...' />;
-
-// Lazy-loaded route components
+// Lazy-loaded route components using Next.js dynamic imports
 export const LazyRoutes = {
   // Authentication routes
-  Login: createLazyComponent(() => import('../../app/login/page'), { chunkName: 'auth-login' }),
-
-  // Register: createLazyComponent(
-  //   () => import('@/components/auth/RegisterForm'),
-  //   { chunkName: 'auth-register' }
-  // ),
-
-  // ForgotPassword: createLazyComponent(
-  //   () => import('@/components/auth/ForgotPasswordForm'),
-  //   { chunkName: 'auth-forgot-password' }
-  // ),
+  Login: dynamic(() => import('../../app/login/page'), {
+    loading: AuthFallback,
+    ssr: false, // Client-side only for auth pages
+  }),
 
   // User routes
-  Dashboard: createLazyComponent(() => import('../../app/dashboard/page'), {
-    fallback: DashboardFallback,
-    chunkName: 'user-dashboard',
+  Dashboard: dynamic(() => import('../../app/dashboard/page'), {
+    loading: DashboardFallback,
+    ssr: false, // Dashboard requires authentication
   }),
-
-  // Profile: createLazyComponent(
-  //   () => import('@/components/user/ProfilePage'),
-  //   { chunkName: 'user-profile' }
-  // ),
-
-  // Settings: createLazyComponent(
-  //   () => import('@/components/user/SettingsPage'),
-  //   { chunkName: 'user-settings' }
-  // ),
 
   // Admin routes
-  Admin: createLazyComponent(() => import('../../app/admin/page'), {
-    fallback: AdminFallback,
-    chunkName: 'admin-dashboard',
+  Admin: dynamic(() => import('../../app/admin/page'), {
+    loading: AdminFallback,
+    ssr: false, // Admin requires authentication
   }),
 
-  // AdminUsers: createLazyComponent(
-  //   () => import('@/components/admin/UserManagement'),
-  //   { chunkName: 'admin-users' }
-  // ),
-
-  // AdminEvents: createLazyComponent(
-  //   () => import('@/components/admin/EventManagement'),
-  //   { chunkName: 'admin-events' }
-  // ),
-
-  // AdminSettings: createLazyComponent(
-  //   () => import('@/components/admin/SystemSettings'),
-  //   { chunkName: 'admin-settings' }
-  // ),
-
-  // Artist routes
-  // ArtistDashboard: createLazyComponent(
-  //   () => import('@/components/artist/ArtistDashboard'),
-  //   {
-  //     fallback: ArtistFallback,
-  //     chunkName: 'artist-dashboard'
-  //   }
-  // ),
-
-  // ArtistProfile: createLazyComponent(
-  //   () => import('@/components/artist/ArtistProfile'),
-  //   { chunkName: 'artist-profile' }
-  // ),
-
-  // ArtistEvents: createLazyComponent(
-  //   () => import('@/components/artist/ArtistEvents'),
-  //   { chunkName: 'artist-events' }
-  // ),
-
-  // Feature routes
-  // Events: createLazyComponent(
-  //   () => import('@/components/events/EventsPage'),
-  //   { chunkName: 'events' }
-  // ),
-
-  // EventDetails: createLazyComponent(
-  //   () => import('@/components/events/EventDetailsPage'),
-  //   { chunkName: 'event-details' }
-  // ),
-
-  // Artists: createLazyComponent(
-  //   () => import('@/components/artists/ArtistsPage'),
-  //   { chunkName: 'artists' }
-  // ),
-
-  // ArtistDetails: createLazyComponent(
-  //   () => import('@/components/artists/ArtistDetailsPage'),
-  //   { chunkName: 'artist-details' }
-  // ),
-
   // Demo and utility routes
-  Demo: createLazyComponent(() => import('../../app/demo/page'), { chunkName: 'demo' }),
-
-  // Heavy components (charts, analytics, etc.)
-  // Analytics: createLazyComponent(
-  //   () => import('@/components/analytics/AnalyticsPage'),
-  //   { chunkName: 'analytics' }
-  // ),
-
-  // Reports: createLazyComponent(
-  //   () => import('@/components/reports/ReportsPage'),
-  //   { chunkName: 'reports' }
-  // )
+  Demo: dynamic(() => import('../../app/demo/page'), {
+    loading: DemoFallback,
+    ssr: true, // Demo can be server-side rendered
+  }),
 } as const;
 
 // Route groups for preloading strategies
 export const ROUTE_GROUPS = {
   // Critical routes - preload immediately
-  CRITICAL: [LazyRoutes.Login, LazyRoutes.Dashboard],
-
-  // High priority routes - preload on user interaction
-  HIGH_PRIORITY: [
-    // LazyRoutes.Profile,
-    // LazyRoutes.Events,
-    // LazyRoutes.Artists
-  ],
+  CRITICAL: ['login', 'dashboard'],
 
   // Admin routes - preload only for admin users
-  ADMIN: [
-    LazyRoutes.Admin,
-    // LazyRoutes.AdminUsers,
-    // LazyRoutes.AdminEvents,
-    // LazyRoutes.AdminSettings
-  ],
+  ADMIN: ['admin'],
 
-  // Artist routes - preload only for artist users
-  ARTIST: [
-    // LazyRoutes.ArtistDashboard,
-    // LazyRoutes.ArtistProfile,
-    // LazyRoutes.ArtistEvents
-  ],
-
-  // Heavy routes - preload only when needed
-  HEAVY: [
-    // LazyRoutes.Analytics,
-    // LazyRoutes.Reports
-  ],
+  // Demo routes
+  DEMO: ['demo'],
 } as const;
 
-// Preloading utilities
+// Route name mapping for dynamic imports
+export const ROUTE_IMPORT_MAP = {
+  login: () => import('../../app/login/page'),
+  dashboard: () => import('../../app/dashboard/page'),
+  admin: () => import('../../app/admin/page'),
+  demo: () => import('../../app/demo/page'),
+} as const;
+
+// Preloading utilities optimized for Next.js dynamic imports
 export class RoutePreloader {
   private static preloadedRoutes = new Set<string>();
 
-  static async preloadRoute(routeComponent: React.LazyExoticComponent<any>): Promise<void> {
-    const componentName = routeComponent.displayName || 'Unknown';
-
-    if (this.preloadedRoutes.has(componentName)) {
+  static async preloadRoute(routeName: keyof typeof ROUTE_IMPORT_MAP): Promise<void> {
+    if (this.preloadedRoutes.has(routeName)) {
       return; // Already preloaded
     }
 
     try {
-      // @ts-ignore - accessing internal preload method
-      if (routeComponent._init) {
-        // @ts-ignore
-        await routeComponent._init();
-        this.preloadedRoutes.add(componentName);
-        console.debug(`Preloaded route: ${componentName}`);
-      }
+      // Preload the dynamic import
+      await ROUTE_IMPORT_MAP[routeName]();
+      this.preloadedRoutes.add(routeName);
+      console.debug(`Preloaded route: ${routeName}`);
     } catch (error) {
-      console.error(`Failed to preload route ${componentName}:`, error);
+      console.error(`Failed to preload route ${routeName}:`, error);
     }
   }
 
-  static async preloadRouteGroup(routes: React.LazyExoticComponent<any>[]): Promise<void> {
-    const preloadPromises = routes.map(route => this.preloadRoute(route));
+  static async preloadRouteGroup(routes: string[]): Promise<void> {
+    const preloadPromises = routes.map(route =>
+      this.preloadRoute(route as keyof typeof ROUTE_IMPORT_MAP)
+    );
     await Promise.allSettled(preloadPromises);
   }
 
@@ -190,15 +93,8 @@ export class RoutePreloader {
   }
 
   static preloadUserRoutes(userRoles: string[] = []): void {
-    // Preload routes based on user roles
-    this.preloadRouteGroup(ROUTE_GROUPS.HIGH_PRIORITY);
-
     if (userRoles.includes('admin')) {
       this.preloadRouteGroup(ROUTE_GROUPS.ADMIN);
-    }
-
-    if (userRoles.includes('artist')) {
-      this.preloadRouteGroup(ROUTE_GROUPS.ARTIST);
     }
   }
 
@@ -209,12 +105,13 @@ export class RoutePreloader {
 
 // React component for route preloading
 export function RoutePreloadManager({ userRoles = [] }: { userRoles?: string[] }) {
-  React.useEffect(() => {
+
+  useEffect(() => {
     // Preload critical routes on mount
     RoutePreloader.preloadCriticalRoutes();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Preload user-specific routes when roles change
     if (userRoles.length > 0) {
       RoutePreloader.preloadUserRoutes(userRoles);

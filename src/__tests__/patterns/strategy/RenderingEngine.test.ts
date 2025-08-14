@@ -10,8 +10,8 @@ class MockRenderStrategy extends BaseRenderStrategy {
 
   constructor(
     name: string,
-    priority: number = 5,
-    canHandleResult: boolean = true,
+    priority = 5,
+    canHandleResult = true,
     renderResult: React.ReactElement | null = null
   ) {
     super(name, `Mock strategy: ${name}`);
@@ -20,15 +20,15 @@ class MockRenderStrategy extends BaseRenderStrategy {
     this.renderResult = renderResult;
   }
 
-  canHandle(data: RenderData, context: RenderContext): boolean {
+  canHandle(): boolean {
     return this.canHandleResult;
   }
 
-  getPriority(data: RenderData, context: RenderContext): number {
+  getPriority(): number {
     return this.priority;
   }
 
-  async render(data: RenderData, context: RenderContext): Promise<RenderResult> {
+  async render(): Promise<RenderResult> {
     const startTime = this.startPerformanceTracking();
 
     // Simulate some work
@@ -37,7 +37,7 @@ class MockRenderStrategy extends BaseRenderStrategy {
     const renderTime = this.endPerformanceTracking(startTime);
 
     return this.createRenderResult(
-      this.renderResult || ({ type: 'div', props: { children: 'Mock render' } } as any),
+      this.renderResult || ({ type: 'div', props: { children: 'Mock render' } }),
       renderTime
     );
   }

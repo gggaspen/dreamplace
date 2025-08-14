@@ -8,7 +8,7 @@
 import { useEffect, useCallback, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/infrastructure/auth/AuthContext';
-import { RoutePreloader, ROUTE_GROUPS, LazyRoutes } from '@/infrastructure/routing/LazyRoutes';
+import { RoutePreloader, ROUTE_GROUPS, ROUTE_IMPORT_MAP } from '@/infrastructure/routing/LazyRoutes';
 
 export interface PreloadingConfig {
   preloadOnHover?: boolean;
@@ -27,7 +27,7 @@ export function useRoutePreloading(config: PreloadingConfig = {}) {
 
   const { user } = useAuth();
   const pathname = usePathname();
-  const router = useRouter();
+  useRouter();
   const preloadTimersRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
 
   // Preload routes based on user roles
@@ -48,10 +48,10 @@ export function useRoutePreloading(config: PreloadingConfig = {}) {
     // Preload related routes based on current page
     if (currentRoute.startsWith('/admin')) {
       RoutePreloader.preloadRouteGroup(ROUTE_GROUPS.ADMIN);
-    } else if (currentRoute.startsWith('/artist')) {
-      RoutePreloader.preloadRouteGroup(ROUTE_GROUPS.ARTIST);
     } else if (currentRoute === '/dashboard') {
-      RoutePreloader.preloadRouteGroup(ROUTE_GROUPS.HIGH_PRIORITY);
+      RoutePreloader.preloadRouteGroup(ROUTE_GROUPS.CRITICAL);
+    } else if (currentRoute === '/demo') {
+      RoutePreloader.preloadRouteGroup(ROUTE_GROUPS.DEMO);
     }
   }, [pathname]);
 
@@ -62,10 +62,10 @@ export function useRoutePreloading(config: PreloadingConfig = {}) {
         onMouseEnter: preloadOnHover
           ? () => {
               const timer = setTimeout(() => {
-                // Find the corresponding lazy route component
-                const routeComponent = findRouteComponent(routePath);
-                if (routeComponent) {
-                  RoutePreloader.preloadRoute(routeComponent);
+                // Find the corresponding route name and preload
+                const routeName = findRouteName(routePath);
+                if (routeName) {
+                  RoutePreloader.preloadRoute(routeName);
                 }
               }, preloadDelay);
 
@@ -85,10 +85,10 @@ export function useRoutePreloading(config: PreloadingConfig = {}) {
 
         onFocus: preloadOnHover
           ? () => {
-              // Find the corresponding lazy route component
-              const routeComponent = findRouteComponent(routePath);
-              if (routeComponent) {
-                RoutePreloader.preloadRoute(routeComponent);
+              // Find the corresponding route name and preload
+              const routeName = findRouteName(routePath);
+              if (routeName) {
+                RoutePreloader.preloadRoute(routeName);
               }
             }
           : undefined,
@@ -113,27 +113,13 @@ export function useRoutePreloading(config: PreloadingConfig = {}) {
   };
 }
 
-// Helper function to find the route component for a given path
-function findRouteComponent(routePath: string): React.LazyExoticComponent<any> | null {
-  const routeMap: Record<string, React.LazyExoticComponent<any>> = {
-    '/login': LazyRoutes.Login,
-    '/register': LazyRoutes.Register,
-    '/forgot-password': LazyRoutes.ForgotPassword,
-    '/dashboard': LazyRoutes.Dashboard,
-    '/profile': LazyRoutes.Profile,
-    '/settings': LazyRoutes.Settings,
-    '/admin': LazyRoutes.Admin,
-    '/admin/users': LazyRoutes.AdminUsers,
-    '/admin/events': LazyRoutes.AdminEvents,
-    '/admin/settings': LazyRoutes.AdminSettings,
-    '/artist': LazyRoutes.ArtistDashboard,
-    '/artist/profile': LazyRoutes.ArtistProfile,
-    '/artist/events': LazyRoutes.ArtistEvents,
-    '/events': LazyRoutes.Events,
-    '/artists': LazyRoutes.Artists,
-    '/analytics': LazyRoutes.Analytics,
-    '/reports': LazyRoutes.Reports,
-    '/demo': LazyRoutes.Demo,
+// Helper function to find the route name for a given path
+function findRouteName(routePath: string): keyof typeof ROUTE_IMPORT_MAP | null {
+  const routeMap: Record<string, keyof typeof ROUTE_IMPORT_MAP> = {
+    '/login': 'login',
+    '/dashboard': 'dashboard',
+    '/admin': 'admin',
+    '/demo': 'demo',
   };
 
   return routeMap[routePath] || null;
@@ -154,9 +140,9 @@ export function useVisibilityPreloading(routePath: string, options: Intersection
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting && !hasPreloaded.current) {
-            const routeComponent = findRouteComponent(routePath);
-            if (routeComponent) {
-              RoutePreloader.preloadRoute(routeComponent);
+            const routeName = findRouteName(routePath);
+            if (routeName) {
+              RoutePreloader.preloadRoute(routeName);
               hasPreloaded.current = true;
             }
           }
@@ -196,9 +182,9 @@ export function useSmartPreloading() {
 
     // Preload predicted routes
     predictedRoutes.forEach(route => {
-      const routeComponent = findRouteComponent(route);
-      if (routeComponent) {
-        RoutePreloader.preloadRoute(routeComponent);
+      const routeName = findRouteName(route);
+      if (routeName) {
+        RoutePreloader.preloadRoute(routeName);
       }
     });
   }, [pathname]);
@@ -214,17 +200,17 @@ function predictNextRoutes(history: string[]): string[] {
   const current = history[history.length - 1];
   const predicted: string[] = [];
 
-  // Common navigation patterns
+  // Common navigation patterns for existing routes only
   if (current === '/dashboard') {
-    predicted.push('/profile', '/events', '/artists');
+    predicted.push('/admin', '/demo');
   } else if (current === '/admin') {
-    predicted.push('/admin/users', '/admin/events', '/admin/settings');
-  } else if (current === '/events') {
-    predicted.push('/artists', '/dashboard');
-  } else if (current === '/artists') {
-    predicted.push('/events', '/dashboard');
-  } else if (current.startsWith('/admin/')) {
-    predicted.push('/admin');
+    predicted.push('/dashboard');
+  } else if (current === '/demo') {
+    predicted.push('/dashboard');
+  } else if (current === '/login') {
+    predicted.push('/dashboard');
+  } else if (current === '/') {
+    predicted.push('/login', '/demo');
   }
 
   return predicted;

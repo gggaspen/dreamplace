@@ -103,7 +103,10 @@
             "type": "object"
           }
         },
-        "required": ["id", "attributes"]
+        "required": [
+          "id",
+          "attributes"
+        ]
       },
       "StrapiResponse": {
         "type": "object",
@@ -134,7 +137,9 @@
             }
           }
         },
-        "required": ["data"]
+        "required": [
+          "data"
+        ]
       },
       "Event": {
         "type": "object",
@@ -177,7 +182,12 @@
             "format": "date-time"
           }
         },
-        "required": ["id", "name", "startDate", "endDate"]
+        "required": [
+          "id",
+          "name",
+          "startDate",
+          "endDate"
+        ]
       },
       "Artist": {
         "type": "object",
@@ -226,7 +236,10 @@
             "format": "date-time"
           }
         },
-        "required": ["id", "name"]
+        "required": [
+          "id",
+          "name"
+        ]
       },
       "HeroSection": {
         "type": "object",
@@ -258,7 +271,10 @@
             "format": "date-time"
           }
         },
-        "required": ["id", "title"]
+        "required": [
+          "id",
+          "title"
+        ]
       },
       "ContactInfo": {
         "type": "object",
@@ -299,7 +315,10 @@
             "format": "date-time"
           }
         },
-        "required": ["id", "email"]
+        "required": [
+          "id",
+          "email"
+        ]
       },
       "EventResponse": {
         "allOf": [

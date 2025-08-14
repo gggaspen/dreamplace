@@ -1,7 +1,8 @@
-import React, { JSX, ComponentType, Component, ReactNode, ErrorInfo } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { ComponentType, Component, ReactNode, ErrorInfo } from 'react';
 import { BaseDecorator } from '../BaseDecorator';
 import { DecoratorConfig, ErrorBoundaryDecoratorConfig } from '../types';
-import {Hero} from '@/app/pages/hero/Hero';
 
 /**
  * Error Boundary Decorator - wraps components with error boundary functionality

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type ServiceIdentifier = string | symbol;
 export type Factory<T = any> = () => T;
 export type AsyncFactory<T = any> = () => Promise<T>;
@@ -115,8 +116,30 @@ export const createContainer = (): DIContainer => {
 export const getContainer = (): DIContainer => {
   if (!globalContainer) {
     globalContainer = createContainer();
+    // During SSR/build time, return a mock container that doesn't error
+    if (typeof window === 'undefined') {
+      return createMockContainer();
+    }
   }
   return globalContainer;
+};
+
+// Create a mock container for SSR that doesn't throw errors
+const createMockContainer = (): DIContainer => {
+  const mockContainer = new DIContainer();
+  
+  // Override methods to be SSR-safe
+  const originalRegisterSingleton = mockContainer.registerSingleton.bind(mockContainer);
+  mockContainer.registerSingleton = function<T>(identifier: ServiceIdentifier, factory: Factory<T> | AsyncFactory<T>): void {
+    try {
+      originalRegisterSingleton(identifier, factory);
+    } catch (error) {
+      // Silently fail during SSR
+      console.warn(`Failed to register service ${String(identifier)} during SSR:`, error);
+    }
+  };
+  
+  return mockContainer;
 };
 
 export const setContainer = (container: DIContainer): void => {

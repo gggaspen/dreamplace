@@ -59,7 +59,9 @@ const initializeInfrastructure = () => {
   return container;
 };
 
-// Auto-initialize the container
-initializeInfrastructure();
+// Auto-initialize the container only in browser environment
+if (typeof window !== 'undefined') {
+  initializeInfrastructure();
+}
 
 export { initializeInfrastructure };

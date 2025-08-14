@@ -8,7 +8,7 @@
  */
 
 import React, { Suspense } from 'react';
-import Hero from '@/app/pages/hero/Hero';
+import dynamic from 'next/dynamic';
 import { HomeData } from '@/components/containers/HomeContainer';
 import {
   LazyCarousel,
@@ -19,16 +19,24 @@ import {
 } from '@/components/lazy';
 import LoadingScreen from '@/components/loading-screen/LoadingScreen';
 
+// Lazy load Hero component for better code splitting
+const LazyHero = dynamic(() => import('@/app/pages/hero/Hero'), {
+  ssr: true,
+  loading: () => <LoadingScreen />
+});
+
 interface HomePresentationProps {
   data: HomeData;
 }
 
-export const HomePresentation: React.FC<HomePresentationProps> = React.memo(({ data }) => {
+const HomePresentationComponent: React.FC<HomePresentationProps> = React.memo(({ data }) => {
   const { heroSections, activeEvent, artists, contactInfo, carousel, spotifySection } = data;
 
   return (
     <main className='pulse-motion'>
-      <Hero config={heroSections} activeEvent={activeEvent} />
+      <Suspense fallback={<LoadingScreen />}>
+        <LazyHero config={heroSections} activeEvent={activeEvent} />
+      </Suspense>
 
       <Suspense fallback={<LoadingScreen />}>
         <div style={{ zIndex: 888 }}>
@@ -48,3 +56,7 @@ export const HomePresentation: React.FC<HomePresentationProps> = React.memo(({ d
     </main>
   );
 });
+
+HomePresentationComponent.displayName = 'HomePresentation';
+
+export const HomePresentation = HomePresentationComponent;
