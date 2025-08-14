@@ -25,36 +25,77 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["@chakra-ui/react"],
   },
-  webpack: (config, { dev }) => {
-    // Bundle optimization
-    config.optimization.splitChunks = {
-      chunks: 'all',
-      cacheGroups: {
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
+  webpack: (config, { dev, isServer }) => {
+    // Bundle optimization for client-side only
+    if (!isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        maxInitialRequests: 25,
+        maxAsyncRequests: 25,
+        cacheGroups: {
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            priority: -10,
+            chunks: 'all',
+            reuseExistingChunk: true,
+          },
+          // Framework chunks
+          framework: {
+            test: /[\\/]node_modules[\\/](react|react-dom|next)[\\/]/,
+            name: 'framework',
+            priority: 20,
+            chunks: 'all',
+            reuseExistingChunk: true,
+            enforce: true,
+          },
+          // UI library chunks
+          chakra: {
+            test: /[\\/]node_modules[\\/]@chakra-ui[\\/]/,
+            name: 'chakra-ui',
+            priority: 15,
+            chunks: 'all',
+            reuseExistingChunk: true,
+          },
+          framer: {
+            test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+            name: 'framer-motion',
+            priority: 15,
+            chunks: 'all',
+            reuseExistingChunk: true,
+          },
+          // Authentication libraries
+          auth: {
+            test: /[\\/]node_modules[\\/](firebase|@firebase)[\\/]/,
+            name: 'auth',
+            priority: 12,
+            chunks: 'all',
+            reuseExistingChunk: true,
+          },
+          // State management
+          state: {
+            test: /[\\/]node_modules[\\/](@tanstack|zustand)[\\/]/,
+            name: 'state',
+            priority: 12,
+            chunks: 'all',
+            reuseExistingChunk: true,
+          },
+          // Utility libraries
+          utils: {
+            test: /[\\/]node_modules[\\/](lodash|date-fns|ramda)[\\/]/,
+            name: 'utils',
+            priority: 8,
+            chunks: 'all',
+            reuseExistingChunk: true,
+          },
         },
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          priority: -10,
-          chunks: 'all',
-        },
-        chakra: {
-          test: /[\\/]node_modules[\\/]@chakra-ui[\\/]/,
-          name: 'chakra-ui',
-          priority: 10,
-          chunks: 'all',
-        },
-        framer: {
-          test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
-          name: 'framer-motion',
-          priority: 10,
-          chunks: 'all',
-        },
-      },
-    };
+      };
+    }
 
     // Tree shaking optimization
     config.resolve.alias = {

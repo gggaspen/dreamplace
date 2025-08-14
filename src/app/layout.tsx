@@ -3,6 +3,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Provider } from "@/components/ui/provider";
 import { QueryProvider } from "@/infrastructure/providers/QueryProvider";
+import { DIProvider } from "@/infrastructure/di/DIContext";
+import { AuthProvider } from "@/infrastructure/providers/AuthProvider";
+import { RoutePreloadManager } from "@/infrastructure/routing/LazyRoutes";
 import { poppins } from "./ui/fonts";
 import Head from "next/head";
 
@@ -94,9 +97,16 @@ export default async function RootLayout({
         // className={`${roboto.className} ${geistSans.variable} ${geistMono.variable} antialiased`}
         className={`${poppins.className} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryProvider>
-          <Provider>{children}</Provider>
-        </QueryProvider>
+        <DIProvider>
+          <QueryProvider>
+            <Provider>
+              <AuthProvider>
+                <RoutePreloadManager />
+                {children}
+              </AuthProvider>
+            </Provider>
+          </QueryProvider>
+        </DIProvider>
       </body>
     </html>
   );

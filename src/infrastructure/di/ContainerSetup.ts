@@ -8,12 +8,18 @@ import { createCacheService } from '../cache/CacheService';
 
 // External Services
 import { StrapiApiClient } from '../api/client/StrapiApiClient';
+import { firebaseAuth } from '../auth/firebase';
 
 // Repositories
 import { StrapiEventRepository } from '../repositories/StrapiEventRepository';
 import { StrapiArtistRepository } from '../repositories/StrapiArtistRepository';
 import { StrapiHeroSectionRepository } from '../repositories/StrapiHeroSectionRepository';
 import { StrapiContactInfoRepository } from '../repositories/StrapiContactInfoRepository';
+import { FirebaseAuthRepository } from '../auth/FirebaseAuthRepository';
+
+// Authentication
+import { LoginUseCase } from '../../domain/auth/usecases/LoginUseCase';
+import { ConsoleLogger } from '../logging/ConsoleLogger';
 
 // Use Cases
 import { GetAllEventsUseCase } from '../../core/application/use-cases/GetAllEventsUseCase';
@@ -47,6 +53,10 @@ export const setupContainer = (container: DIContainer): void => {
     return StrapiApiClient.getInstance();
   });
 
+  container.registerSingleton(SERVICE_TOKENS.FIREBASE_AUTH, () => {
+    return firebaseAuth;
+  });
+
   // Repositories
   container.registerSingleton(SERVICE_TOKENS.EVENT_REPOSITORY, async () => {
     const apiClient = await container.resolve<StrapiApiClient>(SERVICE_TOKENS.STRAPI_API_CLIENT);
@@ -66,6 +76,12 @@ export const setupContainer = (container: DIContainer): void => {
   container.registerSingleton(SERVICE_TOKENS.CONTACT_INFO_REPOSITORY, async () => {
     const apiClient = await container.resolve<StrapiApiClient>(SERVICE_TOKENS.STRAPI_API_CLIENT);
     return new StrapiContactInfoRepository(apiClient);
+  });
+
+  container.registerSingleton(SERVICE_TOKENS.AUTH_REPOSITORY, async () => {
+    const auth = await container.resolve(SERVICE_TOKENS.FIREBASE_AUTH);
+    const logger = new ConsoleLogger('Auth');
+    return new FirebaseAuthRepository(auth, logger);
   });
 
   // Use Cases
@@ -96,5 +112,11 @@ export const setupContainer = (container: DIContainer): void => {
       heroSectionRepository,
       contactInfoRepository
     );
+  });
+
+  container.registerTransient(SERVICE_TOKENS.LOGIN_USE_CASE, async () => {
+    const authRepository = await container.resolve(SERVICE_TOKENS.AUTH_REPOSITORY);
+    const logger = new ConsoleLogger('LoginUseCase');
+    return new LoginUseCase(authRepository, logger);
   });
 };
