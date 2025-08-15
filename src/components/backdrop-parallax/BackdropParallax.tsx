@@ -191,35 +191,43 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                   zIndex: 2,
                 }}
               >
-                {/* <Image
-                  src={imageUrls.highQuality}
-                  width={3000}
-                  height={0}
-                  alt="Banner Prensa - High Quality"
-                  style={{
-                    objectFit: "cover",
-                    height: "100%",
-                  }}
-                  className={
-                    // parent === "banner" ? "pulse-motion-2" : "pulse-motion"
-                    ""
-                  }
-                /> */}
-                <video
-                  style={{
-                    objectFit: "cover",
-                    height: "100%",
-                  }}
-                  autoPlay
-                  loop
-                  muted
-                >
-                  <source
-                    src={"/video/WhatsApp Video 2025-08-15 at 03.48.17.mp4"}
-                    type="video/mp4"
+                {parent === "banner" ? (
+                  <video
+                    style={{
+                      objectFit: "cover",
+                      height: "100%",
+                    }}
+                    autoPlay
+                    loop
+                    muted
+                  >
+                    <source
+                      src={"/video/WhatsApp Video 2025-08-15 at 03.48.17.mp4"}
+                      type="video/mp4"
+                    />
+                    <track
+                      src={"/"}
+                      kind="captions"
+                      lang="en"
+                      label="English"
+                    />
+                  </video>
+                ) : (
+                  <Image
+                    src={imageUrls.highQuality}
+                    width={3000}
+                    height={0}
+                    alt="Banner Prensa - High Quality"
+                    style={{
+                      objectFit: "cover",
+                      height: "100%",
+                    }}
+                    className={
+                      // parent === "banner" ? "pulse-motion-2" : "pulse-motion"
+                      ""
+                    }
                   />
-                  <track src={"/"} kind="captions" lang="en" label="English" />
-                </video>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
