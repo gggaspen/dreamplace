@@ -6,8 +6,6 @@ import { QueryProvider } from '@/infrastructure/providers/QueryProvider';
 import { DIProvider } from '@/infrastructure/di/DIContext';
 import { AuthProvider } from '@/infrastructure/providers/AuthProvider';
 import { RoutePreloadManager } from '@/infrastructure/routing/LazyRoutes';
-import Head from 'next/head';
-// import { poppins } from './ui/fonts';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -86,7 +84,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <Head>
+      <head>
         {/* img */}
         <meta property='og:title' content='DREAMPLACE' />
         {/* <meta property="og:description" content="" /> */}
@@ -133,7 +131,7 @@ export default async function RootLayout({
         {/* Font preconnections for performance optimization */}
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
-      </Head>
+      </head>
       <body
         // className={`${roboto.className} ${geistSans.variable} ${geistMono.variable} antialiased`}
         className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable} antialiased`}
