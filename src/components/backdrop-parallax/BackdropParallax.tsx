@@ -102,7 +102,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
 
   useEffect(() => {
     setInputRange([0, 800]);
-    setOutputRange(parent === "banner" ? [0, 200] : [0, 0]);
+    setOutputRange([0, 200]);
   }, [parent]);
 
   const { scrollY } = useScroll();
