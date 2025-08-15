@@ -45,10 +45,12 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
     useState<boolean>(false);
   const [outputRange, setOutputRange] = useState<number[]>([0, 0]);
   const [inputRange, setInputRange] = useState<InputRange>([0, 0]);
+  const [isDesktop, setIsDesktop] = useState<boolean>(false);
 
   useEffect(() => {
     const updateDesktopSize = async () => {
       const isDesktopView = window.matchMedia("(min-width: 768px)").matches;
+      setIsDesktop(isDesktopView);
       const coverData = isDesktopView ? srcUrlDesktop : srcUrlMobile;
 
       const lowQuality = coverData?.formats?.large?.url || AUX_IMG_BG;
@@ -191,7 +193,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                   zIndex: 2,
                 }}
               >
-                {parent === "banner" ? (
+                {parent === "banner" && !isDesktop ? (
                   <video
                     style={{
                       objectFit: "cover",
