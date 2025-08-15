@@ -16,10 +16,10 @@ interface IPressCarouselProps {
 
 export default function PressCarousel({ artists }: IPressCarouselProps) {
   const [isDesktop, setIsDesktop] = useState(false);
-  const [_artists, setArtists] = useState<IArtist[]>(artists);
+  const [artistsList, setArtistsList] = useState<IArtist[]>(artists);
 
   useEffect(() => {
-    setArtists(artists);
+    setArtistsList(artists);
 
     const mediaQuery = window.matchMedia("(min-width: 768px)");
     setIsDesktop(mediaQuery.matches);
@@ -49,7 +49,7 @@ export default function PressCarousel({ artists }: IPressCarouselProps) {
             type: "progressbar",
             progressbarOpposite: false,
           }}
-          loop={_artists.length > 1}
+          loop={artistsList.length > 1}
           autoplay={{
             delay: 2000,
             disableOnInteraction: !isDesktop,
@@ -73,7 +73,7 @@ export default function PressCarousel({ artists }: IPressCarouselProps) {
           // }}
           // parallax={true}
         >
-          {_artists.map((artist: IArtist, index: number) => (
+          {artistsList.map((artist: IArtist, index: number) => (
             <SwiperSlide key={index}>
               <Press artist={artist} />
             </SwiperSlide>
