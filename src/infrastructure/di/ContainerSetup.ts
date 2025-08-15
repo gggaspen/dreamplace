@@ -16,6 +16,7 @@ import { StrapiArtistRepository } from '../repositories/StrapiArtistRepository';
 import { StrapiHeroSectionRepository } from '../repositories/StrapiHeroSectionRepository';
 import { StrapiContactInfoRepository } from '../repositories/StrapiContactInfoRepository';
 import { FirebaseAuthRepository } from '../auth/FirebaseAuthRepository';
+import { MockAuthRepository } from '../auth/MockAuthRepository';
 
 // Authentication
 import { LoginUseCase } from '../../domain/auth/usecases/LoginUseCase';
@@ -81,6 +82,13 @@ export const setupContainer = (container: DIContainer): void => {
   container.registerSingleton(SERVICE_TOKENS.AUTH_REPOSITORY, () => {
     const auth = container.resolveSync(SERVICE_TOKENS.FIREBASE_AUTH);
     const logger = new ConsoleLogger('Auth');
+    
+    // Use MockAuthRepository if Firebase auth is not available
+    if (!auth) {
+      logger.warn('Firebase auth not available - using MockAuthRepository');
+      return new MockAuthRepository(logger);
+    }
+    
     return new FirebaseAuthRepository(auth, logger);
   });
 

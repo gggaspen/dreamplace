@@ -17,13 +17,26 @@ const nextConfig = {
   },
   // Add headers to fix CSP issues
   async headers() {
+    const isDev = process.env.NODE_ENV === 'development';
+    
+    const cspPolicy = [
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline' data:",
+      "style-src-elem 'self' 'unsafe-inline' data:",
+      "font-src 'self' data:",
+      "img-src 'self' data: blob:",
+      "object-src 'self' data:",
+      "frame-src 'self'",
+      isDev ? "connect-src 'self' ws: wss: http://localhost:*" : "connect-src 'self'"
+    ].join('; ') + ';';
+    
     return [
       {
         source: '/(.*)',
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "script-src 'self' 'unsafe-eval' 'unsafe-inline'; object-src 'none';",
+            value: cspPolicy,
           },
         ],
       },

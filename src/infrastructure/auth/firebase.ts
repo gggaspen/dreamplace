@@ -22,19 +22,33 @@ let app: FirebaseApp;
 let auth: Auth;
 
 try {
-  app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
+  // Only initialize Firebase if environment variables are properly configured
+  const hasValidConfig = process.env.NEXT_PUBLIC_FIREBASE_API_KEY && 
+                        process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN && 
+                        process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+  
+  if (hasValidConfig) {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
 
-  // Connect to emulator in development
-  if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
-    const useEmulator = process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATOR === 'true';
-    if (useEmulator && !auth.config.emulator) {
-      connectAuthEmulator(auth, 'http://localhost:9099');
+    // Connect to emulator in development
+    if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
+      const useEmulator = process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATOR === 'true';
+      if (useEmulator && !auth.config.emulator) {
+        connectAuthEmulator(auth, 'http://localhost:9099');
+      }
     }
+  } else {
+    console.warn('Firebase configuration incomplete - authentication disabled');
+    // Create mock auth object for development
+    auth = null as any;
+    app = null as any;
   }
 } catch (error) {
   console.error('Failed to initialize Firebase:', error);
-  throw error;
+  // Don't throw error, just disable Firebase functionality
+  auth = null as any;
+  app = null as any;
 }
 
 export { app as firebaseApp, auth as firebaseAuth };
