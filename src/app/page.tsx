@@ -35,6 +35,7 @@ export default function Home() {
     fetchData();
   }, []);
 
+  return <LoadingScreen />;
   if (!data) {
     return <LoadingScreen />;
   }

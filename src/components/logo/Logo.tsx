@@ -1,15 +1,21 @@
+import { motion } from "framer-motion";
+
 export interface ILogoProps {
   color?: string;
   w?: string;
   h?: string;
   mode?: "full" | "mini";
+  enableMotion?: boolean;
 }
+
+const duration = 1.8;
 
 const Logo = ({
   color = "#eee",
   w = "100%",
   h = "100%",
   mode = "full",
+  enableMotion = null,
 }: ILogoProps) => {
   if (mode === "full") {
     return (
@@ -71,6 +77,74 @@ const Logo = ({
         />
       </svg>
     );
+  } else if (enableMotion) {
+    return (
+      <motion.svg
+        width={w}
+        height={h}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 771.11 565.26"
+        initial={{ scale: 0.95 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0.95 }}
+        transition={{
+          duration,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeOut",
+          delay: 0.15,
+        }}
+      >
+        <motion.circle
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{
+            duration,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "easeOut",
+            delay: 0,
+          }}
+          cx="105.55"
+          cy="282.63"
+          r="105.55"
+          fill={color}
+        />
+        <motion.rect
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{
+            duration,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "easeOut",
+            delay: 0.15,
+          }}
+          x="340.84"
+          width="89.43"
+          height="565.26"
+          fill={color}
+        />
+        <motion.circle
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{
+            duration,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "easeOut",
+            delay: 0.3,
+          }}
+          cx="665.55"
+          cy="282.63"
+          r="105.55"
+          fill={color}
+        />
+      </motion.svg>
+    );
   } else {
     return (
       <svg
@@ -79,8 +153,8 @@ const Logo = ({
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 771.11 565.26"
       >
-        <rect x="340.84" width="89.43" height="565.26" fill={color} />
         <circle cx="105.55" cy="282.63" r="105.55" fill={color} />
+        <rect x="340.84" width="89.43" height="565.26" fill={color} />
         <circle cx="665.55" cy="282.63" r="105.55" fill={color} />
       </svg>
     );
