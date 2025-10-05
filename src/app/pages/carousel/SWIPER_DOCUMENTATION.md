@@ -1,11 +1,13 @@
 # Swiper React Library - Documentación Completa
 
 ## Descripción General
+
 La librería Swiper React está siendo utilizada en el componente `Carousel.tsx` para crear un carousel de imágenes con autoplay y navegación. Este documento describe cómo implementar y manejar eventos de cambio de slide en Swiper.
 
 ## Implementación Actual en Carousel.tsx
 
 ### Configuración Básica
+
 ```typescript
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
@@ -35,9 +37,11 @@ import "swiper/css/pagination";
 ## Eventos de Cambio de Slide
 
 ### 1. onSlideChange
+
 **Descripción**: Se dispara cada vez que cambia el slide activo, sin importar la dirección o el orden.
 
 **Implementación básica**:
+
 ```typescript
 <Swiper
   onSlideChange={() => console.log('Slide cambió')}
@@ -46,6 +50,7 @@ import "swiper/css/pagination";
 ```
 
 **Con acceso a la instancia de Swiper**:
+
 ```typescript
 <Swiper
   onSlideChange={(swiper) => {
@@ -59,6 +64,7 @@ import "swiper/css/pagination";
 ```
 
 ### 2. onSlideChangeTransitionStart
+
 **Descripción**: Se dispara al inicio de la animación cuando comienza la transición a otro slide.
 
 ```typescript
@@ -72,6 +78,7 @@ import "swiper/css/pagination";
 ```
 
 ### 3. onSlideChangeTransitionEnd
+
 **Descripción**: Se dispara cuando termina la animación de transición entre slides.
 
 ```typescript
@@ -86,16 +93,19 @@ import "swiper/css/pagination";
 ## Propiedades Útiles de la Instancia Swiper
 
 ### Índices
+
 - `swiper.activeIndex`: Índice del slide actualmente activo
 - `swiper.realIndex`: Índice real del slide (útil cuando `loop: true`)
 - `swiper.previousIndex`: Índice del slide anterior
 
 ### Estados
+
 - `swiper.progress`: Progreso actual de la transición (0 a 1)
 - `swiper.isBeginning`: `true` si está en el primer slide
 - `swiper.isEnd`: `true` si está en el último slide
 
 ### Información de slides
+
 - `swiper.slides.length`: Número total de slides
 - `swiper.slides`: Array con todos los elementos slide
 
@@ -111,7 +121,7 @@ interface SlideChangeData {
 
 export default function Carousel({ fotos, banner_text }: ICarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
-  
+
   const handleSlideChange = (swiper: any) => {
     const slideData: SlideChangeData = {
       activeIndex: swiper.activeIndex,
@@ -119,7 +129,7 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
       previousIndex: swiper.previousIndex,
       direction: swiper.activeIndex > swiper.previousIndex ? 'next' : 'prev'
     };
-    
+
     setCurrentSlide(swiper.realIndex);
     console.log('Cambio de slide:', slideData);
   };
@@ -152,6 +162,7 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
 ## Casos de Uso Comunes
 
 ### 1. Tracking de Slides para Analytics
+
 ```typescript
 const trackSlideView = (swiper: any) => {
   // Enviar evento a Google Analytics, Mixpanel, etc.
@@ -165,10 +176,11 @@ const trackSlideView = (swiper: any) => {
 ```
 
 ### 2. Actualizar Indicadores Personalizados
+
 ```typescript
 const [activeSlide, setActiveSlide] = useState(0);
 
-<Swiper 
+<Swiper
   onSlideChange={(swiper) => setActiveSlide(swiper.realIndex)}
 >
   {/* slides */}
@@ -177,7 +189,7 @@ const [activeSlide, setActiveSlide] = useState(0);
 {/* Indicadores personalizados */}
 <div className="custom-pagination">
   {fotos.map((_, index) => (
-    <span 
+    <span
       key={index}
       className={index === activeSlide ? 'active' : ''}
     />
@@ -186,6 +198,7 @@ const [activeSlide, setActiveSlide] = useState(0);
 ```
 
 ### 3. Precargar Contenido del Siguiente Slide
+
 ```typescript
 const preloadNextSlide = (swiper: any) => {
   const nextIndex = (swiper.realIndex + 1) % fotos.length;
@@ -198,11 +211,11 @@ const preloadNextSlide = (swiper: any) => {
 
 ## Diferencias Entre Eventos
 
-| Evento | Momento | Uso Recomendado |
-|--------|---------|-----------------|
-| `onSlideChange` | Al cambiar el slide activo | Estado general, tracking |
-| `onSlideChangeTransitionStart` | Al iniciar animación | Preparación, precarga |
-| `onSlideChangeTransitionEnd` | Al terminar animación | Confirmación, limpieza |
+| Evento                         | Momento                    | Uso Recomendado          |
+| ------------------------------ | -------------------------- | ------------------------ |
+| `onSlideChange`                | Al cambiar el slide activo | Estado general, tracking |
+| `onSlideChangeTransitionStart` | Al iniciar animación       | Preparación, precarga    |
+| `onSlideChangeTransitionEnd`   | Al terminar animación      | Confirmación, limpieza   |
 
 ## Consideraciones Importantes
 
@@ -216,15 +229,16 @@ const preloadNextSlide = (swiper: any) => {
 **Nota**: La documentación oficial indica que Swiper React podría ser deprecado en futuras versiones en favor de Swiper Element (Web Components). Sin embargo, para 2024 sigue siendo la opción más estable y recomendada para proyectos React.
 
 Para proyectos nuevos, considerar la migración gradual a Swiper Element:
+
 ```typescript
 // Futuro enfoque con Swiper Element
-import { register } from 'swiper/element/bundle';
+import { register } from "swiper/element/bundle";
 
 useEffect(() => {
   register();
-  
-  swiperRef.current.addEventListener('swiperslidechange', (e) => {
-    console.log('Slide cambió:', e.detail);
+
+  swiperRef.current.addEventListener("swiperslidechange", (e) => {
+    console.log("Slide cambió:", e.detail);
   });
 }, []);
 ```
