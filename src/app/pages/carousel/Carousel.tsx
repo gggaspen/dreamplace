@@ -11,7 +11,6 @@ import "./Carousel.css";
 import { Box, Flex } from "@chakra-ui/react";
 import { ICover } from "@/interfaces/event.interface";
 import MiniBanner from "@/components/mini-banner/MiniBanner";
-// import { extractNumericValue } from "@/app/utils/extract-numeric-value";
 
 interface ICarouselProps {
   fotos: ICover[];
@@ -21,9 +20,14 @@ interface ICarouselProps {
 export default function Carousel({ fotos, banner_text }: ICarouselProps) {
   const [isDesktop, setIsDesktop] = useState(false);
   const [images, setImages] = useState<ICover[]>([]);
+  const [activeImage, setActiveImage] = useState<ICover | null>(null);
+  const [containerHeight, setContainerHeight] = useState<string>("auto");
 
   useEffect(() => {
     setImages(fotos);
+    if (fotos.length > 0) {
+      setActiveImage(fotos[0]);
+    }
 
     const mediaQuery = window.matchMedia("(min-width: 768px)");
     setIsDesktop(mediaQuery.matches);
@@ -36,15 +40,34 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
     };
   }, [fotos]);
 
-  const [windowHeight, setWindowHeight] = useState<CSSProperties["height"]>(0);
+  const calculateImageHeight = (image: ICover) => {
+    if (!image?.formats?.large) return "auto";
+
+    const screenWidth = window.innerWidth;
+    const imageWidth = image.formats.large.width || 1;
+    const imageHeight = image.formats.large.height || 1;
+
+    const aspectRatio = imageHeight / imageWidth;
+    const calculatedHeight = screenWidth * aspectRatio;
+
+    return `${calculatedHeight}px`;
+  };
+
+  const handleSlideChange = (swiper: any) => {
+    const currentImage = images[swiper.realIndex];
+    if (currentImage) {
+      setActiveImage(currentImage);
+      const newHeight = calculateImageHeight(currentImage);
+      setContainerHeight(newHeight);
+    }
+  };
 
   useEffect(() => {
-    setWindowHeight(window.innerHeight + "px");
-  }, []);
-
-  const styles: CSSProperties = {
-    height: windowHeight,
-  };
+    if (activeImage) {
+      const newHeight = calculateImageHeight(activeImage);
+      setContainerHeight(newHeight);
+    }
+  }, [activeImage]);
 
   return (
     <>
@@ -52,29 +75,14 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
 
       <Flex
         h={{
-          // base: extractNumericValue(`${styles.height}`) / 2.5,
-          base: "auto",
-          lg: styles.height,
+          base: containerHeight,
+          lg: containerHeight,
         }}
       >
-        <Box
-          w={"100%"}
-          // h={"100%"}
-          // h={{
-          //   base: extractNumericValue(`${styles.height}`) / 2.5,
-          //   lg: styles.height,
-          // }}
-          position={"relative"}
-          bgColor={"#000"}
-        >
+        <Box w={"100%"} position={"relative"} bgColor={"#000"}>
           <Swiper
             className="progress-slide-carousel"
             modules={[Autoplay, Pagination]}
-            // pagination={{
-            //   clickable: true,
-            //   type: "progressbar",
-            //   progressbarOpposite: false,
-            // }}
             loop={images.length > 1}
             autoplay={{
               delay: 2000,
@@ -82,6 +90,7 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
               pauseOnMouseEnter: isDesktop,
             }}
             speed={100}
+            onSlideChange={handleSlideChange}
           >
             {images.map((image, index) => (
               <SwiperSlide key={image.id}>
