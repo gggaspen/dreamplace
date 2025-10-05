@@ -129,7 +129,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
         position={"absolute"}
         display={{
           base: imageUrls.lowQuality ? "flex" : "block",
-          lg: "flex",
+          lg: imageUrls.lowQuality ? "flex" : "block",
         }}
         justifyContent={"center"}
         width={"100%"}
@@ -140,7 +140,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
           width={"100%"}
           height={"100%"}
           backgroundGradient={"linear(to-t, rgba(0, 0, 0, 1), transparent"}
-        ></Box>
+        />
 
         <Box position="relative" width="100%" height="100%">
           {!isHighQualityLoaded && (
@@ -166,6 +166,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                 priority
                 style={{
                   objectFit: "cover",
+                  objectPosition: "top",
                   height: "100%",
                   filter: "blur(2px)",
                 }}
