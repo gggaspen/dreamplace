@@ -23,7 +23,6 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
   const [images, setImages] = useState<ICover[]>([]);
   const [activeImage, setActiveImage] = useState<ICover | null>(null);
   const [containerHeight, setContainerHeight] = useState<string>("auto");
-  const [isVisible, setIsVisible] = useState(true);
   const carouselRef = useRef<HTMLDivElement>(null);
   const swiperRef = useRef<SwiperType | null>(null);
 
@@ -77,9 +76,8 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         const newVisibility = entry.isIntersecting;
-        setIsVisible(newVisibility);
 
-        if (swiperRef.current && swiperRef.current.autoplay) {
+        if (swiperRef?.current?.autoplay) {
           if (newVisibility) {
             swiperRef.current.autoplay.start();
           } else {
