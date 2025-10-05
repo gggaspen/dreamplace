@@ -5,6 +5,7 @@ import "./Nav.css";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useEffect, useState } from "react";
 import Logo from "@/components/logo/Logo";
+import navHeight from "@/app/constants/nav-height";
 
 export default function Nav({ show_banner }: { show_banner: boolean }) {
   const linkList: string[] = ["Events", "Artists"];
@@ -56,6 +57,9 @@ export default function Nav({ show_banner }: { show_banner: boolean }) {
         staggerChildren: 0.05,
       }}
       className={show_banner ? "mt-40-nav" : ""}
+      style={{
+        height: navHeight,
+      }}
     >
       <Flex>
         <Logo

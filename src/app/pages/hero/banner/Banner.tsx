@@ -75,7 +75,7 @@ export default function Banner({ config, event }: IBannerProps): JSX.Element {
             _selection={{
               backgroundColor: "#000",
             }}
-            fontSize={{ base: "3em", lg: "4em" }}
+            fontSize={{ base: "2em", lg: "4em" }}
             color={textColor}
           >
             {title}

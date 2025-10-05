@@ -12,6 +12,7 @@ import Image from "next/image";
 import { Box } from "@chakra-ui/react";
 import { ICover } from "@/interfaces/event.interface";
 import "@/app/css/motions.css";
+import navHeight from "@/app/constants/nav-height";
 
 type InputRange = number[];
 
@@ -189,6 +190,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                   width: "100%",
                   height: "100%",
                   zIndex: 2,
+                  marginTop: navHeight,
                 }}
               >
                 <Image
