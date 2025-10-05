@@ -14,6 +14,7 @@ export default function Footer() {
   const [counter, setCounter] = useState<number>(0);
 
   useEffect(() => {
+    const currentRef = observerRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -23,13 +24,13 @@ export default function Footer() {
       { threshold: 0.5 } // Se activa cuando el 50% del elemento es visible
     );
 
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);

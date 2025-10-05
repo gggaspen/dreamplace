@@ -30,7 +30,7 @@ export default function PressCarousel({ artists }: IPressCarouselProps) {
     return () => {
       mediaQuery.removeEventListener("change", handleResize);
     };
-  }, []);
+  }, [artists]);
 
   return (
     <Flex>

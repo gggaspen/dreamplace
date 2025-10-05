@@ -73,34 +73,35 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
   }, [activeImage]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const newVisibility = entry.isIntersecting;
+  const currentRef = carouselRef.current;
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      const newVisibility = entry.isIntersecting;
 
-        if (swiperRef?.current?.autoplay) {
-          if (newVisibility) {
-            swiperRef.current.autoplay.start();
-          } else {
-            swiperRef.current.autoplay.stop();
-          }
+      if (swiperRef?.current?.autoplay) {
+        if (newVisibility) {
+          swiperRef.current.autoplay.start();
+        } else {
+          swiperRef.current.autoplay.stop();
         }
-      },
-      {
-        threshold: 0.3,
-        rootMargin: "0px",
       }
-    );
-
-    if (carouselRef.current) {
-      observer.observe(carouselRef.current);
+    },
+    {
+      threshold: 0.3,
+      rootMargin: "0px",
     }
+  );
 
-    return () => {
-      if (carouselRef.current) {
-        observer.unobserve(carouselRef.current);
-      }
-    };
-  }, []);
+  if (currentRef) {
+    observer.observe(currentRef);
+  }
+
+  return () => {
+    if (currentRef) {
+      observer.unobserve(currentRef);
+    }
+  };
+}, [swiperRef]);
 
   return (
     <>
