@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import React, { CSSProperties, useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import type { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -13,8 +14,8 @@ import { ICover } from "@/interfaces/event.interface";
 import MiniBanner from "@/components/mini-banner/MiniBanner";
 
 interface ICarouselProps {
-  fotos: ICover[];
-  banner_text: string;
+  readonly fotos: ICover[];
+  readonly banner_text: string;
 }
 
 export default function Carousel({ fotos, banner_text }: ICarouselProps) {
@@ -22,6 +23,9 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
   const [images, setImages] = useState<ICover[]>([]);
   const [activeImage, setActiveImage] = useState<ICover | null>(null);
   const [containerHeight, setContainerHeight] = useState<string>("auto");
+  const [isVisible, setIsVisible] = useState(true);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const swiperRef = useRef<SwiperType | null>(null);
 
   useEffect(() => {
     setImages(fotos);
@@ -69,11 +73,43 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
     }
   }, [activeImage]);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const newVisibility = entry.isIntersecting;
+        setIsVisible(newVisibility);
+
+        if (swiperRef.current && swiperRef.current.autoplay) {
+          if (newVisibility) {
+            swiperRef.current.autoplay.start();
+          } else {
+            swiperRef.current.autoplay.stop();
+          }
+        }
+      },
+      {
+        threshold: 0.3,
+        rootMargin: "0px",
+      }
+    );
+
+    if (carouselRef.current) {
+      observer.observe(carouselRef.current);
+    }
+
+    return () => {
+      if (carouselRef.current) {
+        observer.unobserve(carouselRef.current);
+      }
+    };
+  }, []);
+
   return (
     <>
       <MiniBanner text={banner_text} bgColor="#eee" />
 
       <Flex
+        ref={carouselRef}
         h={{
           base: containerHeight,
           lg: containerHeight,
@@ -88,6 +124,9 @@ export default function Carousel({ fotos, banner_text }: ICarouselProps) {
               delay: 2000,
               disableOnInteraction: !isDesktop,
               pauseOnMouseEnter: isDesktop,
+            }}
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
             }}
             speed={100}
             onSlideChange={handleSlideChange}
