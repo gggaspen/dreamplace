@@ -37,6 +37,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
   srcUrlDesktop,
   srcUrlMobile,
   parent,
+  objectPosition = "center",
 }) => {
   const [imageUrls, setImageUrls] = useState<ImageUrls>({
     lowQuality: AUX_IMG_BG,
@@ -166,14 +167,10 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                 priority
                 style={{
                   objectFit: "cover",
-                  objectPosition: "top",
+                  objectPosition: objectPosition,
                   height: "100%",
                   filter: "blur(2px)",
                 }}
-                className={
-                  // parent === "banner" ? "pulse-motion-2" : "pulse-motion"
-                  ""
-                }
               />
             </motion.div>
           )}
@@ -191,7 +188,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                   width: "100%",
                   height: "100%",
                   zIndex: 2,
-                  marginTop: navHeight,
+                  marginTop: parent === "banner" ? navHeight : 0,
                 }}
               >
                 <Image
@@ -201,6 +198,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                   alt="Banner Prensa - High Quality"
                   style={{
                     objectFit: "cover",
+                    objectPosition: objectPosition,
                     height: "100%",
                   }}
                   className={
