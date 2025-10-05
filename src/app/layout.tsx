@@ -4,6 +4,7 @@ import "./globals.css";
 import { Provider } from "@/components/ui/provider";
 import { poppins } from "./ui/fonts";
 import Head from "next/head";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -94,6 +95,7 @@ export default async function RootLayout({
         className={`${poppins.className} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider>{children}</Provider>
+        <SpeedInsights />
       </body>
     </html>
   );
