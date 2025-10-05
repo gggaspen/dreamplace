@@ -7,7 +7,7 @@ import {
   getArtistSection,
   getFooterSection,
 } from "@/services/strapi.service";
-import { postCounter } from "./counter.service";
+// import { postCounter } from "./counter.service";
 
 export const fetchAllData = async () => {
   const [
