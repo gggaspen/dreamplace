@@ -9,7 +9,7 @@ import YouTubeEmbed from "@/components/youtube-embed/YouTube-Embed";
 
 export default function Footer() {
   const [isVisible, setIsVisible] = useState(false);
-  const observerRef = useRef(null); // El ref para el observador
+  const observerRef = useRef(null);
 
   const [counter, setCounter] = useState<number>(0);
 
@@ -18,10 +18,10 @@ export default function Footer() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true); // Cambia el estado cuando sea visible
+          setIsVisible(true);
         }
       },
-      { threshold: 0.5 } // Se activa cuando el 50% del elemento es visible
+      { threshold: 0.5 }
     );
 
     if (currentRef) {
