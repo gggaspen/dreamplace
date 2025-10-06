@@ -91,7 +91,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
           });
           // setIsHighQualityLoaded(true);
         } catch (error) {
-          // console.warn("Failed to preload high quality image:", error);
+          console.warn("Failed to preload high quality image:", error);
           // setIsHighQualityLoaded(false);
         }
       } else {
