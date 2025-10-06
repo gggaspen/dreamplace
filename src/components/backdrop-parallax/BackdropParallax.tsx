@@ -147,7 +147,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
         />
 
         <Box position="relative" width="100%" height="100%">
-          {!isHighQualityLoaded && (
+          {/* {!isHighQualityLoaded && (
             <motion.div
               key="low-quality"
               initial="visible"
@@ -176,10 +176,10 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                 }}
               />
             </motion.div>
-          )}
+          )} */}
 
           <AnimatePresence>
-            {isHighQualityLoaded && (
+            {/* {isHighQualityLoaded && ( */}
               <motion.div
                 key="high-quality"
                 initial="hidden"
@@ -210,7 +210,6 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
                   }
                 />
               </motion.div>
-            )}
           </AnimatePresence>
         </Box>
       </Box>
