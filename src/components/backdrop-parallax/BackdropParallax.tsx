@@ -43,12 +43,11 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
     lowQuality: AUX_IMG_BG,
     highQuality: AUX_IMG_BG,
   });
-  const [isHighQualityLoaded, setIsHighQualityLoaded] =
-    useState<boolean>(false);
+  // const [isHighQualityLoaded, setIsHighQualityLoaded] =
+  //   useState<boolean>(false);
   const [outputRange, setOutputRange] = useState<number[]>([0, 0]);
   const [inputRange, setInputRange] = useState<InputRange>([0, 0]);
   const [isDesktopViewState, setIsDesktopViewState] = useState<boolean>(false);
-
 
   useEffect(() => {
     const updateDesktopSize = async () => {
@@ -76,7 +75,7 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
 
       // Solo resetear la carga si las URLs han cambiado
       if (urlsChanged) {
-        setIsHighQualityLoaded(false);
+        // setIsHighQualityLoaded(false);
       } else {
         return; // No hacer nada si las URLs no cambiaron
       }
@@ -90,13 +89,13 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
               reject(new Error(`Failed to load image: ${urls.highQuality}`));
             img.src = urls.highQuality;
           });
-          setIsHighQualityLoaded(true);
+          // setIsHighQualityLoaded(true);
         } catch (error) {
-          console.warn("Failed to preload high quality image:", error);
-          setIsHighQualityLoaded(false);
+          // console.warn("Failed to preload high quality image:", error);
+          // setIsHighQualityLoaded(false);
         }
       } else {
-        setIsHighQualityLoaded(true);
+        // setIsHighQualityLoaded(true);
       }
     };
 
@@ -180,36 +179,37 @@ const BackdropParallax: React.FC<BackdropParallaxProps> = ({
 
           <AnimatePresence>
             {/* {isHighQualityLoaded && ( */}
-              <motion.div
-                key="high-quality"
-                initial="hidden"
-                animate="visible"
-                variants={imageTransitionVariants}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+            <motion.div
+              key="high-quality"
+              initial="hidden"
+              animate="visible"
+              variants={imageTransitionVariants}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              style={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                zIndex: 2,
+                marginTop:
+                  parent === "banner" && !isDesktopViewState ? navHeight : 0,
+              }}
+            >
+              <Image
+                src={imageUrls.highQuality}
+                width={3000}
+                height={0}
+                alt="Banner Prensa - High Quality"
                 style={{
-                  position: "absolute",
-                  width: "100%",
+                  objectFit: "cover",
+                  objectPosition: objectPosition,
                   height: "100%",
-                  zIndex: 2,
-                  marginTop: parent === "banner" && !isDesktopViewState ? navHeight : 0,
                 }}
-              >
-                <Image
-                  src={imageUrls.highQuality}
-                  width={3000}
-                  height={0}
-                  alt="Banner Prensa - High Quality"
-                  style={{
-                    objectFit: "cover",
-                    objectPosition: objectPosition,
-                    height: "100%",
-                  }}
-                  className={
-                    // parent === "banner" ? "pulse-motion-2" : "pulse-motion"
-                    ""
-                  }
-                />
-              </motion.div>
+                className={
+                  // parent === "banner" ? "pulse-motion-2" : "pulse-motion"
+                  ""
+                }
+              />
+            </motion.div>
           </AnimatePresence>
         </Box>
       </Box>
